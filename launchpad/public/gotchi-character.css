@@ -1,0 +1,143 @@
+/* Gotchi characters: layered rigs, idle life, expressions, evolutions and
+   celebrations. Motion runs only while .is-live (visible tab + in viewport)
+   and collapses to static poses under prefers-reduced-motion. */
+.gotchi-character{position:relative;display:block;width:100%;max-width:100%;--look-x:0;--look-y:0;--tilt:0deg;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;contain:layout}
+.gotchi-rig{position:relative;width:100%;z-index:1}
+/* One pose per evolution stage (its own layered artwork); only the current stage's pose is shown. */
+.gotchi-pose{position:absolute;inset:0;display:none}
+.gotchi-character[data-stage="1"] .gotchi-pose[data-pose-stage="1"],.gotchi-character[data-stage="2"] .gotchi-pose[data-pose-stage="2"],.gotchi-character[data-stage="3"] .gotchi-pose[data-pose-stage="3"]{display:block}
+.gotchi-rig.is-interactive{cursor:grab}
+.gotchi-character.is-petting .gotchi-rig{cursor:grabbing}
+.gotchi-layer{position:absolute;pointer-events:none;will-change:transform}
+.gotchi-anim{position:relative;width:100%;height:100%}
+.gotchi-layer img{display:block;width:100%;height:100%;object-fit:fill;pointer-events:none}
+.gotchi-fx{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:visible}
+.gotchi-aura{position:absolute;inset:-8% -10% -4%;z-index:0;border-radius:50%;opacity:0;pointer-events:none;background:radial-gradient(closest-side,var(--gotchi-glow,#ff7ad9) 0%,transparent 72%);transition:opacity 600ms ease}
+.gotchi-character[data-stage="3"] .gotchi-aura{opacity:.5}
+.gotchi-character.is-live[data-motion=full][data-stage="3"] .gotchi-aura{animation:gotchi-aura 4.2s ease-in-out infinite}
+
+/* Head follows the pointer; eyes drift a little further than the head. */
+.gotchi-layer-head{transform:rotate(var(--tilt)) translate(calc(var(--look-x)*1.3%),calc(var(--look-y)*1%));transition:transform 320ms cubic-bezier(.2,.9,.3,1.2)}
+.gotchi-layer-eyes{transform:translate(calc(var(--look-x)*3.2%),calc(var(--look-y)*2.6%));transition:transform 220ms ease,clip-path 160ms ease,opacity 80ms linear}
+.gotchi-visor{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gotchi-visor .gotchi-eyes{transform:translate(calc(var(--look-x)*22px),calc(var(--look-y)*14px));transition:transform 220ms ease}
+
+/* Idle life */
+.gotchi-character.is-live[data-motion=full] .gotchi-layer-body>.gotchi-anim{animation:gotchi-breathe 3.8s ease-in-out infinite}
+.gotchi-character.is-live[data-motion=full] .gotchi-layer-head>.gotchi-anim{animation:gotchi-bob 3.8s ease-in-out infinite}
+.gotchi-character.is-live[data-motion=full] .gotchi-layer-tail>.gotchi-anim{animation:gotchi-wag var(--wag-speed,1.9s) ease-in-out infinite}
+.gotchi-tail-mirror>.gotchi-anim{animation-direction:reverse}
+.gotchi-character.is-live[data-motion=full] .gotchi-layer-harrows>.gotchi-anim{animation:gotchi-float 3.2s ease-in-out infinite}
+.gotchi-character.is-live[data-motion=full] .gotchi-layer-barrows>.gotchi-anim{animation:gotchi-float 3.2s ease-in-out -1.6s infinite}
+.gotchi-character.is-live[data-motion=full] .gotchi-visor-scan{animation:gotchi-scan 5s linear infinite}
+.gotchi-visor-scan{fill:var(--gotchi-glow,#9d6bff);opacity:0}
+@keyframes gotchi-breathe{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,1.03)}}
+@keyframes gotchi-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.4%)}}
+@keyframes gotchi-wag{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes gotchi-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5%)}}
+@keyframes gotchi-aura{0%,100%{transform:scale(1);opacity:.45}50%{transform:scale(1.06);opacity:.65}}
+@keyframes gotchi-scan{0%{opacity:0;transform:translateY(0)}10%{opacity:.6}50%{opacity:.6;transform:translateY(220px)}60%{opacity:0}100%{opacity:0;transform:translateY(220px)}}
+
+/* Gestures (short, randomly scheduled while idle) */
+.gotchi-character[data-gesture=tilt-left] .gotchi-layer-head{transform:rotate(-6deg) translate(-1%,0)}
+.gotchi-character[data-gesture=tilt-right] .gotchi-layer-head{transform:rotate(6deg) translate(1%,0)}
+.gotchi-character[data-gesture=look-around] .gotchi-layer-eyes,.gotchi-character[data-gesture=look-around] .gotchi-visor .gotchi-eyes{animation:gotchi-look-around 1.8s ease-in-out}
+.gotchi-character[data-gesture=ear-twitch] .gotchi-layer-head>.gotchi-anim{animation:gotchi-twitch .5s ease-in-out 2}
+.gotchi-character[data-gesture=hop] .gotchi-rig,.gotchi-character.is-hop .gotchi-rig{animation:gotchi-hop .6s cubic-bezier(.3,1.4,.5,1)}
+.gotchi-character[data-gesture=wiggle] .gotchi-rig{animation:gotchi-wiggle .8s ease-in-out}
+.gotchi-character.is-bounce .gotchi-rig{animation:gotchi-bounce .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes gotchi-look-around{0%,100%{transform:translate(0,0)}25%{transform:translate(-3%,0)}60%{transform:translate(3%,-1%)}}
+@keyframes gotchi-twitch{0%,100%{transform:rotate(0)}50%{transform:rotate(1.6deg)}}
+@keyframes gotchi-hop{0%,100%{transform:translateY(0)}40%{transform:translateY(-5%)}}
+@keyframes gotchi-wiggle{0%,100%{transform:rotate(0)}20%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}80%{transform:rotate(-2deg)}}
+@keyframes gotchi-bounce{0%{transform:scale(1)}35%{transform:scale(1.06,.94)}65%{transform:scale(.97,1.04)}100%{transform:scale(1)}}
+
+/* Blinks and expressions. Furry rigs reveal the closed eyes painted on the
+   head under the eye layer; the visor squashes its slits. */
+.gotchi-character.is-blinking .gotchi-layer-eyes{opacity:0}
+.gotchi-eye-slit{fill:var(--gotchi-glow,#9d6bff);filter:drop-shadow(0 0 6px var(--gotchi-glow,#9d6bff));transform-box:fill-box;transform-origin:center;transition:transform 140ms ease,opacity 120ms ease}
+.gotchi-eye-happy,.gotchi-eye-dizzy,.gotchi-eye-love{opacity:0;fill:none;stroke:var(--gotchi-glow,#9d6bff);stroke-width:14;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--gotchi-glow,#9d6bff));transform-box:fill-box;transform-origin:center;transition:opacity 120ms ease}
+.gotchi-eye-love{fill:var(--gotchi-accent-b,#ff2d95);stroke:none}
+.gotchi-character.is-blinking .gotchi-eye-slit{transform:scaleY(.08)}
+.gotchi-character[data-expression=happy] .gotchi-eye-slit,.gotchi-character[data-expression=squint] .gotchi-eye-slit,.gotchi-character[data-expression=dizzy] .gotchi-eye-slit,.gotchi-character[data-expression=love] .gotchi-eye-slit{opacity:0}
+.gotchi-character[data-expression=happy] .gotchi-eye-happy,.gotchi-character[data-expression=squint] .gotchi-eye-happy{opacity:1}
+.gotchi-character[data-expression=dizzy] .gotchi-eye-dizzy{opacity:1}
+.gotchi-character.is-live[data-motion=full][data-expression=dizzy] .gotchi-eye-dizzy{animation:gotchi-spin 1.1s linear infinite}
+.gotchi-character[data-expression=love] .gotchi-eye-love{opacity:1}
+.gotchi-character.is-live[data-motion=full][data-expression=love] .gotchi-eye-love{animation:gotchi-throb .7s ease-in-out infinite}
+.gotchi-character[data-expression=surprised] .gotchi-eye-slit{transform:scale(1.28)}
+.gotchi-character[data-expression=sleepy] .gotchi-eye-slit{transform:scaleY(.42) translateY(14%)}
+.gotchi-character[data-expression=wink] .gotchi-visor-eye-right .gotchi-eye-slit{transform:scaleY(.08)}
+.gotchi-character[data-expression=happy] .gotchi-layer-eyes,.gotchi-character[data-expression=squint] .gotchi-layer-eyes{clip-path:inset(44% 0 0 0)}
+.gotchi-character[data-expression=love] .gotchi-layer-eyes{clip-path:inset(30% 0 0 0);filter:drop-shadow(0 0 8px var(--gotchi-accent-b,#ff2e8b))}
+.gotchi-character[data-expression=sleepy] .gotchi-layer-eyes{clip-path:inset(62% 0 0 0)}
+.gotchi-character[data-expression=surprised] .gotchi-layer-eyes{transform:translate(calc(var(--look-x)*3.2%),calc(var(--look-y)*2.6%)) scale(1.1)}
+.gotchi-character[data-expression=wink] .gotchi-layer-eyes{clip-path:inset(0 0 0 52%)}
+.gotchi-character.is-live[data-motion=full][data-expression=dizzy] .gotchi-layer-eyes{animation:gotchi-dizzy-eyes .9s ease-in-out infinite}
+@keyframes gotchi-spin{to{transform:rotate(360deg)}}
+@keyframes gotchi-throb{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+@keyframes gotchi-dizzy-eyes{0%,100%{transform:translate(-2%,0) rotate(-6deg)}50%{transform:translate(2%,0) rotate(6deg)}}
+.gotchi-character.is-chomp .gotchi-layer-head>.gotchi-anim{animation:gotchi-chomp .35s ease-in-out 2}
+@keyframes gotchi-chomp{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(1.5%) scale(1.01,.97)}}
+
+/* Evolution accents. Every stage is its own artwork, so the extras here are
+   light: glowing tails and arrows from stage 2, sparkles and an aura at stage 3. */
+.gotchi-character[data-stage="2"] .gotchi-layer-tail img,.gotchi-character[data-stage="3"] .gotchi-layer-tail img{filter:drop-shadow(0 0 12px var(--gotchi-glow,#ff7ad9)) saturate(1.12)}
+.gotchi-character[data-stage="3"] .gotchi-layer-eyes{filter:drop-shadow(0 0 7px var(--gotchi-accent-a,#ff6a3d))}
+.gotchi-sparkles{display:none;position:absolute;inset:0;pointer-events:none}
+.gotchi-character[data-stage="3"] .gotchi-sparkles{display:block}
+.gotchi-sparkles i{position:absolute;width:3.2%;height:3.2%;left:calc(8% + var(--i)*13%);top:calc(12% + (var(--i)*37%) - (var(--i)*var(--i)*4%));background:radial-gradient(circle,#fff 0 25%,var(--gotchi-glow,#ff7ad9) 26% 55%,transparent 60%);border-radius:50%;opacity:.8}
+.gotchi-character.is-live[data-motion=full] .gotchi-sparkles i{animation:gotchi-twinkle 2.4s ease-in-out infinite;animation-delay:calc(var(--i)*-.37s)}
+@keyframes gotchi-twinkle{0%,100%{transform:scale(.5);opacity:.2}50%{transform:scale(1.2);opacity:1}}
+/* Robot characters: the arrow layers run hot from stage 2. */
+.gotchi-character[data-stage="2"] .gotchi-layer-harrows img,.gotchi-character[data-stage="2"] .gotchi-layer-barrows img,.gotchi-character[data-stage="3"] .gotchi-layer-harrows img,.gotchi-character[data-stage="3"] .gotchi-layer-barrows img{filter:drop-shadow(0 0 9px var(--gotchi-accent-b,#ff2d95)) saturate(1.2)}
+.gotchi-character.is-live[data-motion=full][data-stage="2"] .gotchi-layer-harrows img,.gotchi-character.is-live[data-motion=full][data-stage="3"] .gotchi-layer-harrows img{animation:gotchi-glow-pulse 2.2s ease-in-out infinite}
+@keyframes gotchi-glow-pulse{0%,100%{filter:drop-shadow(0 0 6px var(--gotchi-accent-b,#ff2d95)) saturate(1.1)}50%{filter:drop-shadow(0 0 16px var(--gotchi-accent-a,#ff7a3d)) saturate(1.35)}}
+/* Pumpgotchi: the crest (stage 1 art) and the capsule charm glow from stage 2. */
+.gotchi-crest,.gotchi-charm{position:absolute;display:none;pointer-events:none;mix-blend-mode:screen}
+.gotchi-crest{clip-path:polygon(0 0,50% 18%,100% 0,50% 96%);background:linear-gradient(180deg,#d6fff3 0%,var(--gotchi-accent-a,#39f0a8) 45%,var(--gotchi-accent-c,#0f6b4b) 100%);opacity:.8;filter:blur(1.5px) drop-shadow(0 0 10px var(--gotchi-accent-a,#39f0a8))}
+.gotchi-charm{border-radius:50%;background:radial-gradient(circle,#ffffff 0%,var(--gotchi-glow,#8dffd4) 28%,#39f0a866 50%,transparent 70%);opacity:.9}
+.gotchi-character[data-stage="2"] .gotchi-crest,.gotchi-character[data-stage="3"] .gotchi-crest,.gotchi-character[data-stage="2"] .gotchi-charm,.gotchi-character[data-stage="3"] .gotchi-charm{display:block}
+.gotchi-character.is-live[data-motion=full][data-stage="2"] .gotchi-crest,.gotchi-character.is-live[data-motion=full][data-stage="3"] .gotchi-crest{animation:gotchi-crest 2.6s ease-in-out infinite}
+.gotchi-character.is-live[data-motion=full][data-stage="2"] .gotchi-charm,.gotchi-character.is-live[data-motion=full][data-stage="3"] .gotchi-charm{animation:gotchi-charm 1.8s ease-in-out infinite}
+@keyframes gotchi-crest{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes gotchi-charm{0%,100%{opacity:.45;transform:scale(.9)}50%{opacity:.9;transform:scale(1.15)}}
+.gotchi-character[data-theme=pumpgotchi][data-stage="3"] .gotchi-layer-eyes{filter:drop-shadow(0 0 8px var(--gotchi-accent-a,#39f0a8))}
+
+/* Evolution and celebration sequences */
+.gotchi-character.is-evolving .gotchi-rig{animation:gotchi-evolve 2.4s ease-in-out}
+.gotchi-character.is-evolving .gotchi-aura{opacity:1;animation:gotchi-burst 1.3s ease-out}
+@keyframes gotchi-evolve{0%{transform:scale(1);filter:brightness(1)}35%{transform:scale(1.04) rotate(-2deg);filter:brightness(1.6) saturate(1.4)}50%{transform:scale(1.12);filter:brightness(2.4)}62%{transform:scale(.98) rotate(2deg);filter:brightness(1.2)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes gotchi-burst{0%{transform:scale(.6);opacity:0}30%{opacity:1}100%{transform:scale(1.5);opacity:0}}
+.gotchi-character.is-celebrating .gotchi-rig{animation:gotchi-party .75s ease-in-out 5}
+@keyframes gotchi-party{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-4%) rotate(-3deg)}75%{transform:translateY(-4%) rotate(3deg)}}
+
+/* Particles: hearts, treats, sparks and confetti. */
+.gotchi-particle{position:absolute;width:6%;height:6%;transform:translate(-50%,-50%);font:700 12px var(--sans,Arial,sans-serif);color:var(--gotchi-accent-b,#ff2e8b);text-align:center;line-height:1;pointer-events:none}
+.gotchi-particle.is-heart::before{content:"♥";font-size:clamp(14px,3.6cqw,26px);color:var(--gotchi-accent-b,#ff2e8b);text-shadow:0 0 8px var(--gotchi-glow,#ff7ad9)}
+.gotchi-particle.is-heart{animation:gotchi-rise 1.2s ease-out forwards}
+.gotchi-particle.is-nom{color:#fff;text-shadow:0 0 6px var(--gotchi-accent-a,#ff6a3d);animation:gotchi-rise 1s ease-out forwards;font-size:clamp(11px,3cqw,18px)}
+.gotchi-particle.is-treat{width:7%;height:7%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#ffe1a6 0 18%,#d88d3c 20% 70%,#9b5a1f 72%);box-shadow:inset -2px -2px 0 #7a4316,0 2px 6px #0006;animation:gotchi-treat-fly .72s cubic-bezier(.4,0,.6,1) forwards}
+.gotchi-particle.is-treat::before,.gotchi-particle.is-treat::after{content:"";position:absolute;width:22%;height:22%;border-radius:50%;background:#4b2a10;left:28%;top:34%}.gotchi-particle.is-treat::after{left:58%;top:52%}
+.gotchi-particle.is-spark{width:3%;height:3%;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,var(--gotchi-glow,#ff7ad9) 32% 70%,transparent 72%);animation:gotchi-spark 1.3s ease-out forwards}
+.gotchi-particle.is-confetti{width:2.6%;height:4%;border-radius:1px;background:var(--gotchi-accent-a,#ff6a3d);animation:gotchi-confetti 2.4s ease-in forwards}
+.gotchi-particle.is-confetti:nth-child(3n){background:var(--gotchi-accent-b,#ff2e8b)}.gotchi-particle.is-confetti:nth-child(3n+1){background:var(--gotchi-accent-c,#8a3bff)}
+@keyframes gotchi-rise{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + (var(--seed) - .5)*60px),-220%) scale(1.15)}}
+@keyframes gotchi-treat-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.4) rotate(0)}15%{opacity:1}100%{left:var(--mouth-x,50%);top:var(--mouth-y,52%);opacity:0;transform:translate(-50%,-50%) scale(.25) rotate(300deg)}}
+@keyframes gotchi-spark{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}30%{opacity:1;transform:translate(-50%,-50%) scale(1.3)}100%{opacity:0;transform:translate(calc(-50% + (var(--seed) - .5)*120px),calc(-50% - 60px)) scale(.4)}}
+@keyframes gotchi-confetti{0%{opacity:0;transform:translate(-50%,-50%) rotate(0)}10%{opacity:1}100%{opacity:0;transform:translate(calc(-50% + (var(--seed) - .5)*120px),1200%) rotate(calc(var(--seed)*900deg))}}
+
+/* Sizes: the width follows the drawn figure's height (set per rig by the
+   controller) so every character stands the same height in a card, the launch
+   picker and the hero; a narrow stage shrinks all three alike. */
+.gotchi-character[data-size]{width:calc(var(--gotchi-figure-height,222px)*var(--gotchi-figure-ratio,1));max-width:100%;margin:0 auto}
+.gotchi-character[data-size=mini]{--gotchi-figure-height:150px}
+.gotchi-character[data-size=mini] .gotchi-fx{display:none}
+.gotchi-character[data-size=card]{--gotchi-figure-height:222px}
+.gotchi-character[data-size=page]{--gotchi-figure-height:360px}
+.gotchi-character{container-type:inline-size}
+
+/* Reduced motion: static poses, no loops, no particles, instant expressions. */
+.gotchi-character[data-motion=reduced] *,.gotchi-character[data-motion=reduced] .gotchi-rig,.gotchi-character[data-motion=reduced] .gotchi-aura{animation:none !important;transition:none !important}
+.gotchi-character[data-motion=reduced] .gotchi-fx{display:none}
+@media(prefers-reduced-motion:reduce){.gotchi-character *{animation:none !important;transition:none !important}.gotchi-character .gotchi-fx{display:none}}

@@ -1,0 +1,32 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = []
+# The Foundry tests run against the real Uniswap v4 PoolManager: `node scripts/vendor-v4-core.mjs` copies v4-core/src under
+# test/vendor (not part of this repository) and the one file it imports from solmate, which this remapping serves.
+remappings = ["solmate/=test/vendor/solmate/"]
+solc = "0.8.28"
+evm_version = "cancun"
+# Cancun throughout (v71.41): the vendored Uniswap v4 PoolManager the tests run against uses transient storage (EIP-1153),
+# so a plain `forge build` of the whole tree needs it, and forge's local simulation of the deploy and smoke scripts
+# (which reach the chain's PoolManager) activates it only from Cancun on. Robinhood Chain supports Cancun — the official
+# PoolManager runs there. `--evm-version cancun` on the command line is still accepted and changes nothing.
+optimizer = true
+optimizer_runs = 200
+via_ir = true
+bytecode_hash = "none"
+cbor_metadata = false
+fs_permissions = []
+# The contracts themselves vendor nothing: every dependency (ERC-20, ownership, reentrancy guard, the Uniswap v4 interfaces, math) is in
+# src/lib and src/interfaces, so `forge build` needs no `forge install` and no network. Only the tests need v4-core (see above).
+
+[profile.default.fuzz]
+runs = 256
+
+[rpc_endpoints]
+robinhood = "https://rpc.mainnet.chain.robinhood.com"
+
+[lint]
+severity = ["high", "med"]

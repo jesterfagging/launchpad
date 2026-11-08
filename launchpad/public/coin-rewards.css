@@ -1,0 +1,77 @@
+/* ===== Holder rewards / tokenized agent / Gotchi pot card (coin page and My Tokens). v71.26 makeover v2:
+   a roomy card with a consistent heading, large primary values and tiles for the secondary numbers. ===== */
+.coin-rewards { padding:var(--card-pad,24px); border:1px solid var(--line-card,var(--line)); border-radius:var(--radius-card,18px); background:var(--panel); }
+.coin-rewards[hidden] { display:none!important; }
+.coin-rewards>.coin-card-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:28px; }
+.coin-rewards>.coin-card-heading h2 { margin:0; font-size:var(--text-card,17px); font-weight:650; letter-spacing:-.01em; }
+.coin-rewards .coin-rewards-actions { display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+.coin-rewards-activity { color:var(--accent); font-size:13px; text-decoration:none; white-space:nowrap; }
+.coin-rewards-activity[hidden] { display:none; }
+.coin-rewards-activity:hover { text-decoration:underline; }
+.coin-rewards .text-button { font-size:13px; padding:3px 0; }
+.coin-rewards-status-row { display:flex; gap:10px; align-items:center; justify-content:space-between; margin-top:18px; }
+.coin-rewards-mode { font-size:14px; font-weight:600; color:var(--muted); }
+.coin-rewards-state { font-size:11px; color:var(--accent); padding:4px 8px; border-radius:4px; background:var(--panel2); white-space:nowrap; }
+.coin-rewards-state[data-state="paused"] { background:#18181b; color:#a78bff; }
+.coin-rewards-state[data-state="unknown"] { background:var(--panel2); color:var(--coin-muted, var(--muted)); }
+.coin-rewards-description { color:var(--coin-muted, var(--muted)); font-size:14px; line-height:1.6; margin:12px 0 18px; }
+.coin-rewards-primary>div { padding:16px 0; border-top:1px solid var(--line); }
+.coin-rewards-primary .coin-reward-value-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; }
+.coin-reward-value-row>span { font-size:13px; color:var(--muted); }
+.coin-reward-value-row strong { font-size:24px; letter-spacing:-.02em; font-variant-numeric:tabular-nums; min-width:0; overflow-wrap:anywhere; text-align:right; }
+.coin-reward-unit { color:var(--coin-muted, var(--muted)); font-size:12px; font-weight:500; margin-left:6px; }
+.coin-rewards-primary small { display:block; font-size:12px; color:var(--coin-muted, var(--muted)); line-height:1.5; margin-top:5px; }
+.coin-rewards-secondary { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.coin-rewards-secondary>div { padding:14px 14px; border:1px solid var(--line); border-radius:var(--radius-inset,12px); min-width:0; background:#0b0b0c55; }
+.coin-rewards-secondary strong { display:block; font-size:18px; letter-spacing:-.01em; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.coin-rewards-secondary .coin-reward-unit { display:block; margin:4px 0 0; font-size:11px; }
+.coin-rewards-secondary small { display:block; color:var(--coin-muted, var(--muted)); font-size:12px; margin-top:8px; line-height:1.5; }
+.coin-rewards-schedule,.coin-rewards-latest,.coin-rewards-note { font-size:13px; color:var(--coin-muted, var(--muted)); line-height:1.6; margin:14px 0 0; }
+.coin-rewards-schedule:not(:empty) { background:#1212143f; border:1px solid var(--line); border-radius:var(--radius-inset,12px); padding:12px 14px; color:var(--muted); }
+.coin-rewards-latest { color:var(--muted); }
+.coin-rewards-note { font-size:12px; }
+.coin-rewards-note:empty,.coin-rewards-latest:empty,.coin-rewards-schedule:empty { display:none; }
+
+/* ===== Reward cards: tiles lift under the cursor, an odd last tile spans the row instead of leaving a hole,
+   and the state chip carries a colour-coded dot. ===== */
+@keyframes coin-rewards-breathe{50%{opacity:.4;transform:scale(.75)}}
+.coin-rewards-secondary>div{transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease)}
+.coin-rewards-secondary>div:hover{border-color:#4a4a53;transform:translateY(-2px)}
+.coin-rewards-secondary>div:last-child:nth-child(odd){grid-column:1/-1}
+.coin-rewards-secondary strong{color:var(--sunrise-cream,#ddd3ff)}
+.coin-rewards-primary .coin-reward-value-row strong{color:var(--sunrise-cream,#ddd3ff)}
+.coin-rewards-state{display:inline-flex;align-items:center;gap:7px;height:26px;border-radius:999px;padding:0 11px;font-weight:600;font-size:12px}
+.coin-rewards-state::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.coin-rewards-state[data-state="enabled"]{color:#2ee59d;background:#2ee59d1a;border:1px solid #2ee59d40}
+.coin-rewards-state[data-state="enabled"]::before{animation:coin-rewards-breathe 2.4s ease-in-out infinite}
+.coin-rewards-state[data-state="paused"]{border:1px solid #a78bff40}
+.coin-rewards-state[data-state="paused"]::before{animation:none}
+.coin-rewards-state[data-state="unknown"]{border:1px solid var(--line)}
+.coin-rewards-state[data-state="unknown"]::before{opacity:.5;box-shadow:none}
+.coin-rewards-schedule:not(:empty){transition:border-color var(--motion-mid,260ms) ease}
+.coin-rewards-activity{transition:color var(--motion-mid,260ms) ease}
+.coin-rewards-activity:hover{color:var(--sunrise-cream,#ddd3ff)}
+@media(prefers-reduced-motion:reduce){.coin-rewards-state::before{animation:none!important}.coin-rewards-secondary>div{transition:none}.coin-rewards-secondary>div:hover{transform:none}}
+
+/* ===== Coin page: a full-width reward card under the market (coin.css flows it into two columns on wide
+   screens). Secondary tiles wrap to fill each row and the last row stretches, leaving no holes. ===== */
+.coin-page .coin-rewards-status-row { margin-top:14px; }
+.coin-page .coin-rewards-mode { font-size:14px; }
+.coin-page .coin-rewards-description { margin:10px 0 14px; font-size:14px; line-height:1.6; }
+.coin-page .coin-rewards-primary>div { padding:14px 0; }
+.coin-page .coin-reward-value-row strong { font-size:24px; }
+.coin-page .coin-rewards-primary small { margin-top:3px; font-size:12px; line-height:1.5; }
+.coin-page .coin-rewards-secondary { display:flex; flex-wrap:wrap; gap:10px; }
+.coin-page .coin-rewards-secondary>div { flex:1 1 140px; padding:14px 16px; border-radius:var(--radius-inset,12px); }
+.coin-page .coin-rewards-secondary>div:last-child:nth-child(odd) { grid-column:auto; }
+.coin-page .coin-rewards-secondary strong { font-size:20px; line-height:1.2; }
+.coin-page .coin-rewards-secondary .coin-reward-unit { margin:3px 0 0; font-size:11px; }
+.coin-page .coin-rewards-secondary small { margin-top:6px; font-size:12px; line-height:1.45; }
+.coin-page :is(.coin-rewards-schedule,.coin-rewards-latest,.coin-rewards-note) { margin-top:12px; font-size:13px; line-height:1.55; }
+.coin-page .coin-rewards-schedule:not(:empty) { padding:12px 14px; border-radius:var(--radius-inset,12px); }
+.coin-page .coin-rewards-note { font-size:12px; }
+@media(max-width:640px){
+  .coin-rewards { padding:var(--card-pad,18px); }
+  .coin-page .coin-reward-value-row strong { font-size:22px; }
+  .coin-page .coin-rewards-secondary>div { flex-basis:120px; padding:12px 14px; }
+}

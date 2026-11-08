@@ -1,0 +1,16 @@
+/* The Clean layout (<body data-layout="terminal" data-style="clean">): Terminal opened up. Inter throughout, flat cards with
+   hairline borders, softer corners, quieter labels, no glows. Loaded after public/tenant.css. */
+@font-face { font-family: 'Pad Inter'; src: url('/fonts/InterVariable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+body[data-product="tenant"][data-style="clean"] {
+  --sans: 'Pad Inter', ui-sans-serif, -apple-system, 'Segoe UI', Arial, sans-serif; --display: 'Pad Inter', ui-sans-serif, sans-serif;
+  --radius-card: 16px; --radius-control: 10px; --radius-inset: 10px; --radius-pill: 999px; --radius-tile: 12px;
+  font-family: var(--sans); letter-spacing: -.003em;
+}
+body[data-product="tenant"][data-style="clean"] * { font-family: inherit; }
+body[data-product="tenant"][data-style="clean"] :is(code, kbd, pre, .coin-address, .coin-mint, .account-address, .wallet-address, [class*="mono"]) { font-family: var(--mono); }
+body[data-product="tenant"][data-style="clean"].relay-terminal :is(h1, h2, h3) { font-weight: 700; letter-spacing: -.025em; }
+body[data-product="tenant"][data-style="clean"].relay-terminal :is(.eyebrow, .tag, .explore-section-tag, .explore-count, .coin-stage, .mainnet-badge, .admin-eyebrow) { font-weight: 600; letter-spacing: .05em; }
+body[data-product="tenant"][data-style="clean"] :is([class*="card"], [class*="panel"], .tn-hero, .pad-card) { box-shadow: none !important; }
+body[data-product="tenant"][data-style="clean"] :is(.primary, .top-launch, .cv-button, .small-button) { box-shadow: none !important; background-image: none; }
+body[data-product="tenant"][data-style="clean"].relay-terminal :is(input, select):not([type="checkbox"], [type="radio"], [type="range"], [type="file"]) { border-radius: 10px; }
+body[data-product="tenant"][data-style="clean"] .site-tape { letter-spacing: 0; }

@@ -1,0 +1,1022 @@
+/* Shared by the launch page and the toolkit funding page (funding.html). Page CSS stays loaded after client-side
+   navigation, so page-wide rules are scoped by body class. */
+:is(.launch-page,.funding-page) [hidden]{display:none!important}
+.launch-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(280px,.85fr);gap:24px;align-items:start}.launch-side{display:grid;gap:24px}.launch-fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.launch-route,.launch-fees{border:0;padding:0;margin:22px 0;display:grid;gap:12px}.launch-route legend,.launch-fees legend{font-size:12px;color:var(--muted);margin-bottom:12px}.launch-route input,.launch-fees input,.launch-checkbox input{width:18px;height:18px;min-height:18px;flex:none;accent-color:var(--accent)}
+.launch-checkbox{display:flex;gap:10px;align-items:flex-start;margin:20px 0;text-transform:none;letter-spacing:0;line-height:1.55}.launch-chain{display:flex;gap:10px;align-items:center;font-size:13px}
+.launch-highlight{background:radial-gradient(ellipse at top right,rgba(181,114,142,.11),transparent 70%),var(--panel)}.launch-highlight h2{font-size:32px;line-height:1.15;margin:20px 0}.launch-highlight p,.launch-highlight dd{font-size:13px;line-height:1.7;color:var(--muted)}.launch-highlight dt{font-weight:650;margin-top:18px;font-size:13px}.launch-highlight dd{margin:6px 0}
+.launch-review{margin-top:24px;scroll-margin-top:90px}.launch-review details{margin-top:18px}.launch-review[hidden],#launch-live-actions[hidden]{display:none}
+.launch-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:20px 0}.launch-facts>div{border:1px solid var(--line);padding:16px;border-radius:6px;min-width:0}.launch-facts span{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}.launch-facts strong{font-size:15px;overflow-wrap:anywhere;line-height:1.45}.launch-facts small{display:block;color:var(--muted);margin-top:6px}
+.launch-funding{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--bg,var(--panel));padding:18px;border-radius:6px;margin:20px 0}.launch-funding>span{width:100%;font-size:12px;color:var(--muted)}.launch-funding code{overflow-wrap:anywhere;word-break:break-all;max-width:100%}
+#launch-live-actions{display:flex;gap:12px;flex-wrap:wrap}#launch-transactions{margin:22px 0;display:grid;gap:8px}#launch-transactions a{font-size:12px;overflow-wrap:anywhere}
+.launch-history-row{display:flex;justify-content:space-between;gap:16px;width:100%;text-align:left;padding:14px 0;background:none;border:0;border-bottom:1px solid var(--line);border-radius:0}.launch-history-row small{color:var(--muted)}.launch-history-row strong{overflow-wrap:anywhere;min-width:0}
+#launch-error{white-space:pre-wrap}
+.funding-wallet{display:grid;grid-template-columns:minmax(0,1fr) 100px;gap:16px;padding:14px 0;border-bottom:1px solid var(--border,var(--line))}.funding-wallet>label:first-child{display:flex;align-items:center;gap:12px;min-width:0}.funding-wallet input[type=checkbox]{width:auto;flex-shrink:0}.funding-wallet span{display:grid;gap:4px;min-width:0}.funding-wallet code,.launch-facts code{font-size:11px;overflow-wrap:anywhere;white-space:normal}.funding-wallet label{margin:0}
+@media(max-width:1050px){.launch-layout{grid-template-columns:1fr}.launch-side{grid-template-columns:1fr 1fr}.launch-highlight h2{font-size:26px}}
+@media(max-width:650px){.launch-side,.launch-fields{grid-template-columns:1fr}.launch-facts{grid-template-columns:1fr 1fr}.launch-facts>div{padding:12px}.launch-chain{font-size:11px}#launch-review-confirm>button{width:100%;margin:8px 0}.launch-highlight h2 br{display:none}}
+@media(prefers-reduced-motion:reduce){:is(.launch-page,.funding-page) *{scroll-behavior:auto!important}}
+
+/* ==========================================================================
+   Launch page (v71.26 makeover v2). Roomy numbered section cards in the form
+   column and a sticky side column with the live preview and the launch panel
+   (step rail, wallet, Create coin), so the call to action never covers the
+   form. Scale: 28px card padding, 44px inputs,
+   15px body, 18px card radius, 12px control radius, 40/48px buttons, a 1360px
+   frame. Rules are prefixed with body.launch-page.relay-terminal so they beat
+   the shared theme's (0,2,1) brand rules for the same elements. Motion is
+   transform/opacity only and collapses under prefers-reduced-motion.
+   ========================================================================== */
+body.launch-page.relay-terminal{--lp-gold:#a78bff;--lp-peach:#8b5cff;--lp-coral:#7c4dff;--lp-live:#2ee59d;--lp-label:#c9c9cf;--lp-side:380px;--lp-gap:var(--space-7,32px);--lp-pad:var(--card-pad-lg,28px);--lp-radius:var(--radius-card,18px);--lp-control:var(--radius-control,12px);--lp-line:var(--line-card,#f4f4f51a);--lp-line-hover:var(--line-card-hover,#8b5cff59);--lp-shadow:var(--shadow-card,0 1px 0 #ffffff07 inset,0 12px 32px -20px #000000c7);--lp-top:calc(var(--header-h,72px) + 16px);--lp-ease:var(--motion-ease,cubic-bezier(.22,1,.36,1));--lp-spring:var(--motion-spring,cubic-bezier(.34,1.4,.64,1));--lp-done:linear-gradient(135deg,#a78bff,#8b5cff 60%,#7c4dff);--lp-glow:0 0 0 1px #8b5cff4d,0 12px 34px -14px #8b5cff73}
+body.launch-page.relay-terminal .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@property --sunrise-angle{syntax:'<angle>';inherits:false;initial-value:0deg}
+
+/* Page head: a 36px title over a soft sunrise glow, one line of context and the venue chip. */
+body.launch-page.relay-terminal .launch-heading{position:relative;isolation:isolate;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin:0 0 var(--space-7,32px);padding:4px 0 0}
+body.launch-page.relay-terminal .launch-heading-glow{position:absolute;z-index:-1;left:-120px;top:-170px;width:640px;height:380px;border-radius:50%;background:radial-gradient(closest-side,#8b5cff2e,#6d45d914 55%,transparent 72%);pointer-events:none;animation:lp-glow-drift 14s ease-in-out infinite alternate}
+body.launch-page.relay-terminal .launch-heading h1{margin:0!important;font-size:var(--text-title,36px)!important;line-height:1.1;font-weight:650;letter-spacing:-.02em;background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+/* The eyebrow is filled only for an administrator launch ("Launchpad / Administrator launch"). */
+body.launch-page.relay-terminal .launch-heading .eyebrow{margin:0 0 8px;font:600 12px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--lp-peach)}
+body.launch-page.relay-terminal .launch-heading .eyebrow:empty{display:none}
+body.launch-page.relay-terminal .launch-heading .subtitle{margin:8px 0 0;font-size:var(--text-body,15px);line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-chain.launch-venue{display:inline-flex;align-items:center;gap:9px;flex:none;height:36px;padding:0 16px 0 14px;border:1px solid var(--line-strong);border-radius:999px;background:var(--panel);color:#ddd3ff;font-size:13px;font-weight:600;line-height:1;white-space:nowrap;text-transform:none;box-shadow:var(--lp-shadow)}
+body.launch-page.relay-terminal .launch-chain.launch-venue::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lp-gold);box-shadow:0 0 0 0 #a78bff66;animation:lp-live 2.4s ease-in-out infinite}
+body.launch-page.relay-terminal .launch-notice{margin:0 0 20px;padding:14px 16px;border:1px solid #3a3a42;border-radius:var(--lp-control);background:#121214;font-size:14px;line-height:1.5}
+
+/* Layout: the form and then "Your coins" in the left column; the side column (live preview and launch panel) stays in view. */
+body.launch-page.relay-terminal .launch-layout{grid-template-columns:minmax(0,1fr) var(--lp-side);grid-template-rows:auto auto;align-content:start;column-gap:var(--lp-gap);row-gap:var(--space-6,24px);align-items:start}
+body.launch-page.relay-terminal .launch-layout>*{min-width:0}
+body.launch-page.relay-terminal .launch-editor{grid-column:1;grid-row:1;display:block;margin:0;padding:0;border:0;background:none;overflow:visible}
+/* The side column sticks below the header; when it is taller than the viewport it sticks by its bottom edge instead
+   (launchpad.js measures it into --lp-side-h), so the Create coin panel is always reachable. */
+body.launch-page.relay-terminal .launch-side{grid-column:2;grid-row:1/span 2;position:sticky;top:min(var(--lp-top),calc(100dvh - var(--lp-side-h,0px) - 24px));display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-5,20px)}
+body.launch-page.relay-terminal .launch-history{grid-column:1;grid-row:2}
+body.launch-page.relay-terminal .launch-form-fields{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-6,24px);min-width:0;margin:0;padding:0;border:0;counter-reset:lp-section}
+
+/* Section cards: roomy, numbered, with a soft ambient shadow. Form cards do not lift on hover. */
+body.launch-page.relay-terminal .launch-section{position:relative;min-width:0;margin:0;padding:var(--lp-pad);border:1px solid var(--lp-line);border-radius:var(--lp-radius);background:var(--panel);box-shadow:var(--lp-shadow);scroll-margin-top:var(--lp-top);transition:border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-section:hover{transform:none;box-shadow:var(--lp-shadow);border-color:var(--lp-line)}
+body.launch-page.relay-terminal .launch-section:focus-within{border-color:var(--lp-line-hover);box-shadow:var(--lp-shadow),0 0 0 4px #8b5cff0f}
+body.launch-page.relay-terminal .launch-section[data-launch-section]{counter-increment:lp-section}
+body.launch-page.relay-terminal .launch-section-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 22px}
+body.launch-page.relay-terminal .launch-section-heading h2{display:flex;align-items:center;gap:14px;margin:0;font-size:20px;font-weight:650;line-height:1.25;letter-spacing:-.015em}
+body.launch-page.relay-terminal .launch-section[data-launch-section] .launch-section-heading h2::before{content:counter(lp-section);display:grid;place-items:center;flex:none;width:32px;height:32px;border:1px solid var(--line-strong);border-radius:6px;background:var(--panel2);color:#c9b8ff;font:700 13px/1 var(--sans);box-shadow:0 1px 0 #ffffff0a inset;transition:background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-section.is-complete .launch-section-heading h2::before{content:"✓";border-color:transparent;background:var(--lp-done);color:#121214;font-size:14px;box-shadow:0 6px 18px -8px #8b5cff99;animation:lp-pop .55s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-section-heading :is(.launch-section-hint,.optional){margin:0;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap}
+body.launch-page.relay-terminal .launch-section.is-complete .launch-section-hint{color:#a78bff}
+body.launch-page.relay-terminal .launch-section h3,body.launch-page.relay-terminal .launch-fees legend{display:flex;align-items:center;gap:8px;margin:0 0 10px;padding:0;font-size:14px;font-weight:600;line-height:1.4;letter-spacing:0;color:var(--text)}
+body.launch-page.relay-terminal .launch-divider{height:1px;margin:24px 0;background:linear-gradient(90deg,var(--line),#ffffff10 50%,var(--line))}
+
+/* Fields: 44px inputs, 15px text, 13px labels 6px above. */
+body.launch-page.relay-terminal .launch-section label{display:block;margin:0;font-size:13px;font-weight:500;line-height:1.5;letter-spacing:0;text-transform:none;color:var(--lp-label)}
+body.launch-page.relay-terminal .launch-section label>:is(input,select,textarea){margin-top:var(--label-gap,6px)}
+body.launch-page.relay-terminal .launch-section>label{margin-top:16px}
+body.launch-page.relay-terminal .launch-section>.launch-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+body.launch-page.relay-terminal .launch-section :is(input:not([type=radio],[type=checkbox],[type=file],[type=range],[type=hidden]),select){width:100%;min-height:var(--input-h,44px);padding:10px 14px;border-radius:var(--lp-control);font-size:var(--text-body,15px);box-shadow:none;transition:border-color var(--motion-fast,150ms) ease,box-shadow var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-section textarea{width:100%;min-height:104px;padding:12px 14px;border-radius:var(--lp-control);font-family:var(--sans);font-size:var(--text-body,15px);line-height:1.5;resize:vertical;transition:border-color var(--motion-fast,150ms) ease,box-shadow var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal :is(.launch-section,.launch-asset-dialog) :is(input,textarea)::placeholder{color:#7a7a85;opacity:1}
+body.launch-page.relay-terminal .launch-section input[name=symbol]{text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+body.launch-page.relay-terminal .launch-section input[name=symbol]::placeholder{letter-spacing:.06em;font-weight:500}
+body.launch-page.relay-terminal .launch-section input[name=symbol]:not(:placeholder-shown):invalid{border-color:#7c4dff;box-shadow:0 0 0 3px #7c4dff1f}
+body.launch-page.relay-terminal .optional{margin-left:5px;font-size:12px;font-weight:400;color:var(--muted)}
+body.launch-page.relay-terminal .help{margin:8px 0 0;font-size:13px;line-height:1.55;color:var(--muted)}
+body.launch-page.relay-terminal .launch-fine{margin:0;font-size:12.5px;line-height:1.55;color:#7a7a85;text-align:left}
+body.launch-page.relay-terminal :is(#launch-fee-note,#launch-pump-classic-disclosure,#launch-pump-classic-terms,#launch-agent-intro) a{color:var(--text)}
+
+/* Social links: a small toggle; the website gets a full row, X and Telegram share one. */
+body.launch-page.relay-terminal .launch-socials{margin-top:16px}
+body.launch-page.relay-terminal .launch-socials summary{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 14px 0 8px;margin-left:-8px;border-radius:6px;color:#9a9aa3;font-size:14px;font-weight:500;list-style:none;cursor:pointer;transition:background-color var(--motion-fast,150ms) ease,color var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-socials summary::-webkit-details-marker{display:none}
+body.launch-page.relay-terminal .launch-socials summary::before{content:"+";display:grid;place-items:center;width:22px;height:22px;border-radius:4px;background:var(--panel2);color:var(--lp-peach);font-weight:700;transition:transform var(--motion-mid,260ms) var(--lp-spring)}
+body.launch-page.relay-terminal .launch-socials[open] summary::before{transform:rotate(45deg)}
+body.launch-page.relay-terminal .launch-socials summary:hover{background:var(--hover);color:var(--text)}
+body.launch-page.relay-terminal .launch-social-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:12px;padding:0;animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-social-fields>label:first-child{grid-column:1/-1}
+
+/* Coin image: a drop zone with an unobscured preview and a real file button. */
+body.launch-page.relay-terminal .launch-upload{position:relative;display:grid;grid-template-columns:88px minmax(0,1fr) auto;align-items:center;gap:18px;min-height:0;margin:0;padding:18px;border:1px dashed #4a4a53;border-radius:10px;background:var(--inset);text-align:left;cursor:default;overflow:visible;transition:border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-upload:hover{border-color:#5e5e67;background:#0b0b0c}
+body.launch-page.relay-terminal .launch-upload:focus-within{border-color:#5e5e67;background:#0b0b0c}
+body.launch-page.relay-terminal .launch-upload[data-drop=over]{border-style:solid;border-color:var(--lp-gold);background:#121214;box-shadow:0 0 0 4px #a78bff22}
+body.launch-page.relay-terminal .launch-upload[data-drop=blocked]{border-color:#4a4a53}
+body.launch-page.relay-terminal .launch-upload-art{position:relative;display:grid;place-items:center;width:88px;height:88px;overflow:visible;border:1px solid #3a3a42;border-radius:12px;background:linear-gradient(140deg,#2a2a30,#18181b);color:#c9b8ff;cursor:pointer;box-shadow:0 10px 24px -14px #000c;transition:transform .45s var(--lp-spring),border-color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-upload-art>span{display:grid;place-items:center}
+body.launch-page.relay-terminal .launch-upload-art svg{width:34px;height:34px}
+body.launch-page.relay-terminal .launch-upload-art>img{position:static;display:block;width:100%;height:100%;padding:0;border-radius:21px;object-fit:cover;opacity:1}
+body.launch-page.relay-terminal .launch-upload:hover .launch-upload-art{transform:scale(1.04) rotate(-2deg)}
+body.launch-page.relay-terminal .launch-upload[data-drop=over] .launch-upload-art{transform:translateY(-3px) scale(1.06);border-color:var(--lp-gold)}
+body.launch-page.relay-terminal .launch-upload-art.is-popped{animation:lp-pop .6s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-image-section.is-complete .launch-upload{border-style:solid;border-color:#3a3a42}
+body.launch-page.relay-terminal .launch-image-section.is-complete .launch-upload-art::after{content:"✓";position:absolute;right:-7px;bottom:-7px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--lp-done);color:#121214;font:700 12px/1 var(--sans);box-shadow:0 0 0 3px var(--inset);animation:lp-pop .5s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-upload-copy{display:grid;gap:4px;min-width:0}
+body.launch-page.relay-terminal .launch-upload-copy strong{font-size:16px;font-weight:600;line-height:1.35;color:var(--text);text-shadow:none}
+body.launch-page.relay-terminal .launch-upload-copy small{display:block;overflow:hidden;font-size:13px;line-height:1.45;color:var(--muted);text-overflow:ellipsis;white-space:nowrap;text-shadow:none}
+body.launch-page.relay-terminal .launch-upload-drop{font-size:12.5px;color:#7a7a85;text-shadow:none}
+body.launch-page.relay-terminal .launch-upload[data-drop=over] .launch-upload-drop{color:var(--lp-gold)}
+body.launch-page.relay-terminal .launch-upload-button{position:relative;min-height:var(--control-h,40px);padding:0 18px;overflow:hidden;border:1px solid #a78bff;border-radius:var(--lp-control);background:var(--grad-sunrise,#8b5cff);color:#fff;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;box-shadow:none;transition:transform var(--motion-fast,150ms) var(--lp-ease),box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-upload-button:hover:not(:disabled){background:#a78bff;border-color:#a78bff;color:#121214;box-shadow:0 8px 22px -10px #8b5cff99;transform:translateY(-1px)}
+body.launch-page.relay-terminal .launch-upload-button:disabled{opacity:.5;cursor:default}
+body.launch-page.relay-terminal .launch-upload[aria-busy=true] .launch-upload-art{opacity:.6}
+body.launch-page.relay-terminal .launch-upload[aria-busy=true] .launch-upload-art::before{content:"";position:absolute;inset:-5px;border:2px solid transparent;border-top-color:var(--lp-gold);border-right-color:#8b5cff66;border-radius:26px;animation:lp-spin .9s linear infinite}
+body.launch-page.relay-terminal .launch-form-fields:disabled .launch-upload{cursor:default}
+@media(hover:none){body.launch-page.relay-terminal .launch-upload-drop{display:none}}
+
+/* Details and image side by side only when both have room (a form column of about 900px or more). */
+@media(min-width:1240px){
+  body.launch-page.relay-terminal .launch-form-fields{grid-template-columns:minmax(0,1fr) minmax(300px,340px)}
+  body.launch-page.relay-terminal .launch-form-fields>.launch-section:not(.launch-details-section,.launch-image-section){grid-column:1/-1}
+  body.launch-page.relay-terminal .launch-image-section{display:flex;flex-direction:column}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload{flex:1;grid-template-columns:minmax(0,1fr);justify-items:center;align-content:center;gap:16px;padding:24px 20px;text-align:center}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload-art{width:112px;height:112px;border-radius:28px}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload-art>img{border-radius:27px}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload-art svg{width:40px;height:40px}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload-copy{justify-items:center;max-width:100%}
+  body.launch-page.relay-terminal .launch-image-section .launch-upload-copy small{white-space:normal;overflow-wrap:anywhere}
+  body.launch-page.relay-terminal .launch-image-section .launch-section-heading{flex-wrap:wrap;gap:2px 12px}
+  body.launch-page.relay-terminal .launch-image-section .launch-section-heading .optional{flex-basis:100%;margin:0;padding-left:46px}
+}
+
+/* Selectors: the pair segments keep a boxed segmented look; venue and launch-option groups become card grids below. */
+body.launch-page.relay-terminal .launch-segments{position:relative;display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset)}
+body.launch-page.relay-terminal .launch-segments>button{position:relative;display:flex;align-items:center;justify-content:center;gap:8px;flex:1 1 0;min-width:0;min-height:var(--control-h,40px);margin:0;padding:6px 12px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font-size:14px;font-weight:500;line-height:1.2;text-align:center;cursor:pointer;box-shadow:none;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-segments>button:hover:not(:disabled,[aria-pressed=true]){background:var(--hover);color:var(--text)}
+body.launch-page.relay-terminal .launch-segments>button[aria-pressed=true]{background:var(--sel-bg);border-color:var(--sel-line);color:var(--sel-text);box-shadow:0 1px 0 #ffffff0a inset}
+body.launch-page.relay-terminal .launch-segments>button:disabled{opacity:.45;cursor:not-allowed}
+body.launch-page.relay-terminal .launch-segments>[hidden]{display:none}
+body.launch-page.relay-terminal .launch-segments .quote-logo{flex:none}
+
+/* Launch venue: three 88px cards with the venue mark, its name and a one-line route; the chosen one glows and carries a check. */
+body.launch-page.relay-terminal .launch-mode-select .launch-segments{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:0;border:0;background:none}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]{justify-content:flex-start;gap:14px;min-height:88px;padding:14px 44px 14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--inset);text-align:left;white-space:normal;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]:hover:not(:disabled,[aria-pressed=true]){border-color:var(--line-strong);background:var(--hover);transform:translateY(-2px)}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue][aria-pressed=true]{border-color:#8b5cff80;background:linear-gradient(145deg,#18181b,#121214 70%);color:var(--text);box-shadow:var(--lp-glow)}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]::after{content:"✓";position:absolute;right:14px;top:14px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--lp-done);color:#121214;font:700 11px/1 var(--sans);opacity:0;transform:scale(.4);transition:opacity var(--motion-mid,260ms) ease,transform .45s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue][aria-pressed=true]::after{opacity:1;transform:scale(1)}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue] img{flex:none;width:44px;height:44px;padding:5px;border-radius:50%;background:#121214;box-shadow:0 0 0 1px #ffffff12;object-fit:cover;transition:transform .45s var(--lp-spring),box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-mode-select [data-launch-venue][aria-pressed=true] img{transform:rotate(-8deg) scale(1.08);box-shadow:0 0 0 1px #a78bff5c,0 8px 20px -8px #8b5cff99}
+body.launch-page.relay-terminal .launch-venue-copy{display:grid;gap:3px;min-width:0}
+body.launch-page.relay-terminal .launch-venue-name{font-size:16px;font-weight:650;line-height:1.25;color:inherit}
+/* The route line is decorative copy from data-launch-route / data-launch-tagline, so each button's text content stays its venue name. */
+body.launch-page.relay-terminal .launch-venue-copy[data-launch-route]::after{content:attr(data-launch-route);display:block;font-size:12.5px;font-weight:500;line-height:1.35;color:#7a7a85}
+body.launch-page.relay-terminal .launch-venue-copy[data-launch-tagline]::after{content:attr(data-launch-tagline);display:block;font-size:12.5px;font-weight:500;line-height:1.35;color:#7a7a85}
+body.launch-page.relay-terminal [data-launch-venue][aria-pressed=true] .launch-venue-copy::after{color:#8b5cff}
+body.launch-page.relay-terminal :is(#launch-pump-classic-availability,#launch-damm-pump-availability,#launch-meteora-availability,#launch-pump-public-preview){display:flex;align-items:center;gap:8px;margin:12px 0 0;color:#9a9aa3}
+body.launch-page.relay-terminal :is(#launch-pump-classic-availability,#launch-damm-pump-availability,#launch-meteora-availability,#launch-pump-public-preview)::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--lp-live);box-shadow:0 0 0 0 #2ee59d66;animation:lp-live 2.4s ease-in-out infinite}
+/* A venue change cross-fades everything below the venue cards (presentation only; the content itself is rendered at once). */
+body.launch-page.relay-terminal .launch-market-section.is-switching>:not(.launch-section-heading,.launch-mode-select){animation:lp-crossfade .46s var(--lp-ease) both}
+
+/* Pair and starting market cap share a comfortable row; the cap field disappears where a venue has none (Pump.fun). */
+body.launch-page.relay-terminal .launch-market-grid{display:flex;flex-wrap:wrap;align-items:flex-start;gap:20px 28px}
+body.launch-page.relay-terminal .launch-pair-field{flex:1.6 1 320px;min-width:0}
+body.launch-page.relay-terminal .launch-cap-field{flex:1 1 240px;min-width:0}
+body.launch-page.relay-terminal .launch-cap-field:not(:has(>:not([hidden]))){display:none}
+body.launch-page.relay-terminal .launch-pairs>button{min-height:44px;font-size:14.5px;font-weight:600}
+body.launch-page.relay-terminal .launch-pairs>button:has(.launch-ticker-compact){padding-top:3px;padding-bottom:3px}
+body.launch-page.relay-terminal .launch-pairs .launch-ticker-compact{width:28px;height:28px;padding:2px}
+body.launch-page.relay-terminal .launch-pairs .quote-logo{width:24px;height:24px}
+body.launch-page.relay-terminal #launch-custom-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-fixed-fdv{display:grid;gap:10px;margin:0;padding:0;border:0;background:none;font-size:14px;font-weight:600;line-height:1.4;color:var(--text)}
+body.launch-page.relay-terminal .launch-fixed-fdv>strong{display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 18px;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset);font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--lp-gold);font-variant-numeric:tabular-nums;box-shadow:0 1px 0 #ffffff07 inset}
+body.launch-page.relay-terminal .launch-admin-fdv{margin:0}
+body.launch-page.relay-terminal .launch-admin-fdv input[type=range]{width:100%;margin:4px 0 8px;accent-color:var(--accent)}
+body.launch-page.relay-terminal .launch-slider-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 10px}
+body.launch-page.relay-terminal .launch-slider-heading output{font-size:22px;font-weight:700;color:var(--lp-gold);font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-range-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+body.launch-page.relay-terminal :is(.launch-presets,.launch-asset-filters){display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+body.launch-page.relay-terminal :is(.launch-presets,.launch-asset-filters) button{display:inline-flex;align-items:center;height:36px;min-height:0;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:#9a9aa3;font-size:13.5px;font-weight:500;cursor:pointer;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal :is(.launch-presets,.launch-asset-filters) button:hover{background:var(--hover);color:var(--text);transform:translateY(-1px)}
+body.launch-page.relay-terminal :is(.launch-presets,.launch-asset-filters) button[aria-pressed=true]{background:var(--sel-bg);border-color:var(--sel-line);color:var(--sel-text)}
+
+/* Launch options: a card grid (two per row; three when Pump.fun adds its two strategies) with an icon, the name and a
+   one-line summary from data-launch-summary. The two Pump.fun-only strategies carry a ribbon. Selection glows. */
+body.launch-page.relay-terminal .launch-fees{display:block;margin:0;padding:0;border:0;min-width:0}
+body.launch-page.relay-terminal .launch-rewards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:0;border:0;background:none}
+body.launch-page.relay-terminal .launch-rewards[data-count="6"],body.launch-page.relay-terminal .launch-rewards[data-count="9"]{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* Paycheck (v71.44): the fifth Raydium option takes the whole last row. */
+body.launch-page.relay-terminal .launch-rewards[data-count="5"]>label[data-raydium-only]:not([hidden]){grid-column:1/-1}
+/* v71.34: the Pump.fun option settings panel inside the launch dialog, built from pump-option-catalog.mjs. */
+body.launch-page .launch-pump-option-wrap{display:grid;gap:14px;margin-top:4px}
+body.launch-page .launch-pump-option{display:grid;gap:10px;margin:0;padding:16px 18px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset)}
+body.launch-page .launch-pump-option>legend{padding:0 4px;font-size:13px;font-weight:600;color:var(--text)}
+body.launch-page .launch-pump-option>label{font-size:13px;font-weight:500;color:#c9c9cf}
+body.launch-page .launch-pump-option .launch-sol-input input[type=number]{width:100%;min-width:0}
+body.launch-page .launch-pump-option .launch-pump-option-choice select{width:100%}
+body.launch-page .launch-pump-option>.help{margin:-4px 0 2px;font-size:12px;line-height:1.5}
+body.launch-page .launch-pump-option>.launch-pump-option-help{margin:4px 0 0;padding:10px 12px;border-radius:6px;background:#0b0b0c;font-size:13px;line-height:1.55;color:var(--text)}
+body.launch-page .launch-pump-option>.launch-pump-option-help[data-state=problem]{background:#18181b;color:#ff8fa3}
+body.launch-page.relay-terminal .launch-rewards>label{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto;column-gap:14px;row-gap:3px;align-items:center;min-width:0;min-height:88px;margin:0;padding:16px 16px 16px 16px;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font-size:15px;font-weight:600;line-height:1.3;text-align:left;cursor:pointer;overflow:hidden;box-shadow:none;transition:background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-rewards>label:hover:not(:has(:checked,:disabled)){border-color:var(--line-strong);background:var(--hover);transform:translateY(-2px)}
+body.launch-page.relay-terminal .launch-rewards>label:has(:checked){border-color:#8b5cff80;background:linear-gradient(145deg,#18181b,#121214 70%);box-shadow:var(--lp-glow)}
+body.launch-page.relay-terminal .launch-rewards>label:has(:disabled){opacity:.45;cursor:not-allowed}
+body.launch-page.relay-terminal .launch-rewards>label[hidden]{display:none}
+body.launch-page.relay-terminal .launch-rewards>label>span{grid-column:2;grid-row:1;align-self:end;min-width:0;overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-rewards>label::after{content:attr(data-launch-summary);grid-column:2;grid-row:2;align-self:start;display:block;min-width:0;font-size:12.5px;font-weight:500;line-height:1.4;color:#7a7a85}
+body.launch-page.relay-terminal .launch-rewards>label:has(:checked)::after{color:#8b5cff}
+body.launch-page.relay-terminal .launch-option-icon{grid-column:1;grid-row:1/span 2;display:block;width:44px;height:44px;padding:11px;border-radius:50%;background:#121214;box-shadow:0 0 0 1px #ffffff12;color:#9a9aa3;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .45s var(--lp-spring),background-color var(--motion-mid,260ms) ease,color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-option-icon .launch-option-dot{fill:currentColor;stroke:none}
+body.launch-page.relay-terminal .launch-rewards>label:has(:checked) .launch-option-icon{background:var(--lp-done);color:#121214;box-shadow:0 0 0 1px #a78bff5c,0 8px 20px -8px #8b5cff99;transform:rotate(-8deg) scale(1.08)}
+body.launch-page.relay-terminal .launch-rewards>label:hover:not(:has(:checked,:disabled)) .launch-option-icon{color:var(--text)}
+/* v71.37: the Pump.fun-only options carry no ribbon any more (they are shown on the Pump.fun venue only, so the ribbon said nothing); the three
+   v71.35 options carry a small "New" chip instead. */
+body.launch-page.relay-terminal .launch-rewards>label[data-new]::before{content:"New";position:absolute;top:10px;right:10px;padding:2px 7px;border:1px solid #a78bff55;border-radius:999px;background:#a78bff14;color:var(--lp-peach,#a78bff);font:700 10px/1.4 var(--sans);letter-spacing:.08em;text-transform:uppercase;pointer-events:none}
+body.launch-page.relay-terminal .launch-rewards input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+body.launch-page.relay-terminal .launch-rewards>label:has(:focus-visible){outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal #launch-fee-note{margin-top:16px;font-size:13.5px;line-height:1.6;color:#9a9aa3}
+/* The detail block below the options (fee card, tax field, Gotchi picker, agent settings) cross-fades when the option changes. */
+body.launch-page.relay-terminal #launch-reward-options.is-switching :is(#launch-fee-note,#launch-fee-settings,#launch-gotchi-picker,#launch-agent-settings,#launch-holder-minimum-wrap){animation:lp-crossfade .46s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-section .launch-fee-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:start;gap:16px;max-width:100%;margin-top:16px}
+body.launch-page.relay-terminal .launch-auto-fee{display:grid;grid-template-columns:minmax(150px,auto) minmax(0,1fr);align-items:center;gap:4px 24px;min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-auto-fee>span{grid-column:1;display:block;font-size:13px;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-auto-fee>strong{grid-column:1;display:block;margin:0;font-size:20px;font-weight:700;line-height:1.3;color:var(--lp-gold);font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-auto-fee>.help{grid-column:2;grid-row:1/span 2;margin:0;font-size:13px;line-height:1.55}
+/* Next to the transfer-tax field (Raydium holder rewards) the fee card stacks. */
+body.launch-page.relay-terminal .launch-fee-settings:has(>label:not([hidden])) .launch-auto-fee{grid-template-columns:minmax(0,1fr)}
+body.launch-page.relay-terminal .launch-fee-settings:has(>label:not([hidden])) .launch-auto-fee>.help{grid-column:1;grid-row:auto;margin-top:8px}
+body.launch-page.relay-terminal #launch-tax-label{min-width:0}
+body.launch-page.relay-terminal #launch-tax-label .help{display:block}
+body.launch-page.relay-terminal .launch-holder-minimum{max-width:none;margin-top:16px;padding:14px 18px;border:1px solid var(--line);border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-holder-minimum strong{font-size:14px;font-weight:600}
+body.launch-page.relay-terminal .launch-holder-minimum .help{margin-top:4px}
+
+/* AI Agent settings (v71.27): roomy blocks for the personality cards, the objective picker (grouped cards, program
+   settings, capability locks, the "what the platform will do" line) and the model picker grouped by provider. */
+body.launch-page.relay-terminal .launch-agent-settings{display:grid;gap:20px;margin:16px 0 0;padding:22px;border:1px solid var(--line);border-radius:10px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-agent-settings>.help{margin:0;font-size:13.5px;line-height:1.6}
+body.launch-page.relay-terminal .launch-agent-status:empty{display:none}
+body.launch-page.relay-terminal .launch-agent-status[data-state=closed]{color:#a78bff}
+body.launch-page.relay-terminal .launch-agent-status[data-state=open]{color:#8ff0c9}
+body.launch-page.relay-terminal .launch-agent-settings :is(select,textarea,input[type=text]){background:var(--panel)}
+body.launch-page.relay-terminal .launch-agent-settings .help{display:block;margin-top:6px;font-size:12.5px}
+body.launch-page.relay-terminal .launch-agent-block{display:grid;gap:14px;min-width:0;margin:0;padding:0;border:0}
+body.launch-page.relay-terminal .launch-agent-block>legend{display:block;width:100%;margin:0 0 2px;padding:0;font-size:15px;font-weight:650;line-height:1.4;color:var(--text)}
+body.launch-page.relay-terminal .launch-agent-block-title{display:inline-flex;align-items:center;gap:10px}
+body.launch-page.relay-terminal .launch-agent-block-title::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(140deg,var(--lp-gold),var(--lp-coral));box-shadow:0 0 10px #8b5cff66}
+body.launch-page.relay-terminal .launch-agent-block-hint{display:block;margin-top:3px;font-size:13px;font-weight:400;line-height:1.5;color:var(--muted)}
+/* Choice cards (personality, objective, model): a hidden radio, a title, a line of copy and chips; the chosen one glows and carries a check. */
+body.launch-page.relay-terminal .launch-agent-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+body.launch-page.relay-terminal label.launch-agent-choice{position:relative;display:block;min-width:0;min-height:64px;margin:0;padding:14px 40px 14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--text);font-size:15px;font-weight:600;line-height:1.3;text-align:left;cursor:pointer;box-shadow:none;transition:background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-agent-choice>input{position:absolute;width:1px;height:1px;margin:0;opacity:0;pointer-events:none}
+body.launch-page.relay-terminal .launch-agent-choice:hover:not(:has(:checked)){border-color:var(--line-strong);background:var(--hover);transform:translateY(-2px)}
+body.launch-page.relay-terminal .launch-agent-choice:has(:checked){border-color:#8b5cff80;background:linear-gradient(145deg,#18181b,#121214 70%);box-shadow:var(--lp-glow)}
+body.launch-page.relay-terminal .launch-agent-choice:has(:focus-visible){outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal .launch-agent-choice::after{content:"✓";position:absolute;right:12px;top:12px;display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--lp-done);color:#121214;font:700 10px/1 var(--sans);opacity:0;transform:scale(.4);transition:opacity var(--motion-mid,260ms) ease,transform .45s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-agent-choice:has(:checked)::after{opacity:1;transform:scale(1)}
+body.launch-page.relay-terminal .launch-agent-choice-copy{display:grid;gap:4px;min-width:0}
+body.launch-page.relay-terminal .launch-agent-choice-title{display:block;font-size:15px;font-weight:650;line-height:1.3;color:var(--text);overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-agent-choice-text{display:block;font-size:12.5px;font-weight:500;line-height:1.45;color:#7a7a85;overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-agent-choice:has(:checked) .launch-agent-choice-text{color:#9a9aa3}
+body.launch-page.relay-terminal .launch-agent-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+body.launch-page.relay-terminal .launch-agent-chips .cv-pill{height:22px;padding:0 8px;font-size:11.5px}
+body.launch-page.relay-terminal .launch-agent-personality.is-custom .launch-agent-choice-text{font-style:italic}
+/* Objectives: three groups, each with a heading line; cards keep the Program / spending chips. */
+body.launch-page.relay-terminal .launch-agent-objectives{display:grid;gap:22px}
+body.launch-page.relay-terminal .launch-agent-objective-group{display:grid;gap:12px}
+body.launch-page.relay-terminal .launch-agent-group-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+body.launch-page.relay-terminal .launch-agent-group-head h4{margin:0;font-size:14px;font-weight:650;line-height:1.4;letter-spacing:.01em;color:var(--lp-gold)}
+body.launch-page.relay-terminal .launch-agent-group-head p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-objective-group[data-group=own] .launch-agent-objective-grid{grid-template-columns:minmax(0,1fr)}
+/* Program settings (creator-set numbers): a slider with an exact field, or a segmented control for fixed options. */
+body.launch-page.relay-terminal .launch-agent-objective-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px 24px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--panel);animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-agent-setting{display:grid;gap:10px;min-width:0}
+body.launch-page.relay-terminal .launch-agent-setting-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+body.launch-page.relay-terminal .launch-agent-setting-label{display:block;margin:0;font-size:13px;font-weight:500;line-height:1.5;color:var(--lp-label)}
+body.launch-page.relay-terminal .launch-agent-setting-value{flex:none;font-size:15px;font-weight:650;color:var(--lp-gold);font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-agent-setting-field{display:grid;grid-template-columns:minmax(0,1fr) 124px;align-items:center;gap:12px}
+body.launch-page.relay-terminal .launch-agent-setting-field input[type=range]{width:100%;min-height:0;margin:0;accent-color:var(--accent)}
+body.launch-page.relay-terminal .launch-agent-setting-number{display:flex;align-items:center;gap:4px;height:var(--input-h,44px);padding:0 10px 0 0;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset);transition:border-color var(--motion-fast,150ms) ease,box-shadow var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-agent-setting-number:focus-within{border-color:#7c4dff;box-shadow:0 0 0 3px #6d45d933}
+body.launch-page.relay-terminal .launch-agent-setting-number:has(input[aria-invalid=true]){border-color:#7c4dff;box-shadow:0 0 0 3px #7c4dff1f}
+body.launch-page.relay-terminal .launch-agent-setting-number input[type=number]{flex:1;width:100%;min-width:0;height:100%;min-height:0;margin:0;padding:0 0 0 12px;border:0;border-radius:var(--lp-control);background:transparent;box-shadow:none;font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-agent-setting-number input[type=number]:focus-visible{outline:none}
+body.launch-page.relay-terminal .launch-agent-setting-unit{flex:none;font-size:12.5px;font-weight:600;color:#a78bff}
+body.launch-page.relay-terminal .launch-agent-setting-unit:empty{display:none}
+body.launch-page.relay-terminal .launch-agent-setting-range{font-size:12px;line-height:1.45;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-segmented{justify-self:start;max-width:100%}
+body.launch-page.relay-terminal .launch-agent-segmented>button{min-width:64px;min-height:0;margin:0;font-size:14px}
+body.launch-page.relay-terminal .launch-agent-setting-error{margin:-6px 0 0;font-size:13px;line-height:1.5;color:#a78bff}
+body.launch-page.relay-terminal .launch-agent-rule{display:grid;gap:4px;margin:0;padding:14px 16px;border:1px solid #8b5cff2e;border-left:3px solid var(--lp-peach);border-radius:4px 8px 8px 4px;background:#8b5cff0d;font-size:13.5px;line-height:1.55;color:#e4e4e7}
+body.launch-page.relay-terminal .launch-agent-rule[data-kind=none]{border-left-color:#4a4a53;border-color:var(--line);background:#ffffff05;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-agent-rule-label{font-size:11.5px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:var(--lp-peach)}
+body.launch-page.relay-terminal .launch-agent-rule[data-kind=none] .launch-agent-rule-label{color:var(--muted)}
+/* Model: the chosen model up front; "Change model" opens the full list grouped by provider. */
+body.launch-page.relay-terminal .launch-agent-model-current{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+body.launch-page.relay-terminal .launch-agent-model-copy{display:grid;gap:4px;min-width:0;flex:1 1 240px}
+body.launch-page.relay-terminal .launch-agent-model-eyebrow{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-model-title{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:16px;font-weight:650;line-height:1.3;color:var(--text)}
+body.launch-page.relay-terminal .launch-agent-model-vendor{font-size:13px;font-weight:500;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-model-meta{display:block;font-size:13px;line-height:1.5;color:#9a9aa3;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-agent-model-toggle{flex:none;min-height:36px;padding:0 14px}
+body.launch-page.relay-terminal .launch-agent-models{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:12px;animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-agent-models-note{grid-column:1/-1;margin:0;padding:10px 14px;border:1px solid #a78bff40;border-radius:6px;background:#a78bff0f;font-size:13px;line-height:1.55;color:#ffb020}
+body.launch-page.relay-terminal .launch-agent-model-group{display:grid;gap:8px;align-content:start;min-width:0;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+body.launch-page.relay-terminal .launch-agent-model-provider{margin:0 0 2px 4px;font-size:12px;font-weight:650;letter-spacing:.07em;line-height:1.4;text-transform:uppercase;color:var(--lp-peach)}
+body.launch-page.relay-terminal .launch-agent-settings .launch-agent-model-grid{grid-template-columns:minmax(0,1fr);gap:8px}
+body.launch-page.relay-terminal .launch-agent-settings .launch-agent-model-grid>label.launch-agent-choice{min-height:0;padding:10px 34px 10px 12px;border-radius:6px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-agent-settings .launch-agent-model-grid>label.launch-agent-choice:has(:checked){background:linear-gradient(145deg,#18181b,#121214 70%)}
+body.launch-page.relay-terminal .launch-agent-settings .launch-agent-model-grid>label.launch-agent-choice::after{right:10px;top:10px;width:18px;height:18px;font-size:9px}
+body.launch-page.relay-terminal .launch-agent-choice-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;min-width:0}
+body.launch-page.relay-terminal .launch-agent-choice-head .cv-pill{height:20px;padding:0 7px;font-size:11px}
+body.launch-page.relay-terminal .launch-agent-model .launch-agent-choice-title{font-size:14.5px}
+body.launch-page.relay-terminal .launch-agent-model .launch-agent-choice-text{font-size:12.5px;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-agent-model.is-unpriced .launch-agent-choice-text,body.launch-page.relay-terminal .launch-agent-model-meta.is-missing{color:#ffb020}
+/* Capability boxes: a program that needs one ticks it and locks it, with the reason inline. */
+body.launch-page.relay-terminal .launch-agent-toggles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+body.launch-page.relay-terminal label.launch-agent-toggle{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);cursor:pointer;transition:border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-agent-toggle:hover{border-color:var(--line-strong)}
+body.launch-page.relay-terminal .launch-agent-toggle input{flex:none;width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+body.launch-page.relay-terminal .launch-agent-toggle input:disabled{opacity:1;cursor:not-allowed}
+body.launch-page.relay-terminal .launch-agent-toggle strong{display:block;margin-bottom:3px;font-size:14px;color:var(--text)}
+body.launch-page.relay-terminal .launch-agent-toggle small{display:block;font-size:12.5px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-toggle:has(:checked){border-color:#8b5cff80;background:var(--sel-bg);box-shadow:var(--lp-glow)}
+body.launch-page.relay-terminal .launch-agent-toggle.is-locked{cursor:default}
+body.launch-page.relay-terminal .launch-agent-toggle small.launch-agent-lock{display:flex;align-items:center;gap:7px;margin-top:8px;color:var(--lp-gold);font-weight:600;animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-agent-lock::before{content:"";flex:none;width:12px;height:12px;border-radius:3px;background:linear-gradient(140deg,var(--lp-gold),var(--lp-coral));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='10' width='16' height='11' rx='2.5'/%3E%3Cpath d='M8 10V7a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='10' width='16' height='11' rx='2.5'/%3E%3Cpath d='M8 10V7a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E") center/contain no-repeat}
+body.launch-page.relay-terminal .launch-agent-lock[hidden]{display:none}
+body.launch-page.relay-terminal .launch-agent-settings .launch-agent-capability-note{margin:-8px 0 0;padding:10px 14px;border:1px solid #a78bff40;border-radius:6px;background:#a78bff0f;font-size:13px;line-height:1.5;color:#ffb020;transition:background-color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-agent-capability-note.is-nudged{background:#a78bff30}
+body.launch-page.relay-terminal .launch-agent-disclosure{padding:16px 18px;border:1px solid #3a3a42;border-radius:8px;background:#0b0b0c;font-size:12.5px;line-height:1.6;color:var(--muted)}
+body.launch-page.relay-terminal .launch-agent-disclosure strong{display:block;margin-bottom:8px;font-size:13.5px;color:var(--text)}
+body.launch-page.relay-terminal .launch-agent-disclosure ul{display:grid;gap:6px;margin:0;padding-left:18px}
+
+/* Transfer hook rules (v71.28, Meteora only): the catalogue's seven groups of rule cards (the agent choice-card look,
+   with checkbox semantics and a route badge), the chosen rules' settings in bordered panels (the agent setting rows,
+   hh:mm and time-zone selects, the blocklist textarea, address fields), weekday chips, the live "what the program will
+   enforce" list with its route line and the "not offered" details. */
+body.launch-page.relay-terminal .launch-hooks{display:grid;gap:0;min-width:0}
+body.launch-page.relay-terminal .launch-hooks-block{display:grid;gap:16px;min-width:0;margin:0;padding:0;border:0}
+body.launch-page.relay-terminal .launch-hooks-block>legend{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;width:100%;margin:0 0 2px;padding:0;font-size:16px;font-weight:650;line-height:1.4;color:var(--text)}
+body.launch-page.relay-terminal .launch-hooks-title{display:inline-flex;align-items:center;gap:10px}
+body.launch-page.relay-terminal .launch-hooks-title::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(140deg,#e4e4e7,#6d45d9);box-shadow:0 0 10px #a78bff66}
+body.launch-page.relay-terminal .launch-hooks-hint{font-size:13px;font-weight:400;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-hooks-block>.help,body.launch-page.relay-terminal .launch-hooks-body>.help{margin:0;font-size:13.5px;line-height:1.6}
+body.launch-page.relay-terminal .launch-hooks-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;min-width:0}
+body.launch-page.relay-terminal .launch-hooks-head .launch-hooks-count{flex:1 1 260px;margin:0;font-weight:500;color:var(--muted)}
+body.launch-page.relay-terminal .launch-hooks.has-rules .launch-hooks-head .launch-hooks-count{font-weight:600;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-hooks.is-collapsed:not(.has-rules) .launch-hooks-count::before{animation:none;background:#5e5e67;box-shadow:none}
+body.launch-page.relay-terminal .launch-hooks-toggle{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px 0 12px;border:1px solid #a78bff55;border-radius:var(--lp-control,12px);background:#a78bff12;color:#e4e4e7;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;cursor:pointer;transition:background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease,ease)}
+body.launch-page.relay-terminal .launch-hooks-toggle::before{content:"+";display:grid;place-items:center;width:20px;height:20px;border-radius:4px;background:#a78bff22;color:#e4e4e7;font-weight:700;line-height:1;transition:transform var(--motion-mid,260ms) var(--lp-spring,ease)}
+body.launch-page.relay-terminal .launch-hooks-toggle[aria-expanded="true"]::before{transform:rotate(45deg)}
+body.launch-page.relay-terminal .launch-hooks-toggle:hover{background:#a78bff24;border-color:#a78bff99}
+body.launch-page.relay-terminal .launch-hooks-toggle:focus-visible{outline:2px solid #e4e4e7;outline-offset:2px}
+body.launch-page.relay-terminal .launch-hooks-body{display:grid;gap:16px;min-width:0}
+body.launch-page.relay-terminal .launch-hooks-body[hidden]{display:none}
+body.launch-page.relay-terminal .launch-hooks-count{display:flex;align-items:center;gap:8px;margin:0;font-size:13px;font-weight:600;line-height:1.5;color:#9a9aa3;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-hooks-count::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:#a78bff;box-shadow:0 0 0 0 #a78bff66;animation:lp-live 2.4s ease-in-out infinite}
+body.launch-page.relay-terminal .launch-hooks-conflict{margin:0;padding:12px 14px;border:1px solid #ff4d6d55;border-radius:6px;background:#ff4d6d12;font-size:13px;line-height:1.55;color:#ff8fa3}
+body.launch-page.relay-terminal .launch-hooks-groups{display:grid;gap:22px}
+body.launch-page.relay-terminal .launch-hook-group .launch-agent-group-head h4{color:#e4e4e7}
+body.launch-page.relay-terminal label.launch-hook-rule{padding-right:40px}
+body.launch-page.relay-terminal .launch-hook-rule.is-blocked{opacity:.45;cursor:not-allowed}
+body.launch-page.relay-terminal .launch-hook-rule.is-blocked:hover{transform:none;border-color:var(--line);background:var(--panel)}
+body.launch-page.relay-terminal .launch-hook-rule-block{display:block;margin-top:6px;font-size:12px;font-weight:600;line-height:1.4;color:#a78bff}
+body.launch-page.relay-terminal .launch-hook-rule-block[hidden]{display:none}
+body.launch-page.relay-terminal .launch-hook-rule .launch-agent-chips .cv-pill{color:#9a9aa3;border-color:#a78bff3d}
+/* Route badge: "Trades anywhere" stays quiet; "Launchpad route only" takes the hook orchid so it reads at a glance. */
+body.launch-page.relay-terminal .launch-hooks-routes{margin:-6px 0 0}
+body.launch-page.relay-terminal .cv-pill.launch-hook-route{height:22px;padding:0 8px;font-size:11.5px;color:#9a9aa3;border-color:#2ee59d4d;background:#2ee59d12}
+body.launch-page.relay-terminal .cv-pill.launch-hook-route.is-curve{color:#e4e4e7;border-color:#a78bff66;background:#a78bff1f}
+body.launch-page.relay-terminal .cv-pill.launch-hook-route.is-app{color:#c9b8ff;border-color:#ffb02066;background:#ffb0201a}
+body.launch-page.relay-terminal .launch-hook-rule.is-unavailable .launch-hook-rule-block{color:#c9b8ff}
+body.launch-page.relay-terminal .cv-pill.launch-hook-route::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.8}
+body.launch-page.relay-terminal .launch-hooks-settings{display:grid;gap:14px}
+body.launch-page.relay-terminal .launch-hook-setting-group{display:grid;gap:14px;min-width:0;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--panel);animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-hook-setting-head{display:grid;gap:4px}
+body.launch-page.relay-terminal .launch-hook-setting-title{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+body.launch-page.relay-terminal .launch-hook-setting-head strong{font-size:15px;font-weight:650;line-height:1.3;color:var(--text)}
+/* hh:mm and time-zone selects (Trading hours): the control height of the number fields, the mono tabular look of a clock. */
+body.launch-page.relay-terminal .launch-hook-time{width:auto;min-width:132px;max-width:100%;height:var(--input-h,44px);min-height:0;margin:0;padding:0 36px 0 12px;border:1px solid var(--line);border-radius:var(--lp-control);background-color:var(--inset);color:var(--text);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-hook-zone{min-width:min(100%,320px);font-weight:500}
+body.launch-page.relay-terminal .launch-hook-time:focus-visible{outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal .launch-hook-time[aria-invalid=true]{border-color:#7c4dff;box-shadow:0 0 0 3px #7c4dff1f}
+/* Address fields (gate token, tithe recipient) and the blocklist textarea with its live count. */
+body.launch-page.relay-terminal .launch-hook-address,body.launch-page.relay-terminal .launch-hook-blocklist{display:grid;gap:6px;margin:0}
+body.launch-page.relay-terminal :is(.launch-hook-address,.launch-hook-blocklist) :is(input,textarea){margin-top:0;font-family:var(--mono,ui-monospace,monospace);font-size:14px}
+body.launch-page.relay-terminal .launch-hook-blocklist textarea{min-height:112px;line-height:1.55;resize:vertical}
+body.launch-page.relay-terminal :is(.launch-hook-address,.launch-hook-blocklist) .help{margin:0;font-size:12.5px}
+body.launch-page.relay-terminal .launch-hook-blocklist-count{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;line-height:1.5;color:#9a9aa3;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-hook-blocklist-count::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:#a78bff}
+body.launch-page.relay-terminal .launch-hook-blocklist-count.is-invalid,body.launch-page.relay-terminal .launch-hook-blocklist-count.is-over{color:#a78bff}
+body.launch-page.relay-terminal .launch-hook-blocklist-count.is-invalid::before,body.launch-page.relay-terminal .launch-hook-blocklist-count.is-over::before{background:#a78bff}
+body.launch-page.relay-terminal .launch-hook-timezone{grid-column:1/-1}
+body.launch-page.relay-terminal .launch-hook-setting-rule{font-size:13px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-hook-setting-rows{padding:0;border:0;background:none;animation:none}
+body.launch-page.relay-terminal .launch-hook-setting[hidden]{display:none}
+/* Hook settings carry longer units ("% of supply", "% to graduation"): the number box sizes to its unit instead of a fixed width. */
+body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-field{grid-template-columns:minmax(0,1fr) auto}
+body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-number{min-width:180px;max-width:240px}
+body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-number input[type=number]{min-width:64px}
+body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-field.is-exact{grid-template-columns:minmax(0,1fr)}
+body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-field.is-exact .launch-agent-setting-number{max-width:320px}
+body.launch-page.relay-terminal .launch-hook-setting-note{margin:0;font-size:12.5px;line-height:1.5}
+body.launch-page.relay-terminal .launch-hook-gate{display:grid;gap:6px;margin:0}
+body.launch-page.relay-terminal .launch-hook-gate input{margin-top:0;font-family:var(--mono,ui-monospace,monospace);font-size:14px}
+body.launch-page.relay-terminal .launch-hook-gate .help{margin:0;font-size:12.5px}
+body.launch-page.relay-terminal .launch-hook-days{display:flex;flex-wrap:wrap;gap:8px}
+body.launch-page.relay-terminal .launch-hook-days>button{display:inline-flex;align-items:center;justify-content:center;min-width:48px;height:36px;min-height:0;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:transparent;color:#9a9aa3;font-size:13.5px;font-weight:500;cursor:pointer;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-hook-days>button:hover{background:var(--hover);color:var(--text);transform:translateY(-1px)}
+body.launch-page.relay-terminal .launch-hook-days>button[aria-pressed=true]{background:var(--sel-bg);border-color:var(--sel-line);color:var(--sel-text)}
+body.launch-page.relay-terminal .launch-hooks-error{margin:-6px 0 0;font-size:13px;line-height:1.5;color:#a78bff}
+body.launch-page.relay-terminal .launch-hooks-enforce{display:grid;gap:8px;margin:0;padding:14px 16px;border:1px solid #a78bff33;border-left:3px solid #a78bff;border-radius:4px 8px 8px 4px;background:#a78bff0d;font-size:13.5px;line-height:1.55;color:#e4e4e7}
+body.launch-page.relay-terminal .launch-hooks-enforce-label{font-size:11.5px;font-weight:650;letter-spacing:.07em;text-transform:uppercase;color:#e4e4e7}
+body.launch-page.relay-terminal .launch-hooks-enforce ul{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+body.launch-page.relay-terminal .launch-hooks-enforce-row{display:grid;gap:2px}
+body.launch-page.relay-terminal .launch-hooks-enforce-row strong{font-size:13.5px;font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .launch-hooks-enforce-row span{font-size:13.5px;color:#c9c9cf}
+body.launch-page.relay-terminal .launch-hooks-enforce-row.is-invalid span{color:#a78bff}
+/* The route line heads the enforce list: where the coin trades before graduation. */
+body.launch-page.relay-terminal .launch-hooks-enforce-route{padding-bottom:8px;margin-bottom:2px;border-bottom:1px solid #a78bff26}
+body.launch-page.relay-terminal .launch-hooks-enforce-route strong{display:inline-flex;align-items:center;gap:8px;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-hooks-enforce-route[data-route=curve] strong{color:#e4e4e7}
+body.launch-page.relay-terminal .launch-hooks-enforce-route strong::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
+body.launch-page.relay-terminal .launch-hooks-enforce-note{margin:4px 0 0;font-size:12.5px;line-height:1.5}
+body.launch-page.relay-terminal .launch-hooks-not-offered{margin:0}
+body.launch-page.relay-terminal .launch-hooks-not-offered summary{display:inline-flex;align-items:center;gap:10px;min-height:40px;padding:0 14px 0 8px;margin-left:-8px;border-radius:6px;color:#9a9aa3;font-size:14px;font-weight:500;list-style:none;cursor:pointer;transition:background-color var(--motion-fast,150ms) ease,color var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-hooks-not-offered summary::-webkit-details-marker{display:none}
+body.launch-page.relay-terminal .launch-hooks-not-offered summary::before{content:"+";display:grid;place-items:center;width:22px;height:22px;border-radius:4px;background:var(--panel2);color:var(--lp-peach);font-weight:700;transition:transform var(--motion-mid,260ms) var(--lp-spring)}
+body.launch-page.relay-terminal .launch-hooks-not-offered[open] summary::before{transform:rotate(45deg)}
+body.launch-page.relay-terminal .launch-hooks-not-offered summary:hover{background:var(--hover);color:var(--text)}
+body.launch-page.relay-terminal .launch-hooks-not-offered dl{display:grid;gap:10px;margin:10px 0 0;animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-hooks-not-offered-row{display:grid;gap:3px;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+body.launch-page.relay-terminal .launch-hooks-not-offered dt{font-size:13.5px;font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .launch-hooks-not-offered dd{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+
+/* Gotchi pairing: three permanent choices with live characters at a generous size (loaded only when Gotchi is chosen). */
+body.launch-page.relay-terminal .launch-gotchi-picker{display:grid;gap:14px;margin-top:16px}
+body.launch-page.relay-terminal .launch-gotchi-picker>.help{margin:0;font-size:13.5px;line-height:1.6}
+body.launch-page.relay-terminal .launch-gotchi-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+body.launch-page.relay-terminal label.launch-gotchi-option{position:relative;display:grid;grid-template-rows:auto 1fr;gap:12px;margin:0;padding:14px;border:1px solid var(--line);border-radius:10px;background:radial-gradient(120% 90% at 50% 0%,var(--gotchi-sky,#2b1f52) 0%,var(--panel) 72%);cursor:pointer;overflow:hidden;transition:transform var(--motion-mid,260ms) var(--lp-ease),border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-gotchi-option input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+body.launch-page.relay-terminal label.launch-gotchi-option:hover{transform:translateY(-3px);border-color:var(--gotchi-b,#a78bff)}
+body.launch-page.relay-terminal :is(label.launch-gotchi-option.is-selected,label.launch-gotchi-option:has(:checked)){border-color:var(--gotchi-b,#a78bff);box-shadow:0 0 0 1px var(--gotchi-b,#a78bff),0 14px 36px -16px var(--gotchi-b,#a78bff)}
+body.launch-page.relay-terminal :is(label.launch-gotchi-option.is-selected,label.launch-gotchi-option:has(:checked))::after{content:"✓";position:absolute;right:12px;top:12px;display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--gotchi-b,#a78bff);color:#0b0b0c;font:700 12px/1 var(--sans);animation:lp-pop .5s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-gotchi-option:has(:focus-visible){outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal .launch-gotchi-stage{display:grid;place-items:center;height:176px;overflow:hidden;border-radius:6px}
+body.launch-page.relay-terminal .launch-gotchi-stage .gotchi-character[data-size=mini]{--gotchi-figure-height:160px}
+body.launch-page.relay-terminal .launch-gotchi-copy{display:grid;gap:3px;padding:0 4px 2px}
+body.launch-page.relay-terminal .launch-gotchi-copy strong{font-size:15px;font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .launch-gotchi-copy span{font-size:12.5px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal #launch-gotchi-note{font-size:13.5px}
+
+/* Side column: live preview. A slow sunrise ring frames the card; the curve draws itself in and keeps a travelling light. */
+body.launch-page.relay-terminal .launch-token-card{position:relative;isolation:isolate;display:grid;grid-template-columns:72px minmax(0,1fr);column-gap:16px;margin:0;padding:24px;overflow:hidden;border:1px solid transparent;border-radius:var(--lp-radius);background:radial-gradient(130% 70% at 0 0,#3a3a4233,transparent 60%),var(--panel)!important;box-shadow:var(--lp-shadow);transition:box-shadow .5s ease}
+body.launch-page.relay-terminal .launch-token-card::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;padding:1px;background:conic-gradient(from var(--sunrise-angle,0deg),#a78bff,#8b5cff,#7c4dff,#6d45d9,#4b2fa0,#6d45d9,#7c4dff,#8b5cff,#a78bff);opacity:.5;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:lp-sunrise-spin 16s linear infinite}
+body.launch-page.relay-terminal .launch-token-card:hover{transform:none;box-shadow:var(--lp-shadow)}
+body.launch-page.relay-terminal .launch-token-card.is-updating::before{opacity:.95;transition:opacity .08s}
+body.launch-page.relay-terminal .launch-preview-top{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 18px}
+body.launch-page.relay-terminal .launch-preview-top .eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0;font:600 13px/1.3 var(--sans);letter-spacing:0;text-transform:none;color:#c9b8ff}
+body.launch-page.relay-terminal .launch-preview-top .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lp-live);box-shadow:0 0 0 0 #2ee59d66;animation:lp-live 2.4s ease-in-out infinite}
+body.launch-page.relay-terminal .mainnet-badge{display:inline-flex;align-items:center;height:24px;padding:0 9px;border:1px solid var(--line);border-radius:999px;background:#ffffff0a;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:0;white-space:nowrap}
+body.launch-page.relay-terminal .launch-preview-image{grid-column:1;grid-row:2/span 2;display:grid;place-items:center;width:72px;height:72px;margin:0;overflow:hidden;border-radius:12px;background:linear-gradient(140deg,#3a3a42,#18181b);color:#ddd3ff;font-size:30px;font-weight:700;box-shadow:0 0 0 1px #ffffff17,0 12px 28px -14px #000c}
+body.launch-page.relay-terminal .launch-preview-image img{width:100%;height:100%;border-radius:12px;object-fit:cover}
+body.launch-page.relay-terminal .launch-preview-image.is-popped{animation:lp-pop .6s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-token-card h2{grid-column:2;grid-row:2;align-self:end;margin:0;overflow:hidden;font-size:21px;font-weight:700;line-height:1.2;letter-spacing:-.015em;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-card-symbol{grid-column:2;grid-row:3;align-self:start;justify-self:start;max-width:100%;margin:6px 0 0;padding:3px 9px;overflow:hidden;border:1px solid #8b5cff33;border-radius:4px;background:#8b5cff1a;color:#a78bff;font:600 12.5px/1.5 var(--mono,monospace);letter-spacing:.04em;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-preview-curve{grid-column:1/-1;display:block;width:100%;height:auto;margin:18px 0 6px;overflow:visible}
+body.launch-page.relay-terminal .launch-preview-curve-base{fill:none;stroke:#ffffff14;stroke-width:1}
+body.launch-page.relay-terminal .launch-preview-curve-line{fill:none;stroke:url(#launch-curve-stroke);stroke-width:2.5;stroke-linecap:round;stroke-dasharray:260;stroke-dashoffset:0;animation:lp-draw 1.6s var(--lp-ease) .2s backwards}
+body.launch-page.relay-terminal .launch-preview-curve-light{fill:none;stroke:#f4f4f5;stroke-width:3;stroke-linecap:round;stroke-dasharray:18 242;stroke-dashoffset:18;opacity:0;animation:lp-travel 5.2s ease-in-out 2s infinite}
+body.launch-page.relay-terminal .launch-preview-curve-dot{fill:var(--lp-gold);transform-box:fill-box;transform-origin:center;animation:lp-dot 2.6s ease-in-out 1.6s infinite}
+body.launch-page.relay-terminal .launch-preview-curve text{fill:#7a7a85;font:500 9px var(--sans);letter-spacing:.3px}
+body.launch-page.relay-terminal .launch-preview-facts{grid-column:1/-1;margin:10px 0 0;color:var(--muted)}
+body.launch-page.relay-terminal .launch-preview-facts>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid #ffffff10;font-size:14px;line-height:1.4}
+body.launch-page.relay-terminal .launch-preview-facts dt{color:var(--muted)}
+body.launch-page.relay-terminal .launch-preview-facts dd{min-width:0;margin:0;overflow-wrap:anywhere;text-align:right;color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal #launch-curve-summary{grid-column:1/-1;margin:10px 0 0;font-size:13px;line-height:1.55;color:#9a9aa3}
+
+/* Side column: launch panel (step rail, readiness, wallet, Create coin, reassurance). */
+body.launch-page.relay-terminal .launch-form-footer{position:static;display:grid;grid-template-columns:minmax(0,1fr);gap:16px;margin:0;padding:24px;border:1px solid var(--lp-line);border-radius:var(--lp-radius);background:var(--panel);box-shadow:var(--lp-shadow);transition:border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-form-footer:hover{transform:none;box-shadow:var(--lp-shadow);border-color:var(--lp-line)}
+body.launch-page.relay-terminal .launch-form-footer[data-ready=true]{border-color:#8b5cff73;box-shadow:var(--lp-shadow),0 0 0 4px #8b5cff14}
+body.launch-page.relay-terminal .launch-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:0 0 2px;padding:0;list-style:none;counter-reset:lp-step}
+body.launch-page.relay-terminal .launch-steps li{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;font-size:12.5px;font-weight:600;line-height:1.3;color:var(--muted);text-align:center;counter-increment:lp-step;transition:color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-step-mark{position:relative;z-index:1;display:grid;place-items:center;flex:none;width:30px;height:30px;border:1px solid var(--line-strong);border-radius:50%;background:var(--panel2);color:#9a9aa3;font:700 12px/1 var(--sans);transition:background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-step-mark::before{content:counter(lp-step)}
+body.launch-page.relay-terminal .launch-step-label{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-step-line{position:absolute;top:14px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;overflow:hidden;border-radius:2px;background:#1f1f23}
+body.launch-page.relay-terminal .launch-step-line i{position:absolute;inset:0;background:linear-gradient(90deg,var(--lp-gold),var(--lp-peach));transform:scaleX(0);transform-origin:0 50%;transition:transform .7s var(--lp-ease)}
+body.launch-page.relay-terminal .launch-steps li[aria-current=step]{color:var(--text)}
+body.launch-page.relay-terminal .launch-steps li[aria-current=step] .launch-step-mark{border-color:var(--lp-peach);background:#18181b;color:var(--lp-gold);box-shadow:0 0 0 4px #8b5cff1f;animation:lp-current 2.4s ease-in-out infinite}
+body.launch-page.relay-terminal .launch-steps li.is-done{color:#c9b8ff}
+body.launch-page.relay-terminal .launch-steps li.is-done .launch-step-mark{border-color:transparent;background:var(--lp-done);color:#121214;animation:lp-pop .5s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-steps li.is-done .launch-step-mark::before{content:"✓"}
+body.launch-page.relay-terminal .launch-steps li.is-done .launch-step-line i{transform:scaleX(1)}
+body.launch-page.relay-terminal .launch-ready{display:block;min-width:0;text-align:center}
+body.launch-page.relay-terminal .launch-ready-text{display:block;font-size:14px;font-weight:500;line-height:1.45;color:#c9c9cf}
+body.launch-page.relay-terminal .launch-form-footer[data-ready=true] .launch-ready-text{color:var(--lp-gold);font-weight:600}
+body.launch-page.relay-terminal .launch-wallet-line{display:flex;flex-wrap:wrap;align-items:center;gap:8px 8px;margin:0;padding-top:16px;border-top:1px solid var(--line)}
+body.launch-page.relay-terminal .launch-wallet-line>button{flex:1 1 0;min-width:0;max-width:100%;min-height:var(--control-h,40px);padding:0 12px;overflow:hidden;font-size:14px;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-wallet-line>#launch-disconnect{flex:0 0 auto;padding:0 10px;border-color:transparent;background:transparent;color:var(--muted);font-size:13px}
+body.launch-page.relay-terminal .launch-wallet-line>#launch-disconnect:hover:not(:disabled){background:var(--hover);color:var(--text)}
+body.launch-page.relay-terminal .launch-wallet-line .help{flex-basis:100%;margin:0;font-size:13px;line-height:1.45;color:#7a7a85}
+body.launch-page.relay-terminal .launch-form-footer #launch-open{position:relative;width:100%;min-height:var(--control-h-lg,48px);margin:0;overflow:hidden;font-size:16px;font-weight:650;letter-spacing:-.005em;box-shadow:0 10px 26px -12px #8b5cff99;transition:transform var(--motion-fast,150ms) var(--lp-ease),box-shadow var(--motion-mid,260ms) ease,background-color var(--motion-fast,150ms) ease}
+/* The motion layer sweeps a shine on hover; once every step is done the CTA also sparkles on its own every few seconds. */
+body.launch-page.relay-terminal .launch-form-footer #launch-open::after{content:"";position:absolute;top:-40%;bottom:-40%;left:-30%;width:28%;background:linear-gradient(100deg,#ffffff00,#ffffff9e 50%,#ffffff00);transform:translateX(-120%) skewX(-18deg);opacity:0;pointer-events:none}
+body.launch-page.relay-terminal .launch-form-footer #launch-open:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 16px 34px -12px #8b5cffcc}
+body.launch-page.relay-terminal .launch-form-footer[data-ready=true] #launch-open:not(:disabled)::after{animation:lp-shine 2.6s var(--lp-ease) .6s infinite}
+body.launch-page.relay-terminal .launch-form-footer #launch-open:disabled{box-shadow:none}
+body.launch-page.relay-terminal .launch-form-footer #launch-damm-pump-resume{width:100%;margin:0}
+body.launch-page.relay-terminal .launch-panel-reassure{display:flex;align-items:center;gap:9px;margin:-2px 0 0;font-size:12.5px;line-height:1.45;color:#7a7a85}
+body.launch-page.relay-terminal .launch-panel-reassure svg{flex:none;width:16px;height:16px;fill:none;stroke:var(--lp-live);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+body.launch-page.relay-terminal .launch-footer-notes{display:grid;gap:8px;padding:0 8px}
+
+/* Your coins: roomy rows with status pills under the form; the archive link sits in the heading row. */
+body.launch-page.relay-terminal .launch-history{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;margin:0;padding:var(--lp-pad);border:1px solid var(--lp-line);border-radius:var(--lp-radius);background:var(--panel);box-shadow:var(--lp-shadow)}
+body.launch-page.relay-terminal .launch-history:hover{transform:none;box-shadow:var(--lp-shadow);border-color:var(--lp-line)}
+body.launch-page.relay-terminal .launch-history .card-heading{grid-column:1;margin:0}
+body.launch-page.relay-terminal .launch-history h2{margin:0;font-size:20px;font-weight:650;letter-spacing:-.015em}
+body.launch-page.relay-terminal #launch-list{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+body.launch-page.relay-terminal #launch-list>p{grid-column:1/-1;margin:0;padding:18px 20px;border:1px dashed var(--line-strong);border-radius:8px;font-size:14px;line-height:1.5;color:var(--muted);text-align:center}
+/* The empty state hosts a peeking Gotchi (motion layer, window.curveMotion.peek): a taller box with room on the right. */
+body.launch-page.relay-terminal #launch-list.has-peek{position:relative;overflow:hidden;min-height:112px;border-radius:8px}
+body.launch-page.relay-terminal #launch-list.has-peek>p{min-height:112px;padding:18px 140px 18px 24px;text-align:left;display:flex;align-items:center}
+body.launch-page.relay-terminal .launch-history-row{display:flex;align-items:center;gap:12px;width:100%;min-width:0;min-height:60px;margin:0;padding:8px 12px 8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--inset);color:var(--text);font-size:13px;text-align:left;text-decoration:none;cursor:pointer;transition:background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-mid,260ms) var(--lp-ease),box-shadow var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-history-row:hover{border-color:var(--line-strong);background:var(--hover);transform:translateY(-2px);box-shadow:0 14px 30px -18px #000c}
+body.launch-page.relay-terminal .launch-history-avatar{position:relative;display:grid;place-items:center;flex:none;width:40px;height:40px;overflow:hidden;border-radius:6px;background:linear-gradient(140deg,#3a3a42,#18181b);color:#ddd3ff;font-size:15px;font-weight:700;box-shadow:0 0 0 1px #ffffff12}
+body.launch-page.relay-terminal .launch-history-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s var(--lp-ease)}
+body.launch-page.relay-terminal .launch-history-row:hover .launch-history-avatar img{transform:scale(1.08)}
+body.launch-page.relay-terminal .launch-history-row strong{flex:1;min-width:0;overflow:hidden;font-size:15px;font-weight:650;letter-spacing:.01em;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-history-state{display:inline-flex;align-items:center;gap:6px;flex:none;max-width:64%;height:26px;padding:0 10px;overflow:hidden;border:1px solid var(--line);border-radius:999px;background:#ffffff0a;color:#9a9aa3;font-size:12px;font-weight:600;line-height:1;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .launch-history-state::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.85}
+body.launch-page.relay-terminal .launch-history-state.is-live{color:#2ee59d;border-color:#2ee59d4d;background:#2ee59d14}
+body.launch-page.relay-terminal .launch-history-state.is-live::before{animation:lp-live 2.4s ease-in-out infinite;box-shadow:0 0 0 0 #2ee59d66}
+body.launch-page.relay-terminal .launch-history-state.is-error{color:#ff4d6d;border-color:#ff4d6d55;background:#ff4d6d14}
+body.launch-page.relay-terminal .launch-history-state.is-archived{color:#7a7a85}
+body.launch-page.relay-terminal .launch-archived-link{grid-column:2;grid-row:1;display:inline-flex;align-items:center;min-height:36px;margin:0;padding:0 6px;border:0;border-radius:5px;color:var(--muted);font-size:13.5px;font-weight:500;text-decoration:none;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-archived-link::after{content:"→";margin-left:7px;transition:transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-archived-link:hover{color:var(--accent);background:var(--hover)}
+body.launch-page.relay-terminal .launch-archived-link:hover::after{transform:translateX(3px)}
+
+/* Dialogs: the shared glass surface (theme), roomy, sized for the launch flows, with a soft entrance. */
+body.launch-page.relay-terminal .launch-asset-dialog{width:min(620px,calc(100vw - 32px));max-height:min(88dvh,900px);padding:28px;overflow-y:auto;overscroll-behavior:contain;border-radius:12px;background:var(--glass-bg,#0b0b0ccc);border:1px solid #ffffff16;box-shadow:var(--shadow-elevated,0 24px 60px -10px #000000d9)}
+body.launch-page.relay-terminal .launch-asset-dialog[open]{animation:lp-dialog-in .36s var(--lp-ease)}
+body.launch-page.relay-terminal .launch-buy-dialog{width:min(520px,calc(100vw - 32px))}
+body.launch-page.relay-terminal .launch-wallet-dialog{width:min(440px,calc(100vw - 32px))}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:0 0 20px}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading>div{display:block;min-width:0}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading h2{margin:0;font-size:22px;font-weight:650;line-height:1.25;letter-spacing:-.015em}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading .help{margin:6px 0 0}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading>.small-button{flex:none;align-self:flex-start;display:grid;place-items:center;width:40px;min-width:40px;height:40px;min-height:40px;padding:0;border-color:transparent;background:#ffffff0a;color:var(--muted);font-size:15px;border-radius:50%;transition:background-color var(--motion-fast,150ms) ease,color var(--motion-fast,150ms) ease,transform var(--motion-mid,260ms) var(--lp-spring)}
+body.launch-page.relay-terminal .launch-asset-dialog>.card-heading>.small-button:hover:not(:disabled){background:var(--hover);border-color:transparent;color:var(--text);transform:rotate(90deg)}
+body.launch-page.relay-terminal .launch-asset-dialog label{display:block;margin:0;font-size:13px;font-weight:500;line-height:1.5;color:var(--lp-label)}
+body.launch-page.relay-terminal .launch-asset-dialog .help{margin:8px 0 0}
+body.launch-page.relay-terminal .launch-asset-dialog .launch-fine{margin:20px 0 0}
+body.launch-page.relay-terminal .launch-buy-dialog .launch-form-fields{display:block}
+body.launch-page.relay-terminal .launch-buy-dialog>.primary,body.launch-page.relay-terminal .launch-buy-dialog #launch-review-button{width:100%;min-height:var(--control-h-lg,48px);margin-top:20px;font-size:16px;font-weight:650}
+body.launch-page.relay-terminal .launch-buy-dialog #launch-dev-summary{margin:10px 0 0}
+body.launch-page.relay-terminal #launch-dev-summary[data-error=true]{color:#a78bff}
+body.launch-page.relay-terminal .launch-buy-dialog #launch-ready-note{display:flex;align-items:center;gap:9px;margin:14px 0 0}
+body.launch-page.relay-terminal .launch-buy-dialog #launch-ready-note::before{content:"";flex:none;width:12px;height:12px;border:2px solid #8b5cff44;border-top-color:var(--lp-gold);border-radius:50%;animation:lp-spin .9s linear infinite}
+body.launch-page.relay-terminal .launch-buy-dialog #launch-modal-error{margin:14px 0 0;font-size:13px;line-height:1.55;overflow-wrap:anywhere}
+
+/* Amount fields: a 52px field with its unit; the focus ring sits on the whole field. */
+body.launch-page.relay-terminal .launch-sol-input{display:flex;align-items:center;gap:8px;height:52px;margin-top:var(--label-gap,6px);padding:0 10px 0 0;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset);transition:border-color var(--motion-fast,150ms) ease,box-shadow var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-sol-input:focus-within{border-color:#7c4dff;box-shadow:0 0 0 3px #6d45d933}
+body.launch-page.relay-terminal .launch-sol-input:has(input:focus-visible){outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal .launch-sol-input input{flex:1;width:100%;min-width:0;height:100%;min-height:0;margin:0!important;padding:0 14px;border:0!important;border-radius:var(--lp-control);background:transparent;box-shadow:none!important;font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-sol-input input:focus-visible{outline:none}
+body.launch-page.relay-terminal .launch-sol-input>span{flex:none;padding:5px 10px;border-radius:5px;background:var(--panel2);color:#a78bff;font-size:13px;font-weight:600}
+body.launch-page.relay-terminal .launch-agent-funding{height:var(--input-h,44px);margin-top:var(--label-gap,6px)}
+body.launch-page.relay-terminal .launch-agent-funding input{font-size:15px}
+
+/* Launch flow track (venue dialogs and the Raydium dialog): numbered dots that pulse while approving, spin while confirming and pop when done. */
+body.launch-page.relay-terminal .launch-flow-track{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0 0 20px;padding:0;list-style:none;counter-reset:lp-flow}
+body.launch-page.relay-terminal .pump-classic-track{grid-template-columns:repeat(4,minmax(0,1fr))}
+body.launch-page.relay-terminal .launch-flow-track.is-hooked{grid-template-columns:repeat(4,minmax(0,1fr))}
+body.launch-page.relay-terminal .launch-flow-track>li[hidden]{display:none}
+body.launch-page.relay-terminal .launch-flow-track li{position:relative;display:grid;justify-items:center;gap:8px;font-size:12.5px;font-weight:600;color:#7a7a85;text-align:center;counter-increment:lp-flow;transition:color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-flow-track li:not(:last-child)::after{content:"";position:absolute;top:14px;left:calc(50% + 19px);right:calc(-50% + 19px);height:2px;border-radius:2px;background:#1f1f23;transition:background-color .5s ease}
+body.launch-page.relay-terminal .launch-flow-track li.is-done:not(:last-child)::after{background:linear-gradient(90deg,var(--lp-gold),var(--lp-peach))}
+body.launch-page.relay-terminal .launch-flow-dot{position:relative;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line-strong);border-radius:50%;background:var(--panel2);color:#9a9aa3;font:700 12px/1 var(--sans);transition:background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-flow-dot::after{content:counter(lp-flow)}
+body.launch-page.relay-terminal .launch-flow-dot::before{content:"";position:absolute;inset:-5px;border:2px solid transparent;border-radius:50%;opacity:0}
+body.launch-page.relay-terminal .launch-flow-track li[aria-current=step]{color:var(--text)}
+body.launch-page.relay-terminal .launch-flow-track li[aria-current=step] .launch-flow-dot{border-color:var(--lp-peach);background:#18181b;color:var(--lp-gold);box-shadow:0 0 0 4px #8b5cff1f}
+body.launch-page.relay-terminal .launch-flow-track[data-state=approve] li[aria-current=step] .launch-flow-dot::before{border-color:var(--lp-peach);opacity:1;animation:lp-ring 1.8s var(--lp-ease) infinite}
+body.launch-page.relay-terminal .launch-flow-track[data-state=confirming] li[aria-current=step] .launch-flow-dot::before{border-top-color:var(--lp-gold);border-right-color:#8b5cff66;opacity:1;animation:lp-spin .9s linear infinite}
+body.launch-page.relay-terminal .launch-flow-track[data-state=error] li[aria-current=step] .launch-flow-dot{border-color:#7c4dff;color:#ff4d6d;box-shadow:0 0 0 4px #7c4dff1f}
+body.launch-page.relay-terminal .launch-flow-track li.is-done{color:#c9b8ff}
+body.launch-page.relay-terminal .launch-flow-track li.is-done .launch-flow-dot{border-color:transparent;background:var(--lp-done);color:#121214;animation:lp-pop .5s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-flow-track li.is-done .launch-flow-dot::after{content:"✓"}
+body.launch-page.relay-terminal .launch-flow-track[data-state=live] li[data-flow-step=live] .launch-flow-dot{box-shadow:0 0 0 5px #a78bff26;animation:lp-pop .5s var(--lp-spring),lp-current 2.4s ease-in-out .5s infinite}
+/* The Raydium dialog's track is driven by the progress section's state alone (review is done once a launch exists). */
+body.launch-page.relay-terminal .launch-raydium-track{margin-bottom:18px}
+body.launch-page.relay-terminal .launch-raydium-track li[data-flow-step=review]{color:#c9b8ff}
+body.launch-page.relay-terminal .launch-raydium-track li[data-flow-step=review] .launch-flow-dot{border-color:transparent;background:var(--lp-done);color:#121214}
+body.launch-page.relay-terminal .launch-raydium-track li[data-flow-step=review] .launch-flow-dot::after{content:"✓"}
+body.launch-page.relay-terminal .launch-raydium-track li[data-flow-step=review]::after{background:linear-gradient(90deg,var(--lp-gold),var(--lp-peach))}
+body.launch-page.relay-terminal .launch-progress:not([data-state=complete]) .launch-raydium-track li[data-flow-step=approve]{color:var(--text)}
+body.launch-page.relay-terminal .launch-progress:not([data-state=complete]) .launch-raydium-track li[data-flow-step=approve] .launch-flow-dot{border-color:var(--lp-peach);background:#18181b;color:var(--lp-gold);box-shadow:0 0 0 4px #8b5cff1f}
+body.launch-page.relay-terminal .launch-progress[data-state=active] .launch-raydium-track li[data-flow-step=approve] .launch-flow-dot::before{border-top-color:var(--lp-gold);border-right-color:#8b5cff66;opacity:1;animation:lp-spin .9s linear infinite}
+body.launch-page.relay-terminal .launch-progress[data-state=waiting] .launch-raydium-track li[data-flow-step=approve] .launch-flow-dot::before{border-color:var(--lp-peach);opacity:1;animation:lp-ring 1.8s var(--lp-ease) infinite}
+body.launch-page.relay-terminal .launch-progress[data-state=error] .launch-raydium-track li[data-flow-step=approve] .launch-flow-dot{border-color:#7c4dff;color:#ff4d6d;box-shadow:0 0 0 4px #7c4dff1f}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-raydium-track li{color:#c9b8ff}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-raydium-track li .launch-flow-dot{border-color:transparent;background:var(--lp-done);color:#121214;animation:lp-pop .5s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-raydium-track li .launch-flow-dot::after{content:"✓"}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-raydium-track li::after{background:linear-gradient(90deg,var(--lp-gold),var(--lp-peach))}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-raydium-track li[data-flow-step=live] .launch-flow-dot{box-shadow:0 0 0 5px #a78bff26}
+
+/* Reviewed amounts in the launch dialogs: one facts list look for every venue. Empty lists take no space. */
+body.launch-page.relay-terminal :is(.launch-budget-facts,.meteora-operation-facts,.pump-operation-facts,.pump-classic-facts){display:grid;gap:10px;margin:20px 0 0;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:#ffffff06;font-size:14px;line-height:1.45}
+body.launch-page.relay-terminal :is(.launch-budget-facts,.meteora-operation-facts,.pump-operation-facts,.pump-classic-facts)>div{display:flex;justify-content:space-between;gap:16px}
+body.launch-page.relay-terminal :is(.launch-budget-facts,.meteora-operation-facts,.pump-operation-facts,.pump-classic-facts) dt{color:var(--muted)}
+body.launch-page.relay-terminal :is(.launch-budget-facts,.meteora-operation-facts,.pump-operation-facts,.pump-classic-facts) dd{margin:0;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal :is(.launch-budget-facts>.launch-budget-total,.meteora-operation-facts>div:last-child,.pump-operation-facts>div:last-child,.pump-classic-facts>.is-total){margin-top:4px;padding-top:12px;border-top:1px solid var(--line);font-size:15px;font-weight:600}
+body.launch-page.relay-terminal :is(.launch-budget-facts>.launch-budget-total,.meteora-operation-facts>div:last-child,.pump-operation-facts>div:last-child,.pump-classic-facts>.is-total) dd{color:var(--lp-gold);font-weight:700}
+body.launch-page.relay-terminal .launch-budget-total dt{color:var(--text)}
+body.launch-page.relay-terminal :is(.meteora-operation-facts,.pump-operation-facts,.pump-classic-facts):empty{display:none}
+body.launch-page.relay-terminal :is(.meteora-operation-status,.pump-operation-status,.pump-classic-status){margin:14px 0 0;font-size:13.5px;line-height:1.55;overflow-wrap:anywhere}
+body.launch-page.relay-terminal :is(.meteora-operation-status,.pump-operation-status,.pump-classic-status):empty{margin:0}
+body.launch-page.relay-terminal :is(.meteora-operation-actions,.pump-operation-actions,.pump-classic-actions){display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:20px}
+body.launch-page.relay-terminal :is(.meteora-operation-actions,.pump-operation-actions,.pump-classic-actions)>.primary{width:100%;min-height:var(--control-h-lg,48px);font-size:16px;font-weight:650}
+body.launch-page.relay-terminal :is(.meteora-operation-actions,.pump-operation-actions,.pump-classic-actions)>a{text-decoration:none}
+body.launch-page.relay-terminal :is(.meteora-operation-actions,.pump-operation-actions,.pump-classic-actions):not(:has(>:not([hidden]))){display:none}
+body.launch-page.relay-terminal .meteora-operation[hidden],body.launch-page.relay-terminal .pump-operation[hidden],body.launch-page.relay-terminal .pump-classic-operation[hidden]{display:none}
+
+/* Pump.fun launch dialog */
+body.launch-page.relay-terminal .launch-pump-classic-option{margin:0 0 16px;padding:12px 14px;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset);font-size:13.5px;line-height:1.55;color:var(--muted)}
+body.launch-page.relay-terminal .launch-pump-classic-option:empty{display:none}
+body.launch-page.relay-terminal .launch-pump-classic-inputs>div:not(.launch-sol-input){margin-top:16px}
+body.launch-page.relay-terminal .launch-pump-classic-inputs select{width:100%;min-height:var(--input-h,44px);margin-top:var(--label-gap,6px);font-size:15px}
+body.launch-page.relay-terminal #launch-pump-classic-note:empty{margin:0}
+body.launch-page.relay-terminal .pump-classic-disclosure{display:grid;gap:8px;margin:16px 0 0;padding:14px 16px 14px 32px;border:1px solid #3a3a42;border-radius:8px;background:#0b0b0c;font-size:12.5px;line-height:1.55;color:var(--muted)}
+body.launch-page.relay-terminal .pump-classic-disclosure a{color:var(--text);text-decoration:underline}
+body.launch-page.relay-terminal .pump-classic-links{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+body.launch-page.relay-terminal .pump-classic-links a{min-height:36px;padding:0 14px;font-size:13px;text-decoration:none}
+#launch-pump-classic-dialog [hidden],#launch-pump-classic-fee-wrap[hidden],#launch-pump-classic-seed-wrap[hidden]{display:none!important}
+
+/* Pair picker: a roomy glass dialog with a 48px search, chip filters and 64px rows. */
+body.launch-page.relay-terminal .launch-asset-count{min-height:1.5em;margin:0 0 12px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-asset-search-wrap{position:relative;display:flex;align-items:center;flex-shrink:0}
+body.launch-page.relay-terminal .launch-asset-search-wrap svg{position:absolute;left:16px;width:18px;height:18px;fill:none;stroke:var(--muted);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;pointer-events:none;transition:stroke var(--motion-fast,150ms) ease}
+body.launch-page.relay-terminal .launch-asset-search-wrap:focus-within svg{stroke:var(--lp-gold)}
+body.launch-page.relay-terminal #launch-asset-search{width:100%;min-height:48px;margin:0;padding:0 16px 0 44px;border-radius:var(--lp-control);font-size:15px}
+body.launch-page.relay-terminal #launch-asset-search::-webkit-search-cancel-button{-webkit-appearance:none;width:14px;height:14px;background:radial-gradient(circle,#9a9aa3 45%,transparent 48%);cursor:pointer}
+body.launch-page.relay-terminal .launch-asset-filters{margin:12px 0 0}
+body.launch-page.relay-terminal #launch-asset-dialog>.help:not(.launch-asset-count){margin:10px 0 0}
+body.launch-page.relay-terminal #launch-asset-dialog>.help:empty{display:none}
+/* Rows are sized max-content: a <button> row does not report its content height to an auto grid track in Chromium. */
+body.launch-page.relay-terminal #launch-asset-results{display:grid;grid-auto-rows:max-content;gap:4px;max-height:52dvh;margin:12px -10px 0;padding:0 10px;overflow-y:auto;overscroll-behavior:contain}
+body.launch-page.relay-terminal .launch-asset-option{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:10px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--text);text-align:left;transition:background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-asset-option:hover:not(:disabled){background:var(--hover);border-color:var(--line)}
+body.launch-page.relay-terminal .launch-asset-option:disabled{opacity:.6}
+body.launch-page.relay-terminal .launch-asset-option>span:nth-child(2){flex:1;min-width:0}
+body.launch-page.relay-terminal .launch-asset-option strong{display:block;font-size:15px}
+body.launch-page.relay-terminal .launch-asset-option small{display:block;margin-top:2px;font-size:12.5px;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-asset-option>small{flex:none;max-width:110px;margin:0;padding:4px 9px;border:1px solid var(--line);border-radius:999px;background:#ffffff08;font-size:11.5px;font-weight:600;line-height:1.3;text-align:center;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-asset-option .launch-asset-reason{margin-top:4px;font-size:12px;line-height:1.45;color:var(--muted)}
+body.launch-page.relay-terminal .launch-asset-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:148px;padding:24px 20px;border:1px dashed var(--line-strong);border-radius:10px;background:#ffffff05;text-align:center}
+body.launch-page.relay-terminal .launch-asset-empty strong{font-size:17px;font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .launch-asset-empty p{max-width:360px;margin:0;font-size:14px;line-height:1.6;color:var(--muted)}
+body.launch-page.relay-terminal #launch-asset-results>p{margin:0;padding:24px 16px;border:1px dashed var(--line-strong);border-radius:10px;font-size:14px;line-height:1.6;color:var(--muted);text-align:center}
+/* Text badges keep every pairing asset distinct without remote logo requests. */
+.launch-page .launch-ticker-badge{width:44px;height:44px;box-sizing:border-box;padding:6px;border:1px solid #ffffff13;box-shadow:inset 0 1px 0 #ffffff0b;line-height:1.15;overflow:hidden;background:var(--panel2);color:var(--text)}
+.launch-page .launch-ticker-letters{max-width:100%;text-align:center;font-family:var(--mono);font-size:var(--ticker-size,11px);font-weight:650;letter-spacing:-.4px;overflow-wrap:anywhere}
+.launch-page .launch-ticker-letters[data-size=medium]{--ticker-size:9px}.launch-page .launch-ticker-letters[data-size=long]{--ticker-size:8px}.launch-page .launch-ticker-letters[data-size=extended]{--ticker-size:7px}
+.launch-page .launch-ticker-compact{width:30px;height:30px;padding:3px}.launch-page .launch-ticker-compact .launch-ticker-letters{font-size:calc(var(--ticker-size,11px)*.8);letter-spacing:-.35px}
+
+/* Wallet picker */
+body.launch-page.relay-terminal #launch-wallet-options{display:grid;gap:10px;margin-top:16px}
+body.launch-page.relay-terminal .launch-wallet-option{display:flex;align-items:center;width:100%;min-height:52px;padding:0 16px;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset);color:var(--text);font-size:15px;font-weight:500;text-align:left;text-decoration:none;transition:border-color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-wallet-option:hover{border-color:var(--line-strong);background:var(--hover);transform:translateY(-1px)}
+body.launch-page.relay-terminal .launch-wallet-option::after{content:"→";margin-left:auto;color:var(--muted);transition:transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-wallet-option:hover::after{transform:translateX(3px);color:var(--text)}
+
+/* Raydium approval progress and reward management (inside the buy dialog) */
+body.launch-page.relay-terminal .launch-progress{margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+body.launch-page.relay-terminal .launch-progress-heading{display:flex;align-items:center;gap:14px}
+body.launch-page.relay-terminal .launch-progress-heading strong{font-size:15px}
+body.launch-page.relay-terminal .launch-progress-heading .help{margin:4px 0 0;overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-progress-dot{position:relative;flex:none;width:14px;height:14px;margin:0;border-radius:50%;background:#3a3a42}
+body.launch-page.relay-terminal .launch-progress-dot::after{content:"";position:absolute;inset:-5px;border:2px solid transparent;border-radius:50%}
+body.launch-page.relay-terminal .launch-progress[data-state=active] .launch-progress-dot{background:var(--lp-peach)}
+body.launch-page.relay-terminal .launch-progress[data-state=active] .launch-progress-dot::after{border-top-color:var(--lp-gold);border-right-color:#8b5cff55;animation:lp-spin .9s linear infinite}
+body.launch-page.relay-terminal .launch-progress[data-state=waiting] .launch-progress-dot{background:#ffb020;animation:lp-fade 1.8s ease-in-out infinite}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-progress-dot{width:24px;height:24px;background:var(--lp-done);animation:lp-pop .6s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] .launch-progress-dot::before{content:"✓";position:absolute;inset:0;display:grid;place-items:center;color:#121214;font:700 12px/1 var(--sans)}
+body.launch-page.relay-terminal .launch-progress[data-state=error] .launch-progress-dot{background:#7c4dff;box-shadow:0 0 0 4px #7c4dff26}
+body.launch-page.relay-terminal .launch-progress[data-state=complete] #launch-progress-title{color:var(--lp-gold)}
+body.launch-page.relay-terminal .launch-progress-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+body.launch-page.relay-terminal .launch-progress-actions a{text-decoration:none}
+body.launch-page.relay-terminal .launch-progress-actions .primary{min-height:var(--control-h,40px)}
+body.launch-page.relay-terminal .launch-progress-actions:has(>[hidden]):not(:has(>:not([hidden]))){display:none}
+body.launch-page.relay-terminal .launch-rewards-manage{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13.5px}
+body.launch-page.relay-terminal .launch-rewards-manage summary{color:var(--muted);cursor:pointer}
+body.launch-page.relay-terminal .launch-rewards-manage .launch-progress-actions{margin-bottom:16px}
+body.launch-page.relay-terminal .launch-rewards-manage label{display:block;margin-top:14px}
+body.launch-page.relay-terminal .launch-rewards-manage input{width:100%;margin:6px 0 0}
+body.launch-page.relay-terminal .launch-rewards-manage #launch-export{margin-top:14px}
+body.launch-page.relay-terminal .launch-rewards-manage details{margin-top:14px}
+body.launch-page.relay-terminal .launch-holder-settings{margin:14px 0 18px;padding:14px 16px;border:1px solid var(--line);border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-holder-settings .launch-holder-schedule{margin:0 0 10px;font-size:13px;line-height:1.6;color:var(--accent)}
+body.launch-page.relay-terminal .launch-holder-earned{display:flex;align-items:baseline;justify-content:space-between;gap:14px;font-size:13px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-holder-earned strong{font-size:14px;font-weight:600;color:var(--text);overflow-wrap:anywhere;text-align:right}
+body.launch-page.relay-terminal .launch-holder-settings .help{font-size:12px;line-height:1.55}
+
+/* Token-created toast */
+body.launch-page.relay-terminal .launch-toast{position:fixed;top:var(--lp-top);left:50%;z-index:1000;display:flex;align-items:center;gap:14px;max-width:calc(100vw - 32px);padding:12px 12px 12px 16px;border:1px solid #7c4dff;border-radius:10px;background:var(--glass-bg,#0b0b0ccc);color:var(--text);box-shadow:var(--shadow-elevated,0 18px 50px #000000cc);font-size:14px;transform:translateX(-50%)}
+body.launch-page.relay-terminal .launch-toast:not([hidden]){animation:lp-toast .6s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-toast-check{display:grid;place-items:center;flex:none;width:26px;height:26px;border-radius:50%;background:var(--lp-done);color:#121214;font-weight:700}
+body.launch-page.relay-terminal .launch-toast strong{font-weight:650;white-space:nowrap}
+body.launch-page.relay-terminal .launch-toast a{color:var(--text);font-size:13.5px;white-space:nowrap}
+body.launch-page.relay-terminal .launch-toast button{display:grid;place-items:center;width:34px;height:34px;min-height:0;padding:0;border:0;border-radius:5px;background:none;color:var(--muted);font-size:12px}
+body.launch-page.relay-terminal .launch-toast button:hover{background:var(--hover);color:var(--text)}
+
+/* Private PumpSwap model and owner funded test (capability-gated owner tools) */
+body.launch-page.relay-terminal :is(.launch-pump-test,.launch-pump-funded){margin-top:20px;padding-top:20px;border-top:1px solid var(--line)}
+body.launch-page.relay-terminal :is(.launch-pump-test,.launch-pump-funded) h3{margin:0 0 8px;font-size:15px;color:var(--text)}
+body.launch-page.relay-terminal .launch-pump-test details{margin-top:14px}
+body.launch-page.relay-terminal .launch-pump-test summary{color:var(--muted);font-size:14px;cursor:pointer}
+body.launch-page.relay-terminal .launch-pump-preset{display:grid;gap:6px;margin:14px 0}
+body.launch-page.relay-terminal .launch-pump-inputs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:14px}
+body.launch-page.relay-terminal .launch-pump-inputs input{width:100%;min-width:0}
+body.launch-page.relay-terminal .launch-pump-result{display:grid;gap:10px;margin:18px 0 0}
+body.launch-page.relay-terminal .launch-pump-result>div{display:flex;justify-content:space-between;gap:16px}
+body.launch-page.relay-terminal .launch-pump-result dt{font-size:14px;color:var(--muted)}
+body.launch-page.relay-terminal .launch-pump-result dd{margin:0;font-size:14px;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-pump-result>div:nth-last-child(2){padding-top:10px;border-top:1px solid var(--line)}
+body.launch-page.relay-terminal .launch-pump-funded-price{margin:14px 0}
+body.launch-page.relay-terminal .launch-pump-funded-price input{width:100%;margin-top:6px}
+body.launch-page.relay-terminal .launch-pump-funded-price input[readonly]{color:var(--muted)}
+body.launch-page.relay-terminal .launch-pump-funded-review{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-pump-funded-review h4{margin:0 0 10px;font-size:15px}
+body.launch-page.relay-terminal .launch-pump-funded-review dd{max-width:65%;overflow-wrap:anywhere;text-align:right}
+body.launch-page.relay-terminal .launch-pump-funded-review .launch-pump-result>div:nth-last-child(2){padding:0;border:0}
+body.launch-page.relay-terminal #launch-pump-funded-state[data-error=true]{color:var(--negative,#ff4d6d)}
+body.launch-page.relay-terminal #launch-pump-rewards-note{font-size:13px;line-height:1.5;color:var(--muted)}
+
+/* Signed-out welcome: the decision and its actions together. */
+.launch-page:has(#launch-gate:not([hidden])){min-height:100dvh;display:flex;flex-direction:column}
+.launch-page .launch-welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100dvh - 160px);padding:56px 24px 48px;background:radial-gradient(ellipse at 50% 38%,#6d45d914,transparent 65%)}
+.launch-page .launch-welcome[hidden]{display:none}
+.launch-welcome-card{width:100%;max-width:500px;box-sizing:border-box;padding:40px;border:1px solid var(--line);border-radius:12px;background:linear-gradient(150deg,var(--panel2),var(--panel) 65%);text-align:center}
+.launch-welcome-mark{display:block;width:68px;height:68px;margin:0 auto 22px}
+.launch-welcome-card .eyebrow{margin:0 0 12px;font:600 12px/1.4 var(--sans);letter-spacing:.08em;color:var(--accent)}
+.launch-page .launch-welcome-card h1{margin:0;font-size:32px;line-height:1.15;letter-spacing:-.025em;text-wrap:balance}
+.launch-page .launch-welcome-description{margin:16px 0 26px;font-size:15px;line-height:1.6;color:var(--muted);text-wrap:balance}
+.launch-page .launch-welcome-card .primary{display:flex;align-items:center;justify-content:center;width:100%;min-height:var(--control-h-lg,48px);margin:0;font-size:16px;font-weight:650;cursor:pointer}
+.launch-welcome-note{margin:14px 0 0;font-size:13px;line-height:1.5;color:var(--muted)}
+.launch-welcome-divider{height:1px;margin:24px 0 20px;background:var(--line)}
+.launch-welcome-signin{margin:0;font-size:13px;line-height:1.8;color:var(--muted)}
+.launch-welcome-signin a{margin-left:5px;color:var(--accent);font-weight:600;text-decoration:none;white-space:nowrap}
+.launch-welcome-back{display:inline-flex;align-items:center;min-height:44px;margin-top:18px;padding:0 12px;font-size:13.5px;color:var(--muted);text-decoration:none}
+.launch-welcome-signin a:hover,.launch-welcome-back:hover{color:var(--text)}
+body.launch-page.relay-terminal .launch-welcome-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid transparent;background:linear-gradient(155deg,#121214,#0b0b0c 62%) padding-box,linear-gradient(140deg,#a78bff55,#3a3a42 40%,#1f1f23 60%,#6d45d955) border-box;box-shadow:var(--lp-shadow)}
+body.launch-page.relay-terminal .launch-welcome-card::before{content:"";position:absolute;z-index:-1;width:520px;height:520px;left:50%;top:-340px;margin-left:-260px;border-radius:50%;background:radial-gradient(circle,#8b5cff26,transparent 62%);pointer-events:none}
+body.launch-page.relay-terminal .launch-welcome-halo{position:absolute;left:50%;top:32px;width:108px;height:108px;margin-left:-54px;border-radius:50%;background:conic-gradient(from 0deg,#a78bff55,#7c4dff44,#4b2fa055,#6d45d944,#a78bff55);filter:blur(12px);opacity:.55;animation:lp-orbit 12s linear infinite;pointer-events:none}
+body.launch-page.relay-terminal .launch-welcome-mark{position:relative;animation:lp-float 5s ease-in-out infinite}
+body.launch-page.relay-terminal .launch-welcome-card h1{background:linear-gradient(100deg,#f4f4f5 10%,#ddd3ff 55%,#a78bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+body.launch-page.relay-terminal .launch-welcome-venues{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:20px 0 0;padding:0;list-style:none}
+body.launch-page.relay-terminal .launch-welcome-venues li{display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 13px 0 7px;border:1px solid var(--line-strong);border-radius:999px;background:var(--inset);color:#c9c9cf;font-size:13px;font-weight:600;animation:motion-pop .6s var(--lp-ease) backwards}
+body.launch-page.relay-terminal .launch-welcome-venues li:nth-child(2){animation-delay:.08s}
+body.launch-page.relay-terminal .launch-welcome-venues li:nth-child(3){animation-delay:.16s}
+body.launch-page.relay-terminal .launch-welcome-venues img{width:20px;height:20px;border-radius:50%;object-fit:cover}
+body.launch-page.relay-terminal .launch-welcome-divider:has(+.launch-welcome-signin[hidden]){display:none}
+
+@keyframes lp-pop{0%{transform:scale(.6);opacity:.4}60%{transform:scale(1.12);opacity:1}100%{transform:scale(1)}}
+@keyframes lp-ring{0%{opacity:.75;transform:scale(.85)}70%,100%{opacity:0;transform:scale(1.35)}}
+@keyframes lp-spin{to{transform:rotate(360deg)}}
+@keyframes lp-live{50%{opacity:.5;transform:scale(.8);box-shadow:0 0 0 6px transparent}}
+@keyframes lp-current{50%{box-shadow:0 0 0 7px #8b5cff0a}}
+@keyframes lp-fade{50%{opacity:.35}}
+@keyframes lp-orbit{to{transform:rotate(360deg)}}
+@keyframes lp-float{50%{transform:translateY(-5px)}}
+@keyframes lp-draw{from{stroke-dashoffset:260}}
+@keyframes lp-travel{0%{stroke-dashoffset:18;opacity:0}8%{opacity:.85}55%{stroke-dashoffset:-242;opacity:.85}62%,100%{stroke-dashoffset:-242;opacity:0}}
+@keyframes lp-dot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.6);opacity:.55}}
+@keyframes lp-toast{from{opacity:0;transform:translate(-50%,-12px) scale(.97)}to{opacity:1;transform:translateX(-50%)}}
+@keyframes lp-crossfade{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+@keyframes lp-dialog-in{from{opacity:0;transform:translate3d(0,14px,0) scale(.975)}to{opacity:1;transform:none}}
+@keyframes lp-shine{0%{opacity:0;transform:translateX(-120%) skewX(-18deg)}12%{opacity:1}100%{opacity:0;transform:translateX(520%) skewX(-18deg)}}
+@keyframes lp-glow-drift{to{transform:translate3d(60px,20px,0) scale(1.08)}}
+@keyframes lp-sunrise-spin{to{--sunrise-angle:360deg}}
+
+/* Laptop: a slimmer side column; the six Pump.fun options go two per row, and while the form column is narrow
+   (two-column layout under 1240px) the three venue cards stack as rows. */
+@media(max-width:1239px){
+  body.launch-page.relay-terminal{--lp-side:340px;--lp-gap:24px}
+  body.launch-page.relay-terminal .launch-rewards[data-count="6"],body.launch-page.relay-terminal .launch-rewards[data-count="9"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+  body.launch-page.relay-terminal .launch-agent-choices{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:980px) and (max-width:1239px){
+  body.launch-page.relay-terminal .launch-mode-select .launch-segments{grid-template-columns:minmax(0,1fr);gap:10px}
+  body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]{min-height:72px;padding:12px 44px 12px 14px}
+}
+
+/* Tablet and phone: one column — form, then the preview and launch panel, then your coins. */
+@media(max-width:979px){
+  body.launch-page.relay-terminal .launch-layout{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  body.launch-page.relay-terminal :is(.launch-editor,.launch-side,.launch-history){grid-column:1;grid-row:auto}
+  body.launch-page.relay-terminal .launch-history{order:3}
+  body.launch-page.relay-terminal .launch-side{position:static}
+  body.launch-page.relay-terminal .launch-preview-curve{display:none}
+  body.launch-page.relay-terminal .launch-preview-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0 16px}
+}
+@media(min-width:720px) and (max-width:979px){
+  body.launch-page.relay-terminal .launch-side{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+  body.launch-page.relay-terminal .launch-token-card{grid-row:1/span 2}
+  body.launch-page.relay-terminal :is(.launch-form-footer,.launch-footer-notes){grid-column:2}
+}
+@media(max-width:719px){
+  body.launch-page.relay-terminal .launch-heading{align-items:flex-start;margin-bottom:24px}
+  body.launch-page.relay-terminal .launch-chain.launch-venue{display:none}
+  body.launch-page.relay-terminal .launch-social-fields{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-agent-toggles,body.launch-page.relay-terminal .launch-agent-choices,body.launch-page.relay-terminal .launch-agent-objective-settings{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-agent-setting-field{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-agent-setting-number{height:48px}
+  body.launch-page.relay-terminal label.launch-agent-choice{min-height:56px;padding:12px 38px 12px 14px}
+  body.launch-page.relay-terminal .launch-agent-model-current{padding:14px}
+  body.launch-page.relay-terminal .launch-agent-model-toggle{width:100%;min-height:44px}
+  body.launch-page.relay-terminal .launch-agent-models{padding:14px}
+  body.launch-page.relay-terminal .launch-gotchi-options{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal label.launch-gotchi-option{grid-template-columns:120px minmax(0,1fr);grid-template-rows:none;align-items:center;gap:14px}
+  body.launch-page.relay-terminal .launch-gotchi-stage{height:120px}
+  body.launch-page.relay-terminal .launch-gotchi-stage .gotchi-character[data-size=mini]{--gotchi-figure-height:108px}
+  body.launch-page.relay-terminal .launch-pump-inputs{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-rewards,body.launch-page.relay-terminal .launch-rewards[data-count="6"],body.launch-page.relay-terminal .launch-rewards[data-count="9"]{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-rewards>label{min-height:72px;padding:12px 14px}
+  body.launch-page.relay-terminal .launch-mode-select .launch-segments{grid-template-columns:minmax(0,1fr);gap:10px}
+  body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]{min-height:72px;padding:12px 44px 12px 14px}
+}
+/* Phone: 20px gutters (theme), 18px card padding, 16px input text (no iOS zoom), touch targets of 48px. */
+@media(max-width:640px){
+  body.launch-page.relay-terminal{--lp-pad:var(--card-pad,18px)}
+  body.launch-page.relay-terminal .launch-heading-glow{left:-160px;top:-200px;width:460px;height:320px}
+  body.launch-page.relay-terminal :is(.launch-section,.launch-form-footer,.launch-history,.launch-token-card){padding:var(--lp-pad)}
+  body.launch-page.relay-terminal .launch-form-fields{gap:16px}
+  body.launch-page.relay-terminal .launch-layout{row-gap:16px}
+  body.launch-page.relay-terminal .launch-side{gap:16px}
+  body.launch-page.relay-terminal .launch-section-heading{margin-bottom:18px}
+  body.launch-page.relay-terminal .launch-section-heading h2{font-size:18px;gap:12px}
+  body.launch-page.relay-terminal .launch-section[data-launch-section] .launch-section-heading h2::before{width:28px;height:28px;border-radius:5px;font-size:12px}
+  body.launch-page.relay-terminal :is(.launch-section,.launch-asset-dialog) :is(input:not([type=radio],[type=checkbox],[type=file],[type=range],[type=hidden]),select,textarea){font-size:16px}
+  body.launch-page.relay-terminal .launch-section :is(input:not([type=radio],[type=checkbox],[type=file],[type=range],[type=hidden]),select){min-height:48px}
+  body.launch-page.relay-terminal .launch-asset-dialog .launch-sol-input input{font-size:20px}
+  body.launch-page.relay-terminal .launch-archived-link{min-height:44px}
+  body.launch-page.relay-terminal .launch-segments>button{min-height:48px;padding:6px 8px;font-size:14px}
+  body.launch-page.relay-terminal .launch-rewards>label{min-height:64px}
+  body.launch-page.relay-terminal .launch-socials summary{min-height:48px}
+  body.launch-page.relay-terminal .launch-section-heading .launch-section-hint{display:none}
+  body.launch-page.relay-terminal .launch-upload{grid-template-columns:72px minmax(0,1fr);gap:14px 16px;padding:16px}
+  body.launch-page.relay-terminal .launch-upload-art{width:72px;height:72px;border-radius:10px;grid-row:1/span 2}
+  body.launch-page.relay-terminal .launch-upload-art>img{border-radius:17px}
+  body.launch-page.relay-terminal .launch-upload-copy small{white-space:normal;overflow-wrap:anywhere}
+  body.launch-page.relay-terminal .launch-upload-button{grid-column:2;justify-self:start;min-height:48px}
+  body.launch-page.relay-terminal .launch-image-section .launch-section-heading{flex-wrap:wrap;gap:4px 12px}
+  body.launch-page.relay-terminal .launch-divider{margin:20px 0}
+  body.launch-page.relay-terminal .launch-fixed-fdv>strong{height:48px;font-size:20px}
+  body.launch-page.relay-terminal .launch-auto-fee{grid-template-columns:minmax(0,1fr);padding:14px 16px}
+  body.launch-page.relay-terminal .launch-auto-fee>.help{grid-column:1;grid-row:auto;margin-top:8px}
+  body.launch-page.relay-terminal .launch-agent-settings{padding:16px}
+  body.launch-page.relay-terminal .launch-hook-days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+  body.launch-page.relay-terminal .launch-hook-days>button{min-width:0;width:100%;height:44px;padding:0 6px}
+  body.launch-page.relay-terminal .launch-hook-setting-group{padding:14px}
+  body.launch-page.relay-terminal .launch-hook-time{width:100%;min-width:0;min-height:48px;font-size:16px}
+  body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-field{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .launch-hook-setting .launch-agent-setting-number{min-width:0;max-width:none}
+  body.launch-page.relay-terminal .launch-hook-setting .launch-agent-segmented{display:flex;width:100%;max-width:100%}
+  body.launch-page.relay-terminal .launch-hook-setting .launch-agent-segmented>button{flex:1 1 0;min-width:0;padding:0 6px}
+  body.launch-page.relay-terminal .launch-hooks-not-offered summary{min-height:48px}
+  body.launch-page.relay-terminal .launch-preview-top{margin-bottom:14px}
+  body.launch-page.relay-terminal .launch-token-card{grid-template-columns:60px minmax(0,1fr);column-gap:14px}
+  body.launch-page.relay-terminal .launch-preview-image{width:60px;height:60px;border-radius:10px;font-size:26px}
+  body.launch-page.relay-terminal .launch-preview-image img{border-radius:10px}
+  body.launch-page.relay-terminal .launch-token-card h2{font-size:19px}
+  body.launch-page.relay-terminal .launch-preview-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+  body.launch-page.relay-terminal .launch-preview-facts>div{display:grid;justify-content:start;gap:2px;padding:9px 0}
+  body.launch-page.relay-terminal .launch-preview-facts dt{font-size:12.5px}
+  body.launch-page.relay-terminal .launch-preview-facts dd{text-align:left;font-size:14px}
+  body.launch-page.relay-terminal #launch-curve-summary,body.launch-page.relay-terminal .launch-preview-facts>div:last-child{display:none}
+  body.launch-page.relay-terminal .launch-steps li{font-size:12px}
+  body.launch-page.relay-terminal .launch-wallet-line>button{min-height:48px}
+  body.launch-page.relay-terminal .launch-form-footer #launch-open{min-height:52px}
+  body.launch-page.relay-terminal .launch-history-row{min-height:60px}
+  body.launch-page.relay-terminal .launch-asset-dialog{width:calc(100vw - 24px);max-height:90dvh;padding:20px;border-radius:10px}
+  /* The pair rows keep their flex layout on phones (a <button> grid cannot size to its rows); the status stays a pill. */
+  body.launch-page.relay-terminal #launch-asset-dialog .launch-asset-option{display:flex;align-items:center;gap:12px;min-height:60px}
+  body.launch-page.relay-terminal #launch-asset-dialog .launch-asset-option>.quote-logo{align-self:center}
+  body.launch-page.relay-terminal #launch-asset-dialog .launch-asset-option>small:last-child{max-width:84px;margin:0;text-align:center;line-height:1.3}
+  body.launch-page.relay-terminal .launch-wallet-option{min-height:52px}
+  body.launch-page.relay-terminal .launch-toast{gap:10px;padding:10px 10px 10px 14px;font-size:13.5px}
+  .launch-page .launch-welcome{justify-content:flex-start;min-height:0;padding:32px 0 24px}
+  .launch-welcome-card{padding:32px 22px}
+  .launch-page .launch-welcome-card h1{font-size:27px}
+  .launch-welcome-mark{width:56px;height:56px;margin-bottom:18px}
+}
+@media(max-width:380px){
+  body.launch-page.relay-terminal .launch-asset-count{min-height:3em}
+  body.launch-page.relay-terminal .launch-steps li{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .launch-page *{scroll-behavior:auto!important}
+  body.launch-page.relay-terminal *,body.launch-page.relay-terminal *::before,body.launch-page.relay-terminal *::after{animation:none!important;transition-duration:0s!important}
+  body.launch-page.relay-terminal :is(.launch-upload:hover .launch-upload-art,.launch-upload[data-drop=over] .launch-upload-art,label.launch-gotchi-option:hover,.launch-mode-select [data-launch-venue][aria-pressed=true] img,.launch-mode-select [data-launch-venue]:hover,.launch-rewards>label:hover,.launch-rewards>label:has(:checked) .launch-option-icon,.launch-agent-choice:hover,.launch-history-row:hover,.launch-form-footer #launch-open:hover){transform:none}
+  body.launch-page.relay-terminal .launch-agent-choice::after{opacity:0;transform:scale(1)}
+  body.launch-page.relay-terminal .launch-agent-choice:has(:checked)::after{opacity:1}
+  body.launch-page.relay-terminal .launch-mode-select [data-launch-venue]::after{opacity:0;transform:scale(1)}
+  body.launch-page.relay-terminal .launch-mode-select [data-launch-venue][aria-pressed=true]::after{opacity:1}
+  body.launch-page.relay-terminal .launch-preview-curve-light{display:none}
+}
+/* Reward baskets (v71.33): the optional step under the holder-reward minimum. Chips name the basket (the pair asset first, fixed), the picker lists verified Meteora pairs. */
+body.launch-page.relay-terminal .launch-basket{margin-top:16px;min-width:0}
+body.launch-page.relay-terminal .launch-basket-block{display:grid;gap:14px;min-width:0;margin:0;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-basket-block>legend{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;width:100%;margin:0;padding:0;font-size:16px;font-weight:650;line-height:1.4;color:var(--text);float:left}
+body.launch-page.relay-terminal .launch-basket-title{display:inline-flex;align-items:center;gap:10px}
+body.launch-page.relay-terminal .launch-basket-title::before{content:"";width:8px;height:8px;border-radius:50%;background:linear-gradient(140deg,#a78bff,#6d45d9);box-shadow:0 0 10px #8b5cff66}
+body.launch-page.relay-terminal .launch-basket-hint{font-size:13px;font-weight:400;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-basket-block>.help{margin:0;font-size:13.5px;line-height:1.6}
+body.launch-page.relay-terminal .launch-basket-status{font-weight:600;color:#9a9aa3}
+body.launch-page.relay-terminal .launch-basket-chips{display:flex;flex-wrap:wrap;gap:8px}
+body.launch-page.relay-terminal .launch-basket-chip{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 8px 4px 12px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:13px;line-height:1.2}
+body.launch-page.relay-terminal .launch-basket-chip strong{font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .launch-basket-chip small{font-size:11.5px;color:var(--muted)}
+body.launch-page.relay-terminal .launch-basket-chip.is-pair{border-color:#a78bff3d;background:#a78bff12;padding-right:12px}
+body.launch-page.relay-terminal .launch-basket-remove{display:inline-grid;place-items:center;width:22px;height:22px;border:0;border-radius:50%;background:transparent;color:var(--muted);font-size:16px;line-height:1;cursor:pointer}
+body.launch-page.relay-terminal .launch-basket-remove:hover{background:#ff4d6d22;color:#ff8fa3}
+body.launch-page.relay-terminal .launch-basket-actions{display:flex;flex-wrap:wrap;gap:10px}
+body.launch-page.relay-terminal .launch-basket-picker{display:grid;gap:10px;padding:12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+body.launch-page.relay-terminal .launch-basket-picker>input[type=search]{margin:0;background:var(--inset)}
+body.launch-page.relay-terminal .launch-basket-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,180px),1fr));gap:8px;max-height:260px;overflow:auto}
+body.launch-page.relay-terminal .launch-basket-option{display:grid;gap:2px;min-width:0;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--inset);text-align:left;cursor:pointer;color:var(--text)}
+body.launch-page.relay-terminal .launch-basket-option:hover{border-color:#a78bff3d;background:#a78bff12}
+body.launch-page.relay-terminal .launch-basket-option strong{font-size:13.5px;font-weight:650}
+body.launch-page.relay-terminal .launch-basket-option small{font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.launch-page.relay-terminal .launch-basket-empty{grid-column:1/-1;margin:0}
+body.launch-page.relay-terminal .launch-basket-rules{font-size:13px;line-height:1.55;color:var(--muted)}
+body.launch-page.relay-terminal .launch-basket-rules summary{cursor:pointer;font-weight:600;color:var(--text)}
+body.launch-page.relay-terminal .launch-basket-rules ul{margin:8px 0 0;padding-left:18px;display:grid;gap:6px}
+
+/* ---- v71.39 Chain choice and the Robinhood Chain market block ------------------------------------------------- */
+body.launch-page.relay-terminal .launch-chains{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:0;border:0;background:none}body.launch-page.relay-terminal .launch-chains[data-launch-chain-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr))}
+body.launch-page.relay-terminal .launch-chains>button{position:relative;justify-content:flex-start;gap:12px;min-height:72px;padding:12px 40px 12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--inset);text-align:left;white-space:normal;transition:color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,background var(--motion-fast,150ms) ease,transform .35s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-chains>button:hover:not(:disabled,[aria-pressed=true]){border-color:var(--line-strong);background:var(--hover);transform:translateY(-2px)}
+body.launch-page.relay-terminal .launch-chains>button[aria-pressed=true]{border-color:#8b5cff80;background:linear-gradient(145deg,#18181b,#121214 70%);color:var(--text);box-shadow:var(--lp-glow)}
+body.launch-page.relay-terminal .launch-chains>button::after{content:"✓";position:absolute;right:12px;top:12px;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--lp-done);color:#121214;font:700 11px/1 var(--sans);opacity:0;transform:scale(.4);transition:opacity var(--motion-mid,260ms) ease,transform .45s var(--lp-spring)}
+body.launch-page.relay-terminal .launch-chains>button[aria-pressed=true]::after{opacity:1;transform:scale(1)}
+body.launch-page.relay-terminal .launch-chains>button:disabled{opacity:.55}
+body.launch-page.relay-terminal .launch-venue-copy[data-launch-tagline=""]::after{display:none}
+body.launch-page.relay-terminal .launch-chains img{width:26px;height:26px;flex:none;border-radius:5px;background:#ffffff0d;padding:3px}
+body.launch-page.relay-terminal .launch-chain-soon{display:inline-block;margin-left:6px;padding:1px 7px;border:1px solid var(--line);border-radius:999px;font-size:10.5px;font-weight:650;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);vertical-align:middle}
+body.launch-page.relay-terminal .rh-market{display:grid;gap:18px}
+body.launch-page.relay-terminal .rh-market h3{margin:0 0 10px;font-size:14px;font-weight:650;color:var(--text)}
+body.launch-page.relay-terminal .rh-availability{margin:0}
+body.launch-page.relay-terminal .rh-availability.negative{color:var(--negative,#ff4d6d)}
+body.launch-page.relay-terminal .rh-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px;align-items:start}
+/* v71.40: the pair row is ETH | USDG | Custom ⌄ like Solana's; Custom opens the catalogue dialog. */
+body.launch-page.relay-terminal .rh-pair-segments>button .rh-pair-badge{width:22px;height:22px;flex:none}
+body.launch-page.relay-terminal .rh-pair-segments>button .rh-pair-badge img,body.launch-page.relay-terminal .rh-pair-segments>button .rh-pair-badge .rh-pair-mark{width:22px;height:22px;font-size:9px}
+body.launch-page.relay-terminal .rh-pair-segment-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .rh-pair-caret{flex:none;font-size:12px;opacity:.7}
+body.launch-page.relay-terminal .rh-pair-dialog .rh-pair-catalogue-note:empty{display:none}
+body.launch-page.relay-terminal .rh-pair-dialog .launch-asset-count{margin-bottom:14px}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-check .rh-pair-copy small,body.launch-page.relay-terminal .rh-pair-results .rh-pair-copy .launch-asset-reason{white-space:normal;overflow:visible;text-overflow:clip}
+body.launch-page.relay-terminal .rh-pair-results{display:grid;grid-auto-rows:max-content;gap:4px;max-height:52dvh;margin:12px -10px 0;padding:0 10px;overflow:auto;overscroll-behavior:contain}
+body.launch-page.relay-terminal .rh-pair-results>p.help{margin:14px 0 4px;text-align:center}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair{min-height:64px;gap:14px;padding:10px;border-radius:6px}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-copy>small{display:block}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-side{display:grid;gap:2px;justify-items:end;text-align:right}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-side small:first-child{color:var(--text);font-weight:600}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair[disabled]{opacity:.65;cursor:not-allowed}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-check .rh-pair-mark{background:var(--sel-bg);color:var(--sel-text);font-weight:700}
+body.launch-page.relay-terminal .rh-pair-results .launch-asset-reason{color:var(--muted);white-space:normal}
+body.launch-page.relay-terminal .rh-pair-results .rh-pair-checking{padding:14px 10px;text-align:center}
+body.launch-page.relay-terminal .rh-pair-search{margin-bottom:10px}
+body.launch-page.relay-terminal .rh-pair-list{display:grid;gap:6px;max-height:300px;overflow:auto;padding:6px;border:1px solid var(--line);border-radius:var(--lp-control);background:var(--inset)}
+body.launch-page.relay-terminal .rh-pair{display:flex;align-items:center;gap:12px;width:100%;min-height:48px;margin:0;padding:8px 12px;border:1px solid transparent;border-radius:6px;background:transparent;color:var(--text);text-align:left;cursor:pointer;font:inherit}
+body.launch-page.relay-terminal .rh-pair:hover{background:var(--hover)}
+body.launch-page.relay-terminal .rh-pair[aria-selected=true]{background:var(--sel-bg);border-color:var(--sel-line);color:var(--sel-text)}
+body.launch-page.relay-terminal .rh-pair.is-halted{opacity:.6}
+/* The pair's badge (v71.40): the company's, ETF's or token's mark in a circle, as Solana's picker shows them; a lettermark when there is none. */
+body.launch-page.relay-terminal .rh-pair-badge{position:relative;display:grid;place-items:center;width:26px;height:26px;flex:none;border-radius:50%;overflow:hidden;background:#ffffff14;box-shadow:inset 0 0 0 1px #ffffff1a}
+body.launch-page.relay-terminal .rh-pair-badge img{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;background:#fff}
+body.launch-page.relay-terminal .rh-pair-badge .rh-pair-mark{width:100%;height:100%;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+body.launch-page.relay-terminal .rh-pair-badge .rh-pair-mark[hidden]{display:none}
+body.launch-page.relay-terminal .rh-pair-check .rh-pair-badge .rh-pair-mark{background:var(--sel-bg);color:var(--sel-text)}
+body.launch-page.relay-terminal .rh-pair-copy{display:grid;gap:2px;min-width:0;flex:1 1 auto}
+body.launch-page.relay-terminal .rh-pair-copy small{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.launch-page.relay-terminal .rh-pair-side{flex:none;font-variant-numeric:tabular-nums;color:var(--muted);font-size:12.5px}
+body.launch-page.relay-terminal .rh-pair.is-native strong::after{content:" · native";font-weight:500;color:var(--muted)}
+body.launch-page.relay-terminal .rh-tier-segments>button{flex-direction:column;gap:2px;min-height:52px}
+body.launch-page.relay-terminal .rh-mode-segments{flex-wrap:wrap}
+body.launch-page.relay-terminal .rh-mode-segments>button{flex:1 1 calc(25% - 4px);min-width:120px}
+body.launch-page.relay-terminal .rh-mode-segments>button:disabled .launch-chain-soon{margin-left:4px}
+body.launch-page.relay-terminal .rh-summary{margin:4px 0 0;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--inset);font-size:13px;color:var(--muted)}
+/* The fee shape (v71.41): the holder-tax segments for a Holders / Diamond Hands coin, the two stage lines for every coin. */
+body.launch-page.relay-terminal .rh-tax-segments[hidden]{display:none}
+body.launch-page.relay-terminal .rh-fee-lines{margin:8px 0 0;padding:10px 12px;list-style:none;display:grid;gap:4px;border:1px solid var(--line);border-radius:6px;background:var(--inset);font-size:12.5px;color:var(--text);font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .rh-fee-lines li::before{content:"·";margin-right:6px;color:var(--muted)}
+body.launch-page.relay-terminal .rh-fee[data-shape=tax] .rh-fee-lines{margin-top:10px}
+body.launch-page.relay-terminal .rh-buy-estimate.negative,body.launch-page.relay-terminal .rh-pair-note.negative{color:var(--negative,#ff4d6d)}
+body.launch-page.relay-terminal .rh-resume{display:grid;gap:8px;margin:0 0 12px}
+body.launch-page.relay-terminal .rh-wallet-line{margin:12px 0 0;font-variant-numeric:tabular-nums}
+body.launch-page.relay-terminal .launch-robinhood-section .launch-hooks{margin-top:4px}
+@media (max-width:900px){
+  body.launch-page.relay-terminal .launch-chains{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  body.launch-page.relay-terminal .launch-chains>button{gap:8px;min-height:64px;padding:10px 30px 10px 10px}
+  body.launch-page.relay-terminal .launch-chains>button::after{right:8px;top:8px;width:18px;height:18px;font-size:10px}
+  body.launch-page.relay-terminal .launch-chains img{width:22px;height:22px}
+  body.launch-page.relay-terminal .launch-chains .launch-venue-name{font-size:15px}
+  body.launch-page.relay-terminal .launch-chains .launch-venue-copy[data-launch-tagline]::after{font-size:11.5px}
+  body.launch-page.relay-terminal .rh-grid{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal .rh-mode-segments>button{flex-basis:calc(50% - 4px);min-width:0}
+}
+/* The chosen Robinhood pair on the launch card (v71.40). */
+.launch-card-pair-logo{width:18px;height:18px;border-radius:50%;vertical-align:-4px;margin-right:6px;background:#fff;object-fit:cover}

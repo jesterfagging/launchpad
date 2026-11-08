@@ -1,0 +1,23 @@
+/* ===== Creator earnings card (coin page, creator-mode coins). v71.26 makeover v2: a roomy card whose rows read
+   as inset tiles; wide cards use three tiles. ===== */
+.coin-creator-earnings{position:relative;border:1px solid var(--line-card,var(--line,#1f1f23));border-radius:var(--radius-card,18px);padding:var(--card-pad,24px);background:var(--panel,#121214);overflow:hidden}
+.coin-creator-earnings h2{font-size:var(--text-card,17px);font-weight:650;line-height:1.3;margin:0 0 16px;letter-spacing:-.01em}
+/* Narrow cards list label/value rows; wide cards use three tiles. A compact amount
+   never wraps mid-number, and the exact amount stays available in its title. */
+.coin-creator-earnings{container-type:inline-size}
+.creator-earnings-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:0}
+.creator-earnings-grid div{min-width:0;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 16px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-inset,12px);background:var(--inset,#0b0b0c);transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease)}
+.creator-earnings-grid div:hover{border-color:var(--line-strong,#3a3a42);transform:translateY(-1px)}
+.creator-earnings-grid dt{flex:1;min-width:0}
+.creator-earnings-grid dd{max-width:62%;text-align:right}
+@container (min-width:560px){.creator-earnings-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.creator-earnings-grid div{flex-direction:column;align-items:stretch;gap:6px;padding:14px 16px}.creator-earnings-grid dd{max-width:none;text-align:left}}
+.creator-earnings-grid dt,.creator-earnings-note,.creator-earnings-time,.creator-earnings-recipient{color:var(--muted,#9a9aa3);font-size:13px;line-height:1.5}
+.creator-earnings-grid dd{margin:0;font-size:17px;font-weight:650;line-height:1.3;letter-spacing:-.01em;color:var(--sunrise-cream,#ddd3ff);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.creator-earnings-grid dd[data-rounded=true]{cursor:help}
+.creator-earnings-grid dd.is-unavailable{color:var(--muted,#9a9aa3);font-weight:550;font-size:14px}
+.creator-earnings-recipient{margin:14px 0 0;overflow-wrap:anywhere}
+.creator-earnings-note{margin:8px 0 0}
+.creator-earnings-time{display:block;margin-top:8px;font-size:12px}
+.creator-earnings-recipient a{color:var(--accent,#8b5cff);text-underline-offset:3px}
+@media(max-width:640px){.coin-creator-earnings{padding:var(--card-pad,18px)}}
+@media(prefers-reduced-motion:reduce){.creator-earnings-grid div{transition:none}.creator-earnings-grid div:hover{transform:none}}

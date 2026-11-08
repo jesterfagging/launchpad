@@ -1,0 +1,112 @@
+/* A white-label launchpad (LAUNCHPAD_PRODUCT=tenant). Every rule is scoped to <body data-product="tenant">, so no
+   other product ever sees it. The server serves the engine's stylesheets in the launchpad's preset (accents mapped,
+   greys turned into --tn-n* tokens; src/tenant/skin.mjs) and appends the preset's tokens for both themes to this file.
+   Dark is the default unless the launchpad picked light; <html data-theme="light"> flips every grey. The Rack layout
+   adds public/tenant-rack.css on top of this file. */
+
+/* ---- Theme: the engine's tokens on the preset ---- */
+body[data-product="tenant"] { --tn-up-light: #0E9F6E; --tn-down-light: #DC2B4A; --tn-warn-light: #B87400; --tn-info-light: #2563EB; }
+body[data-product="tenant"]:not([data-preset="ultraviolet"]) { --acc-ink: var(--tn-ink); }
+body[data-product="tenant"].relay-terminal .primary, body[data-product="tenant"].relay-terminal .primary:hover:not(:disabled) { color: var(--tn-ink); }
+body[data-product="tenant"].relay-terminal .primary:hover:not(:disabled) { background: linear-gradient(105deg, var(--tn-cream), var(--tn-acc-soft) 58%, var(--tn-acc)); }
+html[data-theme="light"] body[data-product="tenant"], html[data-theme="light"] body[data-product="tenant"].relay-terminal {
+  --up: var(--tn-up-light); --down: var(--tn-down-light); --warn: var(--tn-warn-light); --info: var(--tn-info-light);
+  --sel-bg: color-mix(in srgb, var(--tn-acc) 12%, #FFFFFF); --sel-text: var(--tn-deep);
+  --shadow-elevated: 0 24px 60px -16px #0000002e, 0 0 0 1px var(--line-strong);
+  --shadow-card-hover: 0 0 0 1px color-mix(in srgb, var(--tn-acc) 40%, transparent), 0 14px 40px -18px color-mix(in srgb, var(--tn-acc) 40%, transparent);
+  color-scheme: light;
+}
+/* Gradient-filled headings (cream to accent) read as nothing on white: solid ink in light mode. */
+html[data-theme="light"] body[data-product="tenant"].relay-terminal :is(h1, .terminal-heading h1, .tokens-intro h1, .account-intro h1, .explore-feature-value strong, .site-footer-brand) { background: none !important; -webkit-background-clip: initial !important; background-clip: initial !important; -webkit-text-fill-color: currentColor !important; color: var(--text); }
+html[data-theme="light"] body[data-product="tenant"] ::selection { background: color-mix(in srgb, var(--tn-acc) 25%, transparent); color: var(--text); }
+html[data-theme="light"] body[data-product="tenant"].relay-terminal .brand, html[data-theme="light"] body[data-product="tenant"] .brand { color: var(--text); }
+/* Small accent labels use the accent's readable text shade on light pages (bright presets such as Gold fade on white). */
+html[data-theme="light"] body[data-product="tenant"].relay-terminal .eyebrow { color: var(--tn-t6d45d9); }
+html[data-theme="light"] body[data-product="tenant"] .explore-section-icon { color: var(--tn-t8b5cff); }
+
+/* ---- The header: the launchpad's mark and name, the theme switch ---- */
+body[data-product="tenant"].relay-terminal[data-navigation=top] .app-header .brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
+body[data-product="tenant"] .brand .tn-mark { width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px; object-fit: cover; background: transparent; }
+body[data-product="tenant"] .brand .tn-name { display: block; max-width: 15ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: var(--display); font-size: 24px; font-weight: 750; letter-spacing: -.6px; color: var(--text); }
+body[data-product="tenant"] .tn-theme { display: inline-grid; place-items: center; width: var(--control-h); height: var(--control-h); flex: 0 0 auto; padding: 0; border: 1px solid var(--line-strong); border-radius: var(--radius-control); background: var(--s1); color: var(--text-2); cursor: pointer; }
+body[data-product="tenant"] .tn-theme:hover { background: var(--s2); border-color: var(--line-hi); color: var(--tn-acc-soft); }
+body[data-product="tenant"] .tn-theme svg, body[data-product="tenant"] .tn-ic svg { display: block; width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+body[data-product="tenant"] .tn-ic { display: inline-block; width: 18px; height: 18px; flex: 0 0 auto; }
+@media (max-width: 640px) {
+  body[data-product="tenant"] .brand .tn-name { font-size: 20px; max-width: 9ch; }
+  body[data-product="tenant"] .brand .tn-mark { width: 30px; height: 30px; flex-basis: 30px; }
+  body[data-product="tenant"].relay-terminal[data-navigation=top] .app-header .brand > span.tn-name { display: block; }
+}
+
+/* ---- The footer: the launchpad's links, and Powered by unless the launchpad removed it ---- */
+body[data-product="tenant"] .site-footer-brand { display: inline-flex; align-items: center; gap: 8px; }
+body[data-product="tenant"] .site-footer-brand img { width: 26px; height: 26px; border-radius: 8px; }
+body[data-product="tenant"] .site-footer-links .tn-social { color: var(--muted); }
+body[data-product="tenant"] .tn-powered { display: inline-flex; align-items: center; gap: 6px; color: var(--dim); font-size: 12px; text-decoration: none; white-space: nowrap; }
+body[data-product="tenant"] .tn-powered:hover { color: var(--text-2); }
+body[data-product="tenant"] .tn-powered b { color: var(--text-2); font-weight: 650; }
+
+/* The home chart's fill, the launch preview's curve and other drawn accents follow the preset. */
+body[data-product="tenant"] #explore-spark-fill stop { stop-color: var(--tn-acc); }
+body[data-product="tenant"] #launch-curve-stroke stop:nth-child(1) { stop-color: var(--tn-a6d45d9); }
+body[data-product="tenant"] #launch-curve-stroke stop:nth-child(2) { stop-color: var(--tn-a8b5cff); }
+body[data-product="tenant"] #launch-curve-stroke stop:nth-child(3) { stop-color: var(--tn-aa78bff); }
+
+/* ---- What a launchpad does not have: the engine's token badge, the chain switch, its analytics, Robinhood ---- */
+body[data-product="tenant"] :is(.curve-price-badge, .site-chain-toggle, .relay-toolkit, a[href="/analytics"], a[href="/tutorial"]) { display: none !important; }
+/* Gotchi and AI Agents appear only where the launchpad offers them (the admin panel's own Gotchi-named rows stay). */
+body[data-product="tenant"]:not([data-modes~="gotchi"]) :is(.gotchi-character, .gotchi-nav, .tokens-empty-gotchi, .explore-empty-gotchi, .gotchi-fx, .launch-gotchi, .motion-peek, .coin-gotchi-link, [class*="-gotchi"]:not([class*="admin-gotchi"]), [class^="gotchi"], [data-gotchi], a[href="/gotchi"]) { display: none !important; }
+body[data-product="tenant"]:not([data-modes~="agent"]) :is(.agents-nav, a[href="/agents"]) { display: none !important; }
+
+/* ---- The launch page: only the launchpad's venues, launch modes and (on Meteora) hooks ---- */
+body[data-product="tenant"].launch-page :is([data-launch-venue="damm-pump"], [data-launch-venue="pump-public"], [data-launch-venue="pump"], [data-launch-venue="pumpswap"], #launch-pump-test, #launch-pump-funded, .launch-chain-section, .launch-robinhood-section) { display: none !important; }
+body[data-product="tenant"]:not([data-venues~="raydium"]).launch-page [data-launch-venue="raydium"],
+body[data-product="tenant"]:not([data-venues~="meteora"]).launch-page [data-launch-venue="meteora"],
+body[data-product="tenant"]:not([data-venues~="pump-classic"]).launch-page [data-launch-venue="pump-classic"] { display: none !important; }
+body[data-product="tenant"][data-venues="raydium"].launch-page #launch-mode-select,
+body[data-product="tenant"][data-venues="meteora"].launch-page #launch-mode-select,
+body[data-product="tenant"][data-venues="pump-classic"].launch-page #launch-mode-select { display: none !important; }
+body[data-product="tenant"].launch-page #launch-reward-segments label:has(input[value="paycheck"]),
+body[data-product="tenant"].launch-page #launch-reward-segments label:has(input[value="buyback"]) { display: none !important; }
+body[data-product="tenant"]:not([data-modes~="creator"]).launch-page #launch-reward-segments label:has(input[value="creator"]),
+body[data-product="tenant"]:not([data-modes~="holders"]).launch-page #launch-reward-segments label:has(input[value="holders"]),
+body[data-product="tenant"]:not([data-modes~="gotchi"]).launch-page #launch-reward-segments label:has(input[value="gotchi"]),
+body[data-product="tenant"]:not([data-modes~="agent"]).launch-page #launch-reward-segments label:has(input[value="agent"]),
+body[data-product="tenant"]:not([data-modes~="diamond_hands"]).launch-page #launch-reward-segments label:has(input[value="diamond_hands"]),
+body[data-product="tenant"]:not([data-modes~="earned"]).launch-page #launch-reward-segments label:has(input[value="earned"]),
+body[data-product="tenant"]:not([data-modes~="insured"]).launch-page #launch-reward-segments label:has(input[value="insured"]),
+body[data-product="tenant"]:not([data-modes~="market_maker"]).launch-page #launch-reward-segments label:has(input[value="market_maker"]),
+body[data-product="tenant"]:not([data-modes~="lp_manager"]).launch-page #launch-reward-segments label:has(input[value="lp_manager"]) { display: none !important; }
+body[data-product="tenant"][data-hooks="off"].launch-page #launch-hooks { display: none !important; }
+body[data-product="tenant"].launch-page .launch-welcome-venues li[data-tn-off] { display: none !important; }
+/* Home: the venue filter shows the launchpad's venues only. */
+body[data-product="tenant"]:not([data-venues~="raydium"]).explore-page [data-explore-launch-mode="raydium"],
+body[data-product="tenant"]:not([data-venues~="meteora"]).explore-page [data-explore-launch-mode="meteora"],
+body[data-product="tenant"]:not([data-venues~="pump-classic"]).explore-page [data-explore-launch-mode="pump-classic"] { display: none !important; }
+body[data-product="tenant"].explore-page :is([data-explore-launch-mode="damm-pump"], [data-explore-launch-mode="robinhood"], .explore-chain-switch) { display: none !important; }
+
+/* ---- The launchpad's own pages (docs, terms, privacy) ---- */
+body[data-product="tenant"] .tn-doc { max-width: 860px; }
+body[data-product="tenant"] .tn-doc h1 { margin: 0 0 8px; }
+body[data-product="tenant"] .tn-doc .tn-lede { margin: 0 0 var(--space-6); color: var(--muted); font-size: 16px; line-height: 1.6; }
+body[data-product="tenant"] .tn-doc section { margin: 0 0 var(--space-7); }
+body[data-product="tenant"] .tn-doc h2 { margin: 0 0 10px; font-size: 22px; }
+body[data-product="tenant"] .tn-doc h3 { margin: var(--space-4) 0 6px; font-size: 16px; }
+body[data-product="tenant"] .tn-doc p, body[data-product="tenant"] .tn-doc li { color: var(--text-2); line-height: 1.65; font-size: 15px; }
+body[data-product="tenant"] .tn-doc ul { padding-left: 20px; }
+body[data-product="tenant"] .tn-doc a { color: var(--tn-acc-soft); }
+html[data-theme="light"] body[data-product="tenant"] .tn-doc a { color: var(--tn-acc-strong); }
+body[data-product="tenant"] .tn-doc table { width: 100%; border-collapse: collapse; margin: 8px 0 0; font-size: 14px; }
+body[data-product="tenant"] .tn-doc th, body[data-product="tenant"] .tn-doc td { text-align: left; vertical-align: top; padding: 9px 10px; border-bottom: 1px solid var(--line); color: var(--text-2); }
+body[data-product="tenant"] .tn-doc th { color: var(--muted); font-weight: 600; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+body[data-product="tenant"] .tn-doc .tn-callout { padding: 14px 16px; border: 1px solid var(--line-strong); border-radius: var(--radius-card); background: var(--s1); }
+/* The docs page's notes on the launchpad's features (v1.1) show only for the features it has on. */
+body[data-product="tenant"][data-features=""] .tn-doc [data-tn-feature], body[data-product="tenant"]:not([data-features]) .tn-doc [data-tn-feature],
+body[data-product="tenant"]:not([data-features~="registry"]) .tn-doc [data-tn-feature="registry"], body[data-product="tenant"]:not([data-features~="tickerLock"]) .tn-doc [data-tn-feature="tickerLock"],
+body[data-product="tenant"]:not([data-features~="bundleCheck"]) .tn-doc [data-tn-feature="bundleCheck"], body[data-product="tenant"]:not([data-features~="summit"]) .tn-doc [data-tn-feature="summit"],
+body[data-product="tenant"]:not([data-features~="takeover"]) .tn-doc [data-tn-feature="takeover"] { display: none; }
+body[data-product="tenant"] .tn-doc [data-tn-venue], body[data-product="tenant"] .tn-doc [data-tn-mode] { display: none; }
+body[data-product="tenant"][data-venues~="raydium"] .tn-doc [data-tn-venue~="raydium"], body[data-product="tenant"][data-venues~="meteora"] .tn-doc [data-tn-venue~="meteora"], body[data-product="tenant"][data-venues~="pump-classic"] .tn-doc [data-tn-venue~="pump-classic"] { display: revert; }
+body[data-product="tenant"][data-hooks="on"] .tn-doc [data-tn-hooks] { display: revert; }
+body[data-product="tenant"] .tn-doc [data-tn-hooks] { display: none; }
+body[data-product="tenant"][data-modes~="creator"] .tn-doc [data-tn-mode="creator"], body[data-product="tenant"][data-modes~="holders"] .tn-doc [data-tn-mode="holders"], body[data-product="tenant"][data-modes~="gotchi"] .tn-doc [data-tn-mode="gotchi"], body[data-product="tenant"][data-modes~="agent"] .tn-doc [data-tn-mode="agent"], body[data-product="tenant"][data-modes~="diamond_hands"] .tn-doc [data-tn-mode="diamond_hands"], body[data-product="tenant"][data-modes~="earned"] .tn-doc [data-tn-mode="earned"], body[data-product="tenant"][data-modes~="insured"] .tn-doc [data-tn-mode="insured"], body[data-product="tenant"][data-modes~="market_maker"] .tn-doc [data-tn-mode="market_maker"], body[data-product="tenant"][data-modes~="lp_manager"] .tn-doc [data-tn-mode="lp_manager"] { display: list-item; }

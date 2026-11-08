@@ -1,0 +1,284 @@
+{
+  "localOnly": true,
+  "realFundsUsed": false,
+  "programId": "FixSiDfTxvoy5Zgjp5KdFU8U23ChwCxPWY3WTkmMW2fU",
+  "programSha256": "e3c7e833be7228ece8fc1ebe9b7e123343cfe2329d014df47914c8a2753797d5",
+  "pumpProgramSha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5",
+  "testCount": 65,
+  "tests": [
+    {
+      "name": "initialize accepts prefunded PDA addresses",
+      "passed": true
+    },
+    {
+      "name": "initial supply minted exactly once",
+      "passed": true
+    },
+    {
+      "name": "mint authority revoked",
+      "passed": true
+    },
+    {
+      "name": "freeze authority absent",
+      "passed": true
+    },
+    {
+      "name": "SOL reserve owned by PDA under system program",
+      "passed": true
+    },
+    {
+      "name": "prefunded SOL excluded from price ledger",
+      "passed": true
+    },
+    {
+      "name": "reinitialization rejected atomically",
+      "passed": true
+    },
+    {
+      "name": "buy executes",
+      "passed": true
+    },
+    {
+      "name": "buy ledger reconciles token custody",
+      "passed": true
+    },
+    {
+      "name": "reserve covers accounted principal",
+      "passed": true
+    },
+    {
+      "name": "sell slippage failure rolls back",
+      "passed": true
+    },
+    {
+      "name": "sell executes",
+      "passed": true
+    },
+    {
+      "name": "treasury substitution rejected",
+      "passed": true
+    },
+    {
+      "name": "unauthorized operator rejected",
+      "passed": true
+    },
+    {
+      "name": "external holder burn fixture succeeds",
+      "passed": true
+    },
+    {
+      "name": "holder burn does not prevent later buy",
+      "passed": true
+    },
+    {
+      "name": "SOL and base donations do not change curve prices or cap",
+      "passed": true
+    },
+    {
+      "name": "premature migration rejected",
+      "passed": true
+    },
+    {
+      "name": "sell greater than sold supply rejected",
+      "passed": true
+    },
+    {
+      "name": "final buy reaches graduation",
+      "passed": true
+    },
+    {
+      "name": "final buy clips precisely to immutable cap",
+      "passed": true
+    },
+    {
+      "name": "buy after ready phase rejected",
+      "passed": true
+    },
+    {
+      "name": "sell after ready phase redeems principal and reopens curve",
+      "passed": true
+    },
+    {
+      "name": "reopened curve can graduate again",
+      "passed": true
+    },
+    {
+      "name": "migration treasury substitution rejected",
+      "passed": true
+    },
+    {
+      "name": "atomic actual PumpSwap pool creation and LP burn",
+      "passed": true
+    },
+    {
+      "name": "migration commits only on success",
+      "passed": true
+    },
+    {
+      "name": "all newly received LP tokens actually burned",
+      "passed": true
+    },
+    {
+      "name": "pool quote matches accounted funds minus exact graduation fee",
+      "passed": true
+    },
+    {
+      "name": "pool base matches allocation ignoring donated tokens",
+      "passed": true
+    },
+    {
+      "name": "graduation fee paid exactly once",
+      "passed": true
+    },
+    {
+      "name": "unsolicited base surplus remains inaccessible",
+      "passed": true
+    },
+    {
+      "name": "migration retry is a no-op and does not repay fee",
+      "passed": true
+    },
+    {
+      "name": "second fixture initialize",
+      "passed": true
+    },
+    {
+      "name": "second fixture ready",
+      "passed": true
+    },
+    {
+      "name": "wrong AMM program rejected",
+      "passed": true
+    },
+    {
+      "name": "insolvent reserve migration fails without fee or phase change",
+      "passed": true
+    },
+    {
+      "name": "post-burn rollback fixture initializes",
+      "passed": true
+    },
+    {
+      "name": "post-burn rollback fixture ready",
+      "passed": true
+    },
+    {
+      "name": "failure after LP burn rolls back pool, fee and burn atomically",
+      "passed": true
+    },
+    {
+      "name": "negative account fixture initialize",
+      "passed": true
+    },
+    {
+      "name": "zero minimum output rejected atomically",
+      "passed": true
+    },
+    {
+      "name": "zero input rejected atomically",
+      "passed": true
+    },
+    {
+      "name": "unknown opcode rejected atomically",
+      "passed": true
+    },
+    {
+      "name": "duplicate account alias rejected atomically",
+      "passed": true
+    },
+    {
+      "name": "default executable rejects all custody operations",
+      "passed": true
+    },
+    {
+      "name": "rollback fixture initialize",
+      "passed": true
+    },
+    {
+      "name": "rollback fixture ready",
+      "passed": true
+    },
+    {
+      "name": "compute exhaustion during migration rolls back all account changes",
+      "passed": true
+    },
+    {
+      "name": "donation blocker fixture initialize",
+      "passed": true
+    },
+    {
+      "name": "donation blocker fixture ready",
+      "passed": true
+    },
+    {
+      "name": "future Pump reserve donation fixture succeeds",
+      "passed": true
+    },
+    {
+      "name": "pool reserve donation rejected without price change or fee",
+      "passed": true
+    },
+    {
+      "name": "pre-donated pool index can recover to clean canonical index",
+      "passed": true
+    },
+    {
+      "name": "completed migration cannot replay with different index",
+      "passed": true
+    },
+    {
+      "name": "blocked migration redemption fixture initializes",
+      "passed": true
+    },
+    {
+      "name": "redemption fixture reaches cap",
+      "passed": true
+    },
+    {
+      "name": "quote reserve predonation fixture succeeds",
+      "passed": true
+    },
+    {
+      "name": "predonated quote reserve blocks unsafe price change",
+      "passed": true
+    },
+    {
+      "name": "full held supply redeems even when migration destination blocked",
+      "passed": true
+    },
+    {
+      "name": "$100/$500 micro preset initializes",
+      "passed": true
+    },
+    {
+      "name": "micro preset capped buy reaches graduation",
+      "passed": true
+    },
+    {
+      "name": "micro preset actual PumpSwap migration and LP burn",
+      "passed": true
+    },
+    {
+      "name": "micro preset exact LP quote and zero received LP balance",
+      "passed": true
+    },
+    {
+      "name": "micro preset base allocation matches frozen parameters",
+      "passed": true
+    }
+  ],
+  "migrationComputeUnits": 289301,
+  "remainingProductionBlockers": [
+    "all 65536 pool indices could theoretically be pre-donated; phase1 sells preserve redemption while migration unavailable",
+    "local-test operator is public test fixture key, default build rejects all instructions",
+    "no independent professional audit, devnet or live integration deployment",
+    "SOL-only custody program, broader pair previews are not implemented on chain"
+  ],
+  "exampleMigration": {
+    "grossQuoteLamports": "109044650523",
+    "graduationFeeLamports": "31459381676",
+    "poolQuoteLamports": "77585268847",
+    "poolBaseAtoms": "310341075385988",
+    "burnedLpAtoms": "4906923248544"
+  }
+}

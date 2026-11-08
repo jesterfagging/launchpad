@@ -1,0 +1,43 @@
+/* A launchpad's look options from tenant.json (<body data-font data-corners data-background data-hero>, src/tenant/skin.mjs),
+   loaded after the layout's stylesheets. The fonts are served from /fonts/ under the OFL. */
+@font-face { font-family: 'Pad Bricolage'; src: url('/fonts/BricolageGrotesque-Bold.woff') format('woff'); font-weight: 600 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Bricolage'; src: url('/fonts/BricolageGrotesque-Regular.woff') format('woff'); font-weight: 300 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Inter'; src: url('/fonts/InterVariable.woff2') format('woff2'); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Fredoka'; src: url('/fonts/Fredoka.woff2?v=1') format('woff2'); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Lilita'; src: url('/fonts/LilitaOne.woff2?v=1') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Geist Mono'; src: url('/fonts/GeistMono-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Geist Mono'; src: url('/fonts/GeistMono-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+
+/* ---- Fonts: a heading face (--display) and a body face (--sans) ---- */
+body[data-product="tenant"][data-font="grotesk"] { --sans: 'Pad Inter', ui-sans-serif, -apple-system, 'Segoe UI', Arial, sans-serif; --display: 'Pad Bricolage', 'Pad Inter', ui-sans-serif, sans-serif; }
+body[data-product="tenant"][data-font="clean"] { --sans: 'Pad Inter', ui-sans-serif, -apple-system, 'Segoe UI', Arial, sans-serif; --display: 'Pad Inter', ui-sans-serif, sans-serif; }
+body[data-product="tenant"][data-font="rounded"] { --sans: 'Pad Fredoka', ui-rounded, 'Trebuchet MS', Arial, sans-serif; --display: 'Pad Fredoka', ui-rounded, sans-serif; }
+body[data-product="tenant"][data-font="poster"] { --sans: 'Pad Fredoka', ui-rounded, 'Trebuchet MS', Arial, sans-serif; --display: 'Pad Lilita', 'Pad Fredoka', 'Arial Black', sans-serif; }
+body[data-product="tenant"][data-font="mono"] { --sans: 'Pad Inter', ui-sans-serif, -apple-system, 'Segoe UI', Arial, sans-serif; --display: 'Pad Geist Mono', ui-monospace, monospace; }
+body[data-product="tenant"]:is([data-font="grotesk"], [data-font="clean"], [data-font="rounded"], [data-font="poster"], [data-font="mono"]) { font-family: var(--sans); }
+body[data-product="tenant"]:is([data-font="grotesk"], [data-font="clean"], [data-font="rounded"], [data-font="poster"], [data-font="mono"]) * { font-family: inherit; }
+body[data-product="tenant"]:is([data-font="grotesk"], [data-font="clean"], [data-font="rounded"], [data-font="poster"], [data-font="mono"]) :is(code, kbd, pre, .coin-address, .coin-mint, .account-address, .wallet-address, [class*="mono"]) { font-family: var(--mono); }
+body[data-product="tenant"]:is([data-font="grotesk"], [data-font="clean"], [data-font="rounded"], [data-font="poster"], [data-font="mono"]) :is(h1, h2, .brand .tn-name, .site-footer-brand, .tn-strip-title, .pad-title) { font-family: var(--display); }
+body[data-product="tenant"][data-font="grotesk"] :is(h1, h2) { font-weight: 700; letter-spacing: -.03em; }
+body[data-product="tenant"][data-font="poster"] :is(h1, h2, .brand .tn-name, .site-footer-brand, .tn-strip-title, .pad-title) { font-weight: 400; letter-spacing: .015em; }
+body[data-product="tenant"][data-font="mono"] :is(h1, h2) { font-weight: 700; letter-spacing: -.02em; }
+
+/* ---- Corners ---- */
+body[data-product="tenant"][data-corners="sharp"] { --radius-card: 0px; --radius-control: 0px; --radius-inset: 0px; --radius-pill: 0px; --radius-tile: 0px; --coin-radius: 0px; --coin-radius-inset: 0px; --lp-radius: 0px; }
+body[data-product="tenant"][data-corners="soft"] { --radius-card: 10px; --radius-control: 8px; --radius-inset: 6px; --radius-pill: 10px; --radius-tile: 8px; --coin-radius: 10px; --coin-radius-inset: 6px; --lp-radius: 10px; }
+body[data-product="tenant"][data-corners="round"] { --radius-card: 26px; --radius-control: 999px; --radius-inset: 16px; --radius-pill: 999px; --radius-tile: 20px; --coin-radius: 26px; --coin-radius-inset: 16px; --lp-radius: 26px; }
+body[data-product="tenant"][data-corners="sharp"] :is(button, input, select, textarea, .small-button, .cv-button, .top-launch, .primary, .cv-ghost, .tag, .explore-section-tag, .explore-count, .coin-stage, .mainnet-badge, .token-status, .cv-pill, .cv-badge, .explore-coin-badge, .tn-nav a.tn-item, .tn-bar, .tn-bar a.tn-item, .launch-welcome-card, .header-search, .header-profile-dropdown, .explore-progress-track, .explore-progress-fill, .tn-strip > *, .tn-hero, .pad-card, .pad-chip) { border-radius: 0 !important; }
+body[data-product="tenant"][data-corners="soft"] :is(button, input, select, textarea, .small-button, .cv-button, .top-launch, .primary, .cv-ghost, .tn-nav a.tn-item, .tn-bar a.tn-item, .header-search) { border-radius: 8px !important; }
+body[data-product="tenant"][data-corners="soft"] :is(.tn-bar, .launch-welcome-card, .header-profile-dropdown, .tn-strip > *, .tn-hero, .pad-card) { border-radius: 12px !important; }
+body[data-product="tenant"][data-corners="round"] :is(.small-button, .cv-button, .top-launch, .primary, .cv-ghost, .header-search, .tn-nav a.tn-item, .pad-chip) { border-radius: 999px !important; }
+
+/* ---- Backgrounds, in the accent ---- */
+body[data-product="tenant"][data-background="dots"] { background-image: radial-gradient(color-mix(in srgb, var(--tn-acc) 26%, transparent) 1.3px, transparent 1.8px); background-size: 22px 22px; background-attachment: fixed; }
+body[data-product="tenant"][data-background="grid"] { background-image: linear-gradient(to right, color-mix(in srgb, var(--tn-acc) 11%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--tn-acc) 11%, transparent) 1px, transparent 1px); background-size: 44px 44px; background-attachment: fixed; }
+body[data-product="tenant"][data-background="glow"] { background-image: radial-gradient(55% 45% at 85% -5%, color-mix(in srgb, var(--tn-acc) 26%, transparent), transparent 70%), radial-gradient(45% 40% at -5% 105%, color-mix(in srgb, var(--tn-acc-end) 18%, transparent), transparent 70%); background-attachment: fixed; background-repeat: no-repeat; }
+body[data-product="tenant"][data-background="stars"] { background-image: radial-gradient(1.4px 1.4px at 20px 30px, color-mix(in srgb, var(--text) 70%, transparent), transparent), radial-gradient(1px 1px at 120px 80px, color-mix(in srgb, var(--text) 45%, transparent), transparent), radial-gradient(1.6px 1.6px at 200px 150px, color-mix(in srgb, var(--tn-acc) 80%, transparent), transparent), radial-gradient(1px 1px at 60px 190px, color-mix(in srgb, var(--text) 40%, transparent), transparent), radial-gradient(1.2px 1.2px at 250px 40px, color-mix(in srgb, var(--text) 55%, transparent), transparent), radial-gradient(1px 1px at 170px 220px, color-mix(in srgb, var(--tn-acc-end) 70%, transparent), transparent); background-size: 280px 260px; background-attachment: fixed; }
+
+/* ---- The hero banner on the home page (tenant-shell.mjs) ---- */
+body[data-product="tenant"] .tn-hero { display: block; margin: 0 0 var(--space-6, 24px); border-radius: var(--radius-card, 16px); overflow: hidden; border: 1px solid var(--line, rgba(255,255,255,.1)); aspect-ratio: 1600 / 560; background: var(--s1, #111); }
+body[data-product="tenant"] .tn-hero img { display: block; width: 100%; height: 100%; object-fit: cover; }
+body[data-product="tenant"][data-style="arcade"] .tn-hero { border: 3px solid var(--text); box-shadow: 6px 6px 0 var(--tn-acc); }

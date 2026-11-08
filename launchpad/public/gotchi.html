@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Gotchi Mode on Launchpad: pair your coin with a Gotchi, feed its prize pot with every trade and race for the top-holder airdrop.">
+  <title>Launchpad — Gotchi Mode</title><link rel="icon" href="/brand-icon.svg?v=54">
+  <link rel="stylesheet" href="/style.css?v=21"><link rel="stylesheet" href="/workspace.css?v=24"><link rel="stylesheet" href="/dashboard.css?v=21"><link rel="stylesheet" href="/gotchi.css?v=1"><link id="gotchi-character-styles" rel="stylesheet" href="/gotchi-character.css?v=1">
+  <script type="module" src="/gotchi.js"></script>
+<link rel="stylesheet" href="/curve-theme.css?v=73"><link rel="stylesheet" href="/curve-motion.css?v=2"><script type="module" src="/curve-motion.mjs?v=2"></script><meta name="theme-color" content="#000000"><link id="explore-search-styles" rel="stylesheet" href="/explore-search.css?v=49"><link id="curve-quote-logo-styles" rel="stylesheet" href="/quote-logos.css?v=52"><link id="curve-price-badge-styles" rel="stylesheet" href="/curve-price-badge.css"><link rel="preload" href="/fonts/InterVariable.woff2?v=4.1" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/BricolageGrotesque-Bold.woff?v=1" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/GeistMono-Regular.woff?v=1" as="font" type="font/woff" crossorigin></head>
+<body data-robinhood="on" data-product="launchpad" data-shell="true" data-navigation="top" class="relay-terminal gotchi-page" data-page="gotchi">
+  <header class="app-header"><div class="workspace-header-inner"><a class="brand" href="/" aria-label="Launchpad home"><img class="mark" src="/brand-icon.svg?v=54" width="38" height="38" alt=""><span>Launchpad<span class="brand-dot">.</span></span></a><label class="header-search" for="explore-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="search-sr-only">Search coins, tickers, addresses or users</span><input id="explore-search" data-curve-search-trigger name="search" type="search" readonly autocomplete="off" placeholder="Search coins, tickers, addresses or users"><kbd aria-hidden="true">/</kbd></label><div class="local"><a class="gotchi-nav" href="/gotchi" data-workspace-tool="gotchi" aria-label="Gotchi Mode" title="Gotchi Mode" aria-current="page"><svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c4.4 0 7.5 3.1 7.5 7.2V13a7.5 7.5 0 0 1-15 0v-2.8C4.5 6.1 7.6 3 12 3z"></path><path d="M9 11h.01M15 11h.01"></path><path d="M9.5 15c1.4 1.2 3.6 1.2 5 0"></path><path d="M7 5 5 2M17 5l2-3"></path></svg><span>Gotchi</span></a><a class="curve-price-badge" href="/coin?mint=7rvRFpzP5W18yZcNpPNqtWgPTxLaFrnutz5QPxXpyupc" aria-label="Open official $LAUNCHPAD token page. USD price unavailable."><img src="/brand-icon.svg?v=54" width="20" height="20" alt=""><span class="curve-price-symbol">$LAUNCHPAD</span><span class="curve-price-value">—</span></a><a class="top-launch" href="/launchpad" data-workspace-tool="launchpad" aria-label="Launch on Launchpad" title="Create a coin on Launchpad"><svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Launch on Launchpad</span></a><a id="gotchi-account" data-account-link class="small-button" href="/?signin=1">Connect wallet</a></div></div></header>
+  <main id="gotchi-main">
+    <div id="gotchi-list" class="gotchi-list">
+      <div class="gotchi-intro"><div><p class="eyebrow">LAUNCHPAD / GOTCHI MODE</p><h1>Pick a Gotchi. Launch. Race.</h1><p class="gotchi-lede">Pair your coin with a Gotchi at launch. Every trade feeds its prize pot, only graduated coins compete, and when the pot hits <strong>$10,000</strong> the top ten long-term holders split it: half in the winning coin, half in SOL.</p></div><div class="gotchi-intro-facts" id="gotchi-intro-facts"></div></div>
+      <div id="gotchi-cards" class="gotchi-cards" aria-busy="true"><article class="gotchi-card gotchi-card-placeholder" aria-hidden="true"></article><article class="gotchi-card gotchi-card-placeholder" aria-hidden="true"></article><article class="gotchi-card gotchi-card-placeholder" aria-hidden="true"></article></div>
+      <p id="gotchi-list-status" class="gotchi-status" role="status">Waking the Gotchis…</p>
+      <section id="gotchi-standings" class="gotchi-panel gotchi-standings" aria-labelledby="gotchi-standings-title" hidden><div class="gotchi-panel-heading"><h2 id="gotchi-standings-title">Your standings</h2><span id="gotchi-standings-note" class="gotchi-muted"></span></div><div id="gotchi-standings-body"></div></section>
+      <section class="gotchi-panel gotchi-rules" aria-labelledby="gotchi-rules-title"><div class="gotchi-panel-heading"><h2 id="gotchi-rules-title">How the race works</h2></div><ol id="gotchi-rules-list"></ol><div id="gotchi-funding" class="gotchi-funding"></div></section>
+    </div>
+    <div id="gotchi-detail" class="gotchi-detail" hidden>
+      <a class="gotchi-back" href="/gotchi">← All Gotchis</a>
+      <section class="gotchi-hero" id="gotchi-hero" aria-labelledby="gotchi-detail-name">
+        <div class="gotchi-hero-stage" id="gotchi-hero-stage" data-motion-float="slow"></div>
+        <div class="gotchi-hero-copy">
+          <p class="eyebrow" id="gotchi-detail-species">GOTCHI</p>
+          <h1 id="gotchi-detail-name">Gotchi</h1>
+          <p id="gotchi-detail-form" class="gotchi-form"></p>
+          <p id="gotchi-detail-description" class="gotchi-lede"></p>
+          <div class="gotchi-pot" id="gotchi-pot"></div>
+          <div class="gotchi-progress" id="gotchi-progress"></div>
+          <div class="gotchi-interact" id="gotchi-interact"></div>
+          <div class="gotchi-evolutions" id="gotchi-evolutions" aria-label="Evolutions"></div>
+        </div>
+      </section>
+      <div class="gotchi-detail-grid">
+        <section class="gotchi-panel" aria-labelledby="gotchi-race-title"><div class="gotchi-panel-heading"><h2 id="gotchi-race-title">The race</h2><span id="gotchi-race-state" class="gotchi-pill"></span></div><div id="gotchi-race"></div></section>
+        <section class="gotchi-panel" aria-labelledby="gotchi-leaders-title"><div class="gotchi-panel-heading"><h2 id="gotchi-leaders-title">Leaderboard</h2><span id="gotchi-leaders-note" class="gotchi-muted"></span></div><div id="gotchi-leaders"></div></section>
+        <section class="gotchi-panel gotchi-panel-wide" aria-labelledby="gotchi-coins-title"><div class="gotchi-panel-heading"><h2 id="gotchi-coins-title">Attached coins</h2><a id="gotchi-launch-one" class="small-button" href="/launchpad">Launch one →</a></div><div id="gotchi-coins"></div></section>
+        <section class="gotchi-panel" id="gotchi-mine" aria-labelledby="gotchi-mine-title" hidden><div class="gotchi-panel-heading"><h2 id="gotchi-mine-title">Your holdings</h2><span id="gotchi-mine-note" class="gotchi-muted"></span></div><div id="gotchi-mine-body"></div></section>
+        <section class="gotchi-panel" aria-labelledby="gotchi-ledger-title"><div class="gotchi-panel-heading"><h2 id="gotchi-ledger-title">Pot ledger</h2></div><div id="gotchi-ledger"></div></section>
+        <section class="gotchi-panel gotchi-panel-wide" aria-labelledby="gotchi-history-title"><div class="gotchi-panel-heading"><h2 id="gotchi-history-title">Race history</h2></div><div id="gotchi-history"></div></section>
+        <section class="gotchi-panel gotchi-panel-wide gotchi-rules" aria-labelledby="gotchi-detail-rules-title"><div class="gotchi-panel-heading"><h2 id="gotchi-detail-rules-title">Rules</h2></div><ol id="gotchi-detail-rules"></ol><div id="gotchi-detail-funding" class="gotchi-funding"></div></section>
+      </div>
+      <p id="gotchi-detail-status" class="gotchi-status" role="status"></p>
+    </div>
+    <noscript><p class="gotchi-status">Enable JavaScript to meet the Gotchis.</p></noscript>
+  </main>
+  <footer><span>Launchpad / Gotchi Mode</span><span>Feed the pot. Hold the line.</span></footer>
+</body>
+</html>

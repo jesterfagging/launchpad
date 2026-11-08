@@ -1,0 +1,26 @@
+.meteora-operation[hidden],#tokens-meteora[hidden]{display:none}
+.meteora-operation-facts{display:grid;gap:12px;margin:20px 0;padding:16px 0;border-top:1px solid var(--line,#3a3a42);font-size:14px}
+.meteora-operation-facts>div{display:flex;justify-content:space-between;gap:16px}
+.meteora-operation-facts dt{color:var(--muted,#9a9aa3)}
+.meteora-operation-facts dd{margin:0;text-align:right;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.meteora-operation-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.meteora-operation-actions>a{color:var(--text,#f4f4f5);text-decoration:none}
+.meteora-operation-actions>.primary{width:100%}
+.meteora-operation-status{line-height:1.6;overflow-wrap:anywhere}
+/* The section spacing and grid follow the My Tokens venue sections (launched-tokens.css, design tokens from curve-theme.css). */
+#tokens-meteora{margin-top:var(--section-gap,48px)}
+#tokens-meteora .tokens-grid{display:grid;gap:var(--grid-gap,20px)}
+#tokens-meteora .token-card{min-width:0}
+#tokens-meteora .token-card-heading{display:flex;gap:16px;align-items:center}
+#tokens-meteora .token-card-heading h3{margin:0;overflow-wrap:anywhere}
+#tokens-meteora .creator-earnings-grid{display:grid;gap:8px;font-size:14px}
+#tokens-meteora .creator-earnings-grid>div{display:flex;justify-content:space-between;gap:12px}
+#tokens-meteora .creator-earnings-grid dt{color:var(--muted,#9a9aa3)}
+#tokens-meteora .creator-earnings-grid dd{margin:0;text-align:right;overflow-wrap:anywhere}
+#tokens-meteora>.help{margin:12px 0 0;color:var(--muted,#9a9aa3);font-size:14px;line-height:1.5}
+#tokens-meteora>.help:empty{display:none}
+#tokens-meteora form{padding-top:16px;border-top:1px solid var(--line,#3a3a42)}
+#tokens-meteora label{display:grid;gap:8px}
+#tokens-meteora input{width:100%;box-sizing:border-box}
+#tokens-meteora .small-button{margin:0}
+@media(max-width:640px){#tokens-meteora{margin-top:var(--section-gap,32px)}#tokens-meteora .tokens-grid{gap:var(--grid-gap,12px)}}

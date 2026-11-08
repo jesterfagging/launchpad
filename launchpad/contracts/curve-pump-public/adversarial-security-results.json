@@ -1,0 +1,80 @@
+{
+  "localOnly": true,
+  "realFundsUsed": false,
+  "programSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "testCount": 18,
+  "tests": [
+    {
+      "name": "two separate launch PDAs initialize",
+      "passed": true
+    },
+    {
+      "name": "both independent launches receive unrelated trader funds",
+      "passed": true
+    },
+    {
+      "name": "cross-launch state substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "cross-launch SOL vault substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "cross-launch mint substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "cross-launch token vault substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "system-owned configuration lookalike cannot authorize a launch",
+      "passed": true
+    },
+    {
+      "name": "creator cannot initialize without relayer price signature",
+      "passed": true
+    },
+    {
+      "name": "unconfigured cosigner cannot attest launch price",
+      "passed": true
+    },
+    {
+      "name": "expired relayer price approval cannot initialize",
+      "passed": true
+    },
+    {
+      "name": "primary launch reaches migration cap",
+      "passed": true
+    },
+    {
+      "name": "migration custody substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "migration source tokens substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "migration treasury substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "migration pool token vault substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "migration pool quote vault substitution rejects atomically",
+      "passed": true
+    },
+    {
+      "name": "post-burn rollback fixture reaches graduation",
+      "passed": true
+    },
+    {
+      "name": "failure after LP burn rolls back pool, reserves, fee and phase",
+      "passed": true
+    }
+  ]
+}

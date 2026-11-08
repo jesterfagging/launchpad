@@ -1,0 +1,1622 @@
+[
+  {
+    "name": "STONK",
+    "ticker": "STONK",
+    "mint": "6GmAFSYs4gk3FDao5FzzySQpPZaWsa4rUJHacpMpUNgx"
+  },
+  {
+    "name": "Fartcoin",
+    "ticker": "FARTCOIN",
+    "mint": "9BB6NFEcjBCtnNLFko2FqVQBq8HHM13kCyYcdQbgpump"
+  },
+  {
+    "name": "Catecoin",
+    "ticker": "CATE",
+    "mint": "Ai66LHZG9MCzg1WKdawwqduVAXpNDUuV8M3uyq5ppump"
+  },
+  {
+    "name": "AI Rig Complex",
+    "ticker": "ARC",
+    "mint": "61V8vBaqAGMpgDQi4JcAwo1dmBGHsyhzodcPqnEVpump"
+  },
+  {
+    "name": "Anonymous Cat",
+    "ticker": "ZCAT",
+    "mint": "HcRLc9VDgjLeK154xDawfb1dmVJ98DoSqcwTHGqiDeJR"
+  },
+  {
+    "name": "The Black Bull",
+    "ticker": "ANSEM",
+    "mint": "9cRCn9rGT8V2imeM2BaKs13yhMEais3ruM3rPvTGpump"
+  },
+  {
+    "name": "Comedian",
+    "ticker": "BAN",
+    "mint": "9PR7nCP9DpcUotnDPVLUBUZKu5WAYkwrCUx9wDnSpump"
+  },
+  {
+    "name": "Jelly-My-Jelly",
+    "ticker": "JELLYJELLY",
+    "mint": "FeR8VBqNRSUD5NtXAj2n3j1dAHkZHfyDktKuLXD4pump"
+  },
+  {
+    "name": "Peanut the Squirrel",
+    "ticker": "PNUT",
+    "mint": "2qEHjDLDLbuBgRYvsxhc5D6uDWAivNFZGan56P1tpump"
+  },
+  {
+    "name": "Moo Deng",
+    "ticker": "MOODENG",
+    "mint": "ED5nyyWEzpPPiWimP8vYm7sD7TD3LAt3Q3gRTWHzPJBY"
+  },
+  {
+    "name": "TROLL",
+    "ticker": "TROLL",
+    "mint": "5UUH9RTDiSpq6HKS6bp4NdU9PNJpXRXuiw6ShBTBhgH2"
+  },
+  {
+    "name": "Not in Employment, Education, or Training",
+    "ticker": "NEET",
+    "mint": "Ce2gx9KGXJ6C9Mp5b5x1sn9Mg87JwEbrQby4Zqo3pump"
+  },
+  {
+    "name": "Zerebro",
+    "ticker": "ZEREBRO",
+    "mint": "8x5VqbHA8D7NkD52uNuS5nnt3PwA8pLD34ymskeSo2Wn"
+  },
+  {
+    "name": "would",
+    "ticker": "WOULD",
+    "mint": "J1Wpmugrooj1yMyQKrdZ2vwRXG5rhfx3vTnYE39gpump"
+  },
+  {
+    "name": "Goatseus Maximus",
+    "ticker": "GOAT",
+    "mint": "CzLSujWBLFsSjncfkh59rUFqvafWcY5tzedWJSuypump"
+  },
+  {
+    "name": "pippin",
+    "ticker": "PIPPIN",
+    "mint": "Dfh5DzRgSvvCFDoYc2ciTkMrbDfRKybA4SoFbPmApump"
+  },
+  {
+    "name": "MarsMi",
+    "ticker": "MARSMI",
+    "mint": "GqXX9MfkURBZ5cFym9HDzqTL7uZkjtCSqLkUSe2xpump"
+  },
+  {
+    "name": "GRIFFAIN",
+    "ticker": "GRIFFAIN",
+    "mint": "KENJSUYLASHUMfHyy5o4Hp2FdNqZg1AsUPhfH2kYvEP"
+  },
+  {
+    "name": "Bertram The Pomeranian",
+    "ticker": "BERT",
+    "mint": "HgBRWfYxEfvPhtqkaeymCQtHCrKE46qQ43pKe8HCpump"
+  },
+  {
+    "name": "Just a chill guy",
+    "ticker": "CHILLGUY",
+    "mint": "Df6yfrKC8kZE3KNkrHERKzAetSxbrWeniQfyJY4Jpump"
+  },
+  {
+    "name": "Buttcoin",
+    "ticker": "BUTTCOIN",
+    "mint": "Cm6fNnMk7NfzStP9CZpsQA2v3jjzbcYGAxdJySmHpump"
+  },
+  {
+    "name": "Stairway to gold",
+    "ticker": "GOLD",
+    "mint": "LRxbtkvPfpctgR6MS52MAwtobrCCY9KiJgKMmpPpump"
+  },
+  {
+    "name": "WOLF",
+    "ticker": "WOLF",
+    "mint": "BTr5SwWSKPBrdUzboi2SVr1QvSjmh1caCYUkxsxLpump"
+  },
+  {
+    "name": "Manifesting",
+    "ticker": "MANIFEST",
+    "mint": "BCdwQBAn8dYB5YjTsoB6TdHAWokxv28k2oZUodERpump"
+  },
+  {
+    "name": "Act I The AI Prophecy",
+    "ticker": "ACT",
+    "mint": "GJAFwWjJ3vnTsrQVabjBVK2TYB1YtRCQXRDfDgUnpump"
+  },
+  {
+    "name": "Tung Tung Tung Sahur",
+    "ticker": "TRIPLET",
+    "mint": "J8PSdNP3QewKq2Z1JJJFDMaqF7KcaiJhR7gbr5KZpump"
+  },
+  {
+    "name": "GeorgePlaysClashRoyale",
+    "ticker": "CLASH",
+    "mint": "6nR8wBnfsmXfcdDr1hovJKjvFQxNSidN6XFyfAFZpump"
+  },
+  {
+    "name": "Ava AI",
+    "ticker": "AVA",
+    "mint": "DKu9kykSfbN5LBfFXtNNDPaX35o4Fv6vJ9FKk7pZpump"
+  },
+  {
+    "name": "apeonfone",
+    "ticker": "FONE",
+    "mint": "CTPoyCwkjMvoJwU4xvZZqoD8tiYk6yDchySiN5gGpump"
+  },
+  {
+    "name": "aura",
+    "ticker": "AURA",
+    "mint": "DtR4D9FtVoTX2569gaL837ZgrB6wNjj6tkmnX9Rdk9B2"
+  },
+  {
+    "name": "AISM FAITH TOKEN",
+    "ticker": "AISM",
+    "mint": "9ZFfZwZDfoSqj7HFD7BNGy57XVNkd1BR2UrNYKsnpump"
+  },
+  {
+    "name": "Unicorn Fart Dust",
+    "ticker": "UFD",
+    "mint": "eL5fUxj2J4CiQsmW85k5FG9DvuQjjUoBHoQBi2Kpump"
+  },
+  {
+    "name": "Vine",
+    "ticker": "VINE",
+    "mint": "6AJcP7wuLwmRYLBNbi825wgguaPsWzPBEHcHndpRpump"
+  },
+  {
+    "name": "PEPECAT",
+    "ticker": "PEPECAT",
+    "mint": "CRAMvzDsSpXYsFpcoDr6vFLJMBeftez1E7277xwPpump"
+  },
+  {
+    "name": "CUPSEY",
+    "ticker": "CUPSEY",
+    "mint": "6NwarBvDkXhByqVp2Qkq5i9XbtA2B3Bwe8SWGu9vpump"
+  },
+  {
+    "name": "Mansory Token",
+    "ticker": "MNSRY",
+    "mint": "1xdtu7y3LkkrVCAbm5KGKfYzq1qgKhxxk5AaJBqpump"
+  },
+  {
+    "name": "Fwog",
+    "ticker": "FWOG",
+    "mint": "A8C3xuqscfmyLrte3VmTqrAq8kgMASius9AFNANwpump"
+  },
+  {
+    "name": "Hypurr",
+    "ticker": "PURR",
+    "mint": "8RNUw4N655VSrZKuhGdywhbSMDTrheguFPfxbpE2NZHQ"
+  },
+  {
+    "name": "The Bitcoin Bull",
+    "ticker": "TBB",
+    "mint": "42cXQvAAr7hcPBPWAS4ocVtDyeJ4Fa6gRR2uG4gppump"
+  },
+  {
+    "name": "BLACKCOIN",
+    "ticker": "BLACKCOIN",
+    "mint": "Gqdw9DgDQuPekAwcvLvK7wgLGohGQntP45nVeAsZpump"
+  },
+  {
+    "name": "CALI",
+    "ticker": "CALI",
+    "mint": "8k4sBtEeK4pf26noKqApv8NBTnuSJcbdwpKYknk5PbAA"
+  },
+  {
+    "name": "Bobo",
+    "ticker": "BOBO",
+    "mint": "4nV5gNwwP68zUDat26ySChREqVaQaLudfJBkSgEzpump"
+  },
+  {
+    "name": "GIVEBACK",
+    "ticker": "GBACK",
+    "mint": "Fh7mLxtPAysdvHcMcJ37A3vc6WvBVh7JVDwxmwk6pump"
+  },
+  {
+    "name": "Daddy Tate",
+    "ticker": "DADDY",
+    "mint": "4Cnk9EPnW5ixfLZatCPJjDB1PUtcRpVVgTQukm9epump"
+  },
+  {
+    "name": "JOBCOIN",
+    "ticker": "JOBCOIN",
+    "mint": "AyrQpt5xsVYiN4BqgZdd2tZJAWswT9yLUZmP1jKqpump"
+  },
+  {
+    "name": "Jimothy The Raccoon",
+    "ticker": "JIMOTHY",
+    "mint": "Ge87EtsjwRQbHaqQmKRno69RFTwh9bfSsm99XNxTpump"
+  },
+  {
+    "name": "Chonketha the Wet Beaver",
+    "ticker": "CHONKETHA",
+    "mint": "HcfnJxLov6tY8i1dq9uYRRZKCvxADPpovcfkyXzdpump"
+  },
+  {
+    "name": "DOWGE",
+    "ticker": "DJI6930",
+    "mint": "DQnkBM4eYYMnVE8Qy2K3BB7uts1fh2EwBVktEz6jpump"
+  },
+  {
+    "name": "Cryptocurrency Coin",
+    "ticker": "CRYPTO",
+    "mint": "4ikwYoNvoGEwtMbziUyYBTz1zRM6nmxspsfw9G7Bpump"
+  },
+  {
+    "name": "Alon",
+    "ticker": "ALON",
+    "mint": "8XtRWb4uAAJFMP4QQhoYYCWR6XXb7ybcCdiqPwz9s5WS"
+  },
+  {
+    "name": "ALTSEASON",
+    "ticker": "ALTSZN",
+    "mint": "CcLd8HTAKLWtQHatqPwBQjtuCA72FNB9E1ckRTEzpump"
+  },
+  {
+    "name": "michi",
+    "ticker": "MICHI",
+    "mint": "AywAYdNJnSLSXwKWYxDciPjqGRnwp4iZdQptuuQTpump"
+  },
+  {
+    "name": "Pwease",
+    "ticker": "PWEASE",
+    "mint": "CniPCE4b3s8gSUPhUiyMjXnytrEqUrMfSsnbBjLCpump"
+  },
+  {
+    "name": "ALLINDOGE",
+    "ticker": "ALLINDOGE",
+    "mint": "HyDKNdnhZNVYQMruBevbNsUWruA9STmAQrS4srXApump"
+  },
+  {
+    "name": "Catcoin",
+    "ticker": "CAT",
+    "mint": "9i3NFMa9pqR3suCUhyX3nQE1dy6i5wXafDtppUxYpump"
+  },
+  {
+    "name": "Central African Republic Meme",
+    "ticker": "CAR",
+    "mint": "7oBYdEhV4GkXC19ZfgAvXpJWp2Rn9pm1Bx2cVNxFpump"
+  },
+  {
+    "name": "Unicorn",
+    "ticker": "UWU",
+    "mint": "UWUy7J86LUiBv5SjAUZ53LMGhtnqvbQ7QNSSkyupump"
+  },
+  {
+    "name": "Unstable Coin",
+    "ticker": "USDUC",
+    "mint": "CB9dDufT3ZuQXqqSfa1c5kY935TEreyBw9XJXxHKpump"
+  },
+  {
+    "name": "Xavier: Renegade Angel",
+    "ticker": "XAVIER",
+    "mint": "69G8CpUVZAxbPMiEBrfCCCH445NwFxH6PzVL693Xpump"
+  },
+  {
+    "name": "Ket",
+    "ticker": "KET",
+    "mint": "9Pfync3ejPC9eHqVzq3nYQJAhyhjqpnB9UsaSfLxpump"
+  },
+  {
+    "name": "Fapcoin",
+    "ticker": "FAPCOIN",
+    "mint": "8vGr1eX9vfpootWiUPYa5kYoGx9bTuRy2Xc4dNMrpump"
+  },
+  {
+    "name": "V2EX",
+    "ticker": "V2EX",
+    "mint": "9raUVuzeWUk53co63M4WXLWPWE4Xc6Lpn7RS9dnkpump"
+  },
+  {
+    "name": "Rage Guy",
+    "ticker": "RAGEGUY",
+    "mint": "GvV7sFu6FHJsSVXfpG7xqFnWar3c7YkcC74rqe7Bpump"
+  },
+  {
+    "name": "The Last Play",
+    "ticker": "RETIRE",
+    "mint": "zGh48JtNHVBb5evgoZLXwgPD2Qu4MhkWdJLGDAupump"
+  },
+  {
+    "name": "Wojak",
+    "ticker": "WOJAK",
+    "mint": "8J69rbLTzWWgUJziFY8jeu5tDwEPBwUz4pKBMr5rpump"
+  },
+  {
+    "name": "Energy",
+    "ticker": "$NRG",
+    "mint": "9f52wiW2zrt2497HroMHtZtuj7VzWu4AsEusmW3pump"
+  },
+  {
+    "name": "PYTHIA",
+    "ticker": "PYTHIA",
+    "mint": "CreiuhfwdWCN5mJbMJtA9bBpYQrQF2tCBuZwSPWfpump"
+  },
+  {
+    "name": "Raydium Cat",
+    "ticker": "RAYCAT",
+    "mint": "CFNRDaxFcvRwRSNnA5cHrCCr6AHhk9dNkHWpRUjNupFL"
+  },
+  {
+    "name": "LMAO!",
+    "ticker": "LMAO!",
+    "mint": "H74CYmXgMkYHYuSRsZt6RJb4NYp2u72Vw8BS5huApump"
+  },
+  {
+    "name": "Buy The Cat",
+    "ticker": "BTC",
+    "mint": "E4Ap4icMLwKot8rkkTbq5JkS5kZxt5XCE3yfxbzYBjHx"
+  },
+  {
+    "name": "Barking Puppy",
+    "ticker": "BP",
+    "mint": "3B1ijcocM5EDga6XxQ7JLW7weocQPWWjuhBYG8Vepump"
+  },
+  {
+    "name": "Jotchua",
+    "ticker": "JOTCHUA",
+    "mint": "BcHEaaTCvycPwwsJ9yQTXdHP9X2gCLkznDbZ8VySpump"
+  },
+  {
+    "name": "TEH EPIK DUCK",
+    "ticker": "EPIK",
+    "mint": "3BgwJ8b7b9hHX4sgfZ2KJhv9496CoVfsMK2YePevsBRw"
+  },
+  {
+    "name": "LOULOU",
+    "ticker": "LOULOU",
+    "mint": "7BMb4jNt2tQG81jX7W22H2h2UyL4SW9QJgz25HRhpump"
+  },
+  {
+    "name": "HODL",
+    "ticker": "HODL",
+    "mint": "Hh3oTaqDCKKfdBgsQEvxp9sUwyNf8x9qmKqEMLBWpump"
+  },
+  {
+    "name": "Moby AI",
+    "ticker": "MOBY",
+    "mint": "Cy1GS2FqefgaMbi45UunrUzin1rfEmTUYnomddzBpump"
+  },
+  {
+    "name": "Real World AI",
+    "ticker": "RWA",
+    "mint": "G8aVC4nk5oPWzTHp4PDm3kAuixCebv9WRQMD93h9pump"
+  },
+  {
+    "name": "WHISKEY",
+    "ticker": "WHISKEY",
+    "mint": "9UNqoPEXXxEnEphmyYsZYdL5dnmAUtdiKRUchpnUF5Ph"
+  },
+  {
+    "name": "The Bitcoin Mascot",
+    "ticker": "BITTY",
+    "mint": "dTzEP9JU2NRDPuWtM32gaVKip2fTHBqjheU1APBpump"
+  },
+  {
+    "name": "WADDLES LIVE",
+    "ticker": "WADDLESLIV",
+    "mint": "CgozZUAkJXYYBEiCmbeECxkQzVihahtncDho7pX9pump"
+  },
+  {
+    "name": "The Toad Pepe",
+    "ticker": "TOAD",
+    "mint": "A13oRB9FFaiUjfi6LdCg6p9ka1u8SfGkUFs4SKvPpump"
+  },
+  {
+    "name": "Mansioncoin",
+    "ticker": "MANSION",
+    "mint": "3srdiFxca22oK1g7qdbGGe9qXy4aS9QGVdTETCBFpump"
+  },
+  {
+    "name": "The Original Doge",
+    "ticker": "OGDOGE",
+    "mint": "utLyQQCPvjuCc6zeaXdsFeEC3JNdxKS3vxaZWoGdoge"
+  },
+  {
+    "name": "Z李REAL SUPER COIN",
+    "ticker": "ZREAL",
+    "mint": "GnFMf6JVRhAqPbA9r8yW16xycynKNkXfbaYbusLEpump"
+  },
+  {
+    "name": "Official PPshow",
+    "ticker": "PP",
+    "mint": "ch7rTovcUK7C1zNFM7F93kXU2CByYUsJT4pwYx7pump"
+  },
+  {
+    "name": "The Spirit of Gambling",
+    "ticker": "TOKABU",
+    "mint": "H8xQ6poBjB9DTPMDTKWzWPrnxu4bDEhybxiouF8Ppump"
+  },
+  {
+    "name": "AGENDA 47",
+    "ticker": "A47",
+    "mint": "CN162nCPpq3DxPCyKLbAvEJeB1aCxsnVTEG4ZU8vpump"
+  },
+  {
+    "name": "Red Kitten Crew",
+    "ticker": "RKC",
+    "mint": "7HgfXftRBBqsYtAEYcqjGLQrNJLL6Tww9ek4rE3Apump"
+  },
+  {
+    "name": "The Official 67 Coin",
+    "ticker": "67",
+    "mint": "9AvytnUKsLxPxFHFqS6VLxaxt5p6BhYNr53SD2Chpump"
+  },
+  {
+    "name": "Chill House",
+    "ticker": "CHILLHOUSE",
+    "mint": "GkyPYa7NnCFbduLknCfBfP7p8564X1VZhwZYJ6CZpump"
+  },
+  {
+    "name": "@gork",
+    "ticker": "GORK",
+    "mint": "76EDL5qNcte2ZH29quTaFzagXjWAEY83CATEjyA6pump"
+  },
+  {
+    "name": "Burnie Senders",
+    "ticker": "BURNIE",
+    "mint": "CGEDT9QZDvvH5GmVkWJH2BXiMJqMJySC9ihWyr7Spump"
+  },
+  {
+    "name": "Sigma",
+    "ticker": "SIGMA",
+    "mint": "5SVG3T9CNQsm2kEwzbRq6hASqh1oGfjqTtLXYUibpump"
+  },
+  {
+    "name": "Skill Stacker",
+    "ticker": "STKR",
+    "mint": "3DFnwGLJUfxc4eMxDgQwW6oWaeKBrJ1iwA26YjTfpump"
+  },
+  {
+    "name": "Stool Prisondente",
+    "ticker": "JAILSTOOL",
+    "mint": "AxriehR6Xw3adzHopnvMn7GcpRFcD41ddpiTWMg6pump"
+  },
+  {
+    "name": "Plumber",
+    "ticker": "PLUMBER",
+    "mint": "GCa9TZMK9Q3VUSkhZgX76YAQBjqQd1dPxkBnZojFpump"
+  },
+  {
+    "name": "SAAR",
+    "ticker": "SAAR",
+    "mint": "8H5yfL1GoDETLDaLYZzrgQuZs37eiKJjdfP21b6ypump"
+  },
+  {
+    "name": "Chudjak",
+    "ticker": "CHUD",
+    "mint": "6yjNqPzTSanBWSa6dxVEgTjePXBrZ2FoHLDQwYwEsyM6"
+  },
+  {
+    "name": "SolAngeles",
+    "ticker": "SOLANGELES",
+    "mint": "8wxkvAfEns76yBzu4MnbV7VnXWjg3iDPA9uwAQ6cpump"
+  },
+  {
+    "name": "401jK",
+    "ticker": "401JK",
+    "mint": "Cz7LGKdZPpAxonXx23ZYPW3RtDQvjcf17ZDCZEzFpump"
+  },
+  {
+    "name": "Elon Coin",
+    "ticker": "ELON",
+    "mint": "GY9mZfyPpxXxBXBxS2hB2XjhP3kfUsywTvgveozxpump"
+  },
+  {
+    "name": "BUTTHOLE",
+    "ticker": "BUTTHOLE",
+    "mint": "7ssJZGFT3twGqeYA1kvpoMWwZYvMZvrMEbjRaWgg46BL"
+  },
+  {
+    "name": "tomochi",
+    "ticker": "TOMOCHI",
+    "mint": "6mJoQqcPEjiQ1hFya9oH6NBCQLhvS3mwVQWV9EcTHg9u"
+  },
+  {
+    "name": "Leafy",
+    "ticker": "LEAFY",
+    "mint": "DD3AC2Cmr5rXzJ6ErRHeryx3ASLVMhSBALiUqeKcpump"
+  },
+  {
+    "name": "Shark Cat",
+    "ticker": "SC",
+    "mint": "6D7NaB2xsLd7cauWu1wKk6KBsJohJmP2qZH9GEfVi5Ui"
+  },
+  {
+    "name": "HeeeHeee",
+    "ticker": "HEEHEE",
+    "mint": "9dLuVbJMd4ZpTpFgmaFHAGSsFwVjtcnzFWaLAA1expHg"
+  },
+  {
+    "name": "Pepe on SOL",
+    "ticker": "PEPE",
+    "mint": "B5WTLaRwaUQpKk7ir1wniNB6m5o8GgMrimhKMYan2R6B"
+  },
+  {
+    "name": "mini",
+    "ticker": "MINI",
+    "mint": "2JcXacFwt9mVAwBQ5nZkYwCyXQkRcdsYrDXn6hj22SbP"
+  },
+  {
+    "name": "Trencher",
+    "ticker": "TRENCHER",
+    "mint": "8ncucXv6U6epZKHPbgaEBcEK399TpHGKCquSt4RnmX4f"
+  },
+  {
+    "name": "Ping Ping and Fu Shuang",
+    "ticker": "熊猫",
+    "mint": "13i7SfDDzg3t4MQnfZNtFKptHpv8HR2eaGRMfetSpump"
+  },
+  {
+    "name": "vankedisi",
+    "ticker": "VANKEDISI",
+    "mint": "66bHtzcXqmLgkn668EG4ETzHL3RLz5ybdckqvrPppump"
+  },
+  {
+    "name": "catwifmask",
+    "ticker": "MASK",
+    "mint": "6MQpbiTC2YcogidTmKqMLK82qvE9z5QEm7EP3AEDpump"
+  },
+  {
+    "name": "SelfMade by SP3ND",
+    "ticker": "MADE",
+    "mint": "EpXtn6xGoZ4Y45vRjiDUHSCGbBoJD5FaEqZbF98YswH1"
+  },
+  {
+    "name": "The Earn Bull",
+    "ticker": "TEB",
+    "mint": "Dx68jydZnXJkp6Xngku8FbjFFovp9tZmXT66jrLXpump"
+  },
+  {
+    "name": "\"　\"",
+    "ticker": "\"　\"",
+    "mint": "9qriMjPPAJTMCtfQnz7Mo9BsV2jAWTr2ff7yc3JWpump"
+  },
+  {
+    "name": "Gorbagana",
+    "ticker": "GOR",
+    "mint": "71Jvq4Epe2FCJ7JFSF7jLXdNk1Wy4Bhqd9iL6bEFELvg"
+  },
+  {
+    "name": "RNT",
+    "ticker": "RNT",
+    "mint": "2fUFhZyd47Mapv9wcfXh5gnQwFXtqcYu9xAN4THBpump"
+  },
+  {
+    "name": "hehe",
+    "ticker": "HEHE",
+    "mint": "BreuhVohXX5fv6q41uyb3sojtAuGoGaiAhKBMtcrpump"
+  },
+  {
+    "name": "San Chan",
+    "ticker": "SAN",
+    "mint": "GQz5ThKHNcuAvMKA8rCPSdoFUoApk9Fi8qB9m3Gqpump"
+  },
+  {
+    "name": "Core",
+    "ticker": "CORE",
+    "mint": "4FdojUmXeaFMBG6yUaoufAC5Bz7u9AwnSAMizkx5pump"
+  },
+  {
+    "name": "Shoggoth",
+    "ticker": "SHOGGOTH",
+    "mint": "H2c31USxu35MDkBrGph8pUDUnmzo2e4Rf4hnvL2Upump"
+  },
+  {
+    "name": "Store of Value",
+    "ticker": "VAL",
+    "mint": "DtwN3PHiKEpK1MSekViVC8QifdRJCkML6HG16sXHpump"
+  },
+  {
+    "name": "Housecoin",
+    "ticker": "HOUSE",
+    "mint": "DitHyRMQiSDhn5cnKMJV2CDDt6sVct96YrECiM49pump"
+  },
+  {
+    "name": "loom",
+    "ticker": "LOOM",
+    "mint": "CB1YQfUzgsnaCd93cZLdiX1uASW7utWBaYMUsvcwNUBV"
+  },
+  {
+    "name": "moonkey",
+    "ticker": "MOONKEY",
+    "mint": "BRZ5aeJCDuruA42V1CntqKvofa2G7DS3yyxx1pZEpump"
+  },
+  {
+    "name": "Rizzmas",
+    "ticker": "RIZZMAS",
+    "mint": "ADA9mtno4BVknoSefbqdh7aMPg4wwxZHKByRpJNTpump"
+  },
+  {
+    "name": "Kekius Maximus",
+    "ticker": "KM",
+    "mint": "FThrNpdic79XRV6i9aCWQ2UTp7oRQuCXAgUWtZR2cs42"
+  },
+  {
+    "name": "Market Dominance",
+    "ticker": "MD",
+    "mint": "C4j7kPx9PqDnfvxe2uycJQRTAeyGwmU4DyGf21Xgpump"
+  },
+  {
+    "name": "Strategic Super Reserve",
+    "ticker": "SSR",
+    "mint": "BpdHpqznEgYPXZNrJVRZvBhdWoafYLVVuLxTQo34pump"
+  },
+  {
+    "name": "Bullshit Coin",
+    "ticker": "BULLSHIT",
+    "mint": "zj1jpp7QMveWHLs61vL9KMZf254KvW7j4AAmBF8ry2k"
+  },
+  {
+    "name": "The White Whale",
+    "ticker": "WHITEWHALE",
+    "mint": "a3W4qutoEJA4232T2gwZUfgYJTetr96pU4SJMwppump"
+  },
+  {
+    "name": "Holdoween",
+    "ticker": "HOLDOWEEN",
+    "mint": "BxftAowY2dVa2h9KMqDTPk4oMxzU9k6uVbZuoorXpump"
+  },
+  {
+    "name": "Elon4AfD",
+    "ticker": "ELON4AFD",
+    "mint": "BkYAUVMar1gLwuFLv2n5cmB6HhcNtvd86kU3gqAypump"
+  },
+  {
+    "name": "Joss Money",
+    "ticker": "JMONEY",
+    "mint": "HZNnmhAY6xfq2iKRyBTEvTVeoTYJzpkK8mfnfG8Ppump"
+  },
+  {
+    "name": "MITCH",
+    "ticker": "IDRAWLINE",
+    "mint": "FDEF2U9geiWS7sdGPCUo2r1wGswkJr2mmVTECiH6pump"
+  },
+  {
+    "name": "BeB",
+    "ticker": "BEB1M",
+    "mint": "EGedTSu2zdFNT1k7phURksCpcwHNyxepLzSMYGApump"
+  },
+  {
+    "name": "Dotcom",
+    "ticker": "Y2K",
+    "mint": "7voKerVHPvbXde3bEpyNcdodVEufq17tW6eZLUUkpump"
+  },
+  {
+    "name": "Waffles",
+    "ticker": "WAFFLES",
+    "mint": "8doS8nzmgVZEaACxALkbK5fZtw4UuoRp4Yt8NEaXfDMb"
+  },
+  {
+    "name": "Nietzschean Penguin",
+    "ticker": "PENGUIN",
+    "mint": "8Jx8AAHj86wbQgUTjGuj6GTTL5Ps3cqxKRTvpaJApump"
+  },
+  {
+    "name": "Groks Dog",
+    "ticker": "BOLT",
+    "mint": "7Y6Rix8X2botuMaJ2mno4UqSWdQZqU4RezY6qp7zpump"
+  },
+  {
+    "name": "GTA VI",
+    "ticker": "GTA6",
+    "mint": "4kjruqGHDsSqkMdFfCjV7Vb62HPFhtXyWc2t6JpQzDnz"
+  },
+  {
+    "name": "just buy $1 worth of this coin",
+    "ticker": "$1",
+    "mint": "GHichsGq8aPnqJyz6Jp1ASTK4PNLpB5KrD6XrfDjpump"
+  },
+  {
+    "name": "BULLEN",
+    "ticker": "BULLEN",
+    "mint": "BULLENxRbvuwjo4DLBKBbh23cNQ4ZbpDeQKuoVXL7exN"
+  },
+  {
+    "name": "Butthole Coin",
+    "ticker": "BUTTHOLE",
+    "mint": "CboMcTUYUcy9E6B3yGdFn6aEsGUnYV6yWeoeukw6pump"
+  },
+  {
+    "name": "All Will Retire",
+    "ticker": "AWR",
+    "mint": "Ai4CL1SAxVRigxQFwBH8S2JkuL7EqrdiGwTC7JpCpump"
+  },
+  {
+    "name": "Alice",
+    "ticker": "ALICE",
+    "mint": "2hkhFLWQKUcvUNh7eUkfZVz3rYfxXqFNeVLYMotrzFky"
+  },
+  {
+    "name": "goon",
+    "ticker": "GOON",
+    "mint": "HSUMi4rMgjrx7zRUabw3ogGu1pa5hmF2eVcXj9Apump"
+  },
+  {
+    "name": "FRIC",
+    "ticker": "FRIC",
+    "mint": "EsP4kJfKUDLfX274WoBSiiEy74Sh4tZKUCDjfULHpump"
+  },
+  {
+    "name": "PETRO PENGUINS",
+    "ticker": "PENGO",
+    "mint": "F2k82EcxLtzekq1bfoGVdgp6EXZ5dLT1jE7g3LvQpump"
+  },
+  {
+    "name": "Bullish Degen",
+    "ticker": "BULLISH",
+    "mint": "C2omVhcvt3DDY77S2KZzawFJQeETZofgZ4eNWWkXpump"
+  },
+  {
+    "name": "USEFUL COIN",
+    "ticker": "USEFUL",
+    "mint": "GWTP6M5bxhaJ1k2Kxvf8hhYaHE6jZMhh4cKzFuCpnc83"
+  },
+  {
+    "name": "MANLET",
+    "ticker": "MANLET",
+    "mint": "HxQhDGYqyjorgogMJx7YbBHADEDxuHhLnMMmr6VYpyn"
+  },
+  {
+    "name": "PsyopAnime",
+    "ticker": "PSYOPANIME",
+    "mint": "2nP9yKQNSGQy851iyawDvBkzkK2R2aqKArQCKc2gpump"
+  },
+  {
+    "name": "Prometheus",
+    "ticker": "PROMETHEUS",
+    "mint": "63zfjPfH4uaX3TQZoD35WqUrqiuCQQWndMTxQHsJpump"
+  },
+  {
+    "name": "unc",
+    "ticker": "UNC",
+    "mint": "ACtfUWtgvaXrQGNMiohTusi5jcx5RJf5zwu9aAxkpump"
+  },
+  {
+    "name": "New XAI Gork",
+    "ticker": "GORK",
+    "mint": "38PgzpJYu2HkiYvV8qePFakB8tuobPdGm2FFEn7Dpump"
+  },
+  {
+    "name": "BER",
+    "ticker": "BER",
+    "mint": "5kkkNahbYVYZUQthCZCU6ax4zkcN622jAMTnAvJApump"
+  },
+  {
+    "name": "FatCat",
+    "ticker": "FATCAT",
+    "mint": "63EM76z3TqZt92DhzhmmaAgcjSkX7Eg1X65jWiocpump"
+  },
+  {
+    "name": "Brent on SOL",
+    "ticker": "BRENT",
+    "mint": "kLqMvUm1p4pRbxU4r8kWCTVAuWMJLtcTJqGb4b5pump"
+  },
+  {
+    "name": "Normie",
+    "ticker": "NORMIE",
+    "mint": "FrSFwE2BxWADEyUWFXDMAeomzuB4r83ZvzdG9sevpump"
+  },
+  {
+    "name": "Official Layoff Coin",
+    "ticker": "LAYOFF",
+    "mint": "9voQQTTdfbqfXwc9rZAdJEeXXjUWjHnB4wkShMT8pump"
+  },
+  {
+    "name": "PINO",
+    "ticker": "PINO",
+    "mint": "7b36cKRYFZsMp3vLByVwfVQxW2ndcYth5rhPnyypump"
+  },
+  {
+    "name": "Buckazoids",
+    "ticker": "BUCKAZOIDS",
+    "mint": "BQQzEvYT4knThhkSPBvSKBLg1LEczisWLhx5ydJipump"
+  },
+  {
+    "name": "FARTGIRL",
+    "ticker": "FARTGIRL",
+    "mint": "Cjrrc595e9R47EZ3gkbUmL6ZZpLSxiXg16v2Y3Aapump"
+  },
+  {
+    "name": "Fish N Chips",
+    "ticker": "CHIPPY",
+    "mint": "Bz7Nx1F3Mti1BVS7ZAVDLSKGEaejufxvX2DPdjpf8PqT"
+  },
+  {
+    "name": "TASS HUB",
+    "ticker": "TASSHUB",
+    "mint": "FKNfAwb8TmjYkj11V4NiTz4TgrLWTWgm2NRwAD9epump"
+  },
+  {
+    "name": "Swasticoin",
+    "ticker": "YZY",
+    "mint": "9gyfbPVwwZx4y1hotNSLcqXCQNpNqqz6ZRvo8yTLpump"
+  },
+  {
+    "name": "Wobbles",
+    "ticker": "WOBBLES",
+    "mint": "9yZ5Ru8pbmJZ6Q2DKLCGXkaLNwkm83cnJ4QCw4PFpump"
+  },
+  {
+    "name": "Leopardus tilcayo",
+    "ticker": "TILCAYO",
+    "mint": "AyYNfPtftg2zDP4ZbgcoQMggQtwLh4zpfVVmUJs2thto"
+  },
+  {
+    "name": "Mushu",
+    "ticker": "MUSHU",
+    "mint": "5Jr9hGmJgxBRjjF8XGcGgQzXUdsbpZNNMpigEv8Wpump"
+  },
+  {
+    "name": "WAGMI",
+    "ticker": "WAGMI",
+    "mint": "GnM6XZ7DN9KSPW2ZVMNqCggsxjnxHMGb2t4kiWrUpump"
+  },
+  {
+    "name": "Lunar Lad",
+    "ticker": "LAD",
+    "mint": "5Kc2PwwPkyvRXC8wHgkVfKwxrMGktRuDpwTgAy1bpump"
+  },
+  {
+    "name": "LC SHIB",
+    "ticker": "LC",
+    "mint": "43YakhC3TcSuTgSXnxFgw8uKL8VkuLuFa4M6Bninpump"
+  },
+  {
+    "name": "Billy",
+    "ticker": "BILLY",
+    "mint": "3B5wuUrMEi5yATD7on46hKfej3pfmd7t1RKgrsN3pump"
+  },
+  {
+    "name": "supercycle(real)",
+    "ticker": "SUPERCYCLE",
+    "mint": "2G8LH53fcr3aCrEsmAo73eunbZRbyjKrGH5qmur6pump"
+  },
+  {
+    "name": "Clanker",
+    "ticker": "CLANKER",
+    "mint": "7LA4wwjoXU4hAdwX1eT5ouuSsMrHq9wHQBfAyPfJK1eQ"
+  },
+  {
+    "name": "GOLDINU",
+    "ticker": "GOLDINU",
+    "mint": "2LYTMGch89RabgQsCnzgMRiFLuzXi8rrnYqQRnZMe7mx"
+  },
+  {
+    "name": "Smoking Chicken Fish",
+    "ticker": "SCF",
+    "mint": "GiG7Hr61RVm4CSUxJmgiCoySFQtdiwxtqf64MsRppump"
+  },
+  {
+    "name": "Retard Finder Coin",
+    "ticker": "RFC",
+    "mint": "C3DwDjT17gDvvCYC2nsdGHxDHVmQRdhKfpAdqQ29pump"
+  },
+  {
+    "name": "Aura Final Boss",
+    "ticker": "KIMCHI",
+    "mint": "Am8iBffqgaedfdK5XhtorbcRrKzwH9nyL3ySikQfpump"
+  },
+  {
+    "name": "HeavyPulp",
+    "ticker": "HEAVYPULP",
+    "mint": "8G5ayEsJF4Q7FEWEGeF4jtnUWZBEKCqhySTFQf9Ppump"
+  },
+  {
+    "name": "Shytoshi Kusama",
+    "ticker": "SHY",
+    "mint": "7d1vpt5eri79nETcL74Punhp3mGkeBgUkMdPWep6pump"
+  },
+  {
+    "name": "Tapcoin",
+    "ticker": "TAP",
+    "mint": "ADcF26nFGKMuRZ7va5361H2PCHCDRi2FmeJBkX3Spump"
+  },
+  {
+    "name": "something to believe in",
+    "ticker": "BELIEVE",
+    "mint": "HeC2xWqGT9gPfdvaMuqxPo2bUQ1XgY5wRtnrwTEHpump"
+  },
+  {
+    "name": "UPTOBER",
+    "ticker": "UPTOBER",
+    "mint": "6vVfbQVRSXcfyQamPqCzcqmA86vCzb2d7B7gmDDqpump"
+  },
+  {
+    "name": "Touch Grass",
+    "ticker": "TOUCHGRASS",
+    "mint": "5314GTpDziP2ZdaANnt5KJEABGXy5Nn5Kyc3SFPYpump"
+  },
+  {
+    "name": "Diamond Nutted Chads",
+    "ticker": "DNC",
+    "mint": "42HsffEQoHqWoeiffksYayC75fQDxaoUdMBzmeXdpump"
+  },
+  {
+    "name": "STONKS",
+    "ticker": "STONKS",
+    "mint": "DC6HP2A7SUy49WeazfeWgbwxVpzKdEPuB46mtb7XBzWx"
+  },
+  {
+    "name": "First Convicted RACCON",
+    "ticker": "FRED",
+    "mint": "CNvitvFnSM5ed6K28RUNSaAjqqz5tX1rA5HgaBN9pump"
+  },
+  {
+    "name": "RONIN",
+    "ticker": "RONIN",
+    "mint": "2JVEVXoRsskapZ8T56MjMNJq6Dk3feEUYSRmzkkipump"
+  },
+  {
+    "name": "MUMU THE BULL",
+    "ticker": "MUMU",
+    "mint": "hf34pZHnV4entu9bdp4pFEmeKpivEUeSUhASgWopump"
+  },
+  {
+    "name": "rasmr",
+    "ticker": "RASMR",
+    "mint": "B1oEzGes1QxVZoxR3abiwAyL4jcPRF2s2ok5Yerrpump"
+  },
+  {
+    "name": "Whyyoutouzhele",
+    "ticker": "LI",
+    "mint": "HhUVkZ1qz8vfMqZDemLyxBFxrHFKVSYAk7a6227Lpump"
+  },
+  {
+    "name": "dopameme",
+    "ticker": "DOPAMEME",
+    "mint": "Ab1sTFNv2tV5DX1XpriwNehXgiJhdq2RQ5LtD5BXpump"
+  },
+  {
+    "name": "パンチ (Punch)",
+    "ticker": "PUNCH",
+    "mint": "NV2RYH954cTJ3ckFUpvfqaQXU4ARqqDH3562nFSpump"
+  },
+  {
+    "name": "LAYOOO",
+    "ticker": "LAYOOO",
+    "mint": "9sfCHMLWSVy6MD6zr7pR1gD3qbT7C6K1E3dMf2ZBpump"
+  },
+  {
+    "name": "Big Brother Machi",
+    "ticker": "MACHI",
+    "mint": "ATBR4i19gcQ31Rfr7ymA2XvkCQEAkNFGBtVKTmdqpump"
+  },
+  {
+    "name": "SYNAPZ",
+    "ticker": "SYNAPZ",
+    "mint": "HfJvxwLQeHeiDz8e91RWSwMm3R1pLh1vyjLoSr5gpump"
+  },
+  {
+    "name": "Luce",
+    "ticker": "LUCE",
+    "mint": "CBdCxKo9QavR9hfShgpEBG3zekorAeD7W1jfq2o3pump"
+  },
+  {
+    "name": "chad",
+    "ticker": "CHAD",
+    "mint": "PZUbFxtuydyLP2JEwCmvWc1p1NHxWsqBYuEoVbcnQA3"
+  },
+  {
+    "name": "Heavier",
+    "ticker": "HEV",
+    "mint": "4tkupXEGfbYPCVN37CagviJd3tgWnudT9avKZvouT3Dm"
+  },
+  {
+    "name": "Unc Ash",
+    "ticker": "ASH",
+    "mint": "vAddewUHuYgRDrL6n3kXtBXMT635evJz8K93j6Wm1Ba"
+  },
+  {
+    "name": "Stonk Cat",
+    "ticker": "STONKCAT",
+    "mint": "DkPQvrx7CDYrL4HfHijz6GqZLYm7Pd4rm1kTiumLFwhS"
+  },
+  {
+    "name": "artificial gooner intelligence",
+    "ticker": "AGI",
+    "mint": "CaWZeUM4FvX9dPkjGc2xHS6tSN3qJfTWyvaG77aM5o7h"
+  },
+  {
+    "name": "Fries",
+    "ticker": "FRIES",
+    "mint": "7hGgx1VtNTj193fFXXuMEkp1MRV6JbWYgMBhHRYxaxu2"
+  },
+  {
+    "name": "Stonk10 Index",
+    "ticker": "STONK10",
+    "mint": "AqoPZcUumKUBHrnfBsNtoNuneYEjoimaiWYq8GH8gpX9"
+  },
+  {
+    "name": "Not Stonks",
+    "ticker": "NOTSTONKS",
+    "mint": "8EZvUL9ngp8YAprqvRz1w9Ymm7UChFzmzk6fqJh8EnHn"
+  },
+  {
+    "name": "flying tesla roadster",
+    "ticker": "FTR",
+    "mint": "3w5cKpkfz2TAS22oXhMSZGjpsK6URL5d5db2thvwMtVx"
+  },
+  {
+    "name": "Anonymous Dog",
+    "ticker": "ZDOG",
+    "mint": "EbT2jpoeRJVFNWAFJE97EGfQF3iwHsEY8sh17fGbL5ER"
+  },
+  {
+    "name": "Froge",
+    "ticker": "FROGE",
+    "mint": "GhuEi5AWtZaWuAda4ysJwMTzU8oMdjiL1bz6eziptT2p"
+  },
+  {
+    "name": "hot air rises",
+    "ticker": "HOTAIR",
+    "mint": "BbjGgcuB2FpXkgVcLHptwfuEyK58ehc9KmAD5ArucvKk"
+  },
+  {
+    "name": "Stonkless",
+    "ticker": "STONKLESS",
+    "mint": "2tCKJWAdwyzRgoXtNaTFwnsHuZMDQkZooCsoHqPHS6YN"
+  },
+  {
+    "name": "LUCIA THE BADDIE",
+    "ticker": "LUCIA",
+    "mint": "FtHCpYdjVx8WR6vc4zqe6iXqHydZcKhNnmSNF2NXKfy1"
+  },
+  {
+    "name": "Zodl",
+    "ticker": "ZODL",
+    "mint": "4Ee7xRodjp7kBGTZsHj9FE87UQWJuPke7ENzzGWBbFCc"
+  },
+  {
+    "name": "Vida Global CTO",
+    "ticker": "CTO",
+    "mint": "8K5X85PAJHAAVSvYaAzgVPPAPsqqHmvx16ZyBiscYF8L"
+  },
+  {
+    "name": "STONK INU",
+    "ticker": "STONKINU",
+    "mint": "HspTMJZsZpT6gR88wqS1C5x1DkswXp6uNTSKX7bu4J5Z"
+  },
+  {
+    "name": "Mysterious Source of Income",
+    "ticker": "INCOME",
+    "mint": "9PSxYDFLPbSVx2PKjYRMumW14xtxViQU3Qmi7M8NQ32W"
+  },
+  {
+    "name": "Stonk5 Index",
+    "ticker": "STONK5",
+    "mint": "F7CTvENFnkDJysMhaFFicDT2FwnbW2oasFZGG6WJnar7"
+  },
+  {
+    "name": "Kuromi",
+    "ticker": "KUROMI",
+    "mint": "3BzHwZCLoaKMK3co1PDCAgFfeLKexTVJb2dWFX18BmKs"
+  },
+  {
+    "name": "引きこもり",
+    "ticker": "HIKIKOMORI",
+    "mint": "HyUkgbA8Ke3jMfdxHy72T5mPCMXaoM1G3QETtU8p5vYx"
+  },
+  {
+    "name": "NVDA Doge",
+    "ticker": "NVDGE",
+    "mint": "Aigf5pKPyZW8nzxCrHEisE4tZMiUhFpKie8mYE7cmj6c"
+  },
+  {
+    "name": "Cinnamoroll",
+    "ticker": "CINNA",
+    "mint": "4sgjzB5Nc49SUB4xnb3MC2H5dVkKvimfFN5AsJuVs5U7"
+  },
+  {
+    "name": "Upside Down Cat",
+    "ticker": "USDC",
+    "mint": "C5nG72gUFJz6wewcgTPjcBmpSq4BwFLHy5j8heo9d7rZ"
+  },
+  {
+    "name": "babystonk",
+    "ticker": "BABYSTONK",
+    "mint": "FRvKDWr47eZS5VNUATBiP6Req58Q6gE9AowCx8pn7ACB"
+  },
+  {
+    "name": "Winternomics TV",
+    "ticker": "WNTV",
+    "mint": "2GXmB95pGD3pHV4mzNq7YsmyiEmVYWQLptbwYqgdpump"
+  },
+  {
+    "name": "DEV TOMMY JINGL",
+    "ticker": "TOMMYJINGL",
+    "mint": "DVr62PSjVCrEwmWVRdKQABqJumb1jmJGKa8BkUG6pump"
+  },
+  {
+    "name": "Swarmed",
+    "ticker": "SWARM",
+    "mint": "5g9PWcRUHpmqm5uKycpShKXJB18sGLeCEzgB3qrRpump"
+  },
+  {
+    "name": "Utility Coin",
+    "ticker": "UTILITY",
+    "mint": "CbouD8khLcz1Y1QngvRtQufUimSRKpHkvGn6y1n8pump"
+  },
+  {
+    "name": "NPCs",
+    "ticker": "NPC",
+    "mint": "7GUnr7krtQhJwd6ASY2VUprd9t4c64zcgCsjdmZepump"
+  },
+  {
+    "name": "Cats",
+    "ticker": "CATS",
+    "mint": "DyidQqHQvWv9r76bWY7H11uB5qnDE7GyDT7Hq1QCpump"
+  },
+  {
+    "name": "Elon Trump Fart",
+    "ticker": "ETF500",
+    "mint": "CWX6t6pGJ1zsnuywnyd2ZMZJ7inB2sWuPdsteoT6pump"
+  },
+  {
+    "name": "just a memecoin",
+    "ticker": "MEMECOIN",
+    "mint": "Bb4jR951QtVjeFAYFLBYXDSMKjbTDroCLPbFLdd7pump"
+  },
+  {
+    "name": "WAR",
+    "ticker": "WAR",
+    "mint": "C9dJfTGUzhuqPWxh9mcDr66JZN4uzXh2gh9EWnEdpump"
+  },
+  {
+    "name": "Live Action Roleplay",
+    "ticker": "LARP",
+    "mint": "EygStH4gHv1h4E8w4raYv6NGsrDiij3nbfCc26iTpump"
+  },
+  {
+    "name": "Mother Iggy",
+    "ticker": "MOTHER",
+    "mint": "3S8qX1MsMqRbiwKg2cQyx7nis1oHMgaCuc9c4VfvVdPN"
+  },
+  {
+    "name": "StupidCoin",
+    "ticker": "STUPID",
+    "mint": "9RjwNo6hBPkxayWHCqQD1VjaH8igSizEseNZNbddpump"
+  },
+  {
+    "name": "Spinning Cat",
+    "ticker": "OIIAOIIA",
+    "mint": "VaxZxmFXV8tmsd72hUn22ex6GFzZ5uq9DVJ5wA5pump"
+  },
+  {
+    "name": "🟥🟪🟦🟩🟨🟧",
+    "ticker": "🟥🟩",
+    "mint": "HwPtbFpd3VTe3tfyosoVtPf9WPuSk5gAKkN5xp6Npump"
+  },
+  {
+    "name": "BULLIEVE",
+    "ticker": "BULLIEVE",
+    "mint": "3qZ4Abv6WJRPdqSh2i7NgtafjpzcXoEb37Z2zwwwpump"
+  },
+  {
+    "name": "Law Of Attraction",
+    "ticker": "LOA",
+    "mint": "EhHyfjRwj2jhmSE7GW5uJfizaLcNDa5C4HWPiSqjpump"
+  },
+  {
+    "name": "Neiro",
+    "ticker": "NEIRO",
+    "mint": "CTg3ZgYx79zrE1MteDVkmkcGniiFrK1hJ6yiabropump"
+  },
+  {
+    "name": "Kobecoin",
+    "ticker": "KOBX",
+    "mint": "48iJcUv9jsiZ7cCisyVFLPFLMoNBKg3L43bRvktXpump"
+  },
+  {
+    "name": "Wasabi Cheese",
+    "ticker": "WASABI",
+    "mint": "DSZeB6pCzZsM43gTz7jakiYeCafinsNMKcpeB1FApump"
+  },
+  {
+    "name": "Justice for HeeHaw",
+    "ticker": "HEEHAW",
+    "mint": "EEpng77ZPn9FbgbT4xsRjwuxNCcMBYq3HTwEscyTpump"
+  },
+  {
+    "name": "Degen",
+    "ticker": "DGN",
+    "mint": "Fd8TNp5GhhTk6Uq6utMvK13vfQdLN1yUUHCnapWvpump"
+  },
+  {
+    "name": "SelfieDogCoin",
+    "ticker": "SELFIE",
+    "mint": "9WPTUkh8fKuCnepRWoPYLH3aK9gSjPHFDenBq2X1Czdp"
+  },
+  {
+    "name": "Make Aliens Great Again",
+    "ticker": "MAGA",
+    "mint": "Hon2rHAiqkcDtUzL5gA2vjXPr7T1MPCK2UT2AHKCpump"
+  },
+  {
+    "name": "Knight Core",
+    "ticker": "KNIGHT",
+    "mint": "AzeNfRi7DX5HndH7dUgCxMD5sQPV7FPFH1cwDkoqpump"
+  },
+  {
+    "name": "Cheese",
+    "ticker": "CHEESE",
+    "mint": "B1KrhWbacPi3tpjWqnsbjKQJEkp3RvWppGxNzUYBpump"
+  },
+  {
+    "name": "Dollar Cost Average",
+    "ticker": "DCA",
+    "mint": "AXQyzYRdk6ebp3VdwSNNNFR5Ssm5rMVTP84EEg98pump"
+  },
+  {
+    "name": "Autonomous Virtual Beings",
+    "ticker": "AVB",
+    "mint": "6d5zHW5B8RkGKd51Lpb9RqFQSqDudr9GJgZ1SgQZpump"
+  },
+  {
+    "name": "what the dog doing?",
+    "ticker": "我的刀盾",
+    "mint": "6iA73gWCKkLWKbVr8rgibV57MMRxzsaqS9cWpgKBpump"
+  },
+  {
+    "name": "LADYBUG",
+    "ticker": "LADYBUG",
+    "mint": "7TgfC7finEVA1QcCbn1Jb2cz4RiDL4if4ATEGHZupump"
+  },
+  {
+    "name": "Testicle",
+    "ticker": "TESTICLE",
+    "mint": "4TyZGqRLG3VcHTGMcLBoPUmqYitMVojXinAmkL8xpump"
+  },
+  {
+    "name": "AI Slop",
+    "ticker": "AISLOP",
+    "mint": "2wzVMXhLypmP92mXNCq4fuFcd9TCC972AbMfuiH3pump"
+  },
+  {
+    "name": "FIGHT",
+    "ticker": "FIGHT",
+    "mint": "KMnDBXcPXoz6oMJW5XG4tXdwSWpmWEP2RQM1Uujpump"
+  },
+  {
+    "name": "Pepe Trump",
+    "ticker": "PTRUMP",
+    "mint": "Gk2kRrwNMBU4Dn9JhC1Dks8G5X9nqi4ZE5jMvK6bdgEd"
+  },
+  {
+    "name": "PEPE BROCK",
+    "ticker": "PEPENOM",
+    "mint": "EpEfnZxQyiBXppSKi8sncc8w4corn1UJbF9G91fQpump"
+  },
+  {
+    "name": "Pistacio",
+    "ticker": "PISTACIO",
+    "mint": "FZqdw6oSDCbHtKYxmhnfbi97SnyVy8jaYpdCoMrrjKa2"
+  },
+  {
+    "name": "Woman Yelling At Cat",
+    "ticker": "WYAC",
+    "mint": "BEgBsVSKJSxreiCE1XmWWq8arnwit7xDqQXSWYgay9xP"
+  },
+  {
+    "name": "You’ll Own Nothing and Be Happy",
+    "ticker": "NOTHING",
+    "mint": "F7pB3ZdfBnyFw2LRHydWEn9BmhEa5XihXLjhySFRpump"
+  },
+  {
+    "name": "Sol Bastard",
+    "ticker": "SOBA",
+    "mint": "25p2BoNp6qrJH5As6ek6H7Ei495oSkyZd3tGb97sqFmH"
+  },
+  {
+    "name": "Aliens are real",
+    "ticker": "ALIENS",
+    "mint": "F5tfztTnE4sYsMhZT5KrFpWvHmYSfJZoRjCuxKPbpump"
+  },
+  {
+    "name": "Dasha",
+    "ticker": "VVAIFU",
+    "mint": "FQ1tyso61AH1tzodyJfSwmzsD3GToybbRNoZxUBz21p8"
+  },
+  {
+    "name": "LOL",
+    "ticker": "LOL",
+    "mint": "34q2KmCvapecJgR6ZrtbCTrzZVtkt3a5mHEA3TuEsWYb"
+  },
+  {
+    "name": "Litecoin Mascot",
+    "ticker": "LESTER",
+    "mint": "5z3iCe53hUANTiG8Js8RjHNE2Arjik7L2CXLyr2rpump"
+  },
+  {
+    "name": "Kitten Wif Hat",
+    "ticker": "KWIF",
+    "mint": "6Rwcmkz9yiYVM5EzyMcr4JsQPGEAWhcUvLvfBperYnUt"
+  },
+  {
+    "name": "nomnom",
+    "ticker": "NOMNOM",
+    "mint": "6ZrYhkwvoYE4QqzpdzJ7htEHwT2u2546EkTNJ7qepump"
+  },
+  {
+    "name": "maxxing",
+    "ticker": "MAXXING",
+    "mint": "32CdQdBUxbCsLy5AUHWmyidfwhgGUr9N573NBUrDpump"
+  },
+  {
+    "name": "Monkey Cult",
+    "ticker": "MOLT",
+    "mint": "HyLXondhNhGkvWPXr8z4EPSgZNRRs4j8BHdyqMdVpump"
+  },
+  {
+    "name": "WE LOVE ASS",
+    "ticker": "ASS",
+    "mint": "CfgmB9iTWABdYh3CHQQDUGtWy18rMNAEEqyp4GrJpump"
+  },
+  {
+    "name": "boob",
+    "ticker": "BOOB",
+    "mint": "9zqre5sRRdFvKqyTyvEd1jcKDRF4g47s7mZSGUnQpump"
+  },
+  {
+    "name": "Grrr",
+    "ticker": "GRRR",
+    "mint": "DUhWgHD3KgHHmsYdQdJHDv359bySNzigYcqJ45Gcpump"
+  },
+  {
+    "name": "Rifampicin",
+    "ticker": "$RIF",
+    "mint": "GJtJuWD9qYcCkrwMBmtY1tpapV1sKfB2zUv9Q4aqpump"
+  },
+  {
+    "name": "Trencher Broadcasting Company",
+    "ticker": "TBC",
+    "mint": "BbbwE8rudhjK4husSRc37X54mYyDBRcykJ7fk5oHpump"
+  },
+  {
+    "name": "HOLDER",
+    "ticker": "DOGGY",
+    "mint": "BS7HxRitaY5ipGfbek1nmatWLbaS9yoWRSEQzCb3pump"
+  },
+  {
+    "name": "The Crypto Dog",
+    "ticker": "DOG",
+    "mint": "21CnrFRqvEVkQZUTFmTXjcsJTLZhRY51ohoaCPwRpump"
+  },
+  {
+    "name": "Manifest",
+    "ticker": "MANIFEST",
+    "mint": "6cvrZWgEUkr82yKAmxp5cQu7wgYYBPULf16EUBp4pump"
+  },
+  {
+    "name": "Kilroy was here",
+    "ticker": "KILROY",
+    "mint": "CFYhdWXsYfS7swnJgHRwb5toTHMEQD7Ljd5gGwKLpump"
+  },
+  {
+    "name": "Wifejak",
+    "ticker": "WIFE",
+    "mint": "4y3oUrsJfSp431R3wJrWiaLxRPsnYtpkVJmoV2bYpBiy"
+  },
+  {
+    "name": "Martians",
+    "ticker": "MARTIANS",
+    "mint": "7nLukVng5teXze14rum9v57juXLjUp7JJnCveko1pump"
+  },
+  {
+    "name": "Alpha",
+    "ticker": "ALPHA",
+    "mint": "2sCUCJdVkmyXp4dT8sFaA9LKgSMK4yDPi9zLHiwXpump"
+  },
+  {
+    "name": "Tole Tole",
+    "ticker": "MEIMEI",
+    "mint": "MsGDybWRSNdNXkdDZhEksgzugT5CbVWUG2wkhwgpump"
+  },
+  {
+    "name": "Zero Ontology System",
+    "ticker": "SOLFUNMEME",
+    "mint": "BwUTq7fS6sfUmHDwAiCQZ3asSiPEapW5zDrsbwtapump"
+  },
+  {
+    "name": "Solomon",
+    "ticker": "SOL777",
+    "mint": "23Y1bUqVcJsvWH9WpVJfj1xDozq2GdKbEhRSdGhDpump"
+  },
+  {
+    "name": "KWEEN",
+    "ticker": "KWEEN",
+    "mint": "DEf93bSt8dx58gDFCcz4CwbjYZzjwaRBYAciJYLfdCA9"
+  },
+  {
+    "name": "Smoking Wizard",
+    "ticker": "WIZARD",
+    "mint": "7XdCaKpqLmKE2K7yr9xaeWB1H2CVZ1oGwxB6hmd9pump"
+  },
+  {
+    "name": "PINK COIN",
+    "ticker": "PINK",
+    "mint": "AVBN6kXdaw27ySuvMevKYzNTL8d39b7sGQFDCmsvpump"
+  },
+  {
+    "name": "Piñata",
+    "ticker": "PINATA",
+    "mint": "Edpcd9aYh6BVRKV5hYrgnEuJ3MHAFcdnHtSL9yvopump"
+  },
+  {
+    "name": "White Claw",
+    "ticker": "WCLAW",
+    "mint": "E4um9bJTEd463EaiwyNdcDrQK2Q75xyTRczu5Ym5pump"
+  },
+  {
+    "name": "The Machine Economy",
+    "ticker": "TME",
+    "mint": "4Jdwem6D8NyzBS4QkznGfFscjA4uGgJyV4gCX1Njpump"
+  },
+  {
+    "name": "Top G",
+    "ticker": "TOPG",
+    "mint": "8NH3AfwkizHmbVd83SSxc2YbsFmFL4m2BeepvL6upump"
+  },
+  {
+    "name": "moonpig",
+    "ticker": "MOONPIG",
+    "mint": "Ai3eKAWjzKMV8wRwd41nVP83yqfbAVJykhvJVPxspump"
+  },
+  {
+    "name": "just a dog",
+    "ticker": "DOG",
+    "mint": "9gAVAtdnsrniW3GCwsvDeRPf5eJDjtT9S5bu1j7tpump"
+  },
+  {
+    "name": "Qenis",
+    "ticker": "QENIS",
+    "mint": "EkcTa8n14fXcHdfvZqCg72cTCutJnnKb19vcHwKTpump"
+  },
+  {
+    "name": "Tetsuo Coin",
+    "ticker": "TETSUO",
+    "mint": "8i51XNNpGaKaj4G4nDdmQh95v4FKAxw8mhtaRoKd9tE8"
+  },
+  {
+    "name": "dash_eats",
+    "ticker": "DASHA",
+    "mint": "53uxQtB9pcjWvCHguz3JTTndvuKqGxhrD37EetnCpump"
+  },
+  {
+    "name": "Pepe Cate Coin",
+    "ticker": "PATE",
+    "mint": "24EX9CQqEpR9mNUDTjkooKqRTf2pkY2mgbDqwNDwpump"
+  },
+  {
+    "name": "Nasduck",
+    "ticker": "NASDUCK",
+    "mint": "7Y7V1a4m2nWK7BMgbka5B4vR1pDvCK7yva3Hnrqkraze"
+  },
+  {
+    "name": "AnitaMaxWynn",
+    "ticker": "WYNN",
+    "mint": "CvXyWJRq3ZxqifMzAuyUomDvJ8PF8NitXx8HxRLGpump"
+  },
+  {
+    "name": "TOESCOIN",
+    "ticker": "TOES",
+    "mint": "6ehEcTMCc85aNF4x9CWx8HuvWGhxQtvKdhKVf2HDpump"
+  },
+  {
+    "name": "OMEN",
+    "ticker": "OMEN",
+    "mint": "GZyqN8VmXrfoyyYRob5Lu2xGiXTcg1aLaNmptUpKpump"
+  },
+  {
+    "name": "FAFO",
+    "ticker": "FAFO",
+    "mint": "BP8RUdhLKBL2vgVXc3n7oTSZKWaQVbD8S6QcPaMVBAPo"
+  },
+  {
+    "name": "STONKS PARK",
+    "ticker": "PARK",
+    "mint": "7gKKy2p1SaMkRFPX7caF96YpfuMMpDj82ZpjaffuvaU5"
+  },
+  {
+    "name": "Poet Toads",
+    "ticker": "TOADS",
+    "mint": "DMXBsVBwfuzc5axa2vz6Ba2BzAxcUmn6V7ZtsJFEpump"
+  },
+  {
+    "name": "Nailong",
+    "ticker": "NAILONG",
+    "mint": "mkvXiNBpa8uiSApe5BrhWVJaT87pJFTZxRy7zFapump"
+  },
+  {
+    "name": "2027",
+    "ticker": "2027",
+    "mint": "Hmeju3J16Cbx1D6snGFNDGTV32AS9TYPaXyVYHBqpump"
+  },
+  {
+    "name": "POKEAHOE",
+    "ticker": "POKEAHOE",
+    "mint": "HRvw81mktEraX9gZLTHKeYGaFygCSNKuAwNLVE6Tpump"
+  },
+  {
+    "name": "MamaBull",
+    "ticker": "MAMA",
+    "mint": "SJWKUQ8hcSjxizfVGmAB9Rb97znrXFHbRiad2J1pump"
+  },
+  {
+    "name": "Walter",
+    "ticker": "WALTER",
+    "mint": "FV56CmR7fhEyPkymKfmviKV48uPo51ti9kAxssQqTDLu"
+  },
+  {
+    "name": "Urolithin A",
+    "ticker": "$URO",
+    "mint": "FvgqHMfL9yn39V79huDPy3YUNDoYJpuLWng2JfmQpump"
+  },
+  {
+    "name": "Dolos The Bully",
+    "ticker": "BULLY",
+    "mint": "79yTpy8uwmAkrdgZdq6ZSBTvxKsgPrNqTLvYQBh1pump"
+  },
+  {
+    "name": "Tibanne Thecat",
+    "ticker": "CHIEFPUSSY",
+    "mint": "DRtvTCzfiKGhCVREmBbZdN9sB8PHeq9KdRZ3VmFhpump"
+  },
+  {
+    "name": "Hawk Tuah",
+    "ticker": "HAWKTUAH",
+    "mint": "4GFe6MBDorSy5bLbiUMrgETr6pZcjyfxMDm5ehSgpump"
+  },
+  {
+    "name": "Baby Troll",
+    "ticker": "BABYTROLL",
+    "mint": "6qdzMx4c9rL2X3Ns3SwZ8uEo4zReDPjdXpAEmpo7pump"
+  },
+  {
+    "name": "Choctopus",
+    "ticker": "CHOCTOPUS",
+    "mint": "EVrGfAj99Xr1NjqqZv6E2msVKZVmhGaThHhcZXzrpump"
+  },
+  {
+    "name": "Trash Coin",
+    "ticker": "TRASH",
+    "mint": "5ypxFmuJUTsSkAeKRuRs4xSxkb4vWbjMLT3GY7ckpump"
+  },
+  {
+    "name": "Dinky",
+    "ticker": "DINKY",
+    "mint": "3YNCESdqhSgvsD4aARHC4rdqXpjyW9CWjosH82hNpump"
+  },
+  {
+    "name": "Never Give Up",
+    "ticker": "MINER",
+    "mint": "Gka1TQEevBbVw4W9K15ER96ZzKByMTb6TBMQzWFEpump"
+  },
+  {
+    "name": "DASH",
+    "ticker": "DASH",
+    "mint": "8RWFpyz9VW7Wyv626v49f8ybzREcYhYDC19vaWedpump"
+  },
+  {
+    "name": "Looby by Stephen Bliss",
+    "ticker": "LOOBY",
+    "mint": "CyRbC97yrkUB31sv9PLw5Hw8276zXH4sRoTE1KcDpump"
+  },
+  {
+    "name": "Groyper",
+    "ticker": "GROYPER",
+    "mint": "AjgSvYmJLhvt3FteiyTqQf8XBj1SVs6T6AmSUfkHpump"
+  },
+  {
+    "name": "Eliza",
+    "ticker": "ELIZA",
+    "mint": "5voS9evDjxF589WuEub5i4ti7FWQmZCsAsyD5ucbuRqM"
+  },
+  {
+    "name": "Gen Z Quant",
+    "ticker": "QUANT",
+    "mint": "3an8rhdepsLCya22af7qDBKPbdomw8K4iCHXaA2Gpump"
+  }
+]

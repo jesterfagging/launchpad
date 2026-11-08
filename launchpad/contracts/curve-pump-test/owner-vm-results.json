@@ -1,0 +1,75 @@
+{
+  "localOnly": true,
+  "realFundsUsed": false,
+  "feature": "owner-test",
+  "verificationOperator": "GFKfRLPKHYRyARLSTc4p94vukKPMFAkSrQT5j55WYoy2",
+  "PUBLIC_FIXTURE_NEVER_DEPLOY": true,
+  "binarySha256": "3fcd394af832dc9a3aeaa128d0d0d55545f31d678f924912e71dd8d58f2e38fb",
+  "testCount": 16,
+  "tests": [
+    {
+      "name": "distinct owner initializes micro preset with minimum 0.02 SOL subsidy",
+      "passed": true
+    },
+    {
+      "name": "different signer cannot spend owner curve",
+      "passed": true
+    },
+    {
+      "name": "public local-test operator cannot use owner executable",
+      "passed": true
+    },
+    {
+      "name": "standard preset rejected by owner-only micro build",
+      "passed": true
+    },
+    {
+      "name": "more than three SOL required principal rejected at initialization",
+      "passed": true
+    },
+    {
+      "name": "migration rent subsidy above 0.1 SOL rejected",
+      "passed": true
+    },
+    {
+      "name": "graduation fee other than 2885 bps rejected",
+      "passed": true
+    },
+    {
+      "name": "trading fee other than 100 bps rejected",
+      "passed": true
+    },
+    {
+      "name": "owner buy capped at immutable micro allocation and principal ceiling",
+      "passed": true
+    },
+    {
+      "name": "owner fixture pre-donated destination created",
+      "passed": true
+    },
+    {
+      "name": "owner migration rejects dusted destination atomically",
+      "passed": true
+    },
+    {
+      "name": "owner redeems fully when migration destination blocked",
+      "passed": true
+    },
+    {
+      "name": "owner can refill reopened micro curve",
+      "passed": true
+    },
+    {
+      "name": "owner feature actual PumpSwap migration using clean index",
+      "passed": true
+    },
+    {
+      "name": "owner feature burns entire received LP balance",
+      "passed": true
+    },
+    {
+      "name": "owner migration replay does not charge twice",
+      "passed": true
+    }
+  ]
+}

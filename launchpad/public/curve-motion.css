@@ -1,0 +1,275 @@
+/* Launchpad motion layer v2. Shared depth, entrance, feedback, live-value and
+   opt-in effects for every page. Loaded after curve-theme.css. Everything here
+   is decorative: no element relies on it to become visible (pending reveals
+   are capped by /curve-motion.mjs), and reduced-motion users get the static
+   design. Classes are applied by /curve-motion.mjs; the data-motion-*
+   attributes are set by page owners (see curve-motion.mjs).
+   Only transform, opacity and short colour transitions animate. */
+:root {
+  --motion-ease: cubic-bezier(.2, .8, .2, 1);
+  --motion-spring: cubic-bezier(.3, 1.3, .5, 1);
+  --motion-fast: 120ms;
+  --motion-mid: 220ms;
+  --motion-slow: 420ms;
+  --motion-enter: 360ms;
+  --motion-glow: #a78bff26;
+  --motion-glow-strong: #8b5cff52;
+  --motion-up: #2ee59d;
+  --motion-down: #ff4d6d;
+  --motion-live-color: #2ee59d;
+}
+/* The animated angle behind the sunrise glow border (static where unsupported). */
+@property --motion-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+/* v71.43 reborn: true black. The ambient light layer stays mounted for the script but paints nothing. */
+body.relay-terminal { isolation: isolate; }
+.motion-ambient {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+  contain: strict; display: none;
+}
+.motion-ambient span {
+  position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%;
+  filter: blur(70px); opacity: .55; will-change: transform;
+}
+.motion-ambient span:nth-child(1) { left: -22vmax; top: -30vmax; background: radial-gradient(circle, #6d45d933, transparent 66%); animation: motion-drift-a 46s var(--motion-ease) infinite alternate; }
+.motion-ambient span:nth-child(2) { right: -26vmax; top: -24vmax; background: radial-gradient(circle, #8b5cff24, transparent 64%); animation: motion-drift-b 58s ease-in-out infinite alternate; }
+.motion-ambient span:nth-child(3) { left: 18vmax; bottom: -44vmax; background: radial-gradient(circle, #4b2fa02e, transparent 66%); animation: motion-drift-c 64s ease-in-out infinite alternate; }
+@keyframes motion-drift-a { to { transform: translate3d(14vmax, 9vmax, 0) scale(1.12); } }
+@keyframes motion-drift-b { to { transform: translate3d(-12vmax, 12vmax, 0) scale(.9); } }
+@keyframes motion-drift-c { to { transform: translate3d(10vmax, -8vmax, 0) scale(1.08); } }
+
+/* Header: glass that deepens once the page scrolls, with a sunrise hairline. */
+body.relay-terminal .app-header { view-transition-name: curve-header; transition: box-shadow var(--motion-mid) var(--motion-ease), background-color var(--motion-mid) var(--motion-ease); }
+body.relay-terminal .app-header > .motion-hairline {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, #a78bff66 22%, #7c4dff80 50%, #4b2fa066 78%, transparent);
+  background-size: 200% 100%; opacity: 0; transition: opacity var(--motion-slow) var(--motion-ease);
+  animation: motion-hairline 9s linear infinite;
+}
+body.relay-terminal .app-header.motion-scrolled { box-shadow: none; }
+body.relay-terminal .app-header.motion-scrolled > .motion-hairline { opacity: 1; }
+@keyframes motion-hairline { to { background-position: -200% 0; } }
+
+/* Brand mark spins up on hover; the dot keeps a gentle heartbeat. */
+body.relay-terminal .brand .mark { transition: transform var(--motion-slow) var(--motion-spring), filter var(--motion-mid) ease; }
+body.relay-terminal .brand:hover .mark { transform: rotate(-14deg) scale(1.08); filter: drop-shadow(0 0 10px #8b5cff66); }
+body.relay-terminal .brand-dot { display: inline-block; animation: motion-heartbeat 3.6s ease-in-out infinite; }
+@keyframes motion-heartbeat { 0%, 70%, 100% { transform: none; } 78% { transform: scale(1.35); } 86% { transform: scale(.92); } }
+
+/* Scroll progress bar for long pages. */
+.motion-scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 1400; pointer-events: none;
+  transform-origin: 0 50%; transform: scaleX(var(--motion-scroll, 0));
+  background: linear-gradient(90deg, #a78bff, #8b5cff 45%, #7c4dff 75%, #6d45d9);
+  opacity: 0; transition: opacity var(--motion-mid) ease;
+}
+.motion-scroll-progress.is-visible { opacity: .9; }
+
+/* Page entrance: every top-level section rises in, staggered, and the last one
+   starts no later than ~250ms after paint. */
+body.relay-terminal main > :not([hidden]):not(script) {
+  animation: motion-rise var(--motion-enter) var(--motion-ease) backwards;
+  animation-delay: calc(min(var(--motion-index, 0), 6) * 40ms);
+}
+@keyframes motion-rise { from { opacity: 0; transform: translate3d(0, 14px, 0); } to { opacity: 1; transform: none; } }
+@keyframes motion-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes motion-pop { from { opacity: 0; transform: translate3d(0, 10px, 0) scale(.975); } to { opacity: 1; transform: none; } }
+
+/* Content reveal for cards, tiles and rows registered by the motion script.
+   A pending element is hidden only until it scrolls near the viewport or the
+   script's one-second cap passes, whichever comes first. */
+.motion-pending, body.relay-terminal main > .motion-pending { opacity: 0; animation: none; }
+.motion-in, body.relay-terminal main > .motion-in { animation: motion-pop var(--motion-enter) var(--motion-ease) backwards; animation-delay: calc(min(var(--motion-i, 0), 8) * 35ms); }
+
+/* Depth and hover lift for interactive surfaces. */
+body.relay-terminal :is(.explore-coin, .explore-mini-coin, .token-card, .token-launch-card, .documentation-card, .analytics-metric, .launch-admin-row, .admin-card, .coin-trade-panel, .card) {
+  transition: transform var(--motion-mid) var(--motion-ease), box-shadow var(--motion-mid) var(--motion-ease), border-color var(--motion-mid) ease, background-color var(--motion-mid) ease;
+}
+body.relay-terminal :is(.explore-coin, .explore-mini-coin, .token-launch-card, .documentation-card):hover {
+  transform: translate3d(0, -4px, 0);
+  box-shadow: 0 18px 40px -22px #000c, 0 0 0 1px #8b5cff40, 0 10px 34px -14px var(--motion-glow-strong);
+}
+body.relay-terminal :is(.analytics-metric, .token-card):hover { box-shadow: 0 16px 36px -24px #000b, 0 0 0 1px #8b5cff2e; }
+
+/* Cursor spotlight on cards that opt in through the motion script. */
+.motion-spotlight { position: relative; }
+.motion-spotlight > .motion-spot {
+  position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
+  background: radial-gradient(340px circle at var(--motion-x, 50%) var(--motion-y, 50%), #ddd3ff1a, transparent 62%);
+  opacity: 0; transition: opacity var(--motion-mid) ease;
+}
+.motion-spotlight:hover > .motion-spot { opacity: 1; }
+
+/* Buttons: tactile press, primary shine and ripple. */
+body.relay-terminal :is(button, .small-button, .primary, .top-launch, a.small-button):not(:disabled) { transition: transform var(--motion-fast) var(--motion-ease), background-color var(--motion-mid) ease, border-color var(--motion-mid) ease, color var(--motion-mid) ease, box-shadow var(--motion-mid) ease, filter var(--motion-mid) ease; }
+body.relay-terminal :is(button, .small-button, .primary, .top-launch):not(:disabled):active { transform: scale(.965); }
+body.relay-terminal :is(.primary, .top-launch) { position: relative; overflow: hidden; isolation: isolate; }
+body.relay-terminal :is(.primary, .top-launch)::before {
+  content: ""; position: absolute; inset: -40% auto -40% -60%; width: 46%; z-index: -1; pointer-events: none;
+  background: linear-gradient(100deg, transparent, #ffffff70, transparent);
+  transform: translateX(0) skewX(-18deg); opacity: 0;
+}
+body.relay-terminal :is(.primary, .top-launch):not(:disabled):hover::before { animation: motion-shine 900ms var(--motion-ease); }
+body.relay-terminal :is(.primary, .top-launch):not(:disabled):hover { box-shadow: 0 10px 28px -10px #8b5cff99, 0 0 0 1px #a78bff88; filter: saturate(1.08); }
+@keyframes motion-shine { 0% { opacity: 0; transform: translateX(0) skewX(-18deg); } 20% { opacity: 1; } 100% { opacity: 0; transform: translateX(420%) skewX(-18deg); } }
+body.relay-terminal .top-launch { animation: motion-launch-glow 4.8s ease-in-out infinite; }
+@keyframes motion-launch-glow { 0%, 100% { box-shadow: 0 0 0 0 #8b5cff00; } 50% { box-shadow: 0 0 22px -4px #8b5cff73; } }
+.motion-ripple {
+  position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
+  width: var(--motion-size); height: var(--motion-size); left: var(--motion-x); top: var(--motion-y);
+  background: radial-gradient(circle, #ffffffa6 0%, #ffffff33 45%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0); animation: motion-ripple 620ms var(--motion-ease) forwards;
+}
+@keyframes motion-ripple { to { transform: translate(-50%, -50%) scale(1); opacity: 0; } }
+
+/* Links and text buttons get a sliding underline. */
+body.relay-terminal :is(.text-button, .site-footer-links a) { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size var(--motion-mid) var(--motion-ease), color var(--motion-mid) ease; }
+body.relay-terminal :is(.text-button, .site-footer-links a):hover { background-size: 100% 1px; }
+
+/* Live values: flash up/down and a soft settle after a count animation. */
+.motion-up { animation: motion-flash-up 1.1s var(--motion-ease); }
+.motion-down { animation: motion-flash-down 1.1s var(--motion-ease); }
+@keyframes motion-flash-up { 0% { color: var(--motion-up); text-shadow: 0 0 14px #2ee59d66; } 100% { text-shadow: 0 0 0 transparent; } }
+@keyframes motion-flash-down { 0% { color: var(--motion-down); text-shadow: 0 0 14px #ff4d6d66; } 100% { text-shadow: 0 0 0 transparent; } }
+.motion-counting { font-variant-numeric: tabular-nums; }
+
+/* Skeletons and placeholders shimmer instead of sitting still. Opt in with
+   .motion-skeleton or data-motion-shimmer (the element, or every .skeleton inside it). */
+body.relay-terminal :is(.explore-skeleton, .explore-leader-placeholder, .motion-skeleton, [aria-busy=true] > .skeleton, [data-motion-shimmer], [data-motion-shimmer] .skeleton, [data-motion-shimmer] .motion-skeleton) {
+  background-image: linear-gradient(100deg, transparent 20%, #ffffff0d 42%, #ddd3ff14 50%, #ffffff0d 58%, transparent 80%) !important;
+  background-size: 220% 100% !important; animation: motion-shimmer 1.6s linear infinite !important;
+}
+@keyframes motion-shimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
+
+/* Progress bars fill smoothly and glow at the leading edge. */
+body.relay-terminal :is(.explore-progress, .coin-progress-wrap progress, progress[data-motion-bar])::-webkit-progress-value { transition: width 700ms var(--motion-ease); }
+body.relay-terminal :is(.explore-progress, .coin-progress-wrap progress, progress[data-motion-bar])::-moz-progress-bar { transition: width 700ms var(--motion-ease); }
+/* data-motion-bar: the fill (first child or [data-motion-bar-fill]) grows from
+   zero on first view and eases between widths on change (transform only). */
+.motion-bar > :is(:first-child, [data-motion-bar-fill]) { transform-origin: 0 50%; transform: scaleX(var(--motion-bar, 1)); transition: transform 900ms var(--motion-ease); will-change: transform; }
+.motion-bar.motion-bar-reset > :is(:first-child, [data-motion-bar-fill]) { transition: none; }
+
+/* data-motion-float: hero art and characters drift slowly. */
+[data-motion-float] { animation: motion-float var(--motion-float-duration, 6s) ease-in-out infinite alternate; will-change: transform; }
+[data-motion-float="slow"] { --motion-float-duration: 9s; }
+[data-motion-float="fast"] { --motion-float-duration: 3.6s; }
+[data-motion-float="tilt"] { animation-name: motion-float-tilt; }
+@keyframes motion-float { from { transform: translate3d(0, calc(var(--motion-float-y, 8px) * -1), 0); } to { transform: translate3d(0, var(--motion-float-y, 8px), 0); } }
+@keyframes motion-float-tilt { from { transform: translate3d(0, calc(var(--motion-float-y, 8px) * -1), 0) rotate(-2deg); } to { transform: translate3d(0, var(--motion-float-y, 8px), 0) rotate(2deg); } }
+
+/* data-motion-tilt: 3D tilt toward the cursor on desktop pointers (transform only). */
+[data-motion-tilt] { transform: perspective(900px) rotateX(var(--motion-rx, 0deg)) rotateY(var(--motion-ry, 0deg)); transition: transform 320ms var(--motion-ease); transform-style: preserve-3d; }
+[data-motion-tilt].is-tilting { transition-duration: 120ms; }
+
+/* data-motion-sparkle: occasional four-point sparkles on a pill or badge. */
+.motion-sparkle-host { position: relative; }
+.motion-sparkle {
+  position: absolute; width: 10px; height: 10px; pointer-events: none; z-index: 2;
+  background: radial-gradient(circle, #f4f4f5 0 18%, #a78bff 30%, transparent 32%), conic-gradient(from 0deg, #ddd3ff00 0 7%, #ddd3ff 12.5%, #ddd3ff00 18% 32%, #ddd3ff 37.5%, #ddd3ff00 43% 57%, #ddd3ff 62.5%, #ddd3ff00 68% 82%, #ddd3ff 87.5%, #ddd3ff00 93%);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  transform: scale(0); opacity: 0; animation: motion-twinkle 3.2s ease-in-out infinite; animation-delay: calc(var(--i, 0) * -1.1s);
+}
+.motion-sparkle:nth-of-type(1) { right: -5px; top: -6px; }
+.motion-sparkle:nth-of-type(2) { left: -6px; bottom: -5px; width: 8px; height: 8px; animation-duration: 3.9s; }
+.motion-sparkle:nth-of-type(3) { right: 18%; bottom: -7px; width: 7px; height: 7px; animation-duration: 2.7s; }
+.motion-sparkle:nth-of-type(4) { left: 22%; top: -7px; width: 6px; height: 6px; animation-duration: 3.5s; }
+.motion-sparkle:nth-of-type(5) { right: 40%; top: -4px; width: 5px; height: 5px; animation-duration: 4.4s; }
+@keyframes motion-twinkle { 0%, 55%, 100% { transform: scale(0) rotate(0deg); opacity: 0; } 65% { opacity: 1; } 70% { transform: scale(1.15) rotate(28deg); opacity: 1; } 85% { transform: scale(0) rotate(60deg); opacity: 0; } }
+
+/* data-motion-glow: a slow sunrise gradient border for featured cards. One
+   masked pseudo-element whose conic angle animates; no blur, no repaint of the card. */
+[data-motion-glow] { position: relative; isolation: isolate; }
+[data-motion-glow]::before {
+  content: ""; position: absolute; inset: -1px; z-index: -1; border-radius: inherit; pointer-events: none; padding: 1.5px;
+  background: conic-gradient(from var(--motion-angle), #a78bff, #8b5cff 20%, #7c4dff 38%, #6d45d9 55%, #4b2fa0 72%, #8b5cff 88%, #a78bff);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: .85; animation: motion-spin 9s linear infinite; transition: opacity var(--motion-mid) ease;
+}
+[data-motion-glow]:hover::before { opacity: 1; }
+[data-motion-glow="soft"]::before { opacity: .55; }
+@keyframes motion-spin { to { --motion-angle: 360deg; } }
+
+/* data-motion-live: a breathing dot with an expanding ring (set --motion-live-color to tint). */
+[data-motion-live] { position: relative; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--motion-live-color); box-shadow: 0 0 0 2px color-mix(in srgb, var(--motion-live-color) 22%, transparent); animation: motion-breathe 2.4s ease-in-out infinite; vertical-align: middle; }
+[data-motion-live]::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid var(--motion-live-color); animation: motion-ring 2.4s ease-out infinite; }
+[data-motion-live="idle"] { --motion-live-color: #7a7a85; animation: none; }
+[data-motion-live="idle"]::after { animation: none; opacity: 0; }
+[data-motion-live="warn"] { --motion-live-color: #a78bff; }
+[data-motion-live="bad"] { --motion-live-color: #ff4d6d; }
+@keyframes motion-ring { from { transform: scale(1); opacity: .9; } to { transform: scale(3.2); opacity: 0; } }
+
+/* Dialogs scale in over a blurred backdrop. */
+html.motion-ready dialog[open] { animation: motion-dialog var(--motion-mid) var(--motion-ease); }
+html.motion-ready dialog[open]::backdrop { animation: motion-fade var(--motion-mid) ease;  background: #000000a6; }
+@keyframes motion-dialog { from { opacity: 0; transform: translate3d(0, 12px, 0) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* Disclosure panels open with a fade instead of a jump. */
+html.motion-ready details[open] > :not(summary) { animation: motion-fade var(--motion-mid) ease; }
+body.relay-terminal summary { transition: color var(--motion-mid) ease; }
+
+/* Status lights breathe. */
+body.relay-terminal :is(.status-light, .admin-secure i, .explore-live-dot) { animation: motion-breathe 2.4s ease-in-out infinite; }
+@keyframes motion-breathe { 50% { opacity: .45; transform: scale(.82); } }
+
+/* Smooth page-to-page swaps (View Transitions API, used by the router). */
+::view-transition-old(root) { animation: motion-vt-out 220ms var(--motion-ease) both; }
+::view-transition-new(root) { animation: motion-vt-in 380ms var(--motion-ease) both; }
+::view-transition-group(curve-header) { animation-duration: 0s; }
+@keyframes motion-vt-out { to { opacity: 0; transform: translate3d(0, -6px, 0); } }
+@keyframes motion-vt-in { from { opacity: 0; transform: translate3d(0, 10px, 0); } }
+
+/* Celebration: confetti canvas plus a soft sunrise burst (launch and trade success). */
+.motion-confetti { position: fixed; inset: 0; z-index: 2000; pointer-events: none; }
+/* As popovers (top layer) the browser's default popover styling is reset so they stay full-screen overlays. */
+.motion-confetti:popover-open, .motion-burst:popover-open { padding: 0; border: 0; background: transparent; overflow: visible; }
+.motion-confetti:popover-open { margin: 0; width: 100vw; height: 100vh; inset: 0; }
+.motion-burst:popover-open { margin: -110px 0 0 -110px; inset: auto; left: var(--motion-x, 50%); top: var(--motion-y, 34%); }
+.motion-burst {
+  position: fixed; left: var(--motion-x, 50%); top: var(--motion-y, 34%); width: 220px; height: 220px; margin: -110px 0 0 -110px; z-index: 1999; pointer-events: none; border-radius: 50%;
+  background: radial-gradient(circle, #ddd3ffcc 0%, #8b5cff88 22%, #7c4dff33 48%, transparent 70%);
+  transform: scale(.2); opacity: 0; animation: motion-burst 820ms var(--motion-ease) forwards;
+}
+@keyframes motion-burst { 0% { transform: scale(.2); opacity: 0; } 18% { opacity: 1; } 100% { transform: scale(2.4); opacity: 0; } }
+
+/* Gotchi peek: a small character rises into a corner of an empty state. */
+.motion-peek-host { position: relative; }
+.motion-peek { position: absolute; bottom: 0; right: 8%; max-width: 40%; pointer-events: none; z-index: 1; overflow: hidden; line-height: 0; }
+.motion-peek[data-side="left"] { right: auto; left: 8%; }
+.motion-peek > .gotchi-character { margin: 0; pointer-events: none; transform: translate3d(0, 100%, 0); opacity: 0; transition: transform 700ms var(--motion-spring), opacity 400ms ease; }
+.motion-peek.is-in > .gotchi-character { transform: translate3d(0, 36%, 0) rotate(-3deg); opacity: 1; }
+.motion-peek[data-side="left"].is-in > .gotchi-character { transform: translate3d(0, 36%, 0) rotate(3deg); }
+.motion-peek-host:hover > .motion-peek.is-in > .gotchi-character { transform: translate3d(0, 14%, 0) rotate(0deg); }
+
+/* Toast used by the motion script to confirm copy actions. */
+.motion-toast {
+  position: fixed; left: 50%; bottom: 26px; z-index: 1900; pointer-events: none;
+  padding: 9px 16px; border-radius: 999px; font: 600 13px var(--sans);
+  color: #121214; background: linear-gradient(105deg, #a78bff, #8b5cff 58%, #7c4dff);
+  box-shadow: 0 14px 30px -12px #000c; transform: translate(-50%, 16px); opacity: 0;
+  transition: transform var(--motion-mid) var(--motion-spring), opacity var(--motion-mid) ease;
+}
+.motion-toast.is-visible { transform: translate(-50%, 0); opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  [data-motion-tilt] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-ambient span, .brand-dot, .top-launch, .motion-hairline { animation: none !important; }
+  body.relay-terminal main > *, .motion-in, html.motion-ready dialog[open], html.motion-ready details[open] > :not(summary) { animation: none !important; }
+  .motion-pending { opacity: 1 !important; }
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none !important; }
+  .motion-up, .motion-down { animation: none !important; }
+  .motion-ripple, .motion-confetti, .motion-burst, .motion-sparkle { display: none !important; }
+  body.relay-terminal :is(.explore-coin, .explore-mini-coin, .token-launch-card, .documentation-card):hover { transform: none; }
+  [data-motion-float], [data-motion-glow]::before, [data-motion-live], [data-motion-live]::after, body.relay-terminal :is(.status-light, .admin-secure i, .explore-live-dot) { animation: none !important; }
+  [data-motion-live]::after { opacity: 0; }
+  [data-motion-tilt] { transform: none !important; transition: none !important; }
+  .motion-bar > :is(:first-child, [data-motion-bar-fill]) { transform: none !important; transition: none !important; }
+  .motion-peek > .gotchi-character { transition: none; transform: translate3d(0, 36%, 0); opacity: 1; }
+  body.relay-terminal :is(.explore-skeleton, .explore-leader-placeholder, .motion-skeleton, [aria-busy=true] > .skeleton, [data-motion-shimmer], [data-motion-shimmer] .skeleton) { animation: none !important; }
+}
+@media print { .motion-ambient, .motion-scroll-progress, .motion-confetti, .motion-burst, .motion-toast, .motion-sparkle, .motion-peek { display: none !important; } .motion-pending { opacity: 1 !important; } }
+
+/* Full page loads between Launchpad pages cross-fade where the browser supports it. */
+@view-transition { navigation: auto; }

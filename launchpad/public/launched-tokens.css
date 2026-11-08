@@ -1,0 +1,636 @@
+/* My Tokens (/launched-tokens) and, at the end, the profile page (/wallet-account).
+   v71.26 makeover v2: room to breathe. The shared page frame and tokens come from curve-theme.css
+   (curve-theme.css); this file lays out the hero greeting, the roomy reward summary, the launch
+   tiles, the venue rows and the launch detail view. Presentation only: every id, class and text is unchanged. */
+
+/* ---------- Page ---------- */
+.launched-page{--token-surface:var(--panel);--token-border:var(--line-card,#f4f4f51a);--token-dim:var(--muted);--token-accent:var(--accent);--token-text:var(--text);--lt-edge:var(--line-card,#f4f4f51a);--lt-gold:var(--sunrise-gold,#a78bff);--lt-peach:var(--sunrise-peach,#8b5cff);--lt-live:#2ee59d;--lt-ease:var(--motion-ease,cubic-bezier(.22,1,.36,1));--lt-shadow:var(--shadow-card,0 12px 32px -20px #000000c7);--lt-shadow-hover:var(--shadow-card-hover,0 24px 48px -22px #000000d9)}
+.launched-page [hidden]{display:none!important}
+.launched-page .app-header .local{margin-left:auto}
+.launched-page .positive{color:#2ee59d}
+.launched-page .negative{color:#8b5cff}
+/* Signed-out gate: one calm card in the middle of the page. */
+.launched-page .owner-gate{max-width:480px;margin:var(--space-9,48px) auto;padding:var(--space-8,40px) var(--space-7,32px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:radial-gradient(90% 70% at 50% 0,#3a3a422e,transparent 60%),var(--panel);box-shadow:var(--lt-shadow);text-align:center;font-size:16px;line-height:1.55}
+.launched-page .owner-gate::before{content:"";display:block;width:64px;height:64px;margin:0 auto var(--space-5,20px);border-radius:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 17l6-6 4 4 8-8'/%3E%3Cpath d='M14 7h7v7'/%3E%3C/svg%3E") center/30px no-repeat,var(--panel2);box-shadow:inset 0 0 0 1px var(--line-strong,#3a3a42)}
+.launched-page .owner-gate:has(.gotchi-character)::before{display:none}
+.launched-page .owner-gate .tokens-empty-gotchi{display:grid;place-items:end center;height:150px;margin:calc(-1 * var(--space-3,12px)) auto var(--space-4,16px);pointer-events:none}
+.launched-page .owner-gate .tokens-empty-gotchi .gotchi-character[data-size=mini]{--gotchi-figure-height:140px;transform:translateY(calc(var(--gotchi-figure-bottom,0)*1%));filter:drop-shadow(0 12px 18px #00000066)}
+.launched-page .owner-gate .gotchi-fx{display:none}
+.launched-page .owner-gate p{margin:0;color:var(--text)}
+.launched-page .owner-gate a{display:flex;align-items:center;justify-content:center;min-height:var(--control-h-lg,48px);margin-top:var(--space-6,24px);border:1px solid #a78bff;border-radius:var(--radius-control,12px);background:var(--grad-sunrise,linear-gradient(105deg,#a78bff,#8b5cff 58%,#7c4dff));color:#fff;font-size:16px;font-weight:600;text-decoration:none}
+.launched-page .owner-gate a:hover{background:linear-gradient(105deg,#ddd3ff,#a78bff 58%,#8b5cff)}
+
+/* ---------- Hero: a warm greeting and the page's two actions ---------- */
+.launched-page #tokens-list-view>.terminal-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-6,24px);margin:0 0 var(--space-8,40px)}
+.launched-page #tokens-list-view>.terminal-heading>div:first-child{min-width:0}
+.launched-page #tokens-list-view>.terminal-heading .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 10px;color:var(--accent);font:600 12px/1.2 var(--sans);letter-spacing:.08em}
+.launched-page #tokens-list-view>.terminal-heading .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--lt-gold);box-shadow:0 0 0 0 #a78bff66;animation:lt-live 2.6s ease-in-out infinite}
+.launched-page #tokens-list-view>.terminal-heading h1{margin:0;color:var(--sunrise-cream,#ddd3ff);font-size:var(--text-title,36px);line-height:1.1;font-weight:650;letter-spacing:-.02em;overflow-wrap:anywhere}
+.launched-page #tokens-list-view>.terminal-heading h1 .tokens-hero-name{background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.launched-page #tokens-list-view>.terminal-heading .subtitle{margin:10px 0 0;color:var(--muted);font-size:16px;line-height:1.5}
+.tokens-list-actions{display:flex;align-items:center;gap:var(--space-3,12px);flex-wrap:wrap;flex-shrink:0}
+.launched-page .tokens-list-actions .small-button{min-height:var(--control-h,40px)}
+/* Claiming from every launch is the page's main action: the big primary while it is available. */
+body.launched-page.relay-terminal .tokens-list-actions .token-claim-button{min-height:var(--control-h-lg,48px);padding:0 22px;font-size:15px}
+body.launched-page.relay-terminal .tokens-list-actions .token-claim-button:not(:disabled){background:var(--grad-sunrise,linear-gradient(105deg,#a78bff,#8b5cff 58%,#7c4dff));border-color:#a78bff;color:#fff;box-shadow:0 12px 28px -14px #8b5cff99}
+body.launched-page.relay-terminal .tokens-list-actions .token-claim-button:hover:not(:disabled){background:linear-gradient(105deg,#ddd3ff,#a78bff 58%,#8b5cff);color:#121214}
+.launched-page .token-claim-button:disabled{cursor:default}
+.tokens-notice{margin:0 0 var(--space-5,20px);padding:14px var(--space-5,20px);border:1px solid var(--lt-edge);border-radius:var(--radius-control,12px);background:var(--panel);font-size:14px;line-height:1.55}
+.tokens-notice.negative{background:#0b0b0c;border-color:#3a3a42;color:#ff8fa3}
+
+/* ---------- Private rewards summary: two big stat cards ---------- */
+.personal-earnings{margin:0 0 var(--section-gap,48px)}
+.personal-earnings-heading{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-4,16px);margin:0 0 var(--space-4,16px)}
+.personal-earnings-heading h2{margin:0;font-size:var(--text-section,22px);line-height:1.25;font-weight:600;letter-spacing:-.015em}
+.personal-earnings-status{display:inline-flex;align-items:center;gap:8px;margin:0;color:var(--muted);font-size:13px;text-align:right}
+.personal-earnings-status:not(:empty)::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);animation:lt-live 2.6s ease-in-out infinite}
+.personal-earnings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--grid-gap,20px)}
+.personal-earnings-card{position:relative;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"title history" "value value" "caption caption" "assets assets";align-items:start;gap:4px var(--space-5,20px);min-width:0;padding:var(--card-pad-lg,28px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:radial-gradient(70% 90% at 100% 0,#a78bff0f,transparent 60%),var(--panel);box-shadow:var(--lt-shadow);overflow:hidden;transition:transform var(--motion-mid,260ms) var(--lt-ease),box-shadow var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+.personal-earnings-card[data-earnings=holders]{background:radial-gradient(70% 90% at 100% 0,#c9b8ff12,transparent 60%),var(--panel)}
+@media(hover:hover){.personal-earnings-card:hover{transform:translateY(-2px);border-color:var(--line-card-hover,#8b5cff59);box-shadow:var(--lt-shadow-hover)}}
+.personal-earnings-card>h3{grid-area:title;display:flex;align-items:center;gap:10px;margin:0;color:#c9c9cf;font-size:15px;font-weight:500;line-height:1.4}
+.personal-earnings-card>h3::before{content:"";flex:none;width:9px;height:9px;border-radius:50%;background:var(--lt-gold);box-shadow:0 0 12px #a78bff66}
+.personal-earnings-card[data-earnings=holders]>h3::before{background:#c9b8ff;box-shadow:0 0 12px #c9b8ff66}
+.personal-earnings-value{grid-area:value;display:block;margin-top:10px;color:var(--sunrise-cream,#ddd3ff);font-size:40px;line-height:1.1;font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.personal-earnings-caption{grid-area:caption;margin:6px 0 0;color:var(--muted);font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.personal-earnings-assets,.personal-earnings-breakdown{grid-area:assets;align-self:end;min-width:0}
+.personal-earnings-assets{display:flex;flex-wrap:wrap;gap:8px;margin:var(--space-4,16px) 0 0;padding:0;list-style:none}
+.personal-earnings-assets li{display:inline-flex;align-items:center;gap:8px;min-height:32px;padding:0 12px;border:1px solid var(--line);border-radius:var(--radius-pill,999px);background:var(--inset);font-size:14px;line-height:1.3}
+.personal-earnings-assets li>span:first-child{color:var(--muted);overflow-wrap:anywhere}
+.personal-earnings-assets li>span:last-child{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere;min-width:0}
+.personal-earnings-history{grid-area:history;margin:0;color:var(--muted);font-size:13px;line-height:1.4;text-align:right;white-space:nowrap}
+.personal-earnings-note{grid-column:1/-1;margin:var(--space-2,8px) 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.personal-earnings-scope{margin:var(--space-3,12px) 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.personal-earnings-breakdown{margin-top:var(--space-4,16px);color:var(--muted);font-size:13px}
+.personal-earnings-breakdown summary{cursor:pointer;color:var(--accent);font-weight:500}
+.personal-earnings-breakdown .personal-earnings-assets{margin-top:10px}
+.personal-earnings-breakdown summary:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:3px;border-radius:3px}
+
+/* ---------- Launch status tabs (shared .cv-tabs) with a sliding underline ---------- */
+.launched-page .tokens-filters{position:relative;margin:0 0 var(--space-4,16px)}
+.launched-page .tokens-filters>button .count{margin-left:2px}
+.launched-page .tokens-filters>button[aria-pressed=true] .count{border-color:#8b5cff55;background:#8b5cff1f;color:var(--accent)}
+body.launched-page.relay-terminal .tokens-filters.has-indicator>button[aria-pressed=true]{box-shadow:none}
+.launched-page .tokens-filters.has-indicator::after{content:"";position:absolute;left:0;bottom:-1px;width:1px;height:2px;border-radius:2px;background:linear-gradient(90deg,#a78bff,#8b5cff 50%,#7c4dff);transform-origin:0 50%;transform:translateX(var(--tab-x,0)) scaleX(var(--tab-w,0));transition:transform .45s var(--lt-ease);pointer-events:none}
+.tokens-fee-hint{margin:0 0 var(--space-5,20px);color:var(--muted);font-size:14px;line-height:1.5}
+.tokens-claim-summary{margin:0 0 var(--space-4,16px);padding:12px var(--space-5,20px);border:1px solid #8b5cff40;border-radius:var(--radius-control,12px);background:#8b5cff12;color:var(--accent);font-size:14px;line-height:1.5}
+
+/* ---------- Card grid: generous tiles that fill the row ---------- */
+.launched-page .tokens-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:var(--grid-gap,20px)}
+.launched-page .tokens-grid>*{min-width:0}
+.launched-page .tokens-grid>:is(.tokens-empty,.tokens-list-summary){grid-column:1/-1}
+/* Venue rows (Pump.fun, PumpSwap, Meteora) stack full width. */
+.launched-page .tokens-venue-section .tokens-grid{grid-template-columns:minmax(0,1fr)}
+
+/* One card surface for launches, venue launches and assigned fees. */
+.launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card){position:relative;display:grid;gap:var(--space-5,20px);min-width:0;padding:var(--card-pad,24px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:var(--panel);box-shadow:var(--lt-shadow);color:inherit;text-decoration:none;transition:transform var(--motion-mid,260ms) var(--lt-ease),box-shadow var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+@media(hover:hover){
+  body.launched-page.relay-terminal :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card):hover{transform:translateY(-2px);border-color:var(--line-card-hover,#8b5cff59);box-shadow:var(--lt-shadow-hover)}
+  .launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card):hover .token-avatar img{transform:scale(1.06)}
+}
+.token-launch-card:focus-visible,.token-card-link:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:3px}
+.token-avatar{position:relative;display:grid;place-items:center;flex-shrink:0;width:64px;height:64px;overflow:hidden;border:1px solid var(--line);border-radius:10px;background:linear-gradient(140deg,var(--line),var(--panel));color:var(--text);font-size:24px;font-weight:600}
+.token-avatar img{display:block;width:100%;height:100%;object-fit:cover;transition:transform 600ms var(--lt-ease)}
+.launched-page :is(.token-launch-card,.assigned-fee-card) .token-avatar{width:96px;height:96px;border-radius:26px;border-color:#3a3a42;font-size:34px;font-weight:650;box-shadow:0 10px 24px -14px #000c}
+.launched-page .tokens-venue-section .token-card .token-avatar{width:60px;height:60px;border-radius:10px;border-color:#3a3a42;font-size:24px;font-weight:650}
+.token-launch-card-top{display:flex;align-items:flex-start;gap:var(--space-4,16px);min-width:0}
+.token-card-identity{flex:1;min-width:0;align-self:center}
+.token-card-identity :is(h2,h3){margin:0;font-size:20px;line-height:1.25;font-weight:650;letter-spacing:-.015em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.launched-page .tokens-venue-section .token-card-identity h3{font-size:18px}
+.token-card-identity :is(p,span){display:block;margin:5px 0 0;color:#8b5cff;font:600 13px/1.3 var(--mono,ui-monospace,monospace);letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.token-launch-card-top .token-status{align-self:flex-start;max-width:48%}
+/* Key facts: a 2×2 grid of inset cells. */
+.token-card-meta{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3,12px);min-width:0}
+.token-card-meta>div{min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset)}
+.token-card-meta span{display:block;margin:0 0 var(--label-gap,6px);color:var(--muted);font-size:13px;line-height:1.4}
+.token-card-meta strong{display:block;font-size:15px;font-weight:600;line-height:1.4;overflow-wrap:anywhere}
+.token-card-meta a{color:var(--accent);font:500 13px/1.4 var(--mono,ui-monospace,monospace);overflow-wrap:anywhere;text-decoration:none}
+/* Actions: every button of a card in one row, their notes below. */
+.launched-page .token-card-actions{display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:10px var(--space-3,12px);min-width:0}
+.launched-page .token-card-actions>:is(.token-card-claim,.token-archive-control,.token-fee-redirect){display:contents}
+.launched-page .token-card-actions :is(button,.small-button){order:0}
+.launched-page .token-card-actions :is(p,small,.token-claim-receipt){order:1;flex:1 1 100%;margin:0}
+.launched-page :is(.token-card-actions,.assigned-fee-actions,.tokens-venue-section .token-card) .small-button{min-height:var(--control-h,40px);padding:0 16px;border-radius:var(--radius-control,12px);font-size:14px}
+.token-card-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3,12px);padding-top:var(--space-4,16px);border-top:1px solid var(--line);color:var(--muted);font:500 13px/1.4 var(--mono,ui-monospace,monospace);letter-spacing:.02em}
+.token-card-bottom>.token-card-link{margin-left:auto}
+.token-card-link{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:0 14px;border:1px solid #3a3a42;border-radius:var(--radius-pill,999px);background:#8b5cff14;color:var(--accent);font:600 13px/1 var(--sans);letter-spacing:0;text-decoration:none;white-space:nowrap;transition:background-color var(--motion-fast,150ms) ease,color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lt-ease)}
+.token-card-link:hover{background:#8b5cff2b;color:var(--lt-gold);transform:translateX(2px)}
+.token-card-bottom>.token-card-link+.token-card-link{margin-left:0}
+.token-claim-note,.token-draft-note,.token-recovery-note,.token-archive-note{margin:0;color:var(--muted);font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.token-claim-scope{color:var(--muted);font-size:13px;line-height:1.5}
+.token-claim-receipt{color:var(--accent);font-size:13px;line-height:1.5;text-decoration:none;overflow-wrap:anywhere}
+.token-claim-receipt:hover{text-decoration:underline}
+
+/* Launch tile areas. */
+.launched-page .token-launch-card{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr auto;grid-template-areas:"head" "facts" "actions" "foot"}
+.launched-page .token-launch-card>.token-launch-card-top{grid-area:head}
+.launched-page .token-launch-card>.token-card-meta{grid-area:facts}
+.launched-page .token-launch-card>.token-card-actions{grid-area:actions}
+.launched-page .token-launch-card>.token-card-bottom{grid-area:foot}
+/* Venue rows: identity and state on the left, notes in the middle, actions on the right. */
+.launched-page .tokens-venue-section .token-card{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto 1fr auto;grid-template-areas:"head chip" "facts facts" "foot foot";gap:var(--space-4,16px);padding:var(--space-5,20px) var(--card-pad,24px)}
+.launched-page .tokens-venue-section .token-card>.token-card-heading{grid-area:head;display:flex;align-items:center;justify-content:flex-start;gap:var(--space-4,16px);min-width:0;min-height:0;padding:0;border:0}
+.launched-page .tokens-venue-section .token-card>.token-card-state{grid-area:chip;display:flex;align-items:flex-start;justify-content:flex-end;min-width:0;max-width:240px}
+.launched-page .tokens-venue-section .token-card>.token-card-body{grid-area:facts;display:grid;align-content:start;gap:6px;min-width:0}
+.launched-page .tokens-venue-section .token-card>.token-card-actions{grid-area:foot;align-self:end}
+.launched-page .tokens-venue-section .token-card>.token-card-actions>.token-card-open{margin-left:auto}
+.launched-page .tokens-venue-section .token-card .help{margin:0;color:#9a9aa3;font-size:14px;line-height:1.5}
+.launched-page .tokens-venue-section .token-card-open{border-color:#3a3a42;background:#8b5cff14;color:var(--accent);border-radius:var(--radius-pill,999px)}
+/* Transfer hook rules (v71.28): a hooked Meteora coin's card carries a "Hooked" chip next to its status (with a small
+   "Launchpad route" marker inside it when the coin trades on Launchpad only until graduation) and the shared Rules card
+   (hook-ui.css) under its facts, full width, with the blocklist viewer and the allowlist manager for the creator. */
+.launched-page .tokens-venue-section .token-card>.token-card-state{flex-wrap:wrap;gap:6px}
+.launched-page .token-status.token-hook-chip{gap:6px;border-color:#a78bff55;background:#a78bff1a;color:#e4e4e7}
+.launched-page .token-status.token-hook-chip::before{animation:none;box-shadow:0 0 6px currentColor}
+.launched-page .token-status.token-hook-chip .hook-chip-route{display:inline-flex;align-items:center;height:16px;padding:0 6px;border-radius:999px;background:#a78bff33;color:#f4f4f5;font-size:10.5px;font-weight:650;letter-spacing:.02em;line-height:1}
+.launched-page .tokens-venue-section .token-card .token-hook-rules{flex:1 1 100%;width:100%;min-width:0;margin-top:6px;padding-top:14px;border-top:1px solid var(--line)}
+.launched-page .tokens-venue-section .token-card .token-hook-rules .hook-rules-heading h2{font-size:15px}
+.launched-page .tokens-venue-section .token-card .token-hook-rules .hook-rule-text,.launched-page .tokens-venue-section .token-card .token-hook-rules .hook-fine{font-size:13px}
+.launched-page .tokens-venue-section .token-card .token-hook-rules .hook-allowlist .primary{min-height:var(--control-h,40px)}
+body.launched-page.relay-terminal .tokens-venue-section .token-card-open:hover{background:#8b5cff2b;color:var(--lt-gold)}
+@media(min-width:900px){
+  .launched-page .tokens-venue-section .token-card{grid-template-columns:minmax(240px,300px) minmax(0,1fr) auto;grid-template-rows:auto 1fr;grid-template-areas:"head facts foot" "chip facts foot";align-items:start;column-gap:var(--space-7,32px);row-gap:var(--space-3,12px)}
+  .launched-page .tokens-venue-section .token-card>.token-card-state{justify-content:flex-start;max-width:none}
+  .launched-page .tokens-venue-section .token-card>.token-card-body{display:flex;flex-wrap:wrap;gap:6px var(--space-6,24px)}
+  .launched-page .tokens-venue-section .token-card>.token-card-body:has(.creator-earnings-grid){display:grid;gap:8px}
+  .launched-page .tokens-venue-section .token-card>.token-card-actions{align-self:start;justify-content:flex-end;max-width:360px}
+  .launched-page .tokens-venue-section .token-card>.token-card-actions>.token-card-open{margin-left:0}
+  .launched-page .tokens-venue-section .token-card:not(:has(>.token-card-actions>button))>.token-card-actions{align-self:center}
+  .launched-page .tokens-venue-section .token-card:not(:has(.creator-earnings-grid,.token-hook-rules))>.token-card-body{align-self:center}
+  .launched-page .tokens-venue-section .token-card>.token-card-body:has(.token-hook-rules){display:grid;gap:8px}
+}
+/* Assigned-fee tiles. */
+.launched-page .assigned-fee-card{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto 1fr;grid-template-areas:"head foot" "facts facts" "actions actions"}
+.launched-page .assigned-fee-card>.token-launch-card-top{grid-area:head}
+.launched-page .assigned-fee-card>.token-card-meta{grid-area:facts}
+.launched-page .assigned-fee-card>.token-card-link{grid-area:foot;align-self:start}
+.launched-page .assigned-fee-card>.assigned-fee-actions{grid-area:actions;display:flex;flex-wrap:wrap;align-items:center;align-content:flex-start;gap:10px var(--space-3,12px)}
+.launched-page .assigned-fee-card .token-card-meta>div:nth-child(3){grid-column:1/-1}
+.launched-page .assigned-fee-actions>:not(button){flex:1 1 100%;margin:0}
+
+/* Status chips (the shared pill look, colour by state, a breathing dot while live). */
+.launched-page .token-status{display:inline-flex;align-items:center;gap:7px;min-height:26px;padding:4px 10px;border:1px solid #2ee59d4d;border-radius:var(--radius-pill,999px);background:#2ee59d1a;color:var(--lt-live);font:600 12px/1.25 var(--sans);letter-spacing:0;white-space:normal;text-align:left}
+.launched-page .token-status::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:currentColor;animation:lt-breathe 2.4s ease-in-out infinite}
+.launched-page .token-status:is(.pending,[data-status=service-paused]){border-color:#a78bff55;background:#a78bff1a;color:#a78bff}
+.launched-page .token-status:is(.draft,[data-status=archived],[data-status=hidden]){border-color:var(--line);background:#ffffff0a;color:#9a9aa3}
+.launched-page .token-status:is(.draft,[data-status=archived],[data-status=hidden])::before{animation:none;opacity:.7}
+.launched-page .token-status.error{border-color:#ff4d6d55;background:#ff4d6d1a;color:#ff4d6d}
+
+/* ---------- Venue sections and the assigned-fees section share one header style ---------- */
+.launched-page .tokens-venue-section{margin-top:var(--section-gap,48px)}
+.launched-page .tokens-venue-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4,16px);margin:0 0 var(--space-5,20px)}
+.launched-page .tokens-venue-heading h2{margin:0;font-size:var(--text-section,22px);line-height:1.25;font-weight:600;letter-spacing:-.015em}
+.launched-page .tokens-venue-heading p{margin:6px 0 0;color:var(--muted);font-size:15px;line-height:1.5}
+.launched-page .tokens-venue-section>.help{margin:var(--space-3,12px) 0 0;font-size:13px;color:var(--muted)}
+.assigned-fees{margin-top:var(--section-gap,48px)}
+.assigned-fees-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4,16px);margin:0 0 var(--space-3,12px)}
+.assigned-fees-heading>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px var(--space-3,12px);min-width:0}
+.assigned-fees-heading h2{order:1;margin:0;font-size:var(--text-section,22px);line-height:1.25;font-weight:600;letter-spacing:-.015em}
+.launched-page .assigned-fees-heading .eyebrow{order:2;display:inline-flex;align-items:center;height:24px;margin:0;padding:0 9px;border:1px solid var(--line);border-radius:var(--radius-pill,999px);background:#ffffff0a;color:var(--muted);font:600 12px/1 var(--sans);letter-spacing:.04em}
+.assigned-fees-heading p:last-child{order:3;flex:1 1 100%;margin:0;color:var(--muted);font-size:15px;line-height:1.5}
+.assigned-fees-heading button{flex-shrink:0;min-height:var(--control-h,40px)}
+#assigned-fees-status{margin:0 0 var(--space-4,16px)}
+#tokens-meteora .creator-earnings-grid{display:grid;gap:6px;margin:4px 0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset);font-size:14px}
+#tokens-meteora .creator-earnings-grid>div{display:flex;justify-content:space-between;gap:var(--space-4,16px)}
+#tokens-meteora .creator-earnings-grid dt{color:var(--muted)}
+#tokens-meteora .creator-earnings-grid dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--text);overflow-wrap:anywhere}
+.launched-page #tokens-meteora .token-card .small-button{margin:0}
+
+/* ---------- Empty states: a Gotchi peeks in with a short, friendly line ---------- */
+.tokens-empty{position:relative;grid-column:1/-1;display:grid;gap:4px;margin:0;padding:var(--space-8,40px) var(--space-7,32px);border:1px dashed var(--line-strong,#3a3a42);border-radius:var(--radius-card,18px);background:radial-gradient(60% 80% at 50% 100%,#3a3a4222,transparent 70%),var(--panel);color:var(--muted);text-align:center;font-size:15px;line-height:1.55;overflow:hidden}
+.tokens-empty h2{margin:0 0 6px;color:var(--text);font-size:var(--text-section,22px);font-weight:650;letter-spacing:-.015em}
+.tokens-empty p{max-width:520px;margin:0 auto var(--space-4,16px);font-size:15px}
+.tokens-empty p:last-child{margin-bottom:0}
+.tokens-empty a{display:inline-flex;justify-self:center;margin-top:var(--space-2,8px);text-decoration:none}
+body.launched-page.relay-terminal .tokens-empty>a.small-button{min-height:var(--control-h-lg,48px);padding:0 24px;border-color:#a78bff;background:var(--grad-sunrise,linear-gradient(105deg,#a78bff,#8b5cff 58%,#7c4dff));color:#fff;font-size:15px}
+body.launched-page.relay-terminal .tokens-empty>a.small-button:hover{background:linear-gradient(105deg,#ddd3ff,#a78bff 58%,#8b5cff);color:#121214}
+.tokens-empty .tokens-empty-gotchi{order:-1;display:grid;place-items:end center;height:140px;margin:calc(-1 * var(--space-4,16px)) auto var(--space-2,8px);pointer-events:none}
+.tokens-empty .tokens-empty-gotchi .gotchi-character[data-size=mini]{--gotchi-figure-height:132px;transform:translateY(calc(var(--gotchi-figure-bottom,0)*1%));filter:drop-shadow(0 12px 18px #00000066)}
+.tokens-empty .tokens-empty-gotchi .gotchi-fx{display:none}
+.tokens-empty .tokens-empty-hint{margin-bottom:var(--space-2,8px);color:#9a9aa3;font-size:14px}
+.assigned-fees .tokens-empty{padding:var(--space-6,24px)}
+.tokens-empty.is-loading{border-style:solid;color:var(--muted)}
+.tokens-empty.is-loading::after{content:"";display:block;width:160px;height:4px;margin:var(--space-3,12px) auto 0;border-radius:4px;background:linear-gradient(90deg,#1f1f23,#8b5cff 50%,#1f1f23);background-size:200% 100%;animation:lt-sweep 1.6s linear infinite}
+
+/* ---------- Launch detail ---------- */
+/* The claim and redirect boxes share a row when both show (claim first); everything else spans the width. */
+body.launched-page.relay-terminal #tokens-detail-view{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-flow:row dense;column-gap:var(--grid-gap,20px)}
+body.launched-page.relay-terminal #tokens-detail-view>*{grid-column:1/-1;min-width:0}
+@media(min-width:641px){
+  body.launched-page.relay-terminal #tokens-detail-view:has(>#token-fee-redirect-detail:not([hidden])):has(>#token-claim-detail:not([hidden]))>#token-claim-detail{grid-column:1}
+  body.launched-page.relay-terminal #tokens-detail-view:has(>#token-fee-redirect-detail:not([hidden])):has(>#token-claim-detail:not([hidden]))>#token-fee-redirect-detail{grid-column:2}
+}
+.token-detail-nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3,12px);margin:0 0 var(--space-5,20px)}
+.token-detail-nav>div{display:flex;align-items:center;gap:var(--space-4,16px)}
+.token-back{display:inline-flex;align-items:center;gap:6px;min-height:var(--control-h,40px);padding:0 16px;border:1px solid var(--line);border-radius:var(--radius-pill,999px);color:var(--muted);font-size:14px;font-weight:500;text-decoration:none;transition:color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lt-ease)}
+.token-back:hover{color:var(--text);border-color:var(--line-strong,#3a3a42);transform:translateX(-2px)}
+.token-network{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:13px}
+.launched-page .token-header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-6,24px);height:auto;margin:0 0 var(--grid-gap,20px);padding:var(--card-pad-lg,28px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:radial-gradient(70% 160% at 0 0,#3a3a4233,transparent 55%),radial-gradient(40% 120% at 100% 100%,#8b5cff12,transparent 60%),var(--panel);box-shadow:var(--lt-shadow)}
+.token-identity{display:flex;align-items:center;gap:var(--space-5,20px);min-width:0}
+.token-identity>div:last-child{min-width:0}
+.launched-page .token-header .token-avatar{width:92px;height:92px;border-radius:26px;border-color:#3a3a42;font-size:34px;box-shadow:0 14px 30px -16px #000c}
+.token-title-line{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2,8px) var(--space-3,12px)}
+.token-title-line h1{margin:0;color:var(--sunrise-cream,#ddd3ff);font-size:var(--text-title,36px);line-height:1.1;font-weight:650;letter-spacing:-.02em;overflow-wrap:anywhere}
+.token-symbol{display:inline-block;margin:8px 0;padding:3px 10px;border:1px solid #8b5cff30;border-radius:5px;background:#8b5cff17;color:#a78bff;font:600 13px/1.4 var(--mono,ui-monospace,monospace);letter-spacing:.04em}
+.token-address-line{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2,8px) var(--space-3,12px);min-width:0}
+.token-address-line a{padding:4px 10px;border:1px solid var(--line);border-radius:5px;background:var(--inset);color:#9a9aa3;font:500 13px/1.4 var(--mono,ui-monospace,monospace);letter-spacing:.02em;text-decoration:none}
+.token-address-line button{font-size:13px}
+.token-header-value{flex-shrink:0;max-width:50%;text-align:right}
+.token-header-value>span{display:block;margin-bottom:4px;color:var(--muted);font-size:13px}
+.token-header-value strong{display:block;color:var(--sunrise-cream,#ddd3ff);font-size:40px;line-height:1.1;font-weight:650;letter-spacing:-.025em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.token-header-value small{display:block;margin-top:6px;color:var(--muted);font-size:13px}
+.token-detail-claim{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3,12px) var(--space-4,16px);margin:0 0 var(--grid-gap,20px);padding:var(--space-5,20px) var(--card-pad,24px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:var(--panel);box-shadow:var(--lt-shadow)}
+.token-detail-claim :is(.token-claim-note,.token-claim-scope){flex:1 1 auto;font-size:14px}
+.token-detail-claim .token-claim-scope{flex-basis:100%}
+.launched-page .token-detail-claim .small-button{min-height:var(--control-h,40px)}
+.token-archive-control{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3,12px)}
+.token-archive-control[hidden]{display:none}
+.token-archive-note{flex-basis:100%}
+.token-archive-detail{margin:0 0 var(--grid-gap,20px);padding:var(--space-5,20px) var(--card-pad,24px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:var(--panel)}
+.token-fee-redirect{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3,12px)}
+.token-fee-redirect .token-claim-note{flex-basis:100%}
+.token-launch-history{margin:0 0 var(--grid-gap,20px);padding:14px var(--card-pad,24px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:var(--panel);font-size:14px}
+.token-launch-history summary{display:flex;align-items:center;gap:10px;min-height:28px;cursor:pointer;list-style:none;color:#c9c9cf;font-size:14px;font-weight:600}
+.token-launch-history summary::-webkit-details-marker{display:none}
+.token-launch-history summary::before{content:"›";display:grid;place-items:center;width:24px;height:24px;border-radius:5px;background:var(--panel2);color:var(--accent);font-size:15px;transition:transform var(--motion-mid,260ms) ease}
+.token-launch-history[open] summary::before{transform:rotate(90deg)}
+.token-launch-history ul{display:grid;gap:8px;margin:14px 0 4px;padding:0;list-style:none}
+.token-launch-history li{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px var(--space-4,16px);padding:10px 14px;border-radius:6px;background:var(--inset)}
+.token-launch-history li>span{color:var(--muted);text-transform:capitalize}
+.token-launch-history a{color:var(--accent);text-decoration:none}
+.token-launch-history>p{margin:12px 0 0}
+
+/* Market column (chart, activity, holder rewards) and sidebar (trade, overview, details). */
+.launched-page .token-market-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,32%);gap:var(--grid-gap,20px);align-items:start}
+.launched-page .token-market-column{display:grid;gap:var(--grid-gap,20px);align-content:start;min-width:0}
+.launched-page .token-sidebar{position:static;top:auto;display:grid;gap:var(--grid-gap,20px);max-height:none;min-width:0}
+body.launched-page.relay-terminal :is(.token-chart-card,.token-stat-card,.token-info-card,.token-activity){min-width:0;overflow:hidden;border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:var(--panel);box-shadow:var(--lt-shadow)}
+.launched-page .token-activity{margin:0}
+.token-market-grid .token-card-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3,12px);min-height:60px;padding:12px var(--card-pad,24px);border-bottom:1px solid var(--line)}
+.token-market-grid .token-card-heading h2{margin:0;font-size:var(--text-card,17px);font-weight:600;letter-spacing:-.01em}
+.token-market-grid .token-card-heading>div{display:flex;align-items:center;gap:var(--space-3,12px)}
+.token-market-grid .token-sidebar .token-card-heading{min-height:56px;padding-bottom:6px;border-bottom:0}
+.token-muted{color:var(--muted);font-size:13px}
+.token-card-heading label{display:flex;align-items:center;gap:8px;margin-left:auto;color:var(--muted);font-size:13px}
+.token-card-heading label>select{max-width:220px;min-height:var(--control-h-sm,36px);margin:0;padding:4px 12px;font-size:13px}
+.token-card-heading .text-button{font-size:13px}
+.launched-page .token-chart{position:relative;height:clamp(380px,50vh,520px);background:var(--inset)}
+.token-chart iframe{display:block;width:100%;height:100%;border:0;background:var(--inset)}
+.token-chart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;padding:var(--space-7,32px);text-align:center}
+.token-chart-symbol{display:grid;place-items:center;width:64px;height:64px;margin-bottom:var(--space-4,16px);border-radius:12px;background:var(--panel2);color:var(--accent);font-size:32px;line-height:1;animation:lt-float 4s ease-in-out infinite}
+.token-chart-empty h3{margin:0 0 8px;font-size:var(--text-card,17px);font-weight:600}
+.token-chart-empty p{max-width:420px;margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.token-data-note{min-height:0;margin:0;padding:10px var(--card-pad,24px);color:var(--muted);font-size:13px;line-height:1.5}
+.token-data-note:empty{display:none}
+.token-chart-controls{display:flex;gap:3px;padding:8px var(--card-pad,24px);border-bottom:1px solid var(--line);background:var(--inset)}
+.token-chart-controls button{min-height:32px;padding:0 12px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease}
+.token-chart-controls button:hover{color:var(--text)}
+.token-chart-controls button[aria-pressed=true]{border-color:var(--line-strong,#3a3a42);background:var(--panel2);color:var(--text)}
+.token-chart-controls button:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:1px}
+.token-curve-body{display:flex;flex-direction:column;height:100%;min-width:0}
+.token-curve-caption{min-height:0;padding:12px var(--card-pad,24px) 4px;color:var(--muted);font-size:13px;line-height:1.5}
+.token-curve-plot{position:relative;flex:1;min-height:0}
+.token-change{color:var(--muted);font-size:13px}
+.token-price{padding:4px var(--card-pad,24px) var(--space-4,16px)}
+.token-price span{display:block;margin-bottom:4px;color:var(--muted);font-size:13px}
+.token-price strong{color:var(--text);font-size:32px;line-height:1.15;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.token-price small{display:block;margin-top:6px;color:var(--muted);font-size:13px;line-height:1.5}
+.token-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 var(--space-5,20px);margin:0 var(--card-pad,24px)}
+.token-stats>div{min-width:0;padding:12px 0;border-top:1px solid var(--line)}
+.token-stats span{display:block;margin-bottom:var(--label-gap,6px);color:var(--muted);font-size:13px}
+.token-stats strong{display:block;font-size:15px;font-weight:600;line-height:1.4;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.token-curve-progress{margin:var(--space-3,12px) var(--card-pad,24px) var(--card-pad,24px);padding-top:var(--space-4,16px);border-top:1px solid var(--line)}
+.token-curve-progress>div{display:flex;justify-content:space-between;gap:10px;font-size:13px}
+.token-curve-progress strong{color:var(--lt-gold);font-size:15px;font-weight:650;font-variant-numeric:tabular-nums}
+.token-curve-progress progress{display:block;width:100%;height:10px;margin:10px 0;border:0;border-radius:6px;overflow:hidden;appearance:none;background:var(--panel2);color:var(--accent)}
+.token-curve-progress progress::-webkit-progress-bar{border-radius:6px;background:var(--panel2)}
+.token-curve-progress progress::-webkit-progress-value{border-radius:6px;background:linear-gradient(90deg,#6d45d9,#8b5cff 55%,#a78bff);box-shadow:0 0 14px #8b5cff66}
+.token-curve-progress progress::-moz-progress-bar{border-radius:6px;background:linear-gradient(90deg,#6d45d9,#8b5cff 55%,#a78bff)}
+.token-curve-progress small{display:block;color:var(--muted);font-size:13px;line-height:1.5}
+.token-external{display:block;margin:0 var(--card-pad,24px) var(--card-pad,24px);color:var(--muted);font-size:13px;text-align:center;text-decoration:none}
+.token-external:hover{color:var(--text)}
+.token-info-list{margin:0;padding:0 var(--card-pad,24px) 6px}
+.token-info-list>div{display:flex;justify-content:space-between;gap:var(--space-4,16px);padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
+.token-info-list>div:last-child{border-bottom:0}
+.token-info-list dt{color:var(--muted)}
+.token-info-list dd{max-width:62%;margin:0;text-align:right;font-weight:500;overflow-wrap:anywhere}
+.token-info-list a{color:var(--text);text-decoration:none}
+.token-description-section>strong{display:block;margin:var(--space-3,12px) var(--card-pad,24px) 6px;font-size:13px}
+.token-description{margin:0;padding:0 var(--card-pad,24px) var(--space-4,16px);color:var(--muted);font-size:14px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.token-socials{display:flex;flex-wrap:wrap;gap:var(--space-2,8px);padding:0 var(--card-pad,24px) var(--card-pad,24px)}
+.token-socials:empty{display:none}
+.token-socials a{padding:6px 12px;border:1px solid #3a3a42;border-radius:var(--radius-pill,999px);background:#8b5cff12;color:var(--accent);font-size:13px;text-decoration:none;transition:background-color var(--motion-fast,150ms) ease}
+.token-socials a:hover{background:#8b5cff2b}
+/* Swaps and holders: the shared tab look and comfortable 48px rows. */
+.token-activity-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3,12px);padding:6px var(--card-pad,24px) 0;border-bottom:1px solid var(--line)}
+body.launched-page.relay-terminal .token-activity-heading>.cv-tabs{border-bottom:0}
+.token-activity-heading>.text-button{font-size:13px}
+.token-activity .tokens-empty{margin:0;border:0;border-radius:0;background:transparent}
+.token-activity :is(.live-trades-status,.holders-summary){padding-left:var(--card-pad,24px);padding-right:var(--card-pad,24px)}
+.token-activity :is(.live-trades-info,.holders-info){margin-left:var(--card-pad,24px);margin-right:var(--card-pad,24px)}
+.token-activity .terminal-table{font-size:14px}
+body.launched-page.relay-terminal .token-activity .terminal-table td{font-size:14px}
+body.launched-page.relay-terminal .token-activity .terminal-table th{font-size:13px}
+body.launched-page.relay-terminal .token-activity :is(.terminal-table,.cv-table) td{padding:13px 14px}
+body.launched-page.relay-terminal .token-activity :is(.terminal-table,.cv-table) :is(td,th):first-child{padding-left:var(--card-pad,24px)}
+body.launched-page.relay-terminal .token-activity :is(.terminal-table,.cv-table) :is(td,th):last-child{padding-right:var(--card-pad,24px)}
+.token-activity .holders-table{min-width:0}
+/* Holder rows: wallet kind and the activity toggle share one line. */
+body.launched-page.relay-terminal .token-activity .holder-wallet{flex-direction:row;flex-wrap:wrap;align-items:center;gap:2px var(--space-2,8px)}
+body.launched-page.relay-terminal .token-activity .holder-identity{flex:1 1 100%}
+body.launched-page.relay-terminal .token-activity .holder-kind{padding-left:30px;font-size:12px}
+body.launched-page.relay-terminal .token-activity .holders-table th:not(:first-child){text-align:right}
+body.launched-page.relay-terminal .token-activity .holder-history-button{min-height:24px;margin:0;padding:0 2px;font-size:12px}
+.token-activity .live-trades-scroll{max-height:520px}
+.token-activity :is(.live-trades-info,.holders-info) summary{font-size:13px}
+/* Holder rewards: full width under the activity table, three metrics per row. */
+body.launched-page.relay-terminal .token-rewards-card{margin:0;padding:var(--card-pad-lg,28px);border:1px solid var(--lt-edge);border-radius:var(--radius-card,18px);background:radial-gradient(70% 120% at 100% 0,#8b5cff14,transparent 60%),var(--panel);box-shadow:var(--lt-shadow)}
+.token-rewards-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4,16px);margin:0 0 var(--space-5,20px)}
+.token-rewards-heading h2{margin:4px 0 0;font-size:var(--text-section,22px);font-weight:600;letter-spacing:-.015em}
+.token-rewards-eyebrow{margin:0;color:var(--muted);font:600 12px/1.2 var(--sans);letter-spacing:.08em}
+.token-rewards-heading-actions{display:flex;align-items:center;gap:var(--space-4,16px)}
+.token-rewards-schedule{color:var(--muted);font-size:13px}
+.token-rewards-heading .text-button{font-size:13px}
+.token-rewards-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-5,20px) var(--space-6,24px)}
+.token-rewards-metrics>div{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;padding-top:var(--space-4,16px);border-top:1px solid var(--line)}
+.token-rewards-metrics>div>span{color:var(--muted);font-size:13px;line-height:1.4}
+.token-rewards-metrics strong{font-size:24px;line-height:1.2;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.token-rewards-metrics .token-rewards-total strong{color:var(--accent);font-size:30px}
+.token-rewards-metrics small{color:var(--muted);font-size:13px;line-height:1.5}
+.token-rewards-metrics a{color:var(--accent);font:500 13px var(--mono,ui-monospace,monospace);text-decoration:none}
+.token-rewards-footer{display:flex;align-items:center;justify-content:space-between;gap:var(--space-6,24px);margin-top:var(--space-5,20px);padding-top:var(--space-4,16px);border-top:1px solid var(--line)}
+.token-rewards-last{margin:0 0 6px;color:var(--text);font-size:14px;line-height:1.5}
+.token-rewards-note{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.token-rewards-note:empty{display:none}
+.token-rewards-status{margin:var(--space-4,16px) 0 0;color:var(--accent);font-size:14px;line-height:1.5}
+.token-rewards-receipts{display:flex;flex-wrap:wrap;gap:8px var(--space-4,16px);margin-top:var(--space-3,12px)}
+.token-rewards-receipts:empty{display:none}
+.token-rewards-receipts a{color:var(--accent);font-size:13px;text-decoration:none}
+#token-buyback{margin:0}
+#token-buyback .coin-card-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4,16px)}
+#token-buyback .coin-card-heading h2{margin:0;font-size:var(--text-section,22px);font-weight:600;letter-spacing:-.015em}
+#token-buyback .coin-rewards-primary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:var(--space-7,32px)}
+#token-buyback .coin-rewards-secondary{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* ---------- Dialogs (the shared glass surface comes from curve-theme.css) ---------- */
+.tokens-wallet-dialog{width:min(460px,calc(100vw - 32px));max-height:80vh;overflow:auto;padding:var(--card-pad-lg,28px);color:var(--text)}
+.tokens-wallet-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3,12px)}
+.tokens-wallet-heading h2{margin:0;font-size:22px;font-weight:600;letter-spacing:-.015em}
+.tokens-wallet-heading .small-button{width:var(--control-h-sm,36px);min-width:var(--control-h-sm,36px);min-height:var(--control-h-sm,36px);padding:0;font-size:18px}
+.tokens-wallet-dialog p{color:var(--muted);font-size:14px;line-height:1.55}
+.tokens-wallet-dialog p.negative{color:#ff8fa3}
+.tokens-wallet-options{display:grid;gap:var(--space-2,8px);margin-top:var(--space-5,20px)}
+.tokens-wallet-options button{justify-content:flex-start;min-height:var(--control-h-lg,48px);padding:0 var(--space-5,20px);text-align:left}
+.tokens-fee-redirect-dialog{width:min(540px,calc(100vw - 32px))}
+.tokens-fee-redirect-dialog form{display:grid;gap:var(--space-4,16px)}
+.tokens-fee-redirect-dialog form>p{margin:0}
+.tokens-fee-redirect-dialog label{display:block;color:var(--text);font-size:14px;font-weight:500}
+.tokens-fee-redirect-dialog input[type=text]{width:100%;box-sizing:border-box;margin-top:-8px;font:14px var(--mono,ui-monospace,monospace)}
+.fee-redirect-address{display:block;color:var(--text);font:13px/1.5 var(--mono,ui-monospace,monospace);overflow-wrap:anywhere}
+.fee-redirect-address:empty{display:none}
+.tokens-fee-redirect-dialog .fee-redirect-confirm{display:flex;align-items:flex-start;gap:12px;line-height:1.55;font-weight:400}
+.fee-redirect-confirm input{flex-shrink:0;width:18px;height:18px;margin:3px 0 0}
+.tokens-fee-redirect-dialog .primary{width:100%;min-height:var(--control-h-lg,48px)}
+
+@keyframes lt-breathe{50%{opacity:.4;transform:scale(.75)}}
+@keyframes lt-live{50%{opacity:.5;transform:scale(.8);box-shadow:0 0 0 5px #a78bff00}}
+@keyframes lt-sweep{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes lt-float{50%{transform:translateY(-6px)}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:1180px){
+  .launched-page .token-market-grid{grid-template-columns:minmax(0,1fr) 320px}
+}
+/* One column: the chart, trade panel, activity, overview, details and rewards follow the order set in coin-trade.css. */
+@media(max-width:920px){
+  .launched-page .token-market-grid{grid-template-columns:minmax(0,1fr)}
+  .launched-page :is(.token-market-column,.token-sidebar){display:contents}
+}
+@media(max-width:900px){
+  .token-rewards-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .personal-earnings-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:780px){
+  .launched-page #tokens-list-view>.terminal-heading{flex-direction:column;align-items:stretch;gap:var(--space-5,20px)}
+}
+@media(max-width:640px){
+  .launched-page #tokens-list-view>.terminal-heading{gap:var(--space-4,16px);margin-bottom:var(--section-gap,32px)}
+  .launched-page #tokens-list-view>.terminal-heading .subtitle{font-size:15px}
+  .tokens-list-actions{flex-wrap:nowrap}
+  .tokens-list-actions .token-claim-button{flex:1;min-width:0}
+  body.launched-page.relay-terminal .tokens-list-actions .token-claim-button{padding:0 14px;font-size:14px}
+  .personal-earnings{margin-bottom:var(--section-gap,32px)}
+  .personal-earnings-grid{gap:var(--grid-gap,12px)}
+  .personal-earnings-card{grid-template-areas:"title title" "value value" "caption caption" "assets assets" "history history";padding:var(--card-pad,18px) var(--card-pad,18px) var(--space-5,20px);row-gap:2px}
+  .personal-earnings-history{margin-top:var(--space-3,12px);text-align:left;white-space:normal}
+  .personal-earnings-value{font-size:34px}
+  .launched-page .tokens-grid{grid-template-columns:minmax(0,1fr);gap:var(--grid-gap,12px)}
+  .launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card){gap:var(--space-4,16px);padding:var(--card-pad,18px)}
+  .launched-page :is(.token-launch-card,.assigned-fee-card) .token-avatar{width:72px;height:72px;border-radius:12px;font-size:28px}
+  .token-card-identity :is(h2,h3){font-size:18px;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .token-card-meta{gap:var(--space-2,8px)}
+  .token-card-meta>div{padding:10px 12px}
+  .launched-page .token-card-actions .small-button,.launched-page :is(.assigned-fee-actions,.tokens-venue-section .token-card) .small-button{min-height:44px}
+  .launched-page .tokens-venue-section{margin-top:var(--section-gap,32px)}
+  .launched-page .tokens-venue-heading p{font-size:14px}
+  .assigned-fees{margin-top:var(--section-gap,32px)}
+  .assigned-fees-heading{flex-wrap:wrap;align-items:center;gap:8px var(--space-3,12px)}
+  .assigned-fees-heading>div{display:contents}
+  .assigned-fees-heading button{order:2;margin-left:auto}
+  .launched-page .assigned-fees-heading .eyebrow{order:3}
+  .assigned-fees-heading p:last-child{order:4;font-size:14px}
+  .tokens-empty{padding:var(--space-7,32px) var(--space-5,20px)}
+  .token-detail-nav{margin-bottom:var(--space-4,16px)}
+  .token-network{display:none}
+  .launched-page .token-header{flex-wrap:wrap;align-items:flex-start;gap:var(--space-4,16px);padding:var(--card-pad,18px)}
+  .token-identity{width:100%;align-items:flex-start;gap:var(--space-4,16px)}
+  .launched-page .token-header .token-avatar{width:64px;height:64px;border-radius:10px;font-size:26px}
+  .token-title-line h1{font-size:var(--text-title,28px)}
+  .token-header-value{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px var(--space-3,12px);width:100%;max-width:none;padding-top:var(--space-4,16px);border-top:1px solid var(--line);text-align:left}
+  .token-header-value strong{order:2;font-size:28px}
+  .token-header-value>span{order:1}
+  .token-header-value small{order:3;margin:0 0 0 auto}
+  .token-detail-claim{align-items:flex-start;padding:var(--card-pad,18px)}
+  .token-detail-claim>:is(p,small){flex:1 1 100%}
+  .token-archive-detail,.token-launch-history{padding-left:var(--card-pad,18px);padding-right:var(--card-pad,18px)}
+  .launched-page .token-chart{height:clamp(300px,46vh,380px)}
+  .token-market-grid .token-card-heading{padding:10px var(--card-pad,18px)}
+  .token-market-grid .token-chart-card .token-card-heading{gap:var(--space-2,8px)}
+  .token-chart-card .token-muted{display:none}
+  .token-card-heading label{gap:0;font-size:0}
+  .token-card-heading label>select{max-width:150px}
+  .token-chart-controls,.token-data-note,.token-curve-caption{padding-left:var(--card-pad,18px);padding-right:var(--card-pad,18px)}
+  .token-price,.token-stats,.token-curve-progress,.token-external,.token-info-list,.token-description,.token-socials,.token-description-section>strong{padding-left:var(--card-pad,18px);padding-right:var(--card-pad,18px);margin-left:0;margin-right:0}
+  .token-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .token-activity-heading{padding-left:var(--space-2,8px);padding-right:var(--space-3,12px)}
+  .token-activity :is(.live-trades-status,.holders-summary){padding-left:var(--card-pad,18px);padding-right:var(--card-pad,18px)}
+  .token-activity :is(.live-trades-info,.holders-info){margin-left:var(--card-pad,18px);margin-right:var(--card-pad,18px)}
+  body.launched-page.relay-terminal .token-activity :is(.terminal-table,.cv-table) :is(td,th):first-child{padding-left:var(--card-pad,18px)}
+  body.launched-page.relay-terminal .token-activity :is(.terminal-table,.cv-table) :is(td,th):last-child{padding-right:var(--card-pad,18px)}
+  .token-activity .terminal-table{font-size:13px}
+  body.launched-page.relay-terminal .token-rewards-card{padding:var(--card-pad,18px)}
+  .token-rewards-heading{align-items:flex-start;gap:var(--space-3,12px)}
+  .token-rewards-heading-actions{flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+  .token-rewards-metrics{gap:var(--space-4,16px)}
+  .token-rewards-metrics strong{font-size:22px}
+  .token-rewards-metrics .token-rewards-total strong{font-size:26px}
+  .token-rewards-footer{flex-direction:column;align-items:stretch;gap:var(--space-3,12px)}
+  #token-buyback{padding:var(--card-pad,18px)}
+  #token-buyback .coin-rewards-primary{grid-template-columns:minmax(0,1fr)}
+  #token-buyback .coin-rewards-secondary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tokens-wallet-dialog{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+  .launched-page .token-status::before,.launched-page #tokens-list-view>.terminal-heading .eyebrow::before,.personal-earnings-status::before,.tokens-empty.is-loading::after,.token-chart-symbol{animation:none}
+  .launched-page .tokens-filters.has-indicator::after,.token-launch-history summary::before,.launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card),.personal-earnings-card,.token-card-link,.token-back,.token-avatar img{transition:none}
+  .launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card):hover,.personal-earnings-card:hover,.token-card-link:hover,.token-back:hover{transform:none}
+  .launched-page :is(.token-launch-card,.tokens-venue-section .token-card,.assigned-fee-card):hover .token-avatar img{transform:none}
+  .launched-page *{scroll-behavior:auto!important}
+}
+
+/* ==========================================================================
+   Profile (/wallet-account, /profile). This stylesheet loads after curve-theme.css there;
+   everything below is scoped to the profile body.
+   ========================================================================== */
+body.wallet-account-page.relay-terminal{--wa-edge:var(--line-card,#f4f4f51a);--wa-gold:var(--sunrise-gold,#a78bff);--wa-peach:var(--sunrise-peach,#8b5cff);--wa-shadow:var(--shadow-card,0 12px 32px -20px #000000c7)}
+body.wallet-account-page.relay-terminal .terminal-heading{display:block;margin:0 0 var(--space-8,40px)}
+body.wallet-account-page.relay-terminal .terminal-heading>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px var(--space-4,16px)}
+body.wallet-account-page.relay-terminal .terminal-heading .eyebrow{display:flex;align-items:center;gap:8px;flex:1 1 100%;margin:0 0 4px;color:var(--wa-peach);font:600 12px/1.2 var(--sans);letter-spacing:.08em}
+body.wallet-account-page.relay-terminal .terminal-heading .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--wa-gold);animation:lt-live 2.6s ease-in-out infinite}
+body.wallet-account-page.relay-terminal .terminal-heading h1{margin:0;color:var(--sunrise-cream,#ddd3ff);font-size:var(--text-title,36px);line-height:1.1;font-weight:650;letter-spacing:-.02em}
+body.wallet-account-page.relay-terminal .terminal-heading p:last-child{flex:1 1 100%;margin:6px 0 0;color:var(--muted);font-size:16px;line-height:1.5}
+body.wallet-account-page.relay-terminal #wallet-profile-username{display:inline-flex;align-items:center;gap:2px;height:32px;margin:0;padding:0 14px;border:1px solid #3a3a42;border-radius:var(--radius-pill,999px);background:#8b5cff14;color:var(--wa-gold);font-size:14px;font-weight:600}
+body.wallet-account-page.relay-terminal #wallet-profile-username::before{content:"@";color:var(--wa-peach)}
+body.wallet-account-page.relay-terminal #wallet-profile-username:empty{display:none}
+body.wallet-account-page.relay-terminal #wallet-profile-error:not([hidden]){margin:0 0 var(--space-5,20px);padding:14px var(--space-5,20px);border:1px solid #3a3a42;border-radius:var(--radius-control,12px);background:#0b0b0c;color:#ff8fa3;font-size:14px}
+body.wallet-account-page.relay-terminal .admin-card{position:relative;margin:0;padding:var(--card-pad-lg,28px);border:1px solid var(--wa-edge);border-radius:var(--radius-card,18px);background:var(--panel);box-shadow:var(--wa-shadow);transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),box-shadow var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+@media(hover:hover){body.wallet-account-page.relay-terminal .admin-card:not(.wallet-profile-card):hover{transform:translateY(-2px);border-color:var(--line-card-hover,#8b5cff59);box-shadow:var(--shadow-card-hover,0 24px 48px -22px #000000d9)}}
+body.wallet-account-page.relay-terminal .admin-card h2,body.wallet-account-page.relay-terminal .signin-wallet-settings h3,body.wallet-account-page.relay-terminal .evm-wallet-settings h3,body.wallet-account-page.relay-terminal .cashback-wallet-settings h3{display:flex;align-items:center;gap:12px;margin:0 0 var(--space-4,16px);font-size:var(--text-card,17px);font-weight:600;letter-spacing:-.01em}
+body.wallet-account-page.relay-terminal .admin-card h2 small{color:var(--muted);font-size:13px;font-weight:500}
+body.wallet-account-page.relay-terminal :is(.wallet-signin-card h3,.wallet-evm-card h3,.wallet-trading-card h2,.wallet-coins-card h2,.cashback-wallet-settings h3)::before{content:"";flex:none;width:36px;height:36px;border-radius:6px;background:var(--panel2) center/18px no-repeat;box-shadow:inset 0 0 0 1px var(--line-strong,#3a3a42)}
+body.wallet-account-page.relay-terminal .wallet-signin-card h3::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='10' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E")}
+body.wallet-account-page.relay-terminal :is(.wallet-trading-card h2,.cashback-wallet-settings h3)::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 12V8H6a2 2 0 0 1 0-4h12v4'/%3E%3Cpath d='M4 6v12a2 2 0 0 0 2 2h14v-4'/%3E%3Cpath d='M18 12a2 2 0 0 0 0 4h4v-4z'/%3E%3C/svg%3E")}
+body.wallet-account-page.relay-terminal .wallet-evm-card h3::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2 4 7v10l8 5 8-5V7z'/%3E%3Cpath d='M12 22V12'/%3E%3Cpath d='m4 7 8 5 8-5'/%3E%3C/svg%3E")}
+body.wallet-account-page.relay-terminal .wallet-coins-card h2::before{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 17l6-6 4 4 8-8'/%3E%3Cpath d='M14 7h7v7'/%3E%3C/svg%3E")}
+/* Profile form on the left; wallets and the coins shortcut stack on the right. */
+body.wallet-account-page.relay-terminal .wallet-profile-grid:not([hidden]){display:grid;grid-template-columns:minmax(0,1.3fr) minmax(320px,1fr);grid-template-rows:auto auto auto auto minmax(0,1fr);gap:var(--grid-gap,20px);align-items:start}
+/* The profile card spans every row; a taller profile card grows the last (flexible) row, not the gaps between wallet cards. */
+body.wallet-account-page.relay-terminal .wallet-profile-card{grid-row:1/-1}
+body.wallet-account-page.relay-terminal .wallet-profile-grid>section:not(.wallet-profile-card){grid-column:2}
+body.wallet-account-page.relay-terminal .wallet-profile-card h2{margin-bottom:var(--space-6,24px)}
+/* Two columns: the avatar with its soft ring, then the fields. */
+body.wallet-account-page.relay-terminal #profile-form{display:grid;grid-template-columns:132px minmax(0,1fr);column-gap:var(--space-7,32px);row-gap:0;align-items:start}
+body.wallet-account-page.relay-terminal #profile-form>*{grid-column:1/-1}
+body.wallet-account-page.relay-terminal #profile-form>:is(.profile-avatar-placeholder,#profile-preview){grid-column:1;grid-row:1/span 3;width:132px;height:132px;margin:0;border:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px var(--panel),0 0 0 6px #8b5cff73,0 18px 40px -18px #000c;transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),box-shadow var(--motion-mid,260ms) ease}
+body.wallet-account-page.relay-terminal #profile-form:hover>:is(.profile-avatar-placeholder,#profile-preview){box-shadow:0 0 0 4px var(--panel),0 0 0 6px #a78bffb3,0 22px 44px -18px #000c}
+body.wallet-account-page.relay-terminal .profile-avatar-placeholder{display:block;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'/%3E%3C/svg%3E") center/56px no-repeat,linear-gradient(140deg,#3a3a42,#18181b)}
+body.wallet-account-page.relay-terminal #profile-form:has(#profile-preview:not([hidden])) .profile-avatar-placeholder{display:none}
+body.wallet-account-page.relay-terminal #profile-form>label:first-of-type{grid-column:2;grid-row:1;margin:0}
+body.wallet-account-page.relay-terminal #profile-image-help{grid-column:2;grid-row:2;margin:8px 0 0}
+body.wallet-account-page.relay-terminal #profile-remove{grid-column:2;grid-row:3;justify-self:start;margin:6px 0 0;padding:4px 0;font-size:13px}
+body.wallet-account-page.relay-terminal #profile-form>label:not(:first-of-type){margin-top:var(--space-5,20px)}
+body.wallet-account-page.relay-terminal #profile-form label{display:block;color:#c9c9cf;font-size:13px;font-weight:500}
+body.wallet-account-page.relay-terminal #profile-form :is(input:not([type=file]),textarea){display:block;width:100%;box-sizing:border-box;margin-top:var(--label-gap,6px);font:15px/1.5 var(--sans)}
+body.wallet-account-page.relay-terminal #profile-form textarea{min-height:110px;resize:vertical}
+body.wallet-account-page.relay-terminal #profile-form input[type=file]{display:block;width:100%;box-sizing:border-box;min-height:var(--input-h,44px);margin-top:var(--label-gap,6px);padding:3px;border:1px dashed #4a4a53;border-radius:var(--radius-control,12px);background:var(--inset);color:var(--muted);font:14px var(--sans);cursor:pointer;transition:border-color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease}
+body.wallet-account-page.relay-terminal #profile-form input[type=file]:hover{border-color:#5e5e67;background:#0b0b0c}
+body.wallet-account-page.relay-terminal #profile-form input[type=file]::file-selector-button{min-height:var(--control-h-sm,36px);margin-right:var(--space-3,12px);padding:0 14px;border:1px solid #a78bff;border-radius:5px;background:var(--grad-sunrise,#8b5cff);color:#fff;font:600 13px var(--sans);cursor:pointer}
+body.wallet-account-page.relay-terminal #profile-form .help{color:#7a7a85;font-size:13px;line-height:1.5}
+body.wallet-account-page.relay-terminal #profile-name-note,body.wallet-account-page.relay-terminal #profile-form>p.help:not([id]){margin:8px 0 0}
+body.wallet-account-page.relay-terminal #profile-save{justify-self:start;min-width:180px;min-height:var(--control-h-lg,48px);margin-top:var(--space-6,24px);padding:0 24px;font-size:16px}
+body.wallet-account-page.relay-terminal #profile-message{margin:var(--space-3,12px) 0 0;color:var(--wa-gold);font-size:14px}
+body.wallet-account-page.relay-terminal #profile-message:empty{display:none}
+body.wallet-account-page.relay-terminal .account-address{display:block;margin:var(--space-4,16px) 0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset);color:#e4e4e7;font:500 13px/1.5 var(--mono,ui-monospace,monospace);letter-spacing:.02em;overflow-wrap:anywhere}
+body.wallet-account-page.relay-terminal .account-address:empty{display:none}
+body.wallet-account-page.relay-terminal .signin-wallet-settings .account-address{margin-bottom:0}
+body.wallet-account-page.relay-terminal .signin-wallet-settings :is(.account-actions,.signin-wallets):not(:has(>:not([hidden]))),body.wallet-account-page.relay-terminal .signin-wallet-settings p.help:empty{display:none}
+body.wallet-account-page.relay-terminal .admin-card p{color:#9a9aa3;font-size:14px;line-height:1.55}
+body.wallet-account-page.relay-terminal .admin-card :is(h2,h3)+p{margin-top:0}
+body.wallet-account-page.relay-terminal .admin-card .account-actions{display:flex;flex-wrap:wrap;gap:10px var(--space-3,12px);margin-top:var(--space-4,16px)}
+body.wallet-account-page.relay-terminal .admin-card .small-button{min-height:var(--control-h,40px);padding:0 16px;border-radius:var(--radius-control,12px);font-size:14px}
+body.wallet-account-page.relay-terminal .wallet-trading-card{display:flex;flex-wrap:wrap;align-items:center;gap:0 var(--space-3,12px)}
+body.wallet-account-page.relay-terminal .wallet-trading-card>:is(h2,p){flex-basis:100%}
+body.wallet-account-page.relay-terminal .wallet-trading-card #wallet-profile-wallet-note{margin:var(--space-4,16px) 0 var(--space-3,12px)}
+body.wallet-account-page.relay-terminal .wallet-coins-card{background:radial-gradient(110% 90% at 100% 0,#8b5cff1c,transparent 55%),var(--panel)}
+body.wallet-account-page.relay-terminal .wallet-coins-card .primary{display:flex;width:100%;min-height:var(--control-h-lg,48px);margin:var(--space-4,16px) 0;font-size:15px}
+body.wallet-account-page.relay-terminal .wallet-coins-card p:last-child{margin-bottom:0}
+body.wallet-account-page.relay-terminal .wallet-gate-card{max-width:480px;margin:var(--space-8,40px) auto 0;padding:var(--space-8,40px) var(--space-7,32px);text-align:center;background:radial-gradient(90% 70% at 50% 0,#3a3a422e,transparent 60%),var(--panel)}
+body.wallet-account-page.relay-terminal .wallet-gate-mark{display:block;width:64px;height:64px;margin:0 auto var(--space-5,20px);border-radius:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'/%3E%3C/svg%3E") center/32px no-repeat,var(--panel2);box-shadow:inset 0 0 0 1px var(--line-strong,#3a3a42)}
+body.wallet-account-page.relay-terminal .wallet-gate-card h2{justify-content:center;font-size:22px}
+body.wallet-account-page.relay-terminal .wallet-gate-card p{font-size:15px}
+body.wallet-account-page.relay-terminal .wallet-gate-card .primary{display:flex;width:100%;min-height:var(--control-h-lg,48px);margin-top:var(--space-5,20px);font-size:16px}
+@media(max-width:900px){
+  body.wallet-account-page.relay-terminal .wallet-profile-grid:not([hidden]){grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  body.wallet-account-page.relay-terminal .wallet-profile-card{grid-row:auto}
+  body.wallet-account-page.relay-terminal .wallet-profile-grid>section:not(.wallet-profile-card){grid-column:auto}
+}
+@media(max-width:640px){
+  body.wallet-account-page.relay-terminal .terminal-heading{margin-bottom:var(--section-gap,32px)}
+  body.wallet-account-page.relay-terminal .terminal-heading p:last-child{font-size:15px}
+  body.wallet-account-page.relay-terminal .admin-card{padding:var(--card-pad,18px)}
+  body.wallet-account-page.relay-terminal #profile-form{grid-template-columns:88px minmax(0,1fr);column-gap:var(--space-4,16px)}
+  body.wallet-account-page.relay-terminal #profile-form>:is(.profile-avatar-placeholder,#profile-preview){width:88px;height:88px;box-shadow:0 0 0 3px var(--panel),0 0 0 5px #8b5cff73}
+  body.wallet-account-page.relay-terminal .profile-avatar-placeholder{background-size:40px}
+  body.wallet-account-page.relay-terminal #profile-save{width:100%}
+  body.wallet-account-page.relay-terminal .admin-card .small-button{min-height:44px}
+  body.wallet-account-page.relay-terminal .wallet-gate-card{padding:var(--space-7,32px) var(--space-5,20px)}
+}
+@media(prefers-reduced-motion:reduce){
+  body.wallet-account-page.relay-terminal .terminal-heading .eyebrow::before{animation:none}
+  body.wallet-account-page.relay-terminal .admin-card{transition:none}
+  body.wallet-account-page.relay-terminal .admin-card:not(.wallet-profile-card):hover{transform:none}
+}
+
+/* ==========================================================================
+   Edit profile overlay (the shared .public-account-dialog) and the identity dialog, as seen from the
+   profile and My Tokens pages. The same block, unscoped, is handed to curve-theme.css for every page.
+   ========================================================================== */
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .card-heading{margin-bottom:var(--space-5,20px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .card-heading h2{font-size:24px;letter-spacing:-.02em}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-content]{display:grid;gap:var(--space-4,16px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section{margin:0;padding:var(--card-pad,24px);border:1px solid var(--line-card,#f4f4f51a);border-radius:var(--radius-card,18px);background:#0b0b0cb3}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section>h3{display:flex;align-items:center;gap:10px;margin:0 0 var(--space-3,12px);font-size:var(--text-card,17px);font-weight:600;letter-spacing:-.01em}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section>h3 small{color:var(--muted);font-size:13px;font-weight:500}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section .help{font-size:13px;line-height:1.5}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-actions{display:flex;flex-wrap:wrap;gap:10px var(--space-3,12px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]{grid-template-columns:120px minmax(0,1fr);column-gap:var(--space-6,24px);row-gap:var(--space-4,16px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>*{grid-column:2}
+/* The avatar (or its placeholder) sits in the left column beside every field; the picture controls take the first row. */
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo{display:contents}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>img,body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo::before{grid-column:1;grid-row:1/span 5;width:120px;height:120px;margin:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px #0b0b0c,0 0 0 6px #8b5cff73,0 18px 40px -18px #000c}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>img[hidden]{display:none!important}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo:not(:has(>img:not([hidden])))::before{content:"";background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.5' stroke-linecap='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6'/%3E%3C/svg%3E") center/52px no-repeat,linear-gradient(140deg,#3a3a42,#18181b)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>div{grid-column:2;min-width:0}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>div>label{display:block;margin-bottom:8px;font-size:13px;font-weight:500}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>#public-profile-picture-help{margin-top:-8px}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile] label{font-size:13px;font-weight:500}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile] :is(input:not([type=file]),textarea){width:100%;box-sizing:border-box;margin-top:var(--label-gap,6px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile] textarea{min-height:104px}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>.primary{min-height:var(--control-h-lg,48px);padding:0 24px;font-size:15px}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section .small-button{min-height:var(--control-h,40px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-address{margin:var(--space-3,12px) 0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset);font:500 13px/1.5 var(--mono,ui-monospace,monospace)}
+/* Security: the summary reads like a status line; the enrolment and recovery steps are inset cards. */
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section>[id$=security-summary]{display:flex;align-items:flex-start;gap:10px;margin:0 0 var(--space-4,16px);color:#c9c9cf;font-size:14px}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section>[id$=security-summary]::before{content:"";flex:none;width:26px;height:26px;border-radius:5px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f4d797' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l8 3v6c0 4.5-3.5 8-8 9-4.5-1-8-4.5-8-9V6z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E") center/15px no-repeat,var(--panel2);box-shadow:inset 0 0 0 1px var(--line-strong,#3a3a42)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog :is([id$=security-enrollment],[id$=security-recovery]):not([hidden]){display:grid;gap:var(--space-3,12px);margin-top:var(--space-4,16px);padding:var(--space-4,16px);border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [id$=security-codes]{margin:0;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:#000000;font:14px/1.7 var(--mono,ui-monospace,monospace);white-space:pre-wrap}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [id$=security-account-note]{margin:var(--space-3,12px) 0 0}
+/* Identity check: a small glass card with a calm tone. */
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog form{display:grid;gap:var(--space-4,16px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog h2{margin:0;font-size:22px;letter-spacing:-.015em}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog .security-auth-intro{margin:-6px 0 0;color:var(--muted);font-size:14px;line-height:1.55}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog label{display:block;font-size:13px;font-weight:500}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog label>input{width:100%;box-sizing:border-box;margin-top:var(--label-gap,6px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog .account-actions{display:flex;gap:var(--space-3,12px);margin-top:var(--space-2,8px)}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog .account-actions>.primary{flex:1;min-height:var(--control-h-lg,48px);font-size:15px}
+body.relay-terminal:is(.wallet-account-page,.launched-page) .security-auth-dialog .account-actions>.small-button{min-height:var(--control-h-lg,48px)}
+@media(max-width:640px){
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .account-section{padding:var(--card-pad,18px)}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]{grid-template-columns:minmax(0,1fr)}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>*{grid-column:1}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo{display:flex;align-items:center;gap:var(--space-4,16px);grid-column:1}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>img,body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo::before{flex:none;width:88px;height:88px;background-size:40px;box-shadow:0 0 0 3px #0b0b0c,0 0 0 5px #8b5cff73}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog .public-profile-photo>div{flex:1;min-width:0}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>#public-profile-picture-help{margin-top:-4px}
+  body.relay-terminal:is(.wallet-account-page,.launched-page) .public-account-dialog [data-profile]>.primary{width:100%}
+}

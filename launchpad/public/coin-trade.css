@@ -1,0 +1,112 @@
+/* ===== Trade card (coin page and My Tokens). v71.26 makeover v2: roomy card, 48px primary action, a Buy/Sell
+   segmented control with a sliding indicator, a wallet row, pill presets and a clear fee note. Class names are
+   shared by the Raydium, Meteora, PumpSwap and Pump.fun trade modules; keep them stable. ===== */
+.coin-trade-panel{min-width:0;overflow:hidden;border:1px solid transparent;background-clip:padding-box;border-radius:var(--radius-card,18px);background-color:var(--panel,#121214);padding:var(--card-pad,24px);color:var(--text,#f4f4f5)}
+.coin-trade-panel[hidden],.coin-trade-panel [hidden]{display:none!important}.coin-trade-panel *{box-sizing:border-box}
+.ct-heading{display:flex;justify-content:space-between;gap:12px;align-items:center;min-height:28px;margin-bottom:16px}
+.ct-heading h2{font-size:var(--text-card,17px);font-weight:650;line-height:1.3;margin:0;letter-spacing:-.01em}
+.ct-heading>span{font-size:13px;color:var(--muted,#9a9aa3);overflow-wrap:anywhere;text-align:right}
+.ct-side{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;background:var(--inset,#0b0b0c);border:1px solid var(--line,#1f1f23);border-radius:var(--radius-control,12px);margin-bottom:16px}
+.ct-side button{min-height:44px;border:0;border-radius:5px;background:transparent;color:var(--muted,#9a9aa3);padding:0 14px;font:inherit;font-size:15px;font-weight:650;cursor:pointer}
+.ct-side button[aria-pressed=true]{background:#3a3a42;color:#c9b8ff}
+.ct-wallet{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;padding:12px 14px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-inset,12px);background:var(--inset,#0b0b0c)}
+.ct-wallet>div{min-width:0}
+.ct-wallet span{display:block;color:var(--muted,#9a9aa3);font-size:12px;margin-bottom:3px}
+.ct-wallet strong{font-size:14px;font-weight:550;overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.ct-wallet>strong{display:inline-flex;align-items:center;gap:8px;min-width:0}
+.ct-wallet>strong::before{content:"";width:8px;height:8px;flex:0 0 8px;border-radius:50%;background:#2ee59d;box-shadow:0 0 8px #2ee59daa}
+.ct-wallet .text-button{flex-shrink:0;font-size:13px;padding:6px 0}
+.ct-wallet-options{display:grid;gap:8px;margin-bottom:16px}
+.ct-note{font-size:13px;line-height:1.55;color:var(--muted,#9a9aa3);margin:0 0 14px;overflow-wrap:anywhere}
+/* App-only coins (v71.35): Buy and Sell are off while the coin is on the curve; the reason sits where the form would be. */
+.coin-trade-panel .ct-trade-lock{padding:12px 14px;border:1px solid #ffb0204d;border-radius:var(--radius-inset,12px);background:#ffb02012;color:#c9b8ff}
+.coin-trade-panel[data-trade-lock=app] .ct-side button,.coin-trade-panel[data-trade-lock=app] .ct-action{opacity:.55;cursor:not-allowed}
+.ct-amount-label{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;font-size:13px;margin:0}
+.ct-amount-label>:nth-child(2){font-size:12px;text-align:right;color:var(--muted,#9a9aa3);font-variant-numeric:tabular-nums}
+.ct-amount{grid-column:1/-1;display:flex;align-items:center;gap:10px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-control,12px);padding:8px 10px 8px 16px;background:var(--inset,#0b0b0c)}
+.ct-amount:focus-within{border-color:var(--accent,#8b5cff);box-shadow:0 0 0 3px #8b5cff1f}
+.ct-amount input{width:100%;min-width:0;min-height:0;flex:1;border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important;margin:0!important;height:40px;color:inherit;font:inherit;font-size:26px;font-weight:600;outline:none;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ct-amount strong{display:inline-flex;align-items:center;height:30px;max-width:40%;padding:0 10px;border-radius:999px;background:var(--panel2,#121214);border:1px solid var(--line,#1f1f23);font-size:13px;font-weight:650;overflow-wrap:anywhere;color:var(--accent,#8b5cff)}
+.ct-presets{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.ct-presets button{min-height:32px;padding:0 14px;font-size:13px;font-weight:600;border:1px solid var(--line,#1f1f23);border-radius:999px;color:var(--muted,#9a9aa3);background:transparent;cursor:pointer}
+.ct-options{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}
+.ct-options label{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted,#9a9aa3);margin:0}
+.ct-slippage-input{display:flex;align-items:center;gap:3px;min-height:36px;padding:0 10px;background:var(--inset,#0b0b0c);border:1px solid var(--line,#1f1f23);border-radius:6px;color:var(--text,#f4f4f5);font-size:14px}
+.ct-slippage-input:focus-within{border-color:var(--accent,#8b5cff)}
+.ct-slippage-input input{width:52px;min-width:0;min-height:0;height:auto;padding:0!important;margin:0!important;border:0!important;box-shadow:none!important;background:transparent!important;color:inherit;font:inherit;outline:none;text-align:right;font-variant-numeric:tabular-nums}
+.ct-slippage-note{color:var(--accent,#8b5cff);margin-bottom:10px}
+.ct-options .text-button{font-size:13px;padding:6px 0}
+.ct-review{border-top:1px solid var(--line,#1f1f23);padding-top:16px;margin-top:16px}
+.ct-review h3{font-size:14px;margin:0 0 10px}
+.ct-review dl{display:grid;gap:8px;margin:0}
+.ct-review dl>div{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-variant-numeric:tabular-nums}
+.ct-review dt{color:var(--muted,#9a9aa3);flex-shrink:0}
+.ct-review dd{margin:0;overflow-wrap:anywhere;text-align:right}
+.ct-review .ct-note{margin-bottom:14px}
+.coin-trade-panel .ct-action{width:100%;min-height:var(--control-h-lg,48px);padding:12px 16px;border-radius:var(--radius-control,12px);font-size:15px;background:linear-gradient(105deg,#a78bff,#ff4d6d);border:1px solid #a78bff;color:#0b0b0c;font-weight:700;margin:0;cursor:pointer}
+.coin-trade-panel .ct-action:disabled{opacity:.55;cursor:default}
+.ct-cancel{display:block;margin:12px auto 0;font-size:13px}
+.ct-status{font-size:13px;line-height:1.55;color:var(--muted,#9a9aa3);overflow-wrap:anywhere;margin:14px 0 0}
+.ct-status:empty{display:none}
+.ct-status.ct-error{color:#ff4d6d}
+.ct-receipt{display:block;font-size:13px;margin-top:12px;color:var(--accent,#8b5cff);text-decoration:none}
+.coin-trade-panel button:focus-visible,.coin-trade-panel input:focus-visible{outline:2px solid var(--accent,#8b5cff);outline-offset:3px}
+.token-market-column{min-width:0;display:grid;gap:var(--grid-gap,20px);align-content:start}.token-market-column>.token-activity{margin-top:0}.token-sidebar>.token-rewards-card,.token-sidebar>.coin-rewards{margin:0;min-width:0}.token-sidebar .token-rewards-metrics{grid-template-columns:1fr 1fr}.token-sidebar .token-rewards-heading{flex-wrap:wrap;padding:18px}.token-sidebar .token-rewards-heading h2{font-size:16px}.token-sidebar .token-rewards-heading-actions{flex-wrap:wrap}.token-description-section>strong{display:block;margin:12px 18px 5px;font-size:11px}.token-header .creator-row{display:inline-flex;width:auto;min-height:0;padding:0;margin-left:10px;border:0;background:transparent;gap:7px;font-size:11px}.token-header .creator-avatar{width:24px;height:24px}.token-address-line{flex-wrap:wrap}@media(max-width:600px){.coin-trade-panel{padding:var(--card-pad,18px)}.ct-options{gap:6px}.ct-side button{padding:0 9px}.token-sidebar .token-rewards-metrics{grid-template-columns:1fr 1fr}}
+
+/* Keep the owned detail page aligned with the public token page. */
+.token-market-grid{grid-template-columns:minmax(0,1fr) minmax(300px,31%);gap:var(--grid-gap,20px)}.token-chart{height:clamp(360px,46vh,460px)}.token-sidebar>#token-buyback{margin-top:0}.token-sidebar #token-buyback .coin-rewards-primary{grid-template-columns:1fr}.token-sidebar #token-buyback .coin-rewards-secondary{grid-template-columns:repeat(2,minmax(0,1fr))}.token-sidebar .token-rewards-heading{padding:0}.ct-review [data-ct-cost-row] dt{max-width:65%;flex-shrink:1}
+@media(max-width:920px){.token-market-grid{grid-template-columns:minmax(0,1fr)}.token-market-column,.token-sidebar{display:contents}.token-chart-card{order:0}.coin-trade-panel{order:1}.token-activity{order:2}.token-stat-card{order:3}.token-info-card{order:4}.coin-rewards,.token-rewards-card{order:5}.token-chart{height:clamp(320px,44vh,400px)}}
+@media(max-width:600px){.token-chart{height:clamp(300px,44vh,360px)}}
+
+
+/* ===== Trade panel states. Buy is green, sell is coral; connection prompts keep the sunrise primary. The first
+   side button is always Buy. A slow sunrise ring runs around the card (a registered --sunrise-angle animates it;
+   browsers without @property keep a still ring). ===== */
+@keyframes ct-pop{0%{transform:scale(.97)}55%{transform:scale(1.02)}100%{transform:none}}
+@keyframes ct-status-in{from{opacity:0;transform:translate3d(0,4px,0)}to{opacity:1;transform:none}}
+@keyframes ct-ring{to{--sunrise-angle:360deg}}
+.coin-trade-panel{--ct-buy:#2ee59d;--ct-sell:#ff4d6d;position:relative;isolation:isolate;box-shadow:none;transition:border-color var(--motion-mid,260ms) ease}
+.coin-trade-panel::before{content:"";position:absolute;z-index:0;inset:0;padding:1px;border-radius:inherit;background:conic-gradient(from var(--sunrise-angle,0deg),#a78bff,#8b5cff 22%,#7c4dff 40%,#6d45d9 58%,#4b2fa0 72%,#6d45d9 84%,#a78bff);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;pointer-events:none;animation:ct-ring 16s linear infinite}
+.coin-trade-panel>*{position:relative;z-index:1}
+.coin-trade-panel:has(.ct-side>button:first-child[aria-pressed=true]){--ct-side:var(--ct-buy)}
+.coin-trade-panel:has(.ct-side>button:last-child[aria-pressed=true]){--ct-side:var(--ct-sell)}
+.coin-trade-panel:focus-within::before{opacity:.95}
+.ct-heading h2{display:inline-flex;align-items:center;gap:9px}
+.ct-heading h2::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ct-side,#8b5cff);box-shadow:0 0 10px var(--ct-side,#8b5cff);transition:background-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+.ct-side{position:relative;isolation:isolate}
+.ct-side::before{content:"";position:absolute;z-index:0;top:4px;bottom:4px;left:4px;width:calc(50% - 6px);border-radius:5px;background:#18181b;box-shadow:inset 0 0 0 1px #1d7a5799,0 6px 18px -10px #2ee59daa;transition:transform 380ms var(--motion-spring,cubic-bezier(.34,1.4,.64,1)),background-color 260ms ease,box-shadow 260ms ease}
+.ct-side:has(>button:last-child[aria-pressed=true])::before{transform:translateX(calc(100% + 4px));background:#18181b;box-shadow:inset 0 0 0 1px #5e5e6799,0 6px 18px -10px #ff4d6daa}
+.ct-side button{position:relative;z-index:1;transition:color var(--motion-mid,260ms) ease}
+.ct-side button[aria-pressed=true]{background:transparent}
+.ct-side button:first-child[aria-pressed=true]{color:#8ff0c9}
+.ct-side button:last-child[aria-pressed=true]{color:#ff8fa3}
+.ct-side button:not([aria-pressed=true]):hover{color:var(--text,#f4f4f5)}
+.ct-amount{transition:border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+.ct-amount:focus-within{border-color:color-mix(in srgb,var(--ct-side,#8b5cff) 70%,transparent);box-shadow:0 0 0 3px color-mix(in srgb,var(--ct-side,#8b5cff) 16%,transparent)}
+.ct-amount strong{color:var(--ct-side,#8b5cff);border-color:color-mix(in srgb,var(--ct-side,#8b5cff) 35%,transparent)}
+.ct-presets button{transition:color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease,transform var(--motion-fast,150ms) ease}
+.ct-presets button:not(:disabled):hover{color:var(--text,#f4f4f5);border-color:color-mix(in srgb,var(--ct-side,#8b5cff) 60%,transparent);background:color-mix(in srgb,var(--ct-side,#8b5cff) 10%,transparent);transform:translateY(-1px)}
+.ct-review{animation:ct-status-in 320ms var(--motion-ease,ease)}
+.ct-status:not(:empty){animation:ct-status-in 320ms var(--motion-ease,ease)}
+.ct-status.ct-error{padding:10px 12px;border:1px solid #3a3a42;border-radius:6px;background:#12121466}
+/* Trading form visible: the action takes the side colour (buy green, sell coral). */
+.coin-trade-panel:has(:is([data-ct-form],[data-mt-form],[data-pp-form]):not([hidden])) .ct-action:not(:disabled){border-color:transparent;transition:transform var(--motion-fast,150ms) var(--motion-ease,ease),box-shadow var(--motion-mid,260ms) ease,filter var(--motion-mid,260ms) ease}
+.coin-trade-panel:has(:is([data-ct-form],[data-mt-form],[data-pp-form]):not([hidden])):has(.ct-side>button:first-child[aria-pressed=true]) .ct-action:not(:disabled){background:linear-gradient(105deg,#8ff0c9,#2ee59d 50%,#25b57c);color:#0d2a1f;box-shadow:none}
+.coin-trade-panel:has(:is([data-ct-form],[data-mt-form],[data-pp-form]):not([hidden])):has(.ct-side>button:last-child[aria-pressed=true]) .ct-action:not(:disabled){background:linear-gradient(105deg,#ff8fa3,#ff4d6d 50%,#ff4d6d);color:#2a0d14;box-shadow:none}
+body.relay-terminal .coin-trade-panel .ct-action:not(:disabled):hover{filter:brightness(1.05) saturate(1.08);box-shadow:0 10px 28px -12px color-mix(in srgb,var(--ct-side,#8b5cff) 70%,transparent),0 0 0 1px color-mix(in srgb,var(--ct-side,#8b5cff) 50%,transparent)}
+.coin-trade-panel .ct-action:not(:disabled):active{transform:scale(.97)}
+.coin-trade-panel .ct-action:disabled{filter:grayscale(.35)}
+.ct-receipt{display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:0 14px;border:1px solid #2a2a30;border-radius:999px;transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-spring,ease)}
+.ct-receipt:hover{border-color:var(--accent,#8b5cff);transform:translateY(-1px)}
+.ct-wallet-options .small-button{transition:transform var(--motion-fast,150ms) ease,border-color var(--motion-mid,260ms) ease}
+.ct-wallet-options .small-button:hover{transform:translateY(-1px)}
+@media(prefers-reduced-motion:reduce){.ct-side::before,.coin-trade-panel,.ct-side button,.ct-amount,.coin-trade-panel .ct-action,.ct-presets button{transition:none!important}.ct-review,.ct-status:not(:empty),.coin-trade-panel::before{animation:none}.ct-presets button:not(:disabled):hover{transform:none}}
+.coin-trade-panel a.ct-action{display:block;text-align:center;text-decoration:none}
+/* Notes after the slippage row and after the main action (fees, venue) keep their distance; the fee note after
+   the action reads as a clear inset note. */
+.coin-trade-panel .ct-options~.ct-note,.coin-trade-panel :is([data-mt-form],[data-pp-form]):not([hidden])+.ct-note{margin-top:12px}
+.coin-trade-panel .ct-action~.ct-note{display:flex;gap:10px;align-items:flex-start;margin:14px 0 0;padding:12px 14px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-inset,12px);background:var(--inset,#0b0b0c);font-size:12.5px;line-height:1.55}
+.coin-trade-panel .ct-action~.ct-note::before{content:"i";flex:0 0 18px;display:grid;place-items:center;width:18px;height:18px;margin-top:1px;border-radius:50%;background:#8b5cff22;color:var(--accent,#8b5cff);font:700 11px/1 var(--sans,inherit);font-style:normal}
+.coin-trade-panel .ct-action~.ct-note:empty{display:none}
+/* Touch screens: the small text buttons (Change, Refresh balance, Cancel review) get a 44px tap area. */
+@media(pointer:coarse){.coin-trade-panel .text-button{position:relative}.coin-trade-panel .text-button::after{content:"";position:absolute;inset:-12px -6px}}

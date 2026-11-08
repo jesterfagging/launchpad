@@ -1,0 +1,18 @@
+[
+  {
+    "case": "missing",
+    "rejected": true
+  },
+  {
+    "case": "public_fixture",
+    "rejected": true
+  },
+  {
+    "case": "invalid",
+    "rejected": true
+  },
+  {
+    "case": "public_owner_verification_fixture_production_helper",
+    "rejected": true
+  }
+]

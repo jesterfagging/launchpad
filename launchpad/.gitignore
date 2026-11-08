@@ -1,0 +1,13 @@
+node_modules/
+# Runtime data, keys and local settings never belong in the repository.
+/launchpad-data/
+/telegram-data/
+/data/
+master.key
+.env
+# Program binaries are built locally (contracts/*/build-*.sh) and pinned in src/*-deployment.mjs.
+/private/
+contracts/*/target/
+contracts/*/artifacts/*.so
+# Uniswap v4 core for the Foundry tests (contracts/curve-launch-evm/scripts/vendor-v4-core.mjs)
+contracts/curve-launch-evm/test/vendor/

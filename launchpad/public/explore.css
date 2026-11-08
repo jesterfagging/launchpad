@@ -1,0 +1,466 @@
+/* Launchpad discovery (home / explore), v71.26 makeover v2: the shared 1360px frame, a spacious market dashboard
+   with a real price chart, roomy filters and a 4/5-column coin grid with square art. Colours, radii, spacing
+   and controls come from the design-system tokens in curve-theme.css; this file only lays the page out.
+   Decorative motion animates transform/opacity and stops under reduced motion. */
+.explore-page [hidden]{display:none!important}
+.explore-sr-only,.explore-page .explore-intro{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.explore-noscript{padding:var(--space-6);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--panel2);color:var(--accent)}
+.explore-page :is(h1,h2,h3){font-family:var(--sans)}
+.explore-page{--chart-h:240px}
+
+/* ===== Market dashboard: "On the horizon" + "On the rise" side by side, "Top by market cap" below. ===== */
+.explore-page .explore-dashboard{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(360px,1fr);gap:var(--space-6);margin:0 0 var(--space-8)}
+.explore-page .explore-dashboard>*{min-width:0}
+.explore-page .explore-featured{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;min-width:0;padding:var(--card-pad-lg) 30px;border:1px solid var(--line-card);border-radius:var(--radius-card);background:radial-gradient(ellipse at 100% 0,#8b5cff1c,transparent 52%),radial-gradient(ellipse at 0 100%,#5e5e6714,transparent 58%),linear-gradient(130deg,#121214,var(--panel) 65%);box-shadow:var(--shadow-card)}
+/* Quiet contour artwork drifts behind the content and never becomes a hit target. */
+.explore-page .explore-featured::after{content:"";position:absolute;inset:-18% -14% auto auto;width:58%;aspect-ratio:1;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 50%,transparent 46%,#a78bff1c 46.2%,transparent 46.6%,transparent 56%,#a78bff14 56.2%,transparent 56.6%,transparent 66%,#7a7a8510 66.2%,transparent 66.6%);animation:explore-drift 18s ease-in-out infinite alternate}
+.explore-page .explore-featured>.eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 var(--space-5);color:var(--sunrise-gold);font:600 12px/1 var(--sans);letter-spacing:.08em}
+.explore-page .explore-featured>.eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sunrise-gold);box-shadow:0 0 10px #a78bffaa;animation:explore-breathe 2.4s ease-in-out infinite}
+.explore-page .explore-featured>h2{margin:0 0 8px;font-size:var(--text-section)}
+.explore-page .explore-featured>.help{margin:0;font-size:14px}
+.explore-page .explore-feature-heading{display:flex;align-items:center;justify-content:space-between;gap:var(--space-5)}
+.explore-page .explore-feature-heading .explore-mini-coin{flex:1;gap:var(--space-4);min-width:0;padding:0;border:0;background:none}
+.explore-page .explore-feature-heading .explore-mini-coin>img{width:72px;height:72px;flex:0 0 72px;box-shadow:0 0 0 3px #ffffff10,0 0 0 4px #8b5cff3d,0 12px 30px -12px #000c;transition:transform var(--motion-slow,560ms) var(--motion-spring,ease)}
+.explore-page .explore-feature-heading .explore-mini-coin:hover>img{transform:rotate(-6deg) scale(1.06)}
+.explore-page .explore-feature-heading h2{margin:0 0 4px;overflow-wrap:anywhere;font-size:32px;font-weight:650;line-height:1.1;letter-spacing:-.025em;transition:color var(--motion-mid,260ms) ease}
+.explore-page .explore-feature-heading .explore-mini-coin:hover h2{color:var(--sunrise-cream)}
+.explore-page .explore-feature-heading span{color:var(--muted);font-size:15px}
+body.relay-terminal.explore-page .explore-feature-heading .explore-mini-coin:hover{transform:none;box-shadow:none;background:none}
+.explore-page .explore-feature-value{display:flex;flex-direction:column;flex-shrink:0;text-align:right}
+.explore-page .explore-feature-value strong{font-size:40px;font-weight:650;line-height:1;letter-spacing:-.025em;background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.explore-page .explore-feature-value strong:is(.motion-up,.motion-down){color:var(--sunrise-cream);background:none;-webkit-text-fill-color:currentColor}
+.explore-page .explore-feature-value small{margin-top:7px;color:var(--muted);font-size:13px}
+/* The price chart: a label line, the plot (area + line, gridlines, high/low/latest labels, a time axis,
+   a crosshair readout) and an optional note. */
+.explore-page .explore-feature-chart{display:flex;flex-direction:column;flex:1;margin:var(--space-5) 0 var(--space-5)}
+.explore-page .explore-feature-chart>p,.explore-page .explore-feature-chart>small{margin:0 0 8px;color:var(--muted);font-size:13px;line-height:1.4}
+.explore-page .explore-feature-chart>small{margin:8px 0 0}
+.explore-page .explore-feature-chart>.explore-chart-note{display:inline-flex;align-items:center;gap:6px;margin:8px 0 0;color:#c9c9cf}
+.explore-page .explore-feature-chart>.explore-chart-note::before{content:"";width:14px;height:2px;border-radius:2px;background:var(--accent)}
+.explore-page .explore-spark{position:relative;display:grid;align-items:center;height:var(--chart-h);min-height:var(--chart-h);color:var(--muted);font-size:13px;outline:none;touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+.explore-page .explore-spark:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:4px;border-radius:5px}
+/* Before the first reading arrives the plot is a soft shimmering placeholder with its status line centred. */
+.explore-page .explore-spark:not(:has(svg)){position:relative;place-items:center;overflow:hidden;border-radius:6px;background:repeating-linear-gradient(to bottom,transparent 0,transparent 58px,#ffffff08 59px),#ffffff04;color:#9a9aa3;text-align:center}
+.explore-page .explore-spark:not(:has(svg))::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,#ffffff08 42%,#ddd3ff10 50%,#ffffff08 58%,transparent 80%);background-size:220% 100%;animation:explore-shimmer 1.8s linear infinite;pointer-events:none}
+.explore-page .explore-spark>svg{display:block;width:100%;height:var(--chart-h);overflow:visible}
+.explore-page .explore-spark .explore-chart-grid{stroke:#ffffff10;stroke-width:1}
+.explore-page .explore-spark .explore-chart-axis{fill:#7a7a85;font:500 11.5px var(--sans);font-variant-numeric:tabular-nums}
+.explore-page .explore-spark .explore-chart-axis.is-y{text-anchor:end}
+.explore-page .explore-spark .explore-chart-axis.is-x{text-anchor:middle}
+.explore-page .explore-spark .explore-chart-axis.is-x.is-first{text-anchor:start}
+.explore-page .explore-spark .explore-chart-axis.is-x.is-last{text-anchor:end}
+.explore-page .explore-spark .explore-spark-line{fill:none;stroke:var(--accent);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.explore-page .explore-spark .explore-spark-area{fill:url(#explore-spark-fill)}
+.explore-page .explore-spark .explore-chart-extreme{fill:#f4f4f5;stroke:var(--panel);stroke-width:2}
+.explore-page .explore-spark .explore-chart-extreme-label{fill:#c9c9cf;font:600 11.5px var(--sans);font-variant-numeric:tabular-nums}
+.explore-page .explore-spark .explore-chart-extreme-label.is-low{fill:#9a9aa3}
+.explore-page .explore-spark .explore-chart-latest{fill:#ddd3ff;font:650 12px var(--sans);font-variant-numeric:tabular-nums}
+.explore-page .explore-spark .explore-chart-latest-bg{fill:#121214;stroke:#8b5cff55;stroke-width:1}
+.explore-page .explore-spark svg.is-drawing .explore-spark-line{stroke-dasharray:1;stroke-dashoffset:1;animation:explore-draw 1.4s var(--motion-ease,ease) forwards}
+.explore-page .explore-spark svg.is-drawing .explore-spark-area{animation:explore-fade-in .6s ease .4s both}
+.explore-page .explore-spark svg.is-drawing :is(.explore-chart-extreme,.explore-chart-extreme-label,.explore-chart-latest,.explore-chart-latest-bg){animation:explore-fade-in .4s ease .85s both}
+.explore-page .explore-spark-dot{position:absolute;left:var(--spark-x,100%);top:var(--spark-y,50%);width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#ddd3ff;box-shadow:0 0 0 2px var(--panel),0 0 0 4px #8b5cff55;pointer-events:none}
+.explore-page .explore-spark-dot::after{content:"";position:absolute;inset:0;border:1px solid #a78bff;border-radius:50%;animation:explore-ping 2.2s cubic-bezier(0,0,.2,1) infinite}
+.explore-page .explore-spark-dot.is-drawing{animation:explore-dot-in .4s var(--motion-spring,ease) .9s both}
+/* Crosshair readout: a hairline that snaps to the nearest reading and a value/time tip. */
+.explore-page .explore-chart-crosshair{position:absolute;left:var(--spark-cx,0);top:var(--spark-top,0);bottom:var(--spark-bottom,0);width:0;border-left:1px solid #ffffff2e;opacity:0;pointer-events:none;transition:opacity var(--motion-fast,150ms) ease}
+.explore-page .explore-chart-crosshair::after{content:"";position:absolute;left:0;top:var(--spark-cy,50%);width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 2px var(--panel)}
+.explore-page .explore-chart-tip{position:absolute;left:var(--spark-cx,0);top:calc(var(--spark-top,0) - 2px);display:grid;gap:2px;padding:7px 10px;border:1px solid #ffffff1c;border-radius:6px;background:var(--glass-bg);box-shadow:var(--shadow-elevated);color:var(--text);font:650 13px/1.2 var(--sans);font-variant-numeric:tabular-nums;white-space:nowrap;opacity:0;transform:translate(-50%,-100%);pointer-events:none;transition:opacity var(--motion-fast,150ms) ease}
+.explore-page .explore-chart-tip.is-left{transform:translate(0,-100%)}
+.explore-page .explore-chart-tip.is-right{transform:translate(-100%,-100%)}
+.explore-page .explore-chart-tip>small{color:var(--muted);font:500 11.5px/1.2 var(--sans)}
+.explore-page .explore-spark.is-probing :is(.explore-chart-crosshair,.explore-chart-tip){opacity:1}
+.explore-page .explore-spark.is-probing .explore-spark-dot{opacity:.45}
+/* Stats row: three roomy tiles. */
+.explore-page .explore-feature-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
+.explore-page .explore-feature-stats>div{min-width:0;padding:14px 16px;border:1px solid #ffffff0f;border-radius:var(--radius-inset);background:#0b0b0c80}
+.explore-page .explore-feature-stats>div>span{display:block;margin-bottom:var(--label-gap);color:var(--muted);font-size:13px}
+.explore-page .explore-feature-stats strong{display:block;font-size:20px;font-weight:650;line-height:1.2;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.explore-page .explore-feature-meter,.explore-page .explore-mini-meter{position:relative;display:block;height:6px;margin-top:10px;overflow:hidden;border-radius:4px;background:#2a2a30}
+.explore-page .explore-feature-meter>i,.explore-page .explore-mini-meter>i{position:absolute;inset:0 auto 0 0;width:calc(var(--progress,0)*1%);border-radius:inherit;background:linear-gradient(90deg,#4b2fa0,#6d45d9 45%,#8b5cff);transform-origin:0 50%;animation:explore-fill .9s var(--motion-ease,ease) .1s both}
+.explore-page .explore-feature-meter>i::after,.explore-page .explore-mini-meter>i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#ffffff66 50%,transparent 70%);transform:translateX(-120%);animation:explore-sheen 3.2s var(--motion-ease,ease) 1.2s infinite}
+.explore-pair-venue,.explore-mini-identity,.explore-page .explore-feature-pair{display:inline-flex;align-items:center;gap:7px;min-width:0}
+.explore-page .explore-feature-pair .quote-identity{margin:0}
+.explore-page .explore-feature-pair .quote-symbol{margin:0;color:inherit;font-size:inherit}
+.explore-page .explore-feature-stats .explore-feature-pair .quote-logo{--quote-logo-size:24px}
+
+/* "On the rise": a ranked list card the same height as the featured coin, 64px+ rows. */
+.explore-page .explore-contenders{display:flex;flex-direction:column;min-width:0;padding:var(--space-5) var(--space-6) var(--space-4);border:1px solid var(--line-card);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow-card)}
+.explore-page .explore-dashboard-heading{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);padding:0 0 10px}
+.explore-page .explore-dashboard-heading h2{display:inline-flex;align-items:center;gap:10px;margin:0;font-size:18px;font-weight:650;letter-spacing:-.01em}
+.explore-page .explore-dashboard-heading h2::before{content:"↗";display:inline-grid;place-items:center;width:26px;height:26px;border-radius:5px;background:linear-gradient(140deg,#2a2a30,#18181b);color:var(--sunrise-gold);font-size:13px;box-shadow:inset 0 0 0 1px #ffffff10}
+.explore-page .explore-dashboard-heading span{color:var(--muted);font-size:13px}
+.explore-page .explore-mini-coin{display:flex;align-items:center;gap:12px;min-width:0;color:var(--text);text-decoration:none}
+.explore-page .explore-mini-coin>img{width:44px;height:44px;flex-shrink:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #ffffff0e}
+.explore-page .explore-mini-coin>div{min-width:0}
+.explore-page .explore-mini-coin strong{display:block;overflow:hidden;font-size:15px;font-weight:650;text-overflow:ellipsis;white-space:nowrap;transition:color var(--motion-mid,260ms) ease}
+.explore-page .explore-mini-coin small{display:block;margin-top:3px;overflow:hidden;color:var(--muted);font-size:13px;text-overflow:ellipsis;white-space:nowrap}
+.explore-page .explore-mini-identity{max-width:100%}
+.explore-page .explore-mini-identity .launch-amm-badge{width:20px;height:20px;padding:1px;border-radius:4px}
+.explore-page .explore-mini-identity .launch-amm-badge>img{width:15px;height:15px}
+.explore-page .explore-contenders .explore-mini-coin :is(strong,small){line-height:1.25}
+.explore-page .explore-mini-value{flex-shrink:0;min-width:96px;margin-left:auto;text-align:right}
+.explore-page .explore-contenders .explore-mini-value{display:grid;grid-template-columns:auto auto;grid-template-areas:"v v" "m s";justify-content:end;align-items:center;column-gap:8px}
+.explore-page .explore-contenders .explore-mini-value>strong{grid-area:v;justify-self:end;font-size:16px}
+.explore-page .explore-contenders .explore-mini-value>small{grid-area:s;margin:0;font-size:12.5px}
+.explore-page .explore-contenders .explore-mini-value>.explore-mini-meter{grid-area:m;width:56px;height:5px;margin:0}
+.explore-page .explore-mini-value strong{font-variant-numeric:tabular-nums}
+.explore-page .explore-mini-meter{width:96px;height:4px;margin:6px 0 0 auto}
+.explore-page .explore-mini-coin:hover strong{color:var(--sunrise-cream)}
+.explore-page #explore-contenders-list{display:flex;flex:1;flex-direction:column}
+.explore-page .explore-contenders .explore-mini-coin{position:relative;flex:1;min-height:64px;margin:0 -10px;padding:8px 10px;border-radius:6px;transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),background-color var(--motion-mid,260ms) ease}
+.explore-page .explore-contenders .explore-mini-coin+.explore-mini-coin::before{content:"";position:absolute;left:10px;right:10px;top:0;height:1px;background:#ffffff0b}
+body.relay-terminal.explore-page .explore-contenders .explore-mini-coin:hover{transform:translateX(4px);box-shadow:none;background:var(--hover);color:var(--text)}
+.explore-page .explore-contenders .explore-mini-coin>img{width:44px;height:44px}
+.explore-page #explore-contenders-list>.help{margin:auto 0;color:var(--muted);font-size:14px;text-align:center}
+.explore-page .explore-rank{display:inline-grid;place-items:center;flex:0 0 28px;width:28px;height:28px;border:1px solid var(--line);border-radius:50%;background:var(--inset);color:var(--muted);font-size:12px;font-weight:650;font-variant-numeric:tabular-nums}
+.explore-page [data-rank="1"] .explore-rank{border:0;color:#2a1d06;background:linear-gradient(140deg,#ddd3ff,#a78bff 45%,#ffb020);box-shadow:0 0 0 1px #a78bff55,0 6px 14px -6px #a78bff99}
+.explore-page [data-rank="2"] .explore-rank{border:0;color:#18181b;background:linear-gradient(140deg,#f4f4f5,#c9c9cf 50%,#7a7a85);box-shadow:0 0 0 1px #c9c9cf44}
+.explore-page [data-rank="3"] .explore-rank{border:0;color:#7c4dff;background:linear-gradient(140deg,#c9b8ff,#7c4dff 50%,#7c4dff);box-shadow:0 0 0 1px #7c4dff44}
+.explore-page .explore-mini-arrow{display:inline-grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:4px;color:var(--muted);font-size:13px;transition:transform var(--motion-mid,260ms) var(--motion-spring,ease),color var(--motion-mid,260ms) ease}
+.explore-page .explore-mini-coin:hover .explore-mini-arrow{transform:translate(2px,-2px);color:var(--sunrise-gold)}
+
+/* "Top by market cap": four roomy tiles that lift on hover. */
+.explore-page .explore-leaders{margin:0 0 var(--space-9)}
+.explore-page .explore-leaders>h2{display:flex;align-items:center;gap:var(--space-4);margin:0 0 var(--space-4);font-size:var(--text-section);font-weight:650;letter-spacing:-.015em}
+.explore-page .explore-leaders>h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line),transparent)}
+.explore-page #explore-leaders-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(88px,auto);gap:var(--grid-gap);counter-reset:explore-leader}
+.explore-page .explore-leader-placeholder{min-height:88px;border:1px solid var(--line-card);border-radius:var(--radius-card);background:var(--panel)}
+.explore-page #explore-leaders-list .explore-mini-coin{position:relative;overflow:hidden;gap:14px;padding:16px 20px;border:1px solid var(--line-card);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow-card);counter-increment:explore-leader;transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+.explore-page #explore-leaders-list .explore-mini-coin::after{content:"#" counter(explore-leader);position:absolute;right:12px;bottom:-14px;color:#ffffff07;font-size:54px;font-weight:800;letter-spacing:-3px;line-height:1;pointer-events:none}
+.explore-page #explore-leaders-list .explore-mini-coin:first-child{border-color:#3a3a42;background:radial-gradient(ellipse at 0 0,#a78bff18,transparent 60%),var(--panel)}
+.explore-page #explore-leaders-list .explore-mini-coin>span:last-child{display:none}
+.explore-page #explore-leaders-list .explore-mini-coin>img{width:48px;height:48px}
+.explore-page #explore-leaders-list .explore-mini-value{min-width:0}
+.explore-page #explore-leaders-list .explore-mini-value strong{font-size:18px;font-weight:650;letter-spacing:-.01em}
+.explore-page #explore-leaders-list .explore-mini-value small{white-space:nowrap;font-size:12.5px}
+body.relay-terminal.explore-page #explore-leaders-list .explore-mini-coin:hover{transform:translate3d(0,-3px,0);border-color:var(--line-card-hover);box-shadow:var(--shadow-card-hover);color:var(--text)}
+.explore-page #explore-leaders-list>.help{grid-column:1/-1;margin:0;color:var(--muted);font-size:14px}
+
+/* ===== Feed controls: stage tabs, asset chips and the view switch on one bar; AMM, status and age below. ===== */
+.explore-page .explore-browse-bar{display:flex;align-items:center;gap:var(--space-5);min-width:0;border-bottom:1px solid var(--line)}
+body.relay-terminal.explore-page .explore-stage-tabs{flex:1 1 auto;gap:2px;border-bottom:0}
+body.relay-terminal.explore-page .explore-stage-tabs>button{height:52px;padding:0 14px;font-size:15px}
+body.relay-terminal.explore-page .explore-stage-tabs>button[aria-pressed=true]{color:var(--sunrise-cream)}
+.explore-page .explore-browse-bar .explore-categories{flex:0 1 auto}
+.explore-page .explore-view-switch{flex:0 0 auto}
+.explore-page .explore-view-switch svg{display:none;width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.explore-page .explore-status-row{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3) var(--space-4);min-height:40px;margin:var(--space-4) 0 var(--space-6)}
+.explore-page .explore-amm-options{flex:0 1 auto}
+.explore-page .explore-amm-label{flex:0 0 auto;padding:0 4px 0 0;color:var(--muted);font-size:13px;font-weight:500}
+body.relay-terminal.explore-page .explore-amm-options>button img{width:17px;height:17px;object-fit:contain}
+.explore-page .explore-status-row>p{display:inline-flex;align-items:center;gap:8px;flex:1;min-width:0;margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.explore-page #explore-status[data-error=true]{color:#a78bff}
+.explore-page #explore-coins:has(.explore-section:not([hidden])>.explore-grid[aria-busy=true]) #explore-status::before{content:"";width:10px;height:10px;flex:0 0 10px;border:2px solid #a78bff33;border-top-color:#a78bff;border-radius:50%;animation:explore-spin-ring .8s linear infinite}
+.explore-page .explore-age-options{flex:0 0 auto}
+.explore-page .explore-auto{display:flex;align-items:center;gap:7px;color:var(--muted);font-size:13px;white-space:nowrap}
+.explore-page .explore-auto i{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 #8b5cff66;animation:explore-live 2.4s ease-in-out infinite}
+.explore-page .explore-status-row:has([data-error=true]) .explore-auto{color:#7a7a85}
+.explore-page .explore-status-row:has([data-error=true]) .explore-auto i{background:#ffb020}
+.explore-page .explore-search-chip{display:inline-flex;align-items:center;gap:6px;flex:0 1 auto;min-width:0;max-width:min(320px,50vw);height:36px;margin:0;padding:0 14px;border:1px solid var(--sel-line);border-radius:999px;background:var(--sel-bg);color:var(--sel-text);font-size:13px;line-height:1.2;white-space:nowrap;cursor:pointer}
+.explore-page .explore-search-chip strong{min-width:0;overflow:hidden;font-weight:600;text-overflow:ellipsis}
+.explore-page .explore-search-chip:hover{border-color:#5e5e67}
+.explore-page .explore-search-chip:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:2px}
+.explore-page .explore-search-chip-clear{opacity:.8}
+/* Sliding selection: JS measures the pressed control; without it the pressed styles above remain. */
+.explore-page .has-slider{position:relative}
+.explore-page .has-slider>button{position:relative;z-index:1}
+.explore-page .explore-indicator{position:absolute;left:0;top:0;z-index:0;width:var(--indicator-w,0);height:var(--indicator-h,0);transform:translate3d(var(--indicator-x,0),var(--indicator-y,0),0);border-radius:999px;background:var(--sel-bg);box-shadow:inset 0 0 0 1px var(--sel-line),0 6px 18px -12px #8b5cff99;opacity:0;pointer-events:none}
+.explore-page .has-indicator>.explore-indicator{opacity:1}
+.explore-page .indicator-ready>.explore-indicator{transition:transform 420ms var(--motion-spring,ease),width 380ms var(--motion-ease,ease),height 380ms var(--motion-ease,ease),opacity 200ms ease}
+.explore-page .has-indicator>button[aria-pressed=true]{background:transparent!important;box-shadow:none!important;border-color:transparent!important}
+.explore-page .explore-stage-tabs>.explore-indicator{top:auto;bottom:-1px;height:2px;transform:translate3d(var(--indicator-x,0),0,0);border-radius:2px;background:linear-gradient(90deg,#a78bff,#8b5cff 50%,#7c4dff);box-shadow:0 0 12px -2px #8b5cff99}
+.explore-page .explore-view-switch>.explore-indicator,.explore-page .explore-age-options>.explore-indicator{border-radius:5px;background:var(--panel2);box-shadow:inset 0 0 0 1px var(--line-strong)}
+
+/* ===== Coin grid: 1 → 5 columns, square art and a roomy body. ===== */
+.explore-page .explore-section{margin:0 0 var(--space-7);padding:0;border:0;border-radius:0;background:none;overflow:visible}
+.explore-page #explore-coins .explore-section-heading{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.explore-page .explore-count{font-variant-numeric:tabular-nums}
+.explore-page .explore-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--grid-gap);align-items:start}
+@media(min-width:380px){.explore-page .explore-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:900px){.explore-page .explore-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1200px){.explore-page .explore-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1560px){.explore-page .explore-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.explore-page .explore-coin{position:relative;isolation:isolate;display:block;min-width:0;padding:0;overflow:hidden;border:1px solid var(--line-card);border-radius:var(--radius-card);background:var(--panel);color:var(--text);text-decoration:none;box-shadow:var(--shadow-card);transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+body.relay-terminal.explore-page .explore-coin:hover,body.relay-terminal.explore-page .explore-coin:focus-visible{transform:translate3d(0,-4px,0);border-color:var(--line-card-hover);box-shadow:var(--shadow-card-hover)}
+.explore-page .explore-coin:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:2px}
+.explore-page .explore-coin-image{position:relative;display:grid;place-items:center;aspect-ratio:1;overflow:hidden;border-radius:0;background:linear-gradient(145deg,#4b2fa060,#6d45d945 60%,#8b5cff30)}
+.explore-page .explore-coin-image>span:first-child{max-width:100%;padding:14px;overflow-wrap:anywhere;color:#c9b8ff;font-size:28px;font-weight:650;letter-spacing:-.5px;text-align:center}
+.explore-page .explore-coin-image>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 700ms var(--motion-ease,ease)}
+.explore-page .explore-coin:hover .explore-coin-image>img,.explore-page .explore-coin:focus-visible .explore-coin-image>img{transform:scale(1.06)}
+/* A soft scrim under the badges keeps them readable on any art. */
+.explore-page .explore-coin-badges{position:absolute;top:0;left:0;right:0;z-index:1;display:flex;flex-wrap:wrap;align-items:flex-start;gap:6px;min-height:64px;padding:10px;background:linear-gradient(180deg,#000000a8,#00000000);pointer-events:none}
+.explore-page .explore-coin-badge{display:inline-flex;align-items:center;gap:6px;max-width:100%;padding:5px 10px;overflow:hidden;border:1px solid #ffffff1f;border-radius:999px;background:#0b0b0ce6;color:#f4f4f5;font-size:12px;font-weight:550;line-height:1.25;text-overflow:ellipsis;white-space:nowrap;}
+.explore-page .explore-coin-badge::before{content:"";width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:var(--badge,#8b5cff);box-shadow:0 0 8px var(--badge,#8b5cff)}
+.explore-page .explore-coin-badge.is-creator{--badge:#8b5cff}
+.explore-page .explore-coin-badge.is-strategy{--badge:#5aa9ff;border-color:#5aa9ff33}
+.explore-page .explore-coin-badge.is-option{--badge:#a78bff;border-color:#a78bff40}
+.explore-page .explore-coin-badge.is-holders{--badge:#2ee59d;border-color:#2ee59d33}
+.explore-page .explore-coin-badge.is-paycheck{--badge:#ffb020;border-color:#ffb02040}
+.explore-page .explore-coin-badge.is-gotchi{--badge:#a78bff;border-color:#a78bff33}
+.explore-page .explore-coin-badge.is-agent{--badge:#5aa9ff;border-color:#5aa9ff33}
+.explore-page .explore-coin-badge.is-buyback{--badge:#c9b8ff;border-color:#c9b8ff33}
+.explore-page .explore-coin-badge.is-hooked{--badge:#a78bff;border-color:#a78bff4d;color:#e4e4e7;pointer-events:auto}
+.explore-page .explore-coin-badge.is-hooked.is-curve-route{--badge:#c9b8ff;border-color:#c9b8ff33;background:transparent;color:#c9b8ff;font-weight:500}
+.explore-page .explore-coin-badge.is-hooked.is-app-route{--badge:#ffb020;border-color:#ffb0204d;background:transparent;color:#c9b8ff;font-weight:500}
+.explore-page .explore-coin-badge.is-graduated{--badge:#a78bff;border-color:#a78bff55;background:linear-gradient(110deg,#1f1f23ee,#18181bee);color:#ddd3ff}
+.explore-page .explore-coin-badge.is-graduating{--badge:#a78bff;color:#ddd3ff}
+.explore-page .explore-coin-badge.is-graduating::before{animation:explore-breathe 1.6s ease-in-out infinite}
+.explore-page .explore-coin-badge.is-moving{--badge:#7c4dff;border-color:#7a7a854d;background:#18181be8;color:#c9b8ff}
+/* Fresh launches (under ten minutes): a NEW pill with a twinkling sparkle on the art. */
+.explore-page .explore-coin.is-fresh .explore-coin-image::after{content:"NEW";position:absolute;left:12px;bottom:12px;z-index:2;display:grid;place-items:center;width:48px;height:24px;border-radius:999px;color:#fff;background:var(--grad-sunrise);box-shadow:0 6px 16px -6px #a78bffcc;font:750 10.5px/1 var(--sans);letter-spacing:.1em;pointer-events:none;animation:explore-new-pop .6s var(--motion-spring,ease) both}
+.explore-page .explore-coin.is-fresh .explore-coin-image::before{content:"";position:absolute;left:54px;bottom:30px;z-index:2;width:14px;height:14px;background:#ddd3ff;clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);filter:drop-shadow(0 0 4px #a78bff);pointer-events:none;animation:explore-sparkle 2.4s ease-in-out infinite}
+/* Card body: name and age, ticker and mint, value, pair and volume, then graduation progress. */
+.explore-page .explore-coin-body{padding:16px 18px 18px}
+.explore-page:not(.explore-list-view) .explore-coin-body{min-height:180px}
+.explore-page:not(.explore-list-view) .explore-coin:not(.explore-skeleton) .explore-coin-body{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name name" "symbol mint" "value age" "secondary secondary" "progress progress";align-content:start;column-gap:var(--space-2);row-gap:4px}
+.explore-page:not(.explore-list-view) .explore-coin-footer{display:contents}
+.explore-page:not(.explore-list-view) .explore-coin-footer>span{grid-area:mint;align-self:center;justify-self:end;max-width:110px;color:#7a7a85;font-size:12px;font-variant-numeric:tabular-nums}
+.explore-page:not(.explore-list-view) .explore-coin-age{grid-area:age;align-self:center;justify-self:end;margin-top:8px}
+.explore-page .explore-coin-name{grid-area:name;margin:0;overflow:hidden;font-size:17px;font-weight:650;line-height:1.3;letter-spacing:-.012em;text-overflow:ellipsis;white-space:nowrap;transition:color var(--motion-mid,260ms) ease}
+.explore-page .explore-coin:hover .explore-coin-name{color:var(--sunrise-cream)}
+.explore-page .explore-coin-symbol{grid-area:symbol;margin:0;overflow:hidden;color:var(--muted);font-size:13px;line-height:1.35;text-overflow:ellipsis;white-space:nowrap}
+.explore-page .explore-coin-value{grid-area:value;display:flex;align-items:baseline;gap:6px;margin-top:8px;overflow:hidden;font-size:22px;font-weight:650;line-height:1.2;letter-spacing:-.015em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.explore-page .explore-coin-value>span{color:var(--text);font-weight:650}
+.explore-page .explore-coin-value small{color:var(--muted);font-size:12px;font-weight:550;letter-spacing:.02em}
+.explore-page .explore-coin-secondary{grid-area:secondary;display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;min-height:26px;margin-top:2px;color:var(--muted);font-size:13px;line-height:1.3}
+.explore-page .explore-coin-secondary>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The pair yields first (its ticker ellipsizes down to the logo), then the volume. */
+.explore-page .explore-coin-secondary .explore-pair-venue{flex:0 1 auto;min-width:0;max-width:none;overflow:hidden}
+.explore-page .explore-coin-secondary .explore-coin-pair{flex:0 1 auto;min-width:0;max-width:none;color:#c9c9cf;font-weight:550;white-space:nowrap}
+.explore-page .explore-coin-secondary .explore-coin-pair .quote-logo{--quote-logo-size:20px}
+.explore-page .explore-coin-secondary .explore-coin-pair .quote-symbol{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.explore-page .explore-coin-secondary .launch-amm-badge{flex:0 0 auto}
+.explore-page .explore-coin-secondary>.explore-pair-venue+span{flex:none;max-width:100%;text-align:right}
+.explore-page .explore-coin-secondary>.explore-pair-venue+span>small{font-size:inherit}
+.explore-page :is(.explore-progress-row,.explore-coin-status){grid-area:progress}
+.explore-page .explore-progress-row{display:flex;align-items:center;gap:10px;min-height:16px;margin:8px 0 0;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.explore-page .explore-progress-row>span{white-space:nowrap}
+.explore-page .explore-progress-track{position:relative;display:block;flex:1;min-width:0;height:6px;border-radius:4px;background:#2a2a30;overflow:hidden}
+.explore-page .explore-progress-track>progress{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0}
+.explore-page .explore-progress-fill{position:absolute;inset:0 auto 0 0;width:calc(var(--progress,0)*1%);border-radius:inherit;background:linear-gradient(90deg,#4b2fa0,#6d45d9 45%,#8b5cff);transform-origin:0 50%;animation:explore-fill .9s var(--motion-ease,ease) .1s both}
+.explore-page .explore-progress-fill::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#ffffff55 50%,transparent 70%);transform:translateX(-120%);transition:transform 900ms var(--motion-ease,ease)}
+.explore-page .explore-coin:hover .explore-progress-fill::after{transform:translateX(220%)}
+.explore-page .explore-progress-row.is-hot .explore-progress-fill{background:linear-gradient(90deg,#6d45d9,#8b5cff 55%,#ddd3ff);box-shadow:0 0 10px -2px #a78bffaa}
+.explore-page .explore-progress-row.is-hot>span{color:var(--sunrise-gold);font-weight:650}
+.explore-page .explore-coin-status{min-height:16px;margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.3}
+.explore-page .explore-coin-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;margin-top:10px;padding-top:10px;border-top:1px solid #ffffff0d;color:var(--muted);font-size:12px}
+.explore-page .explore-coin-footer>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.explore-page .explore-coin-age{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:999px;background:#ffffff08;color:#a78bff;font-size:12px;font-weight:550;white-space:nowrap}
+.explore-page .explore-coin-age.is-recent{background:#8b5cff1a}
+.explore-page .explore-coin-age.is-recent::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor;animation:explore-breathe 2.4s ease-in-out infinite}
+.explore-page .explore-grid.is-swapping>.explore-coin{animation:explore-swap-in 420ms var(--motion-ease,ease) both}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(2){animation-delay:30ms}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(3){animation-delay:60ms}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(4){animation-delay:90ms}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(5){animation-delay:120ms}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(6){animation-delay:150ms}
+.explore-page .explore-grid.is-swapping>.explore-coin:nth-child(n+7){animation-delay:180ms}
+
+/* Loading: placeholders share the loaded card's image and body boxes and shimmer. */
+.explore-page .explore-skeleton{min-height:0;pointer-events:none;box-shadow:none}
+.explore-page .explore-skeleton .explore-coin-image{position:relative;overflow:hidden;background:#121214}
+.explore-page .explore-skeleton .explore-coin-image::after,.explore-page .explore-skeleton-line::after,.explore-page .explore-skeleton .explore-coin-body::before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,#ffffff0d 42%,#ddd3ff16 50%,#ffffff0d 58%,transparent 80%);background-size:220% 100%;animation:explore-shimmer 1.6s linear infinite}
+.explore-page .explore-skeleton .explore-coin-body{display:grid;align-content:start;row-gap:10px}
+.explore-page .explore-skeleton-line{position:relative;order:1;width:66%;height:14px;margin:2px 0 0;overflow:hidden;border-radius:4px;background:#1f1f23}
+.explore-page .explore-skeleton-line:last-child{order:2;width:34%;height:11px;margin-top:0}
+.explore-page .explore-skeleton .explore-coin-body::before{order:3;position:relative;inset:auto;display:block;width:48%;height:22px;margin-top:8px;border-radius:4px;background:#1f1f23;animation:none}
+.explore-page .explore-skeleton .explore-coin-body::after{content:"";order:4;display:block;width:100%;height:6px;margin-top:38px;border-radius:4px;background:#1f1f23}
+
+/* Empty, failed, paging and the data note. A Gotchi peeks into empty states. */
+.explore-page .explore-empty{position:relative;grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:240px;padding:var(--space-8) var(--space-6) var(--space-8);overflow:hidden;border:1px solid var(--line-card);border-radius:var(--radius-card);background:radial-gradient(ellipse at 50% 0,#8b5cff12,transparent 60%),var(--panel);box-shadow:var(--shadow-card);text-align:center}
+.explore-page .explore-empty>span{position:relative;display:grid;place-items:center;width:52px;height:52px;margin-bottom:6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2a2a30,#121214);box-shadow:0 0 0 1px #ffffff10,0 0 30px -8px #8b5cff80;color:var(--sunrise-gold);font-size:22px;animation:explore-float 4s ease-in-out infinite}
+.explore-page .explore-empty>span::after{content:"";position:absolute;inset:-9px;border:1px dashed #8b5cff4d;border-top-color:transparent;border-radius:50%;animation:explore-orbit 16s linear infinite}
+.explore-page .explore-empty strong{color:var(--text);font-size:19px;font-weight:650;letter-spacing:-.01em}
+.explore-page .explore-empty p{max-width:420px;margin:0;color:var(--muted);font-size:14px;line-height:1.55}
+.explore-page .explore-empty .explore-empty-aside{margin:4px 0 0;color:#9a9aa3;font-size:13px;font-style:italic}
+.explore-page .explore-empty .explore-empty-gotchi{--peek-x:0px;position:absolute;right:clamp(12px,6%,72px);bottom:-22px;width:150px;pointer-events:none;transform:translate(var(--peek-x),0) rotate(-6deg);transform-origin:50% 100%;animation:explore-peek 1.1s var(--motion-spring,ease) .2s both}
+.explore-page .explore-empty .explore-empty-gotchi .gotchi-character{margin:0;max-width:100%}
+.explore-page .explore-empty.is-error{border-color:#3a3a42;background:radial-gradient(ellipse at 50% 0,#7c4dff14,transparent 60%),#0b0b0c}
+.explore-page .explore-empty.is-error>span{color:#ff8fa3;background:radial-gradient(circle at 35% 30%,#3a3a42,#121214);animation:none}
+.explore-page .explore-empty.is-error>span::after{border-color:#7c4dff4d;border-top-color:transparent}
+.explore-page .explore-section-message:empty{display:none}
+.explore-page .explore-section-message:not(:empty){display:flex;flex-direction:column;align-items:center;gap:var(--space-3);margin-top:var(--space-4);color:var(--muted);font-size:14px;line-height:1.5;text-align:center}
+.explore-page .explore-section-message p,.explore-page .explore-section-message button{margin:0}
+.explore-page .explore-section-message .small-button{display:inline-flex;align-items:center;gap:8px;border-radius:999px;border-color:var(--sel-line);background:var(--sel-bg);color:var(--sel-text)}
+.explore-page .explore-section-message .small-button::before{content:"↻";font-size:14px;line-height:1;transition:transform var(--motion-slow,560ms) var(--motion-ease,ease)}
+.explore-page .explore-section-message .small-button:hover::before{transform:rotate(180deg)}
+.explore-page .explore-pagination{display:flex;align-items:center;justify-content:center;gap:var(--space-3);margin-top:var(--space-7)}
+.explore-page .explore-pagination:empty{display:none}
+.explore-page .explore-pagination button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:1px solid var(--line-strong);border-radius:var(--radius-control);background:var(--panel2);color:var(--text);font-size:20px;line-height:1;transition:transform var(--motion-fast,150ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease}
+.explore-page .explore-pagination button:not(:disabled,[aria-disabled=true]):hover{border-color:#4a4a53;background:#18181b}
+.explore-page .explore-pagination button:not(:disabled,[aria-disabled=true]):first-child:hover{transform:translateX(-2px)}
+.explore-page .explore-pagination button:not(:disabled,[aria-disabled=true]):last-child:hover{transform:translateX(2px)}
+.explore-page .explore-pagination button:is(:disabled,[aria-disabled=true]){opacity:.35;cursor:default}
+.explore-page .explore-pagination span{padding:0 var(--space-3);color:var(--muted);font-size:14px;font-variant-numeric:tabular-nums}
+.explore-page .explore-data-note{margin:var(--space-4) 0 0;color:var(--muted);font-size:13px;text-align:center;opacity:.8}
+
+/* ===== List view: one scannable row per coin. ===== */
+.explore-page.explore-list-view .explore-grid{grid-template-columns:minmax(0,1fr);gap:var(--space-3)}
+.explore-page.explore-list-view .explore-coin{display:flex;align-items:stretch}
+body.relay-terminal.explore-page.explore-list-view .explore-coin:hover{transform:translate3d(4px,0,0)}
+.explore-page.explore-list-view .explore-coin-image{flex:0 0 128px;width:128px;min-width:128px;aspect-ratio:auto;align-self:stretch}
+.explore-page.explore-list-view .explore-coin-badges{min-height:0;padding:8px}
+.explore-page.explore-list-view .explore-coin-badge{font-size:11px;padding:3px 8px}
+.explore-page.explore-list-view .explore-coin-badge:nth-child(n+2){display:none}
+.explore-page.explore-list-view .explore-coin.is-fresh .explore-coin-badges{display:none}
+.explore-page.explore-list-view .explore-coin.is-fresh .explore-coin-image::before{display:none}
+.explore-page.explore-list-view .explore-coin-body{flex:1;min-width:0;display:grid;grid-template-columns:minmax(150px,1.3fr) minmax(110px,.8fr) minmax(170px,1.2fr) minmax(150px,1.1fr) minmax(110px,.7fr);grid-template-areas:"name value secondary progress footer" "symbol value secondary progress footer";align-items:center;column-gap:24px;row-gap:2px;min-height:88px;padding:var(--space-4) 22px}
+.explore-page.explore-list-view .explore-coin-name{align-self:end;font-size:17px}
+.explore-page.explore-list-view .explore-coin-symbol{align-self:start}
+.explore-page.explore-list-view .explore-coin-value{margin:0;font-size:20px}
+.explore-page.explore-list-view .explore-coin-secondary{flex-direction:column;align-items:flex-start;gap:5px;margin:0}
+.explore-page.explore-list-view .explore-coin-secondary .explore-pair-venue{max-width:100%}
+.explore-page.explore-list-view :is(.explore-progress-row,.explore-coin-status){margin:0}
+.explore-page.explore-list-view .explore-coin-footer{grid-area:footer;flex-direction:column;align-items:flex-end;gap:6px;margin:0;padding:0;border:0}
+.explore-page.explore-list-view .explore-skeleton .explore-coin-body{grid-template-columns:none;grid-template-areas:none;min-height:88px}
+.explore-page.explore-list-view .explore-skeleton .explore-coin-body::after{display:none}
+
+/* ===== Responsive ===== */
+@media(max-width:1180px){
+  .explore-page .explore-dashboard{grid-template-columns:minmax(0,1.4fr) minmax(300px,1fr)}
+  .explore-page .explore-featured{padding:var(--space-6)}
+  .explore-page .explore-contenders{padding:var(--space-5) var(--space-5) var(--space-4)}
+  .explore-page .explore-contenders .explore-mini-value{grid-template-columns:auto;grid-template-areas:"v" "s";min-width:0}
+  .explore-page .explore-contenders .explore-mini-value>.explore-mini-meter{display:none}
+  .explore-page .explore-contenders .explore-mini-arrow{display:none}
+  .explore-page #explore-leaders-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .explore-page .explore-browse-bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:var(--space-3);border-bottom:0}
+  body.relay-terminal.explore-page .explore-stage-tabs{grid-column:1/-1;border-bottom:1px solid var(--line)}
+  .explore-page .explore-browse-bar .explore-categories{padding-top:14px}
+  .explore-page .explore-view-switch{align-self:end}
+  .explore-page.explore-list-view .explore-coin-body{grid-template-columns:minmax(130px,1.2fr) minmax(100px,.8fr) minmax(140px,1.1fr) minmax(120px,1fr);grid-template-areas:"name value secondary progress" "symbol value footer progress"}
+  .explore-page.explore-list-view .explore-coin-footer{flex-direction:row;justify-content:flex-start;align-items:center;gap:10px}
+}
+/* Tablets and phones: the rise and leader rows become edge-faded horizontal scrollers so the feed starts sooner. */
+@media(max-width:900px){
+  .explore-page .explore-dashboard{grid-template-columns:minmax(0,1fr);gap:var(--space-5);margin-bottom:var(--space-7)}
+  .explore-page .explore-status-row{row-gap:10px}
+  .explore-page .explore-amm-options{flex:1 1 0;order:0}
+  .explore-page .explore-age-options{order:1}
+  .explore-page .explore-status-row>p{flex:1 1 100%;order:2}
+  .explore-page .explore-search-chip{order:3}
+  .explore-page .explore-status-row .explore-auto{display:none}
+  .explore-page .explore-contenders{padding:0;border:0;background:none;box-shadow:none}
+  .explore-page .explore-dashboard-heading{padding:0 0 12px}
+  .explore-page :is(#explore-contenders-list,#explore-leaders-list){display:grid;grid-auto-flow:column;grid-template-columns:none;grid-template-rows:none;gap:12px;margin:0 calc(-1 * var(--page-gutter));padding:4px var(--page-gutter) 8px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:0 var(--page-gutter);scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 32px),transparent)}
+  .explore-page :is(#explore-contenders-list,#explore-leaders-list)::-webkit-scrollbar{display:none}
+  .explore-page :is(#explore-contenders-list,#explore-leaders-list)>*{scroll-snap-align:start}
+  .explore-page #explore-contenders-list{grid-auto-columns:minmax(250px,36%)}
+  .explore-page #explore-leaders-list{grid-auto-columns:minmax(200px,32%);grid-auto-rows:auto}
+  .explore-page .explore-contenders .explore-mini-coin{display:grid;grid-template-columns:28px 44px minmax(0,1fr);grid-template-areas:"rank avatar name" "value value value";align-items:center;gap:12px 10px;min-height:0;margin:0;padding:14px 16px;border:1px solid var(--line-card);border-radius:var(--radius-card);background:var(--panel);box-shadow:var(--shadow-card)}
+  .explore-page .explore-contenders .explore-mini-coin+.explore-mini-coin::before{content:none}
+  body.relay-terminal.explore-page .explore-contenders .explore-mini-coin:hover{transform:none}
+  .explore-page .explore-contenders .explore-rank{grid-area:rank}
+  .explore-page .explore-contenders .explore-mini-coin>img{grid-area:avatar}
+  .explore-page .explore-contenders .explore-mini-coin>div:not(.explore-mini-value){grid-area:name}
+  .explore-page .explore-contenders .explore-mini-value{grid-area:value;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"v s" "m m";justify-content:stretch;align-items:baseline;column-gap:8px;min-width:0;margin:0;text-align:left}
+  .explore-page .explore-contenders .explore-mini-value>strong{justify-self:start}
+  .explore-page .explore-contenders .explore-mini-value>small{justify-self:end;text-align:right}
+  .explore-page .explore-contenders .explore-mini-value>.explore-mini-meter{width:auto;margin:8px 0 0}
+  .explore-page .explore-contenders .explore-mini-arrow{display:none}
+  .explore-page #explore-leaders-list .explore-mini-coin{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:10px 12px;padding:14px 16px}
+  .explore-page #explore-leaders-list .explore-mini-coin>img{width:40px;height:40px}
+  .explore-page #explore-leaders-list .explore-mini-value{grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:8px;min-width:0;margin:0;text-align:left}
+  .explore-page #explore-leaders-list .explore-mini-value small{margin:0}
+  .explore-page .explore-leaders{margin-bottom:var(--space-7)}
+}
+@media(max-width:640px){
+  .explore-page{--chart-h:180px}
+  .explore-page #explore-contenders-list{grid-auto-columns:minmax(240px,74%)}
+  .explore-page #explore-leaders-list{grid-auto-columns:minmax(196px,56%)}
+  .explore-page .explore-featured{padding:var(--space-5)}
+  .explore-page .explore-featured>.eyebrow{margin-bottom:14px}
+  .explore-page .explore-feature-heading{gap:var(--space-3)}
+  .explore-page .explore-feature-heading .explore-mini-coin{gap:12px}
+  .explore-page .explore-feature-heading .explore-mini-coin>img{width:56px;height:56px;flex-basis:56px}
+  .explore-page .explore-feature-heading h2{font-size:26px}
+  .explore-page .explore-feature-heading span{font-size:13px}
+  .explore-page .explore-feature-value strong{font-size:30px}
+  .explore-page .explore-feature-value small{font-size:12px;margin-top:5px}
+  .explore-page .explore-feature-chart{margin:16px 0}
+  .explore-page .explore-feature-stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .explore-page .explore-feature-stats>div{padding:12px 14px}
+  .explore-page .explore-feature-stats>div:last-child{grid-column:1/-1}
+  .explore-page .explore-feature-stats strong{font-size:18px}
+  .explore-page .explore-browse-bar{column-gap:var(--space-2)}
+  body.relay-terminal.explore-page .explore-stage-tabs>button{height:48px;padding:0 12px;font-size:14px}
+  .explore-page .explore-view-switch svg{display:block}
+  .explore-page .explore-view-switch button>span{display:none}
+  body.relay-terminal.explore-page .explore-view-switch>button{width:38px;padding:0}
+  .explore-page .explore-status-row{column-gap:var(--space-2);margin:var(--space-3) 0 var(--space-5)}
+  /* Phones: two-up cards with square art; the pair/volume row ellipsizes and the mint/age sit on a footer row. */
+  .explore-page .explore-coin-body{padding:12px 14px 14px}
+  .explore-page:not(.explore-list-view) .explore-coin-body{min-height:218px}
+  .explore-page:not(.explore-list-view) .explore-coin:not(.explore-skeleton) .explore-coin-body{grid-template-columns:minmax(0,1fr);grid-template-areas:"name" "symbol" "value" "secondary" "progress" "footer";row-gap:3px}
+  .explore-page:not(.explore-list-view) .explore-coin-footer{display:flex;grid-area:footer;margin-top:8px;padding-top:8px}
+  .explore-page:not(.explore-list-view) .explore-coin-footer>span{justify-self:start;max-width:none;font-size:11.5px}
+  .explore-page:not(.explore-list-view) .explore-coin-age{margin:0;height:20px;padding:0 6px;font-size:11.5px}
+  .explore-page .explore-coin-image>span:first-child{font-size:22px}
+  .explore-page .explore-coin-name{font-size:16px}
+  .explore-page .explore-coin-value{font-size:20px;margin-top:6px}
+  .explore-page .explore-coin-secondary{font-size:12.5px;min-height:24px}
+  .explore-page .explore-coin-secondary .explore-coin-pair .quote-logo{--quote-logo-size:18px}
+  .explore-page:not(.explore-list-view) .explore-coin-secondary{flex-wrap:wrap;row-gap:4px}
+  .explore-page:not(.explore-list-view) .explore-coin-secondary .explore-pair-venue{flex:0 0 auto;max-width:100%}
+  .explore-page:not(.explore-list-view) .explore-coin-secondary>.explore-pair-venue+span{flex:1 1 100%;min-width:0;text-align:left}
+  .explore-page .explore-coin-badges{min-height:52px;padding:8px}
+  .explore-page .explore-coin-badge{font-size:11px;padding:3px 8px}
+  .explore-page .explore-coin.is-fresh .explore-coin-image::after{left:10px;bottom:10px;width:44px;height:22px}
+  .explore-page .explore-coin.is-fresh .explore-coin-image::before{left:50px;bottom:26px;width:12px;height:12px}
+  .explore-page .explore-empty{min-height:220px;padding:var(--space-7) var(--space-5) 84px}
+  .explore-page .explore-empty .explore-empty-gotchi{--peek-x:50%;right:50%;bottom:-24px;width:132px}
+  .explore-page.explore-list-view .explore-coin-image{flex-basis:92px;width:92px;min-width:92px}
+  .explore-page.explore-list-view .explore-coin-body{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"name value" "symbol value" "progress progress" "secondary footer";column-gap:12px;row-gap:4px;min-height:0;padding:12px 14px}
+  .explore-page.explore-list-view .explore-coin-secondary{flex-direction:row;align-items:center}
+  .explore-page.explore-list-view .explore-coin-secondary>span:last-child{display:none}
+  .explore-page.explore-list-view .explore-coin-value{justify-self:end;font-size:17px}
+  .explore-page.explore-list-view :is(.explore-progress-row,.explore-coin-status){margin:4px 0 2px}
+  .explore-page.explore-list-view .explore-coin-footer{flex-direction:row;align-items:center;justify-content:flex-end;gap:8px}
+  .explore-page.explore-list-view .explore-coin-footer>span{display:none}
+}
+@media(max-width:379px){
+  .explore-page:not(.explore-list-view) .explore-coin-body{min-height:0}
+  .explore-page .explore-coin-name{font-size:18px}
+  .explore-page .explore-coin-value{font-size:24px}
+  .explore-page .explore-coin-secondary{font-size:14px}
+}
+@media(hover:none){.explore-page .explore-coin:hover .explore-coin-image>img{transform:none}}
+
+/* Reserve the dashboard's loaded geometry before scripts and data arrive. */
+/* Measured: the loaded featured card is 574px tall at 1440 and 547px at 390 (it sets the dashboard row). */
+.explore-page .explore-featured{min-height:574px}
+@media(max-width:640px){.explore-page .explore-featured{min-height:547px}}
+
+@keyframes explore-pulse{50%{opacity:.5}}
+@keyframes explore-reveal{from{opacity:0;transform:translate3d(0,6px,0)}to{opacity:1;transform:none}}
+@keyframes explore-draw{to{stroke-dashoffset:0}}
+@keyframes explore-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes explore-dot-in{from{opacity:0;transform:scale(0)}to{opacity:1;transform:scale(1)}}
+@keyframes explore-ping{0%{transform:scale(1);opacity:.75}80%,100%{transform:scale(3);opacity:0}}
+@keyframes explore-fill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes explore-sheen{0%{transform:translateX(-120%)}40%,100%{transform:translateX(220%)}}
+@keyframes explore-breathe{50%{opacity:.4;transform:scale(.75)}}
+@keyframes explore-live{50%{opacity:.45;transform:scale(.78);box-shadow:0 0 0 6px #8b5cff00}}
+@keyframes explore-new-pop{from{opacity:0;transform:scale(.6)}to{opacity:1;transform:none}}
+@keyframes explore-sparkle{0%,100%{opacity:0;transform:scale(.4) rotate(0)}50%{opacity:1;transform:scale(1) rotate(45deg)}}
+@keyframes explore-swap-in{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
+@keyframes explore-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes explore-orbit{to{transform:rotate(360deg)}}
+@keyframes explore-spin-ring{to{transform:rotate(360deg)}}
+@keyframes explore-shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes explore-drift{from{transform:translate3d(0,0,0) rotate(0)}to{transform:translate3d(-4%,5%,0) rotate(8deg)}}
+@keyframes explore-peek{from{transform:translate(var(--peek-x,0px),70%) rotate(-6deg)}to{transform:translate(var(--peek-x,0px),0) rotate(-6deg)}}
+@media(prefers-reduced-motion:reduce){
+  .explore-page *,.explore-page *::before,.explore-page *::after{animation:none!important;transition:none!important}
+  .explore-page .explore-coin:hover,.explore-page .explore-coin:hover .explore-coin-image>img,.explore-page .explore-mini-coin:hover,.explore-page .explore-pagination button:hover,.explore-page #explore-leaders-list .explore-mini-coin:hover{transform:none!important}
+  .explore-page .explore-coin.is-fresh .explore-coin-image::before{display:none}
+  .explore-page .explore-spark svg.is-drawing .explore-spark-line{stroke-dasharray:none;stroke-dashoffset:0}
+  .explore-page .explore-empty .explore-empty-gotchi{transform:translate(var(--peek-x,0px),0) rotate(-6deg)}
+}
+/* The chain switch (v71.41): Solana | Robinhood | All; Robinhood pairs carry the host's badge. */
+.explore-chain-switch{margin-right:6px}
+.explore-coin-pair-robinhood .explore-rh-badge{position:relative;display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;overflow:hidden;background:#ffffff14;font-size:8px;font-weight:700;color:var(--muted,#9a9aa3);vertical-align:middle}
+.explore-coin-pair-robinhood .explore-rh-badge img{display:block;width:100%;height:100%;object-fit:cover;background:#fff}
+.explore-coin-pair-robinhood .explore-rh-mark[hidden]{display:none}
+.explore-coin[data-chain="robinhood"] .launch-amm-badge{filter:none}

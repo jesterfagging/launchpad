@@ -1,0 +1,83 @@
+/* The Rack layout (a launchpad that picked it; <body data-layout="rack">): rounded, playful, a dock on phones.
+   Loaded after public/tenant.css. Fredoka (UI) and Lilita One (display) are served from /fonts/ under the OFL. */
+@font-face { font-family: 'Pad Fredoka'; src: url('/fonts/Fredoka.woff2?v=1') format('woff2'); font-weight: 300 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Pad Lilita'; src: url('/fonts/LilitaOne.woff2?v=1') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+
+body[data-product="tenant"][data-layout="rack"] {
+  --sans: 'Pad Fredoka', Fredoka, 'Trebuchet MS', ui-rounded, ui-sans-serif, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --display: 'Pad Lilita', 'Lilita One', 'Pad Fredoka', Fredoka, 'Arial Black', ui-rounded, sans-serif;
+  --radius-card: 18px; --radius-control: 12px; --radius-inset: 10px; --radius-pill: 999px; --radius-tile: 14px;
+  --control-h: 38px; --control-h-sm: 32px; --control-h-lg: 46px; --input-h: 46px;
+  font-family: var(--sans);
+}
+body[data-product="tenant"][data-layout="rack"] * { font-family: inherit; }
+body[data-product="tenant"][data-layout="rack"] :is(code, kbd, .coin-address, .coin-mint, .account-address, .wallet-address) { font-family: var(--mono); }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(h1, h2, h3) { font-family: var(--sans); font-weight: 700; letter-spacing: -.01em; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(h1, .explore-leaders > h2, .explore-dashboard-heading h2, .explore-feature-heading h2) { font-family: var(--display); font-weight: 400; letter-spacing: .01em; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.eyebrow, .tag, .explore-section-tag, .explore-count, .coin-stage, .mainnet-badge, .step, .admin-eyebrow) { font-family: var(--sans); font-weight: 700; letter-spacing: .1em; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.cv-tabs, .explore-stage-tabs, .coin-tabs, .token-tabs, .admin-tabs) > button { font-weight: 600; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.cv-tabs, .explore-stage-tabs, .coin-tabs, .token-tabs, .admin-tabs) > button::after { height: 3px; border-radius: 3px; }
+body[data-product="tenant"][data-layout="rack"] .brand .tn-name { font-family: var(--display); font-weight: 400; letter-spacing: .02em; font-size: 25px; }
+body[data-product="tenant"][data-layout="rack"] .brand .tn-mark { border-radius: 50%; }
+
+/* ---- Pills and rounded frames ---- */
+body[data-product="tenant"][data-layout="rack"] :is(.small-button, button.cv-button, .cv-button, .top-launch) { border-radius: 999px; font-weight: 700; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.primary, .cv-ghost, .launch-upload-button, .header-search, .skip-link, .cv-chips > button, .explore-amm-options > button, .coin-pair-pill, .coin-creator-compact) { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(input, select):not([type="checkbox"], [type="radio"], [type="range"], [type="file"]) { border-radius: 999px; padding-left: 16px; padding-right: 16px; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal textarea { border-radius: 18px; padding: 14px 18px; line-height: 1.55; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.tag, .explore-section-tag, .explore-count, .coin-stage, .mainnet-badge, .token-status, .cv-pill, .cv-badge, .explore-coin-badge) { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal :is(.cv-segmented, .explore-chain-switch, .explore-view-switch, .explore-age-options, .launch-segments, .coin-chart-controls, .manual-side, .execution-preset-tabs) > button { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal.explore-page :is(.explore-pagination button) { border-radius: 50%; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal.explore-page :is(.explore-progress-track, .explore-progress-fill) { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"] .tn-theme { border-radius: 50%; }
+body[data-product="tenant"][data-layout="rack"].launch-page .launch-welcome-card { border-radius: 28px; }
+body[data-product="tenant"][data-layout="rack"].launch-page .launch-segments button { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"].launch-page.relay-terminal .launch-upload-button { border-radius: 999px; }
+body[data-product="tenant"][data-layout="rack"] .header-profile-dropdown { border-radius: 16px; }
+body[data-product="tenant"][data-layout="rack"][data-navigation=top] .header-account-avatar { border-radius: 50%; background: linear-gradient(140deg, var(--tn-mauve), var(--tn-acc-soft)); color: var(--tn-ink); }
+
+/* ---- The header nav (desktop) and the dock (phones) ---- */
+body[data-product="tenant"] .tn-nav { display: none; }
+body[data-product="tenant"][data-layout="rack"] .tn-nav { display: inline-flex; align-items: center; gap: 2px; }
+body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item { display: inline-flex; align-items: center; gap: 7px; height: var(--control-h); padding: 0 12px; border-radius: 999px; color: var(--muted); font: 600 14px/1 var(--sans); text-decoration: none; white-space: nowrap; }
+body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item:hover { background: var(--s2); color: var(--text); }
+body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item[aria-current="page"] { background: var(--sel-bg); color: var(--tn-acc-soft); }
+html[data-theme="light"] body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item[aria-current="page"] { color: var(--tn-t6d45d9); }
+@media (max-width: 1180px) { body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item { width: var(--control-h); padding: 0; justify-content: center; } body[data-product="tenant"][data-layout="rack"] .tn-nav a.tn-item > span:not(.tn-ic) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); } }
+body[data-product="tenant"] .tn-bar { display: none; }
+@media (max-width: 640px) {
+  body[data-product="tenant"][data-layout="rack"] .tn-nav { display: none; }
+  body[data-product="tenant"][data-layout="rack"] .tn-bar { position: fixed; left: 10px; right: 10px; bottom: 10px; z-index: 58; height: 64px; padding: 0 4px; border-radius: 22px; border: 1px solid var(--line-strong); background: var(--s1); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 20px 40px -20px #000000cc; }
+  body[data-product="tenant"][data-layout="rack"] .tn-bar a.tn-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; flex: 1; height: 56px; border-radius: 16px; color: var(--muted); font: 600 11px/1 var(--sans); text-decoration: none; }
+  body[data-product="tenant"][data-layout="rack"] .tn-bar a.tn-item[aria-current="page"] { color: var(--tn-acc); }
+  body[data-product="tenant"][data-layout="rack"] .tn-bar .tn-ic, body[data-product="tenant"][data-layout="rack"] .tn-bar .tn-ic svg { width: 22px; height: 22px; }
+  body[data-product="tenant"][data-layout="rack"].relay-terminal[data-navigation=top] :is(main, #explore-main) { padding-bottom: 100px; }
+  body[data-product="tenant"][data-layout="rack"].relay-terminal[data-navigation=top] footer.site-footer { padding-bottom: 84px; }
+}
+
+/* ---- The tape under the header, the footer ---- */
+body[data-product="tenant"][data-layout="rack"].relay-terminal .site-tape { font-family: var(--sans); font-size: 12.5px; font-weight: 500; letter-spacing: 0; }
+body[data-product="tenant"][data-layout="rack"].relay-terminal .site-tape-label { color: var(--tn-acc); font-weight: 700; letter-spacing: .12em; }
+html[data-theme="light"] body[data-product="tenant"][data-layout="rack"].relay-terminal .site-tape-label { color: var(--tn-t8b5cff); }
+body[data-product="tenant"][data-layout="rack"].relay-terminal .site-tape-track > a > img { border-radius: 50%; }
+body[data-product="tenant"][data-layout="rack"] .site-footer-brand { font-family: var(--display); font-weight: 400; font-size: 22px; letter-spacing: .02em; }
+body[data-product="tenant"][data-layout="rack"] .site-footer-brand img { border-radius: 50%; }
+body[data-product="tenant"][data-layout="rack"] .site-footer-links a { font-weight: 600; font-size: 13px; letter-spacing: 0; }
+body[data-product="tenant"][data-layout="rack"] .site-footer-social { border-radius: 50%; font-weight: 700; }
+
+/* ---- Home: the hero strip ---- */
+body[data-product="tenant"] .tn-strip { display: none; }
+body[data-product="tenant"][data-layout="rack"] .tn-strip { display: grid; grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0 0 var(--space-6); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile { display: flex; flex-direction: column; justify-content: space-between; gap: 10px; min-height: 132px; padding: 18px 20px; border-radius: 22px; border: 1px solid var(--line); background: var(--s1); color: var(--text); text-decoration: none; transition: transform .2s cubic-bezier(.2, .8, .2, 1), border-color .2s; }
+body[data-product="tenant"][data-layout="rack"] a.tn-tile:hover { transform: translateY(-2px); border-color: var(--tn-acc); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-label { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-value { font-family: var(--display); font-size: 34px; line-height: 1.05; color: var(--text); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-note { font-size: 13px; font-weight: 500; color: var(--muted); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-hero { background: linear-gradient(135deg, var(--tn-acc), var(--tn-acc-end)); border-color: transparent; color: var(--tn-ink); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-hero :is(.tn-tile-label, .tn-tile-note) { color: color-mix(in srgb, var(--tn-ink) 72%, transparent); }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-hero .tn-tile-value { color: var(--tn-ink); font-size: 40px; }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-venues { display: flex; flex-wrap: wrap; gap: 6px; }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-venues span { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px; border-radius: 999px; background: var(--s2); color: var(--text-2); font-size: 12.5px; font-weight: 600; }
+body[data-product="tenant"][data-layout="rack"] .tn-tile-venues img { width: 16px; height: 16px; border-radius: 50%; }
+@media (max-width: 980px) { body[data-product="tenant"][data-layout="rack"] .tn-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); } body[data-product="tenant"][data-layout="rack"] .tn-tile-hero { grid-column: 1 / -1; } }
+@media (max-width: 640px) { body[data-product="tenant"][data-layout="rack"] .tn-tile { min-height: 108px; padding: 14px 16px; } body[data-product="tenant"][data-layout="rack"] .tn-tile-value { font-size: 26px; } body[data-product="tenant"][data-layout="rack"] .tn-tile-hero .tn-tile-value { font-size: 30px; } }

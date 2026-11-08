@@ -1,0 +1,32 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { parseHTML } from 'linkedom';
+import { randomUUID } from 'node:crypto';
+import { cleanLiquidityPlans, MAX_LP_POSITIONS } from '../public/liquidity-plans.mjs';
+import { walletTool } from '../public/wallet-limits.mjs';
+import { appliedExecutionValues } from '../public/execution-presets.mjs';
+import { profiles, strategyDefaults, cleanStrategy, resolvedStrategy, tuningLimits } from '../public/strategy-settings.mjs';
+import { key1, mint, quote } from './fixtures.mjs';
+
+test('Solana web LP controls save per-position compounding and claim only the selected position', async () => {
+  const { document, window } = parseHTML(await readFile(new URL('../public/index.html', import.meta.url), 'utf8'));
+  Object.defineProperty(window.HTMLSelectElement.prototype, 'value', { configurable: true, get() { return [...this.options].find(o => o.selected)?.value || this.options[0]?.value || ''; }, set(value) { for (const o of this.options) o.selected = o.value === String(value); } });
+  const wallet = key1.publicKey.toBase58(), row = document.createElement('div'); row.dataset.id = 'wallet-one'; row.dataset.tool = 'liquidity';
+  row.innerHTML = '<input class="wallet-label" value="LP wallet"><input class="wallet-public"><label class="wallet-amount-field"></label>'; row.querySelector('.wallet-public').value = wallet; document.getElementById('wallets').append(row);
+  const source = (await readFile(new URL('../public/portfolio-ui.js', import.meta.url), 'utf8')).replace(/^import .*;\n/gm, '').replace('export function createPortfolioUI', 'function createPortfolioUI');
+  const create = new Function('document', 'MutationObserver', 'setInterval', 'crypto', 'cleanLiquidityPlans', 'MAX_LP_POSITIONS', 'walletTool', 'profiles', 'strategyDefaults', 'cleanStrategy', 'resolvedStrategy', 'tuningLimits', 'appliedExecutionValues', source + '\nreturn createPortfolioUI;')(document, window.MutationObserver, () => 1, { randomUUID }, cleanLiquidityPlans, MAX_LP_POSITIONS, walletTool, profiles, strategyDefaults, cleanStrategy, resolvedStrategy, tuningLimits, appliedExecutionValues);
+  const id = randomUUID(), requests = [], errors = [], position = { id, wallet, walletLabel: 'LP wallet', kind: 'liquidity', position: { venue: 'Meteora DLMM', id: quote } }, status = { mode: 'live', kind: 'liquidity', state: 'stopped', pending: [], positions: [position], events: [] };
+  const ui = create({ api: async (path, body) => { requests.push({ path, body }); return structuredClone(status); }, configuration: () => ({ mode: 'live', wallets: [{ publicKey: wallet }] }), alertError: e => { if (e) errors.push(e); }, copyStatus: () => ({ concurrent: true, state: 'stopped', runs: {} }), changed() {}, saveNow() {}, download() {} });
+  const plan = { id, label: 'My LP', wallet, strategy: { ...strategyDefaults(), baseMint: mint, quoteMint: quote } };
+  ui.load({}, [plan]); ui.enable(); const flush = async () => { for (let i = 0; i < 5; i++) await new Promise(setImmediate); }; await flush();
+  document.querySelector('[data-tab="liquidity"]').onclick(); await flush();
+  const compound = document.getElementById('strategy-compound'); assert.equal(compound.checked, false); compound.checked = true;
+  assert.equal(ui.plans()[0].strategy.autoCompoundFees, true);
+  const claim = [...document.querySelectorAll('#strategy-positions button')].find(b => b.textContent === 'Claim fees'); assert(claim); assert.equal(claim.disabled, false);
+  await claim.onclick(); const request = requests.find(r => r.path === '/api/portfolio/claim-fees');
+  assert.equal(request.body.id, id); assert.equal(request.body.wallet, wallet); assert.equal(request.body.kind, 'liquidity'); assert.equal(request.body.config.strategy.autoCompoundFees, true);
+  assert.deepEqual(status.positions[0].position, position.position); assert.deepEqual(errors, []);
+  document.querySelector('[data-tab="market"]').onclick(); assert.equal(document.getElementById('strategy-compound-field').hidden, true);
+  assert.equal(ui.plans()[0].strategy.autoCompoundFees, true);
+});

@@ -1,0 +1,12 @@
+/* The Arcade layout (<body data-layout="rack" data-style="arcade">): Rack turned up. Poster headings, chunky outlines and
+   hard offset shadows in the accent. Loaded after public/tenant-rack.css. */
+body[data-product="tenant"][data-style="arcade"] { --radius-card: 20px; --radius-tile: 16px; --arcade-line: color-mix(in srgb, var(--text) 82%, transparent); }
+body[data-product="tenant"][data-style="arcade"].relay-terminal :is(h1, h2) { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+body[data-product="tenant"][data-style="arcade"].relay-terminal :is(.eyebrow, .tag, .explore-section-tag, .explore-count, .coin-stage, .mainnet-badge) { text-transform: uppercase; letter-spacing: .08em; }
+body[data-product="tenant"][data-style="arcade"] :is(.primary, .top-launch, .cv-button) { border: 2px solid var(--arcade-line) !important; box-shadow: 3px 3px 0 var(--arcade-line); transition: transform .08s ease, box-shadow .08s ease; }
+body[data-product="tenant"][data-style="arcade"] :is(.primary, .top-launch, .cv-button):hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--arcade-line); }
+body[data-product="tenant"][data-style="arcade"] :is(.primary, .top-launch, .cv-button):active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--arcade-line); }
+body[data-product="tenant"][data-style="arcade"] .tn-strip > * { border: 2px solid var(--arcade-line) !important; box-shadow: 6px 6px 0 var(--tn-acc); }
+body[data-product="tenant"][data-style="arcade"].relay-terminal :is(.explore-card, .explore-coin, .coin-card, .launch-welcome-card, .pad-card) { border-width: 2px !important; border-color: var(--arcade-line) !important; box-shadow: 5px 5px 0 color-mix(in srgb, var(--tn-acc) 85%, transparent); }
+body[data-product="tenant"][data-style="arcade"] .brand .tn-name { text-transform: uppercase; }
+body[data-product="tenant"][data-style="arcade"] .tn-nav a.tn-item[aria-current="page"] { background: var(--tn-acc); color: var(--tn-ink); }

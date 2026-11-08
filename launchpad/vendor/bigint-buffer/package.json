@@ -1,0 +1,15 @@
+{
+  "name": "@launchpad/bigint-buffer-js",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pure JavaScript buffer conversions with no native addon",
+  "license": "Apache-2.0",
+  "main": "index.cjs",
+  "types": "index.d.ts",
+  "files": [
+    "index.cjs",
+    "index.d.ts",
+    "LICENSE",
+    "NOTICE.md"
+  ]
+}

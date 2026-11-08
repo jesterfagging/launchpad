@@ -1,0 +1,358 @@
+{
+  "realFundsUsed": false,
+  "programSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "pumpSha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5",
+  "scope": "Six price boundary scenarios, partial buy/sell churn, exact fee conservation, LP account and supply burn evidence, idempotent migration",
+  "checkCount": 240,
+  "scenarioCount": 6,
+  "scenarios": [
+    {
+      "solUsdMicros": "1000000",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "545223252610",
+          "reserveDelta": "537044903820",
+          "protocolFee": "5452232527",
+          "creatorFee": "2726116263"
+        },
+        {
+          "side": "buy",
+          "input": "872357204177",
+          "reserveDelta": "859271846114",
+          "protocolFee": "8723572043",
+          "creatorFee": "4361786020"
+        },
+        {
+          "side": "sell",
+          "input": "13236698246915",
+          "reserveDelta": "282731901676",
+          "protocolFee": "2827319018",
+          "creatorFee": "1413659508"
+        },
+        {
+          "side": "buy",
+          "input": "1453928673628",
+          "reserveDelta": "1432119743523",
+          "protocolFee": "14539286737",
+          "creatorFee": "7269643368"
+        },
+        {
+          "side": "sell",
+          "input": "10209489884808",
+          "reserveDelta": "231486842997",
+          "protocolFee": "2314868431",
+          "creatorFee": "1157434214"
+        },
+        {
+          "side": "buy",
+          "input": "43617860208854",
+          "reserveDelta": "19494712355644",
+          "protocolFee": "197915861479",
+          "creatorFee": "98957930739"
+        }
+      ],
+      "accountedQuoteAtGraduation": "21808930104428",
+      "graduationFee": "6291876335128",
+      "poolQuote": "15517053769300",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "69394374077246",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 215264,
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "solUsdMicros": "1000001",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "545222707387",
+          "reserveDelta": "537044366776",
+          "protocolFee": "5452227075",
+          "creatorFee": "2726113536"
+        },
+        {
+          "side": "buy",
+          "input": "872356331820",
+          "reserveDelta": "859270986842",
+          "protocolFee": "8723563319",
+          "creatorFee": "4361781659"
+        },
+        {
+          "side": "sell",
+          "input": "13236698246924",
+          "reserveDelta": "282731618944",
+          "protocolFee": "2827316191",
+          "creatorFee": "1413658094"
+        },
+        {
+          "side": "buy",
+          "input": "1453927219701",
+          "reserveDelta": "1432118311405",
+          "protocolFee": "14539272198",
+          "creatorFee": "7269636098"
+        },
+        {
+          "side": "sell",
+          "input": "10209489884796",
+          "reserveDelta": "231486611510",
+          "protocolFee": "2314866116",
+          "creatorFee": "1157433057"
+        },
+        {
+          "side": "buy",
+          "input": "43617816591036",
+          "reserveDelta": "19494692860951",
+          "protocolFee": "197915663564",
+          "creatorFee": "98957831781"
+        }
+      ],
+      "accountedQuoteAtGraduation": "21808908295520",
+      "graduationFee": "6291870043258",
+      "poolQuote": "15517038252262",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "69394339380086",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 215231,
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "solUsdMicros": "25000000",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "21808930104",
+          "reserveDelta": "21481796152",
+          "protocolFee": "218089302",
+          "creatorFee": "109044650"
+        },
+        {
+          "side": "buy",
+          "input": "34894288167",
+          "reserveDelta": "34370873844",
+          "protocolFee": "348942883",
+          "creatorFee": "174471440"
+        },
+        {
+          "side": "sell",
+          "input": "13236698246430",
+          "reserveDelta": "11309276066",
+          "protocolFee": "113092761",
+          "creatorFee": "56546380"
+        },
+        {
+          "side": "buy",
+          "input": "58157146945",
+          "reserveDelta": "57284789740",
+          "protocolFee": "581571471",
+          "creatorFee": "290785734"
+        },
+        {
+          "side": "sell",
+          "input": "10209489884656",
+          "reserveDelta": "9259473719",
+          "protocolFee": "92594738",
+          "creatorFee": "46297368"
+        },
+        {
+          "side": "buy",
+          "input": "1744714408356",
+          "reserveDelta": "779788494229",
+          "protocolFee": "7916634460",
+          "creatorFee": "3958317229"
+        }
+      ],
+      "accountedQuoteAtGraduation": "872357204180",
+      "graduationFee": "251675053406",
+      "poolQuote": "620682150774",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "13878874815391",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 214673,
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "solUsdMicros": "200000000",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "2726116263",
+          "reserveDelta": "2685224519",
+          "protocolFee": "27261163",
+          "creatorFee": "13630581"
+        },
+        {
+          "side": "buy",
+          "input": "4361786020",
+          "reserveDelta": "4296359229",
+          "protocolFee": "43617861",
+          "creatorFee": "21808930"
+        },
+        {
+          "side": "sell",
+          "input": "13236698246482",
+          "reserveDelta": "1413659508",
+          "protocolFee": "14136596",
+          "creatorFee": "7068297"
+        },
+        {
+          "side": "buy",
+          "input": "7269643368",
+          "reserveDelta": "7160598717",
+          "protocolFee": "72696435",
+          "creatorFee": "36348216"
+        },
+        {
+          "side": "sell",
+          "input": "10209489881209",
+          "reserveDelta": "1157434214",
+          "protocolFee": "11574343",
+          "creatorFee": "5787171"
+        },
+        {
+          "side": "buy",
+          "input": "218089301044",
+          "reserveDelta": "97473561780",
+          "protocolFee": "989579309",
+          "creatorFee": "494789653"
+        }
+      ],
+      "accountedQuoteAtGraduation": "109044650523",
+      "graduationFee": "31459381676",
+      "poolQuote": "77585268847",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "4906923248544",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 214937,
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "solUsdMicros": "1000000000",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "545223252",
+          "reserveDelta": "537044903",
+          "protocolFee": "5452233",
+          "creatorFee": "2726116"
+        },
+        {
+          "side": "buy",
+          "input": "872357204",
+          "reserveDelta": "859271845",
+          "protocolFee": "8723573",
+          "creatorFee": "4361786"
+        },
+        {
+          "side": "sell",
+          "input": "13236698227251",
+          "reserveDelta": "282731901",
+          "protocolFee": "2827320",
+          "creatorFee": "1413659"
+        },
+        {
+          "side": "buy",
+          "input": "1453928673",
+          "reserveDelta": "1432119742",
+          "protocolFee": "14539288",
+          "creatorFee": "7269643"
+        },
+        {
+          "side": "sell",
+          "input": "10209489872493",
+          "reserveDelta": "231486842",
+          "protocolFee": "2314869",
+          "creatorFee": "1157434"
+        },
+        {
+          "side": "buy",
+          "input": "43617860208",
+          "reserveDelta": "19494712359",
+          "protocolFee": "197915863",
+          "creatorFee": "98957930"
+        }
+      ],
+      "accountedQuoteAtGraduation": "21808930106",
+      "graduationFee": "6291876336",
+      "poolQuote": "15517053770",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "2194442788811",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 212701,
+      "checks": 40,
+      "passed": true
+    },
+    {
+      "solUsdMicros": "100000000000",
+      "trades": [
+        {
+          "side": "buy",
+          "input": "5452232",
+          "reserveDelta": "5370448",
+          "protocolFee": "54523",
+          "creatorFee": "27261"
+        },
+        {
+          "side": "buy",
+          "input": "8723572",
+          "reserveDelta": "8592718",
+          "protocolFee": "87237",
+          "creatorFee": "43617"
+        },
+        {
+          "side": "sell",
+          "input": "13236695743871",
+          "reserveDelta": "2827318",
+          "protocolFee": "28274",
+          "creatorFee": "14136"
+        },
+        {
+          "side": "buy",
+          "input": "14539286",
+          "reserveDelta": "14321196",
+          "protocolFee": "145394",
+          "creatorFee": "72696"
+        },
+        {
+          "side": "sell",
+          "input": "10209489418741",
+          "reserveDelta": "2314868",
+          "protocolFee": "23150",
+          "creatorFee": "11574"
+        },
+        {
+          "side": "buy",
+          "input": "436178602",
+          "reserveDelta": "194947126",
+          "protocolFee": "1979159",
+          "creatorFee": "989579"
+        }
+      ],
+      "accountedQuoteAtGraduation": "218089302",
+      "graduationFee": "62918764",
+      "poolQuote": "155170538",
+      "poolBase": "310341075385988",
+      "receivedLpBurned": "219444279003",
+      "remainingLpMintSupply": "0",
+      "unmintedMinimumLpAtoms": "100",
+      "creatorLpBalance": "0",
+      "migrationComputeUnits": 212090,
+      "checks": 40,
+      "passed": true
+    }
+  ]
+}

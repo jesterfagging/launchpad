@@ -1,0 +1,41 @@
+{
+  "capturedAt": "2026-10-01T03:32:48.946935+00:00",
+  "rpc": "https://api.mainnet-beta.solana.com",
+  "genesisHash": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+  "commitment": "finalized",
+  "programAccountSlot": 452167152,
+  "programDataSlot": 452167164,
+  "realFundsUsed": false,
+  "broadcast": false,
+  "programs": [
+    {
+      "name": "damm-v2",
+      "programId": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+      "programData": "AUh8bm2XsMfex3KjYGcM3G4uBqUNSDw6HEhWaWMYnyPH",
+      "lastDeployedSlot": 445230614,
+      "file": "damm-v2.so",
+      "bytes": 2174352,
+      "sha256": "4d5b920baebc090f89b2e8796a3452ed067c9667a143058c96a312f2c1e6848b"
+    },
+    {
+      "name": "pump-swap",
+      "programId": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+      "programData": "6naEzKeUuFh1Jeeu51NXQgr5qkXgXtc9WKNct4xynVJc",
+      "lastDeployedSlot": 446462733,
+      "file": "pump-swap.so",
+      "bytes": 10485715,
+      "sha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5"
+    },
+    {
+      "name": "pump-fees",
+      "programId": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+      "programData": "75Uu23mqWBb8LM8vDppqC1mQAnCcBuLXhVaDezVMQLRw",
+      "lastDeployedSlot": 446465969,
+      "file": "pump-fees.so",
+      "bytes": 948944,
+      "sha256": "4a6e66093305f8a7cb9ca6e4f47c7de726b590dd2be0d5413ce408feba27c8a5"
+    }
+  ],
+  "pumpGlobalSha256": "0fecfb33656e0f0f26f2f5dd80fa6c984f0a175dc58a225841381f9160f3ecde",
+  "pumpTradingConfigSha256": "1c08745171dc748eff782083cadb526be02634c92abf50f1e8ac38df2fd49c54"
+}

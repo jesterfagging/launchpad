@@ -1,0 +1,118 @@
+{
+  "source": "https://api.geckoterminal.com/api/v2/networks/solana/pools/{pool}/ohlcv/day?aggregate=1&limit=1000&currency=usd&token=base&include_empty_intervals=true",
+  "pools": {
+    "5eqQJP9Ms7Rq6gqz1wKY9mNTiQckw2eQNh4hRtCB5Hh5": {
+      "data": {
+        "id": "ec35f5ea-fcb4-495c-8b4c-a1671054b075",
+        "type": "ohlcv_request_response",
+        "attributes": {
+          "ohlcv_list": [
+            [
+              1790812800,
+              0.00027404084446796867,
+              0.0003453956581630355,
+              9.848207262292774e-05,
+              0.0001853929981289962,
+              1187540.908787844
+            ],
+            [
+              1790726400,
+              0.0003561709738725253,
+              0.0004884761274805994,
+              0.00012410550032265053,
+              0.00027404084446796867,
+              581890.002468081
+            ],
+            [
+              1790640000,
+              0.0006007670519325267,
+              0.0010530495537626752,
+              0.00020296934213396325,
+              0.0003561709738725253,
+              83151.08789920849
+            ]
+          ]
+        }
+      },
+      "meta": {
+        "base": {
+          "name": "LAUNCHPAD",
+          "symbol": "LAUNCHPAD",
+          "coingecko_coin_id": null,
+          "address": "7rvRFpzP5W18yZcNpPNqtWgPTxLaFrnutz5QPxXpyupc"
+        },
+        "quote": {
+          "name": "Wrapped SOL",
+          "symbol": "SOL",
+          "coingecko_coin_id": "wrapped-solana",
+          "address": "So11111111111111111111111111111111111111112"
+        }
+      }
+    },
+    "9yHxycKviYLc6LfxoNMXnFbXo7z8SWUxLmSTmZU37baE": {
+      "data": {
+        "id": "d23a16c5-8e1a-4025-aa37-3248b5697b2e",
+        "type": "ohlcv_request_response",
+        "attributes": {
+          "ohlcv_list": [
+            [
+              1790812800,
+              3.5149167207133676e-05,
+              5.6105549014884355e-05,
+              2.0976953318789744e-05,
+              3.294103560899404e-05,
+              38257.00788949943
+            ]
+          ]
+        }
+      },
+      "meta": {
+        "base": {
+          "name": "examplepill",
+          "symbol": "EXPILL",
+          "coingecko_coin_id": null,
+          "address": "AWFDyeJtUjUheCGKKjAHJ9oxpUTvHfmqZVPHDSxgwdGq"
+        },
+        "quote": {
+          "name": "Wrapped SOL",
+          "symbol": "SOL",
+          "coingecko_coin_id": "wrapped-solana",
+          "address": "So11111111111111111111111111111111111111112"
+        }
+      }
+    },
+    "BSDP6ScE3Aqu2WDGn1rK3aaTSjr6QJCucAGza8RRnGBw": {
+      "data": {
+        "id": "7e87f9b7-f453-4a72-a41c-b4af308daf40",
+        "type": "ohlcv_request_response",
+        "attributes": {
+          "ohlcv_list": [
+            [
+              1790812800,
+              3.809969622603357e-05,
+              5.0717394513062175e-05,
+              2.9416969136234524e-05,
+              4.290791167952588e-05,
+              34393.19932089198
+            ]
+          ]
+        }
+      },
+      "meta": {
+        "base": {
+          "name": "examplepill",
+          "symbol": "EXPILL",
+          "coingecko_coin_id": null,
+          "address": "AWFDyeJtUjUheCGKKjAHJ9oxpUTvHfmqZVPHDSxgwdGq"
+        },
+        "quote": {
+          "name": "Wrapped SOL",
+          "symbol": "SOL",
+          "coingecko_coin_id": "wrapped-solana",
+          "address": "So11111111111111111111111111111111111111112"
+        }
+      }
+    }
+  },
+  "retrievalDate": "2026-10-01"
+}

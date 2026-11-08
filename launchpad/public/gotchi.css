@@ -1,0 +1,302 @@
+/* Gotchi Mode pages: list of Gotchi cards and the standalone Gotchi page. */
+/* The page frame (width, gutters, top/bottom padding) comes from curve-theme.css. */
+.gotchi-intro{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;margin:28px 0 22px}
+.gotchi-intro h1{font-size:34px;letter-spacing:-1px;margin:6px 0 10px}
+.gotchi-lede{font-size:14px;line-height:1.6;color:var(--muted);max-width:640px;margin:0}
+.gotchi-lede strong{color:var(--text)}
+.gotchi-intro-facts,.gotchi-facts{display:flex;flex-wrap:wrap;gap:10px}
+.gotchi-fact{display:grid;gap:3px;min-width:118px;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.gotchi-fact span{font-size:10px;letter-spacing:.4px;text-transform:uppercase;color:var(--muted)}
+.gotchi-fact strong{font-size:14px;font-variant-numeric:tabular-nums}
+.gotchi-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.gotchi-card{position:relative;display:flex;flex-direction:column;min-height:560px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);isolation:isolate;transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,box-shadow var(--motion-mid,260ms) ease}
+.gotchi-card:hover{transform:translateY(-3px);border-color:var(--gotchi-accent-b,#a78bff);box-shadow:0 24px 50px -30px var(--gotchi-accent-b,#a78bff)}
+.gotchi-card-placeholder{min-height:420px;background:linear-gradient(110deg,var(--panel),var(--panel2),var(--panel));background-size:200% 100%;animation:gotchi-shimmer 1.6s linear infinite}
+@keyframes gotchi-shimmer{to{background-position:-200% 0}}
+.gotchi-card-sky{position:absolute;inset:0;height:56%;z-index:0;pointer-events:none}
+.gotchi-card-stage{position:relative;z-index:1;display:grid;place-items:end center;height:300px;padding:18px 18px 14px}
+/* Every character is 222px tall here; the transparent canvas margin below its
+   feet is shifted out so all three stand on the same line. */
+.gotchi-card-stage .gotchi-character{filter:drop-shadow(0 18px 24px #00000066);transform:translateY(calc(var(--gotchi-figure-bottom,0)*1%))}
+.gotchi-card-body{position:relative;z-index:1;display:grid;gap:12px;padding:16px 18px 20px;background:linear-gradient(180deg,transparent,var(--panel) 18%)}
+.gotchi-card-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.gotchi-card-heading h2{margin:0;font-size:20px;letter-spacing:-.4px}
+.gotchi-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--muted);white-space:nowrap}
+.gotchi-pill[data-state=open]{color:#2ee59d;border-color:#2ee59d55}
+.gotchi-pill[data-state=closing],.gotchi-pill[data-state=frozen],.gotchi-pill[data-state=buying],.gotchi-pill[data-state=distributing]{color:#a78bff;border-color:#a78bff55}
+.gotchi-card-tagline{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.gotchi-card-race{margin:0;font-size:12px;color:var(--muted)}
+.gotchi-card-race strong{color:var(--text);font-weight:600}
+.gotchi-card-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:6px;font-size:11px}
+.gotchi-muted{color:var(--muted);font-size:12px}
+.gotchi-you{color:#2ee59d;font-size:11px;margin-left:4px}
+.gotchi-link{color:var(--text);text-decoration:underline;text-decoration-color:#ffffff44;text-underline-offset:3px}
+.gotchi-link:hover{text-decoration-color:var(--accent)}
+
+/* Themed skies */
+.gotchi-bg-fomogotchi .gotchi-card-sky,.gotchi-hero.gotchi-bg-fomogotchi::before{background:radial-gradient(120% 80% at 20% 10%,#8b5cff55 0%,transparent 55%),radial-gradient(90% 70% at 85% 25%,#7c4dff55 0%,transparent 60%),repeating-linear-gradient(-35deg,#ffffff08 0 2px,transparent 2px 26px),linear-gradient(180deg,#2b1f52,#121214 70%,transparent)}
+.gotchi-bg-pumpgotchi .gotchi-card-sky,.gotchi-hero.gotchi-bg-pumpgotchi::before{background:radial-gradient(110% 70% at 50% 0%,#25b57c33 0%,transparent 60%),radial-gradient(circle at 18% 36%,#2ee59d22 0 9%,transparent 10%),radial-gradient(circle at 80% 24%,#ffb02022 0 6%,transparent 7%),repeating-linear-gradient(55deg,#ffffff07 0 2px,transparent 2px 30px),linear-gradient(180deg,#0d2a1f,#0d2a1f 70%,transparent)}
+.gotchi-chips{display:flex;flex-wrap:wrap;gap:8px}
+.gotchi-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 9px 5px 5px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--text);text-decoration:none;font-size:12px}
+.gotchi-chip img{width:22px;height:22px;border-radius:50%;object-fit:cover}
+.gotchi-chip small{color:var(--muted)}
+.gotchi-chip:hover{border-color:var(--accent)}
+
+/* Progress toward the goal with evolution ticks */
+.gotchi-progress-wrap{display:grid;gap:6px}
+.gotchi-bar{position:relative;height:12px;border-radius:999px;background:var(--inset,#0b0b0c);border:1px solid var(--line);overflow:visible}
+.gotchi-bar-fill{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gotchi-accent-c,#8b5cff),var(--gotchi-accent-b,#8b5cff),var(--gotchi-accent-a,#7c4dff));box-shadow:0 0 14px var(--gotchi-glow,#a78bff);transition:width var(--motion-slow,600ms) ease}
+.gotchi-bar-tick{position:absolute;top:-5px;width:2px;height:20px;background:#ffffff55;transform:translateX(-50%)}
+.gotchi-bar-tick.is-reached{background:#fff;box-shadow:0 0 8px var(--gotchi-glow,#a78bff)}
+.gotchi-progress-caption{display:flex;justify-content:space-between;gap:10px;font-size:11px;color:var(--muted)}
+
+/* Panels */
+.gotchi-panel{padding:20px;border:1px solid var(--line);border-radius:10px;background:var(--panel);min-width:0}
+.gotchi-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.gotchi-panel-heading h2{margin:0;font-size:16px}
+.gotchi-panel h3{margin:14px 0 8px;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.gotchi-status{margin:18px 0 0;font-size:12px;color:var(--muted)}
+.gotchi-standings{margin-top:22px}
+.gotchi-standings-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gotchi-standing{display:grid;gap:4px;padding:12px;border:1px solid var(--line);border-radius:6px;font-size:12px}
+.gotchi-standing strong{font-size:14px}
+.gotchi-rules{margin-top:22px}
+.gotchi-rules ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:13px;line-height:1.55;color:var(--muted)}
+.gotchi-funding{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.gotchi-funding-card{display:grid;gap:8px;padding:14px;border:1px solid var(--line);border-radius:6px;font-size:12px;line-height:1.5;color:var(--muted)}
+.gotchi-funding-card strong{color:var(--text);font-size:13px}
+.gotchi-funding-card p{margin:0}
+.gotchi-funding-split{display:flex;gap:3px;height:22px;border-radius:999px;overflow:hidden}
+.gotchi-funding-part{display:grid;place-items:center;min-width:0;padding:0 6px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#1a1430}
+.gotchi-funding-part.is-pot{background:#a78bff}.gotchi-funding-part.is-protocol{background:#8b5cff}.gotchi-funding-part.is-venue{background:#a78bff;color:#fff}
+
+/* Detail page */
+.gotchi-back{display:inline-block;margin:22px 0 14px;font-size:13px;color:var(--muted);text-decoration:none}
+.gotchi-back:hover{color:var(--text)}
+.gotchi-hero{position:relative;display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:28px;align-items:center;padding:28px;border:1px solid var(--line);border-radius:12px;overflow:hidden;isolation:isolate;background:var(--panel)}
+.gotchi-hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
+.gotchi-hero-stage{position:relative;z-index:1;display:grid;place-items:center;min-height:360px}
+.gotchi-hero-stage .gotchi-character{filter:drop-shadow(0 26px 34px #00000077)}
+.gotchi-hero-copy{position:relative;z-index:1;display:grid;gap:14px}
+.gotchi-hero-copy h1{margin:0;font-size:38px;letter-spacing:-1.2px}
+/* The three evolutions side by side under the hero copy; the current form is lit. */
+.gotchi-evolutions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:4px}
+.gotchi-evolution{display:grid;gap:8px;padding:12px 12px 10px;border:1px solid var(--line);border-radius:8px;background:#ffffff08;opacity:.62;transition:opacity 260ms ease,border-color 260ms ease}
+.gotchi-evolution[data-reached=true]{opacity:.85}
+.gotchi-evolution[data-current=true]{opacity:1;border-color:var(--gotchi-accent-b,#a78bff);box-shadow:0 0 0 1px var(--gotchi-accent-b,#a78bff) inset,0 14px 30px -22px var(--gotchi-accent-b,#a78bff)}
+.gotchi-evolution-figure{display:grid;place-items:end center;height:110px}
+.gotchi-evolution-figure .gotchi-character[data-size]{--gotchi-figure-height:96px;transform:translateY(calc(var(--gotchi-figure-bottom,0)*1%));filter:drop-shadow(0 8px 12px #00000066)}
+.gotchi-evolution-copy{display:grid;gap:2px;font-size:12px}
+.gotchi-evolution-copy strong{font-size:13px}
+.gotchi-evolution-blurb{margin:4px 0 0;font-size:11px;line-height:1.45;color:var(--muted)}
+@media(max-width:640px){.gotchi-evolutions{grid-template-columns:1fr 1fr 1fr;gap:6px}.gotchi-evolution{padding:8px}.gotchi-evolution-blurb{display:none}.gotchi-evolution-figure{height:84px}.gotchi-evolution-figure .gotchi-character[data-size]{--gotchi-figure-height:72px}}
+.gotchi-form{margin:0;font-size:13px;color:var(--gotchi-glow,#a78bff)}
+.gotchi-interact{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.gotchi-feed{background:linear-gradient(135deg,var(--gotchi-accent-a,#7c4dff),var(--gotchi-accent-b,#8b5cff));border-color:transparent;color:#fff}
+.gotchi-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+.gotchi-panel-wide{grid-column:1/-1}
+.gotchi-dl{display:grid;gap:8px;margin:0;font-size:13px}
+.gotchi-dl>div{display:flex;justify-content:space-between;gap:14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.gotchi-dl>div:last-child{border-bottom:0;padding-bottom:0}
+.gotchi-dl dt{color:var(--muted)}
+.gotchi-dl dd{margin:0;text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.gotchi-table{width:100%;border-collapse:collapse;font-size:12px}
+.gotchi-table th{text-align:left;font-weight:500;color:var(--muted);padding:6px 8px;border-bottom:1px solid var(--line)}
+.gotchi-table td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle;font-variant-numeric:tabular-nums}
+.gotchi-table tr:last-child td{border-bottom:0}
+.gotchi-table tr.is-you td{background:#2ee59d14}
+.gotchi-coins-table td:first-child{min-width:180px}
+.gotchi-list-plain{margin:0;padding-left:18px;font-size:12px;color:var(--muted);display:grid;gap:4px}
+.gotchi-history-row{padding:10px 12px;border:1px solid var(--line);border-radius:6px;margin-bottom:10px;font-size:12px}
+.gotchi-history-row summary{cursor:pointer;color:var(--muted)}
+.gotchi-history-row summary strong{color:var(--text)}
+.gotchi-history-row .gotchi-dl{margin:12px 0}
+
+@media(max-width:980px){.gotchi-cards{grid-template-columns:1fr 1fr}.gotchi-hero{grid-template-columns:1fr}.gotchi-hero-stage{min-height:280px}.gotchi-detail-grid{grid-template-columns:1fr}.gotchi-standings-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.gotchi-cards{grid-template-columns:1fr}.gotchi-intro{grid-template-columns:1fr}.gotchi-intro h1{font-size:28px}.gotchi-funding{grid-template-columns:1fr}.gotchi-hero{padding:18px}.gotchi-hero-copy h1{font-size:30px}}
+@media(prefers-reduced-motion:reduce){.gotchi-card,.gotchi-bar-fill{transition:none}.gotchi-card:hover{transform:none}.gotchi-card-placeholder{animation:none}}
+
+/* ==========================================================================
+   v71.26 makeover v2: the whimsy flagship. Big animated characters on roomy cards, pot values that count
+   up, a podium for your standings, a tall character hero on the detail page, comfortable panels and
+   tables that scroll inside their card on phones. Tokens: curve-theme.css.
+   ========================================================================== */
+.gotchi-page{--go-edge:var(--line-card,#f4f4f51a);--go-ease:var(--motion-ease,cubic-bezier(.22,1,.36,1));--go-shadow:var(--shadow-card,0 12px 32px -20px #000000c7)}
+.gotchi-page main>*{min-width:0}
+.gotchi-page .gotchi-list,.gotchi-page .gotchi-detail{display:grid;gap:var(--section-gap,48px)}
+.gotchi-page .gotchi-list>*,.gotchi-page .gotchi-detail>*{min-width:0;margin:0}
+.gotchi-page .gotchi-intro{gap:var(--space-8,40px);margin:0;align-items:end}
+.gotchi-page .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 10px;color:#c9b8ff;font:600 12px/1.2 var(--sans);letter-spacing:.08em}
+.gotchi-page .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#a78bff;box-shadow:0 0 0 0 #a78bff66;animation:gotchi-live 2.6s ease-in-out infinite}
+.gotchi-page .gotchi-intro h1{margin:0 0 var(--space-3,12px);font-size:var(--text-title,36px);line-height:1.1;font-weight:650;letter-spacing:-.02em;background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gotchi-page .gotchi-lede{max-width:640px;font-size:16px;line-height:1.6}
+.gotchi-page .gotchi-intro-facts{gap:var(--space-3,12px)}
+.gotchi-page .gotchi-intro-facts .gotchi-fact{min-width:132px;box-shadow:var(--go-shadow)}
+.gotchi-page .gotchi-fact{gap:var(--label-gap,6px);min-width:0;padding:14px 16px;border:1px solid var(--go-edge);border-radius:var(--radius-inset,12px);background:var(--panel)}
+.gotchi-page .gotchi-fact span{font-size:12px;letter-spacing:.06em}
+.gotchi-page .gotchi-fact strong{font-size:17px;font-weight:650;letter-spacing:-.01em}
+/* The three Gotchis: tall stages, big names, a lift and glow on hover. */
+.gotchi-page .gotchi-cards{gap:var(--grid-gap,24px)}
+.gotchi-page .gotchi-card{min-height:0;border:1px solid var(--go-edge);border-radius:12px;box-shadow:var(--go-shadow)}
+.gotchi-page .gotchi-card:hover{transform:translateY(-4px);box-shadow:0 30px 60px -34px var(--gotchi-accent-b,#a78bff),var(--go-shadow)}
+.gotchi-page .gotchi-card-placeholder{min-height:640px;border-radius:12px}
+.gotchi-page .gotchi-card-sky{height:50%}
+.gotchi-page .gotchi-card-stage{height:320px;padding:16px 20px 8px}
+.gotchi-page .gotchi-card-stage .gotchi-character[data-size=card]{--gotchi-figure-height:270px}
+.gotchi-page .gotchi-card-body{gap:var(--space-4,16px);padding:var(--space-4,16px) var(--card-pad,24px) var(--card-pad,24px);background:linear-gradient(180deg,transparent,var(--panel) 22%)}
+.gotchi-page .gotchi-card-heading{gap:var(--space-3,12px)}
+.gotchi-page .gotchi-card-heading h2{font-size:24px;letter-spacing:-.02em}
+.gotchi-page .gotchi-pill{min-height:26px;padding:0 11px;font-size:12px;font-weight:600}
+.gotchi-page .gotchi-pill[data-state]::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:gotchi-live 2.4s ease-in-out infinite}
+.gotchi-page .gotchi-card-tagline{font-size:15px;line-height:1.55}
+.gotchi-page .gotchi-card .gotchi-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3,12px)}
+.gotchi-page .gotchi-card .gotchi-fact{background:var(--inset);border-color:var(--line)}
+.gotchi-page .gotchi-card .gotchi-fact:first-child strong{font-size:22px;color:var(--sunrise-cream,#ddd3ff)}
+.gotchi-page .gotchi-card-race{font-size:14px}
+.gotchi-page .gotchi-chip{min-height:34px;padding:0 12px 0 6px;font-size:13px;transition:border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--go-ease)}
+.gotchi-page .gotchi-chip:hover{transform:translateY(-1px)}
+.gotchi-page .gotchi-chip img{width:24px;height:24px}
+.gotchi-page .gotchi-card-actions{gap:var(--space-3,12px);padding-top:var(--space-2,8px);font-size:13px}
+.gotchi-page .gotchi-card-actions .small-button{flex:none;min-height:var(--control-h,40px);padding:0 16px;border-radius:var(--radius-pill,999px);border-color:#3a3a42;background:#8b5cff14;color:var(--accent);font-size:14px;white-space:nowrap;transition:transform var(--motion-fast,150ms) var(--go-ease),background-color var(--motion-fast,150ms) ease}
+.gotchi-page .gotchi-card-actions .small-button:hover{background:#8b5cff2b;color:var(--sunrise-gold,#a78bff);transform:translateX(2px)}
+.gotchi-page .gotchi-card-actions>.gotchi-muted{text-align:right;font-size:13px;line-height:1.45}
+/* Progress: a thicker bar with a glowing edge. */
+.gotchi-page .gotchi-bar{height:14px}
+.gotchi-page .gotchi-bar-fill{transition:none}
+.gotchi-page .gotchi-bar-tick{top:-5px;height:24px}
+.gotchi-page .gotchi-progress-caption{font-size:13px}
+.gotchi-page .gotchi-status{display:flex;align-items:center;gap:8px;margin:calc(-1 * var(--section-gap,48px) + var(--space-4,16px)) 0 0;font-size:14px}
+.gotchi-page .gotchi-status::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:#2ee59d;animation:gotchi-live 2.6s ease-in-out infinite}
+/* Panels. */
+.gotchi-page .gotchi-panel{padding:var(--card-pad-lg,28px);border:1px solid var(--go-edge);border-radius:var(--radius-card,18px);box-shadow:var(--go-shadow)}
+.gotchi-page .gotchi-panel-heading{margin-bottom:var(--space-5,20px)}
+.gotchi-page .gotchi-panel-heading h2{font-size:var(--text-section,22px);font-weight:600;letter-spacing:-.015em}
+.gotchi-page .gotchi-panel-heading .small-button{min-height:var(--control-h,40px);padding:0 16px;border-radius:var(--radius-control,12px);font-size:14px}
+.gotchi-page .gotchi-panel-heading .gotchi-muted{font-size:13px}
+.gotchi-page .gotchi-panel h3{margin:var(--space-5,20px) 0 10px;font-size:12px;letter-spacing:.06em}
+.gotchi-page .gotchi-standings,.gotchi-page .gotchi-rules{margin:0}
+/* Your standings as a podium: the best-ranked Gotchi stands tallest in the middle. */
+.gotchi-page .gotchi-standings-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--grid-gap,20px);align-items:end}
+.gotchi-page .gotchi-standing{position:relative;display:grid;gap:6px;padding:var(--space-5,20px) var(--space-5,20px) calc(var(--space-5,20px) + var(--podium,0px));border:1px solid var(--line);border-radius:var(--radius-card,18px);background:linear-gradient(180deg,var(--inset),var(--panel2));font-size:14px;font-variant-numeric:tabular-nums;overflow:hidden;transition:transform var(--motion-mid,260ms) var(--go-ease),border-color var(--motion-mid,260ms) ease}
+.gotchi-page .gotchi-standing::after{content:"";position:absolute;left:0;right:0;bottom:0;height:var(--podium,0px);background:linear-gradient(180deg,#a78bff22,#a78bff0a);border-top:1px solid #a78bff33}
+.gotchi-page .gotchi-standing[data-place="1"]{order:2}
+.gotchi-page .gotchi-standing[data-place="2"]{order:1}
+.gotchi-page .gotchi-standing[data-place="3"]{order:3}
+.gotchi-page .gotchi-standing[data-place="1"][data-ranked=true]{--podium:44px;border-color:#a78bff66;box-shadow:0 18px 44px -30px #a78bff}
+.gotchi-page .gotchi-standing[data-place="2"][data-ranked=true]{--podium:26px}
+.gotchi-page .gotchi-standing[data-place="3"][data-ranked=true]{--podium:12px}
+.gotchi-page .gotchi-standing[data-ranked=false] .gotchi-standing-rank{color:var(--muted);font-size:20px}
+.gotchi-page .gotchi-standing[data-place="1"][data-ranked=true]::before{content:"1";position:absolute;right:16px;top:14px;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#a78bff,#8b5cff);color:#121214;font:750 13px/1 var(--sans);box-shadow:0 8px 20px -8px #a78bff}
+.gotchi-page .gotchi-standing[data-place="2"][data-ranked=true]::before,.gotchi-page .gotchi-standing[data-place="3"][data-ranked=true]::before{content:attr(data-place);position:absolute;right:16px;top:14px;display:grid;place-items:center;width:30px;height:30px;border:1px solid var(--line-strong,#3a3a42);border-radius:50%;background:var(--panel);color:var(--muted);font:700 13px/1 var(--sans)}
+.gotchi-page .gotchi-standing:hover{transform:translateY(-2px);border-color:var(--line-strong,#3a3a42)}
+.gotchi-page .gotchi-standing strong{font-size:17px;font-weight:650;letter-spacing:-.01em}
+.gotchi-page .gotchi-standing .gotchi-standing-rank{color:var(--sunrise-cream,#ddd3ff);font-size:28px;font-weight:650;letter-spacing:-.02em;line-height:1.1}
+.gotchi-page .gotchi-standing .gotchi-link{justify-self:start;margin-top:6px;font-size:14px}
+.gotchi-page .gotchi-rules ol{gap:10px;padding-left:0;font-size:15px;line-height:1.6;color:#c9c9cf;list-style:none;counter-reset:gotchi-rule}
+.gotchi-page .gotchi-rules ol>li{position:relative;padding-left:40px;counter-increment:gotchi-rule}
+.gotchi-page .gotchi-rules ol>li::before{content:counter(gotchi-rule);position:absolute;left:0;top:1px;display:grid;place-items:center;width:26px;height:26px;border:1px solid #3a3a42;border-radius:5px;background:var(--panel2);color:var(--sunrise-gold,#a78bff);font:650 12px/1 var(--sans)}
+.gotchi-page .gotchi-funding{gap:var(--grid-gap,20px);margin-top:var(--space-6,24px)}
+.gotchi-page .gotchi-funding-card{gap:10px;padding:var(--space-5,20px);border-radius:var(--radius-inset,12px);font-size:14px;line-height:1.55}
+.gotchi-page .gotchi-funding-card strong{font-size:15px}
+.gotchi-page .gotchi-funding-split{height:26px}
+.gotchi-page .gotchi-funding-part{font-size:11px;font-weight:600}
+.gotchi-page .gotchi-table{font-size:14px}
+.gotchi-page .gotchi-table th{padding:10px 14px;font-size:13px;white-space:nowrap}
+.gotchi-page .gotchi-table td{padding:13px 14px}
+.gotchi-page .gotchi-table tr:hover td{background:#ffffff05}
+.gotchi-page .gotchi-table tr.is-you td{background:#2ee59d14}
+.gotchi-page .gotchi-dl{gap:0;font-size:14px}
+.gotchi-page .gotchi-dl>div{padding:11px 0;border-bottom:1px solid var(--line)}
+.gotchi-page .gotchi-dl>div:first-child{padding-top:0}
+.gotchi-page .gotchi-dl>div:last-child{padding-bottom:0}
+.gotchi-page .gotchi-list-plain{font-size:14px;line-height:1.55}
+.gotchi-page .gotchi-history-row{padding:14px 16px;border-radius:var(--radius-inset,12px);margin-bottom:12px;font-size:14px}
+/* Detail page */
+.gotchi-page .gotchi-back{display:inline-flex;align-items:center;gap:6px;justify-self:start;min-height:var(--control-h,40px);margin:0;padding:0 16px;border:1px solid var(--line);border-radius:var(--radius-pill,999px);font-size:14px;font-weight:500;transition:color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--go-ease)}
+.gotchi-page .gotchi-back:hover{border-color:var(--line-strong,#3a3a42);transform:translateX(-2px)}
+.gotchi-page .gotchi-hero{grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:var(--space-8,40px);padding:var(--space-8,40px);border:1px solid var(--go-edge);border-radius:28px;box-shadow:var(--go-shadow)}
+.gotchi-page .gotchi-hero-stage{min-height:440px}
+.gotchi-page .gotchi-hero-stage::before{content:"";position:absolute;left:50%;bottom:8%;width:70%;height:12%;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,var(--gotchi-glow,#a78bff) 0%,transparent 70%);opacity:.35;transform:translateX(-50%);filter:blur(10px);animation:gotchi-glow 5s ease-in-out infinite;pointer-events:none}
+.gotchi-page .gotchi-hero-stage .gotchi-character[data-size=page]{--gotchi-figure-height:400px;position:relative}
+.gotchi-page .gotchi-hero-copy{gap:var(--space-4,16px)}
+.gotchi-page .gotchi-hero-copy .eyebrow{margin-bottom:0}
+.gotchi-page .gotchi-hero-copy h1{font-size:var(--text-title,36px);letter-spacing:-.02em;line-height:1.1;background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gotchi-page .gotchi-form{font-size:15px;line-height:1.5}
+.gotchi-page .gotchi-hero-copy .gotchi-lede{font-size:15px}
+.gotchi-page .gotchi-hero-copy .gotchi-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3,12px)}
+.gotchi-page .gotchi-hero-copy .gotchi-fact{background:#ffffff08;border-color:#ffffff14}
+.gotchi-page .gotchi-hero-copy .gotchi-fact:first-child strong{font-size:24px;color:var(--sunrise-cream,#ddd3ff)}
+.gotchi-page .gotchi-interact{gap:var(--space-4,16px);font-size:13px}
+body.gotchi-page.relay-terminal .gotchi-interact .small-button{min-height:var(--control-h-lg,48px);padding:0 22px;border-radius:var(--radius-control,12px);font-size:15px;font-weight:650;box-shadow:0 14px 30px -14px var(--gotchi-accent-b,#8b5cff)}
+body.gotchi-page.relay-terminal .gotchi-feed{border-color:transparent;background:linear-gradient(135deg,var(--gotchi-accent-a,#7c4dff),var(--gotchi-accent-b,#8b5cff));color:#fff}
+body.gotchi-page.relay-terminal .gotchi-feed:hover{filter:brightness(1.08);color:#fff}
+.gotchi-page .gotchi-evolutions{gap:var(--space-3,12px);margin-top:var(--space-2,8px)}
+.gotchi-page .gotchi-evolution{gap:10px;padding:14px 14px 12px;border-radius:var(--radius-inset,12px)}
+.gotchi-page .gotchi-evolution-figure{height:118px}
+.gotchi-page .gotchi-evolution-copy{font-size:13px}
+.gotchi-page .gotchi-evolution-copy strong{font-size:14px}
+.gotchi-page .gotchi-evolution-blurb{font-size:12px}
+.gotchi-page .gotchi-detail-grid{gap:var(--grid-gap,20px);margin:0;align-items:start}
+/* Wide tables scroll inside their panel instead of widening the page. */
+.gotchi-page :is(#gotchi-coins,#gotchi-leaders,#gotchi-mine-body,#gotchi-history,#gotchi-race,#gotchi-ledger){overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:thin}
+.gotchi-page .gotchi-detail-status{margin-top:calc(-1 * var(--section-gap,48px) + var(--space-4,16px))}
+@keyframes gotchi-live{50%{opacity:.5;transform:scale(.8);box-shadow:0 0 0 5px #a78bff00}}
+@keyframes gotchi-glow{50%{opacity:.55;transform:translateX(-50%) scaleX(1.12)}}
+@media(min-width:981px){
+  /* Short panels stack beside the leaderboard rather than stretching to its height. */
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-race-title]{grid-column:1;grid-row:1}
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-leaders-title]{grid-column:2;grid-row:1/span 2}
+  .gotchi-page .gotchi-detail-grid>#gotchi-mine{grid-column:1;grid-row:2}
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-coins-title]{grid-column:1/-1;grid-row:3}
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-ledger-title]{grid-column:1;grid-row:4}
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-history-title]{grid-column:2;grid-row:4}
+  .gotchi-page .gotchi-detail-grid>[aria-labelledby=gotchi-detail-rules-title]{grid-column:1/-1;grid-row:5}
+}
+@media(max-width:980px){
+  .gotchi-page .gotchi-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gotchi-page .gotchi-hero{grid-template-columns:minmax(0,1fr);gap:var(--space-6,24px);padding:var(--space-6,24px)}
+  .gotchi-page .gotchi-hero-stage{min-height:360px}
+  .gotchi-page .gotchi-hero-stage .gotchi-character[data-size=page]{--gotchi-figure-height:320px}
+  .gotchi-page .gotchi-standings-grid{grid-template-columns:minmax(0,1fr);align-items:stretch}
+  .gotchi-page .gotchi-standing{--podium:0px!important;order:0!important}
+}
+@media(max-width:640px){
+  .gotchi-page .gotchi-list,.gotchi-page .gotchi-detail{gap:var(--section-gap,32px)}
+  .gotchi-page .gotchi-intro{gap:var(--space-4,16px)}
+  .gotchi-page .gotchi-intro-facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2,8px)}
+  .gotchi-page .gotchi-intro-facts .gotchi-fact{min-width:0}
+  .gotchi-page .gotchi-cards{grid-template-columns:minmax(0,1fr);gap:var(--grid-gap,12px)}
+  .gotchi-page .gotchi-card-placeholder{min-height:520px}
+  /* Shorter stages on phones: the character scales down with its stage. */
+  .gotchi-page .gotchi-card-stage{height:250px;padding:12px 16px 6px}
+  .gotchi-page .gotchi-card-stage .gotchi-character[data-size=card]{--gotchi-figure-height:214px}
+  .gotchi-page .gotchi-card-body{gap:var(--space-3,12px);padding:var(--space-3,12px) var(--card-pad,18px) var(--card-pad,18px)}
+  .gotchi-page .gotchi-card-heading h2{font-size:22px}
+  .gotchi-page .gotchi-card .gotchi-facts{gap:var(--space-2,8px)}
+  .gotchi-page .gotchi-card .gotchi-fact{padding:10px 12px}
+  .gotchi-page .gotchi-card-actions{flex-wrap:wrap}
+  .gotchi-page .gotchi-card-actions .small-button{min-height:44px}
+  .gotchi-page .gotchi-card-actions>.gotchi-muted{flex:1 1 100%;text-align:left}
+  .gotchi-page .gotchi-status{margin-top:calc(-1 * var(--section-gap,32px) + var(--space-3,12px))}
+  .gotchi-page .gotchi-panel{padding:var(--card-pad,18px)}
+  .gotchi-page .gotchi-standing{padding:var(--space-4,16px)}
+  .gotchi-page .gotchi-funding{grid-template-columns:minmax(0,1fr);gap:var(--space-3,12px)}
+  .gotchi-page .gotchi-hero{padding:var(--card-pad,18px);gap:var(--space-4,16px);border-radius:var(--radius-card,18px)}
+  .gotchi-page .gotchi-hero-stage{min-height:280px}
+  .gotchi-page .gotchi-hero-stage .gotchi-character[data-size=page]{--gotchi-figure-height:250px}
+  .gotchi-page .gotchi-hero-copy h1{font-size:var(--text-title,28px)}
+  .gotchi-page .gotchi-interact .small-button{width:100%}
+  .gotchi-page .gotchi-evolutions{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .gotchi-page .gotchi-evolution{padding:8px}
+  .gotchi-page .gotchi-evolution-figure{height:84px}
+  .gotchi-page :is(#gotchi-coins,#gotchi-leaders,#gotchi-mine-body,#gotchi-history,#gotchi-race,#gotchi-ledger){margin:0 calc(-1 * var(--card-pad,18px));padding:0 var(--card-pad,18px);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent)}
+  .gotchi-page .gotchi-coins-table td:first-child{min-width:150px}
+  .gotchi-page .gotchi-table{min-width:520px}
+  .gotchi-page #gotchi-race .gotchi-dl,.gotchi-page #gotchi-ledger .gotchi-dl{min-width:0}
+  .gotchi-page .gotchi-detail-status{margin-top:calc(-1 * var(--section-gap,32px) + var(--space-3,12px))}
+}
+@media(prefers-reduced-motion:reduce){
+  .gotchi-page :is(.eyebrow,.gotchi-status,.gotchi-pill[data-state])::before,.gotchi-page .gotchi-hero-stage::before{animation:none!important}
+  .gotchi-page :is(.gotchi-card,.gotchi-standing,.gotchi-chip,.gotchi-back,.gotchi-card-actions .small-button){transition:none}
+  .gotchi-page :is(.gotchi-card,.gotchi-standing,.gotchi-chip,.gotchi-back,.gotchi-card-actions .small-button):hover{transform:none}
+}

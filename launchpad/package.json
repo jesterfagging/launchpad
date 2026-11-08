@@ -1,0 +1,67 @@
+{
+  "name": "launchpad-engine",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "An open-source Solana and Robinhood Chain launchpad: launch and coin pages, trading, holder rewards, every launch mode, an admin panel and white-label launchpads",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "telegram": "node src/telegram-server.mjs",
+    "telegram:setup": "node scripts/setup-telegram.mjs",
+    "test": "node --import ./test/support/env.mjs --test test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "owner:setup": "node scripts/setup-owner.mjs",
+    "rpc:check": "node scripts/check-rpc.mjs",
+    "robinhood:compile": "node scripts/compile-robinhood.mjs",
+    "robinhood:deployment": "node scripts/robinhood-deployment.mjs",
+    "robinhood:fork": "node scripts/robinhood-fork-check.mjs",
+    "security:audit": "npm audit --omit=dev --audit-level=moderate",
+    "readiness:check": "node scripts/check-readiness.mjs",
+    "pump-classic:check": "node scripts/check-pump-classic.mjs"
+  },
+  "dependencies": {
+    "@irys/upload": "0.0.15",
+    "@irys/upload-solana": "0.1.8",
+    "@meteora-ag/cp-amm-sdk": "1.4.10",
+    "@meteora-ag/dlmm": "1.9.14",
+    "@pump-fun/pump-sdk": "2.0.0",
+    "@pump-fun/pump-swap-sdk": "1.20.0",
+    "@raydium-io/raydium-sdk-v2": "0.2.72-alpha",
+    "@solana/spl-token": "0.4.14",
+    "@solana/spl-token-metadata": "0.1.6",
+    "@solana/transaction-messages": "8.3.0",
+    "@solana/transactions": "8.3.0",
+    "@solana/web3.js": "1.99.0",
+    "@uniswap/v3-sdk": "3.31.4",
+    "bn.js": "5.2.5",
+    "bs58": "6.0.0",
+    "viem": "2.56.8",
+    "ws": "8.21.3",
+    "bigint-buffer": "file:vendor/launchpad-bigint-buffer-js-1.0.0.tgz",
+    "@meteora-ag/dynamic-bonding-curve-sdk": "1.5.13"
+  },
+  "overrides": {
+    "toml": "4.2.0",
+    "uuid": "11.1.1",
+    "stream-json": "3.7.0",
+    "bigint-buffer": "$bigint-buffer",
+    "ws@>=8 <9": "$ws",
+    "csv-parse": "7.0.2",
+    "adm-zip": "0.6.1",
+    "cookie@<0.7.0": "0.7.2",
+    "diff": "8.0.3",
+    "serialize-javascript": "7.0.5",
+    "tmp@<0.2.6": "0.2.7",
+    "undici@<6.28.0": "6.28.1"
+  },
+  "devDependencies": {
+    "@foundry-rs/anvil": "1.7.1",
+    "esbuild": "0.28.2",
+    "linkedom": "0.18.12",
+    "solc": "0.8.30"
+  }
+}

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Discover coins launched on Launchpad. Explore new launches, coins moving toward graduation, and graduated markets.">
+  <title>Launchpad — Discover coins</title><link rel="icon" href="/brand-icon.svg?v=54">
+  <link rel="stylesheet" href="/style.css?v=21"><link rel="stylesheet" href="/workspace.css?v=24"><link rel="stylesheet" href="/dashboard.css?v=21"><link rel="stylesheet" href="/explore.css?v=71.41">
+  <script type="module" src="/explore.js"></script>
+<link rel="stylesheet" href="/curve-theme.css?v=73"><link rel="stylesheet" href="/curve-motion.css?v=2"><script type="module" src="/curve-motion.mjs?v=2"></script><meta name="theme-color" content="#000000"><link id="explore-search-styles" rel="stylesheet" href="/explore-search.css?v=49"><link id="curve-quote-logo-styles" rel="stylesheet" href="/quote-logos.css?v=52"><link id="curve-price-badge-styles" rel="stylesheet" href="/curve-price-badge.css"><link rel="preload" href="/fonts/InterVariable.woff2?v=4.1" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/BricolageGrotesque-Bold.woff?v=1" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/GeistMono-Regular.woff?v=1" as="font" type="font/woff" crossorigin></head>
+<body data-robinhood="on" data-product="launchpad" data-shell="true" data-navigation="top" class="relay-terminal explore-page" data-page="explore">
+  <header class="app-header"><div class="workspace-header-inner"><a class="brand" href="/" aria-label="Launchpad home"><img class="mark" src="/brand-icon.svg?v=54" width="38" height="38" alt=""><span>Launchpad<span class="brand-dot">.</span></span></a><label class="header-search" for="explore-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="search-sr-only">Search coins, tickers, addresses or users</span><input id="explore-search" data-curve-search-trigger name="search" type="search" readonly autocomplete="off" placeholder="Search coins, tickers, addresses or users"><kbd aria-hidden="true">/</kbd></label><div class="local"><a class="curve-price-badge" href="/coin?mint=7rvRFpzP5W18yZcNpPNqtWgPTxLaFrnutz5QPxXpyupc" aria-label="Open official $LAUNCHPAD token page. USD price unavailable."><img src="/brand-icon.svg?v=54" width="20" height="20" alt=""><span class="curve-price-symbol">$LAUNCHPAD</span><span class="curve-price-value">—</span></a><a class="top-launch" href="/launchpad" data-workspace-tool="launchpad" aria-label="Launch on Launchpad" title="Create a coin on Launchpad"><svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Launch on Launchpad</span></a><a id="explore-account" data-account-link class="small-button" href="/?signin=1">Connect wallet</a></div></div></header>
+  <main id="explore-main">
+    <div id="explore-coins" data-explore-stage="new">
+    <div class="explore-intro"><div><p class="eyebrow">LAUNCHPAD / EXPLORE</p><h1>Discover what's rising.</h1></div></div>
+    <section class="explore-dashboard" aria-label="Market leaders">
+      <div id="explore-featured" class="explore-featured cv-sunrise-border"><p class="eyebrow">ON THE HORIZON</p><h2>Finding the next mover…</h2><p class="help">Warming up the curve…</p></div>
+      <aside class="explore-contenders"><div class="explore-dashboard-heading"><h2>On the rise</h2><span>Closest to graduation</span></div><div id="explore-contenders-list"></div></aside>
+    </section>
+    <section class="explore-leaders"><h2>Top by market cap</h2><div id="explore-leaders-list" aria-busy="true"><div class="explore-leader-placeholder" aria-hidden="true"></div><div class="explore-leader-placeholder" aria-hidden="true"></div><div class="explore-leader-placeholder" aria-hidden="true"></div><div class="explore-leader-placeholder" aria-hidden="true"></div></div></section>
+    <div class="explore-browse-bar">
+      <nav class="explore-stage-tabs cv-tabs" aria-label="Coin sections">
+        <button type="button" data-explore-stage="new" aria-pressed="true">New</button>
+        <button type="button" data-explore-stage="moving" aria-pressed="false">↗ Moving on up</button>
+        <button type="button" data-explore-stage="graduated" aria-pressed="false">✦ Graduated</button>
+        <button type="button" data-explore-stage="oldest" aria-pressed="false">Oldest</button>
+        <button type="button" data-explore-stage="volume" aria-pressed="false" title="24-hour trading volume">Volume</button>
+        <button type="button" data-explore-stage="recentBuys" aria-pressed="false" title="Latest observed bonding-curve buy; post-graduation pool buys are not included." aria-describedby="explore-recent-buys-help">Recent Buys</button>
+        <button type="button" data-explore-stage="all" aria-pressed="false">All</button>
+      </nav>
+      <div class="explore-chain-switch cv-segmented" role="group" aria-label="Chain">
+        <button type="button" data-explore-chain="all" aria-pressed="true" title="Coins launched on Solana and on Robinhood Chain">All</button>
+        <button type="button" data-explore-chain="solana" aria-pressed="false" title="Coins launched on Solana">Solana</button>
+        <button type="button" data-explore-chain="robinhood" aria-pressed="false" title="Coins launched on Robinhood Chain (Uniswap v4 pools)">Robinhood</button>
+      </div>
+      <div class="explore-categories cv-chips" role="group" aria-label="Paired asset type">
+        <button type="button" data-explore-category="all" aria-pressed="true">All coins</button>
+        <button type="button" data-explore-category="crypto" aria-pressed="false">Crypto</button>
+        <button type="button" data-explore-category="stocks" aria-pressed="false">Stocks &amp; ETFs</button>
+        <button type="button" data-explore-category="preipo" aria-pressed="false">Pre-IPO</button>
+      </div>
+      <div class="explore-view-switch cv-segmented" role="group" aria-label="View style">
+        <button type="button" data-explore-view="grid" aria-pressed="true" aria-label="Grid view" title="Grid view"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="12" y="2" width="6" height="6" rx="1"/><rect x="2" y="12" width="6" height="6" rx="1"/><rect x="12" y="12" width="6" height="6" rx="1"/></svg><span>Grid</span></button>
+        <button type="button" data-explore-view="list" aria-pressed="false" aria-label="List view" title="List view"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 4h11M7 10h11M7 16h11M2 4h1M2 10h1M2 16h1"/></svg><span>List</span></button>
+      </div>
+    </div>
+    <p id="explore-recent-buys-help" class="explore-sr-only">Latest observed bonding-curve buy; post-graduation pool buys are not included.</p>
+    <div class="explore-status-row">
+      <div class="explore-amm-options cv-chips" role="group" aria-label="Graduation AMM">
+        <span class="explore-amm-label">AMM</span>
+        <button type="button" data-explore-launch-mode="all" aria-pressed="true">All</button>
+        <button type="button" data-explore-launch-mode="pump-classic" aria-pressed="false" title="Pump.fun coins that graduate to PumpSwap"><img src="/pair-origin-pump.png" width="16" height="16" alt="">Pump.fun</button>
+        <button type="button" data-explore-launch-mode="meteora" aria-pressed="false" title="Meteora DBC and DAMM v2 coins"><img src="/quote-logos/METvsvVRapdj9cFLzq4Tr43xK4tAjQfwX76z3n6mWQL.webp" width="16" height="16" alt="">Meteora</button>
+        <button type="button" data-explore-launch-mode="raydium" aria-pressed="false" title="Coins that graduate to Raydium"><img src="/quote-logos/4k3Dyjzvzp8eMZWUXbBCjEvwSkkk59S5iCNLY3QrkX6R.png" width="16" height="16" alt="">Raydium</button>
+      </div>
+      <p id="explore-status" role="status">Discovering Launchpad launches…</p>
+      <div class="explore-age-options cv-segmented" role="group" aria-label="Launch age">
+        <button type="button" data-explore-age="all" aria-pressed="true">All</button>
+        <button type="button" data-explore-age="24h" aria-pressed="false">24hr</button>
+        <button type="button" data-explore-age="7d" aria-pressed="false">7d</button>
+      </div>
+      <span class="explore-auto"><i aria-hidden="true"></i> Auto-updating</span>
+    </div>
+    <section id="explore-all" class="explore-section" aria-labelledby="explore-all-title" hidden><div class="explore-section-heading"><div class="explore-title-line"><h2 id="explore-all-title">All coins</h2><span id="explore-all-count" class="explore-count">—</span></div></div><div id="explore-all-grid" class="explore-grid" aria-busy="true"></div><div id="explore-all-message" class="explore-section-message" role="status"></div><nav id="explore-all-pagination" class="explore-pagination" aria-label="All coin pages"></nav></section>
+    <section id="explore-graduated" class="explore-section explore-graduated" aria-labelledby="explore-graduated-title"><div class="explore-section-heading"><div><div class="explore-title-line"><span class="explore-section-icon" aria-hidden="true">✦</span><h2 id="explore-graduated-title">Graduated</h2><span id="explore-graduated-count" class="explore-count">—</span></div><p>Beyond the curve. Trading in a liquidity pool.</p></div><span class="explore-section-tag">The next chapter</span></div><div id="explore-graduated-grid" class="explore-grid" aria-busy="true"></div><div id="explore-graduated-message" class="explore-section-message" role="status"></div><nav id="explore-graduated-pagination" class="explore-pagination" aria-label="Graduated coin pages"></nav></section>
+    <section id="explore-moving" class="explore-section explore-moving" aria-labelledby="explore-moving-title"><div class="explore-section-heading"><div><div class="explore-title-line"><span class="explore-section-icon" aria-hidden="true">↗</span><h2 id="explore-moving-title">Moving on up</h2><span id="explore-moving-count" class="explore-count">—</span></div><p>Growing volume or at least 35% of the way to graduation.</p></div><span class="explore-section-tag">Building momentum</span></div><div id="explore-moving-grid" class="explore-grid" aria-busy="true"></div><div id="explore-moving-message" class="explore-section-message" role="status"></div><nav id="explore-moving-pagination" class="explore-pagination" aria-label="Moving on up coin pages"></nav></section>
+    <section id="explore-new" class="explore-section" aria-labelledby="explore-new-title"><div class="explore-section-heading"><div><div class="explore-title-line"><span class="explore-section-icon" aria-hidden="true">◈</span><h2 id="explore-new-title">New launches</h2><span id="explore-new-count" class="explore-count">—</span></div><p>Meet the coins making their way toward graduation.</p></div><span class="explore-section-tag">Starts here</span></div><div id="explore-new-grid" class="explore-grid" aria-busy="true"><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div><div class="explore-coin explore-skeleton" aria-hidden="true"><div class="explore-coin-image"></div><div class="explore-coin-body"><div class="explore-skeleton-line"></div><div class="explore-skeleton-line"></div></div></div></div><div id="explore-new-message" class="explore-section-message" role="status"></div><nav id="explore-new-pagination" class="explore-pagination" aria-label="New launch pages"></nav></section>
+    <noscript><p class="explore-noscript">Enable JavaScript to explore Launchpad coins and their live market data.</p></noscript>
+    <p class="explore-data-note">Coins launched on Launchpad · Market values update as confirmed data becomes available.</p>
+    </div>
+
+  </main>
+
+  <footer><span>Launchpad / Discover</span><span>Ideas rise here.</span></footer>
+</body>
+</html>

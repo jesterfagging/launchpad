@@ -1,0 +1,116 @@
+/* A launchpad's feature pages and panels (public/tenant-pad.mjs): Launches, Stats, Summit, Takeover, the coin panel, the
+   home Summit card and the launch form's ticker check. Colours come from the launchpad's palette (src/tenant/skin.mjs). */
+/* The pages reuse the docs page frame; the ID keeps the docs two-column grid (documentation.css, >= 1100px) off them. */
+body[data-product="tenant"].pad-page main#pad-main { display: block; grid-template-columns: none; max-width: 1120px; width: 100%; margin-left: auto; margin-right: auto; }
+body[data-product="tenant"].pad-page main#pad-main > * { grid-column: auto; grid-row: auto; max-width: none; }
+body[data-product="tenant"] .pad-loading, body[data-product="tenant"] .pad-empty { color: var(--muted); padding: 18px 0; }
+body[data-product="tenant"] .pad-tabs { margin-bottom: 8px; }
+body[data-product="tenant"] .pad-hero h1 { margin-bottom: 8px; }
+body[data-product="tenant"] .pad-card { background: var(--s1); border: 1px solid var(--line); border-radius: var(--radius-card, 16px); }
+body[data-product="tenant"] .pad-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 18px 0; }
+body[data-product="tenant"] .pad-kpi { padding: 14px 16px; display: grid; gap: 6px; }
+body[data-product="tenant"] .pad-kpi small { color: var(--muted); font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+body[data-product="tenant"] .pad-kpi strong { font-size: 24px; font-weight: 750; letter-spacing: -.02em; color: var(--text); }
+body[data-product="tenant"] .pad-controls { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 240px); gap: 10px; }
+body[data-product="tenant"] .pad-input { width: 100%; min-height: 44px; padding: 10px 14px; border-radius: var(--radius-control, 10px); border: 1px solid var(--line-strong, var(--line)); background: var(--s2, var(--s1)); color: var(--text); font: inherit; }
+body[data-product="tenant"] textarea.pad-input { resize: vertical; line-height: 1.5; }
+body[data-product="tenant"] .pad-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
+body[data-product="tenant"] .pad-filter { min-height: 34px; padding: 0 14px; border-radius: var(--radius-pill, 999px); border: 1px solid var(--line); background: transparent; color: var(--muted); font: 600 13px/1 var(--sans, inherit); cursor: pointer; }
+body[data-product="tenant"] .pad-filter[aria-pressed="true"] { background: var(--tn-acc); border-color: var(--tn-acc); color: var(--tn-ink); }
+body[data-product="tenant"] .pad-list { display: grid; gap: 10px; }
+body[data-product="tenant"] .pad-row { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 12px 14px; color: var(--text); text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+body[data-product="tenant"] .pad-row:hover { border-color: var(--tn-acc); }
+body[data-product="tenant"] .pad-avatar { border-radius: 50%; object-fit: cover; background: var(--s2); flex: none; }
+body[data-product="tenant"] .pad-row .pad-avatar { width: 48px; height: 48px; }
+body[data-product="tenant"] .pad-row-main { min-width: 0; display: grid; gap: 6px; }
+body[data-product="tenant"] .pad-row-title { display: flex; gap: 8px; align-items: baseline; min-width: 0; }
+body[data-product="tenant"] .pad-row-title strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 16px; }
+body[data-product="tenant"] .pad-ticker { color: var(--tn-acc-soft, var(--tn-acc)); font-weight: 700; font-size: 13px; }
+body[data-product="tenant"] .pad-row-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; color: var(--muted); font-size: 12.5px; }
+body[data-product="tenant"] .pad-no { font-family: var(--mono, monospace); font-size: 12px; color: var(--muted); letter-spacing: .02em; }
+body[data-product="tenant"] .pad-no.is-big { font-size: 14px; color: var(--text); font-weight: 700; }
+body[data-product="tenant"] .pad-row-side { display: grid; gap: 6px; justify-items: end; text-align: right; }
+body[data-product="tenant"] .pad-value { font-weight: 750; font-size: 16px; color: var(--text); }
+body[data-product="tenant"] .pad-progress { display: grid; gap: 4px; justify-items: end; min-width: 130px; }
+body[data-product="tenant"] .pad-progress i { display: block; width: 130px; height: 6px; border-radius: 6px; background: var(--s2); overflow: hidden; }
+body[data-product="tenant"] .pad-progress u { display: block; height: 100%; background: linear-gradient(90deg, var(--tn-acc), var(--tn-acc-end)); }
+body[data-product="tenant"] .pad-progress small { color: var(--muted); font-size: 12px; }
+body[data-product="tenant"] .pad-progress.is-done { color: var(--tn-acc); font-weight: 700; font-size: 13px; }
+body[data-product="tenant"] .pad-chip { display: inline-flex; align-items: center; min-height: 22px; padding: 2px 9px; border-radius: var(--radius-pill, 999px); border: 1px solid var(--line); font-size: 11.5px; font-weight: 700; color: var(--muted); white-space: nowrap; }
+body[data-product="tenant"] .pad-chip.is-founding { color: var(--tn-acc); border-color: color-mix(in srgb, var(--tn-acc) 50%, transparent); }
+body[data-product="tenant"] .pad-chip.is-good { color: var(--tn-t2ee59d, #2ee59d); border-color: color-mix(in srgb, #2ee59d 40%, transparent); }
+body[data-product="tenant"] .pad-chip.is-warn { color: var(--tn-tffb020, #ffb020); border-color: color-mix(in srgb, #ffb020 45%, transparent); }
+body[data-product="tenant"] .pad-chip.is-bad { color: var(--tn-tff4d6d, #ff4d6d); border-color: color-mix(in srgb, #ff4d6d 45%, transparent); }
+body[data-product="tenant"] .pad-chip.is-takeover, body[data-product="tenant"] .pad-chip.is-summit { color: var(--tn-ink); background: var(--tn-acc); border-color: var(--tn-acc); }
+body[data-product="tenant"] .pad-pager { display: flex; justify-content: center; align-items: center; gap: 14px; margin: 18px 0; color: var(--muted); font-size: 13px; }
+body[data-product="tenant"] .pad-btn { min-height: 38px; padding: 0 16px; border-radius: var(--radius-control, 10px); border: 1px solid var(--line-strong, var(--line)); background: var(--s2, var(--s1)); color: var(--text); font: 650 13.5px/1 var(--sans, inherit); cursor: pointer; }
+body[data-product="tenant"] .pad-btn:disabled { opacity: .45; cursor: default; }
+body[data-product="tenant"] .pad-btn.is-primary { background: var(--tn-acc); border-color: var(--tn-acc); color: var(--tn-ink); }
+body[data-product="tenant"] .pad-section { margin: 26px 0; }
+body[data-product="tenant"] .pad-section h2 { font-size: 20px; margin: 0 0 12px; }
+body[data-product="tenant"] .pad-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 28px; }
+body[data-product="tenant"] .pad-ranks { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+body[data-product="tenant"] .pad-rank { display: grid; grid-template-columns: 22px 32px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 8px 10px; border-radius: var(--radius-inset, 10px); color: var(--text); text-decoration: none; }
+body[data-product="tenant"] .pad-rank:hover { background: var(--s1); }
+body[data-product="tenant"] .pad-rank b { color: var(--muted); font-size: 12px; text-align: center; }
+body[data-product="tenant"] .pad-rank .pad-avatar { width: 32px; height: 32px; }
+body[data-product="tenant"] .pad-rank-name { display: grid; min-width: 0; } body[data-product="tenant"] .pad-rank-name strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; } body[data-product="tenant"] .pad-rank-name small { color: var(--muted); font-size: 12px; }
+body[data-product="tenant"] .pad-rank-metric { font-weight: 700; font-size: 14px; }
+body[data-product="tenant"] .pad-summit { position: relative; display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 22px; align-items: center; padding: 26px; margin: 18px 0; color: var(--text); text-decoration: none; background: radial-gradient(70% 120% at 100% 0%, color-mix(in srgb, var(--tn-acc) 22%, transparent), transparent 70%), var(--s1); border-color: color-mix(in srgb, var(--tn-acc) 45%, var(--line)); }
+body[data-product="tenant"] .pad-summit .pad-avatar { width: 120px; height: 120px; box-shadow: 0 0 0 4px var(--tn-acc); }
+body[data-product="tenant"] .pad-summit.is-empty { display: block; }
+body[data-product="tenant"] .pad-summit-badge { position: absolute; top: -12px; left: 24px; padding: 4px 12px; border-radius: var(--radius-pill, 999px); background: var(--tn-acc); color: var(--tn-ink); font-weight: 800; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+body[data-product="tenant"] .pad-summit-body h2 { margin: 0; font-size: 34px; }
+body[data-product="tenant"] .pad-summit-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin: 14px 0 10px; }
+body[data-product="tenant"] .pad-next { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; color: var(--muted); }
+body[data-product="tenant"] .pad-countdown { font-family: var(--mono, monospace); font-size: 20px; color: var(--text); }
+body[data-product="tenant"] .pad-day { font-family: var(--mono, monospace); color: var(--tn-acc); font-weight: 700; }
+body[data-product="tenant"] .pad-form { display: grid; gap: 14px; padding: 22px; margin: 18px 0; }
+body[data-product="tenant"] .pad-form label, body[data-product="tenant"] .pad-field { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+body[data-product="tenant"] .pad-grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+body[data-product="tenant"] .pad-wallets { display: flex; flex-wrap: wrap; gap: 8px; }
+body[data-product="tenant"] .pad-note { color: var(--muted); font-size: 12.5px; line-height: 1.5; margin: 0; }
+body[data-product="tenant"] .pad-status { min-height: 1.4em; margin: 0; font-size: 13.5px; color: var(--text); }
+body[data-product="tenant"] .pad-request { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; padding: 14px; margin-bottom: 10px; }
+body[data-product="tenant"] .pad-actions { display: grid; gap: 8px; align-content: start; }
+body[data-product="tenant"] .pad-banner { display: block; width: 100%; aspect-ratio: 3 / 1; object-fit: cover; border-radius: var(--radius-inset, 10px); margin: 8px 0; }
+body[data-product="tenant"] .pad-coin { display: grid; gap: 12px; padding: 14px 16px; margin: 0 0 16px; }
+body[data-product="tenant"] .pad-coin-head { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+body[data-product="tenant"] .pad-coin .pad-banner { max-width: 600px; margin: 0; }
+body[data-product="tenant"] .pad-takeover-body { display: flex; gap: 12px; align-items: flex-start; } body[data-product="tenant"] .pad-takeover-body p { margin: 4px 0 0; }
+body[data-product="tenant"] .pad-links { display: flex; gap: 12px; } body[data-product="tenant"] .pad-links a, body[data-product="tenant"] .pad-link { color: var(--tn-acc-soft, var(--tn-acc)); font-weight: 650; font-size: 13.5px; text-decoration: none; }
+body[data-product="tenant"] .pad-bundle summary { cursor: pointer; font-size: 13.5px; font-weight: 650; }
+body[data-product="tenant"] .pad-bundle ul { margin: 8px 0; padding-left: 18px; font-size: 13px; color: var(--muted); }
+body[data-product="tenant"] .pad-home-summit { display: flex; align-items: center; gap: 12px; position: relative; padding: 14px 18px 12px; margin: 0 0 var(--space-6, 22px); color: var(--text); text-decoration: none; border-color: color-mix(in srgb, var(--tn-acc) 45%, var(--line)); }
+body[data-product="tenant"] .pad-home-summit .pad-summit-badge { position: static; } body[data-product="tenant"] .pad-home-summit .pad-avatar { width: 36px; height: 36px; } body[data-product="tenant"] .pad-home-summit small { color: var(--muted); margin-left: auto; }
+body[data-product="tenant"] .pad-check { margin: 6px 0 0; font-size: 12.5px; font-weight: 600; min-height: 1em; }
+body[data-product="tenant"] .pad-check.is-bad { color: var(--tn-tff4d6d, #ff4d6d); } body[data-product="tenant"] .pad-check.is-warn { color: var(--tn-tffb020, #ffb020); }
+/* Terminal layouts: Launches and Summit in the header (Rack has them in its own nav, public/tenant-rack.css). */
+body[data-product="tenant"][data-layout="terminal"] .tn-padnav { display: inline-flex; align-items: center; gap: 2px; margin-right: 4px; }
+body[data-product="tenant"][data-layout="terminal"] .tn-padnav a.tn-item { display: inline-flex; align-items: center; gap: 7px; height: var(--control-h, 38px); padding: 0 12px; border-radius: var(--radius-control, 10px); color: var(--muted); font: 600 14px/1 var(--sans, inherit); text-decoration: none; white-space: nowrap; }
+body[data-product="tenant"][data-layout="terminal"] .tn-padnav a.tn-item:hover { background: var(--s2, var(--s1)); color: var(--text); }
+body[data-product="tenant"][data-layout="terminal"] .tn-padnav a.tn-item[aria-current="page"] { background: var(--sel-bg, var(--s2)); color: var(--tn-acc-soft, var(--tn-acc)); }
+@media (max-width: 1100px) { body[data-product="tenant"][data-layout="terminal"] .tn-padnav a.tn-item { width: var(--control-h, 38px); padding: 0; justify-content: center; } body[data-product="tenant"][data-layout="terminal"] .tn-padnav a.tn-item > span:last-child { display: none; } }
+@media (max-width: 760px) { body[data-product="tenant"][data-layout="terminal"] .tn-padnav { display: none; } }
+/* The page frame's docs typography (.tn-doc in public/tenant.css) is written for articles; these keep it off the
+   feature pages' cards, rows and notes. */
+body[data-product="tenant"] #pad-main .pad-section { margin: 26px 0; }
+body[data-product="tenant"] #pad-main .pad-section h2 { font-size: 20px; margin: 0 0 12px; }
+body[data-product="tenant"] #pad-main .pad-next { margin: 0 0 8px; }
+body[data-product="tenant"] #pad-main a.pad-row, body[data-product="tenant"] #pad-main a.pad-rank, body[data-product="tenant"] #pad-main a.pad-summit { color: var(--text); }
+body[data-product="tenant"] #pad-main .pad-tabs a { color: var(--muted); }
+body[data-product="tenant"] #pad-main .pad-tabs a:hover { color: var(--text); }
+body[data-product="tenant"] #pad-main .pad-tabs a[aria-current="page"] { color: var(--tn-acc-soft, var(--text)); }
+body[data-product="tenant"] #pad-main p.pad-note { font-size: 12.5px; line-height: 1.5; color: var(--muted); }
+body[data-product="tenant"] #pad-main p.pad-status { font-size: 13.5px; color: var(--text); }
+body[data-product="tenant"] #pad-main p.pad-empty, body[data-product="tenant"] #pad-main p.pad-loading { color: var(--muted); }
+body[data-product="tenant"] #pad-main input[type="file"].pad-input { padding: 6px; background: var(--s2, var(--s1)); color: var(--muted); font-size: 13px; cursor: pointer; }
+body[data-product="tenant"] #pad-main input[type="file"].pad-input::file-selector-button { margin-right: 12px; min-height: 30px; padding: 0 14px; border-radius: var(--radius-control, 10px); border: 1px solid var(--line-strong, var(--line)); background: var(--s1); color: var(--text); font: 650 13px/1 var(--sans, inherit); cursor: pointer; }
+@media (max-width: 760px) {
+  body[data-product="tenant"] .pad-columns, body[data-product="tenant"] .pad-grid3 { grid-template-columns: 1fr; }
+  body[data-product="tenant"] .pad-controls { grid-template-columns: 1fr; }
+  body[data-product="tenant"] .pad-row { grid-template-columns: 40px minmax(0, 1fr); } body[data-product="tenant"] .pad-row .pad-avatar { width: 40px; height: 40px; }
+  body[data-product="tenant"] .pad-row-side { grid-column: 2; justify-items: start; text-align: left; } body[data-product="tenant"] .pad-progress { justify-items: start; }
+  body[data-product="tenant"] .pad-summit { grid-template-columns: 1fr; } body[data-product="tenant"] .pad-summit-stats { grid-template-columns: 1fr 1fr; }
+  body[data-product="tenant"] .pad-request { grid-template-columns: 1fr; } body[data-product="tenant"] .pad-home-summit small { display: none; }
+}

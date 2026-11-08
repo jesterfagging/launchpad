@@ -1,0 +1,274 @@
+/* AI Agents: discovery page and the agent section of a coin page. */
+/* The page frame (width, gutters) comes from curve-theme.css. */
+.agents-page main{display:grid;gap:var(--space-5,20px);align-content:start}
+.agents-intro{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:start}
+.agents-intro h1{font-size:34px;letter-spacing:-1px;margin:6px 0 10px}
+.agents-lede,.agent-mission{font-size:14px;line-height:1.65;color:var(--muted);margin:0}
+.agents-intro-facts,.agent-dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.agents-intro-facts>div{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.agents-intro-facts span,.agent-dl dt{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
+.agents-intro-facts strong,.agent-dl dd{display:block;font-size:13px;margin:0;overflow-wrap:anywhere}
+.agents-status,.agent-status{font-size:12px;color:var(--muted);margin:0}
+.agent-moderation-note{margin:8px 0 0;padding:8px 10px;border:1px solid #ff4d6d55;border-radius:6px;background:#ff4d6d12;color:#ff8fa3;font-size:12px;line-height:1.5}
+.agent-moderation-note strong{color:#ff8fa3}
+.agent-status[data-bad=true],.agent-fund-status[data-bad=true]{color:#a78bff}
+.agents-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+.agents-card{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;padding:18px;border:1px solid var(--line);border-radius:17px;background:var(--panel)}
+.agents-card-body{display:flex;flex-direction:column;gap:12px;min-width:0}
+.agents-card-heading{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.agents-card-heading h2{font-size:16px;margin:0;overflow-wrap:anywhere}
+.agents-card-mission{font-size:12px;line-height:1.55;color:var(--muted);margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;max-height:calc(1.55em * 3)}
+.agents-card-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 12px}
+.agents-card-facts dd{font-size:12px}
+.agents-card-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:11px;margin-top:auto}
+/* v71.37 moderation: a hidden agent (admins only) is dimmed and striped, with the reason under the facts; the hide/unhide button sits in the foot. */
+.agents-card.is-hidden{opacity:.72;border-style:dashed;border-color:#ff4d6d66;background:repeating-linear-gradient(135deg,transparent 0 14px,#ff4d6d08 14px 28px),var(--panel)}
+.agents-card-moderation{margin:8px 0 0;padding:8px 10px;border:1px solid #ff4d6d55;border-radius:6px;background:#ff4d6d12;color:#ff8fa3;font-size:12px;line-height:1.5}
+.agents-card-moderation strong{color:#ff8fa3}
+.agents-moderate{border-color:#ff4d6d66;color:#ff8fa3}
+.agents-moderate:hover{border-color:#ff4d6d;color:#ff8fa3}
+.agents-muted,.agent-muted{color:var(--muted);font-size:12px;line-height:1.55;margin:0}
+.agents-empty{grid-column:1/-1;padding:28px;text-align:center;border:1px dashed var(--line);border-radius:17px;color:var(--muted)}
+.agents-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;align-self:start}.agents-actions>[hidden]{display:none}
+.agents-panel,.agent-panel{padding:20px;border:1px solid var(--line);border-radius:17px;background:var(--panel);min-width:0}
+.agents-panel-heading h2,.agent-panel h3{margin:0 0 12px;font-size:15px}
+.agents-rules ol{margin:0;padding-left:20px;display:grid;gap:8px;font-size:13px;line-height:1.55;color:var(--muted)}
+.agents-funding{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.agents-funding-card{padding:14px;border:1px solid var(--line);border-radius:6px;background:var(--inset)}
+.agents-funding-card strong{display:block;margin-bottom:6px;font-size:13px}
+.agents-funding-card p{margin:0;font-size:12px;line-height:1.55;color:var(--muted)}
+/* avatar with a cosmetic pulse; sleeping and paused agents dim and stop */
+.agent-avatar{position:relative;width:84px;height:84px;border-radius:12px;background:linear-gradient(135deg,#2b1f52,#1a1430);display:grid;place-items:center;overflow:hidden;border:1px solid var(--line)}
+.agent-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.agent-avatar>span{font-weight:700;font-size:28px;color:var(--text)}
+.agent-pulse{position:absolute;right:7px;bottom:7px;width:11px;height:11px;border-radius:50%;background:#5aa9ff;box-shadow:0 0 0 0 #5aa9ff99;animation:agent-pulse 2.4s ease-out infinite}
+.agent-avatar.is-running .agent-pulse{background:#2ee59d;box-shadow:0 0 0 0 #2ee59d99;animation-duration:1.1s}
+.agent-avatar.is-sleeping{filter:saturate(.45) brightness(.8)}
+.agent-avatar.is-sleeping .agent-pulse{background:#5e5e67;animation:none;box-shadow:none}
+.agent-avatar.no-motion .agent-pulse{animation:none}
+@keyframes agent-pulse{0%{box-shadow:0 0 0 0 #5aa9ff99}70%{box-shadow:0 0 0 10px #5aa9ff00}100%{box-shadow:0 0 0 0 #5aa9ff00}}
+@media(prefers-reduced-motion:reduce){.agent-pulse{animation:none!important}}
+.agent-pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--inset);font-size:11px;font-weight:600;white-space:nowrap;color:var(--muted)}
+.agent-pill[data-state=ready],.agent-pill[data-state=running],.agent-pill-finalized,.agent-pill-activated,.agent-pill-live{border-color:#4a4a53;color:#8ff0c9}
+.agent-pill[data-state=sleeping_budget],.agent-pill[data-state=awaiting_funding],.agent-pill[data-state=awaiting_settlement],.agent-pill-proposed,.agent-pill-submitted,.agent-pill-confirmed_pending_finality{border-color:#8a5f0d;color:#ffb020}
+.agent-pill[data-state^=paused],.agent-pill[data-state=archived],.agent-pill-rejected,.agent-pill-failed_proven{border-color:#4a4a53;color:#a78bff}
+.agent-pill-update{border-color:#4a4a53;color:#9fcbff}
+/* coin page section */
+.coin-agent{margin:0 0 22px;padding:22px;border:1px solid var(--line);border-radius:17px;background:var(--panel);display:grid;gap:18px}
+.coin-agent[hidden]{display:none}
+.agent-head{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;align-items:center}
+.agent-head-copy h2{margin:4px 0 6px;font-size:20px}
+.agent-state{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0}
+.agent-tabs{grid-column:1/-1;display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:6px;background:var(--inset);overflow-x:auto}
+.agent-tabs button{flex:1;min-width:0;padding:10px 8px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font:inherit;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.agent-tabs button[aria-pressed=true]{background:#1f1f23;border-color:#4a4a53;color:var(--text)}
+.agent-body{display:grid;gap:16px}
+.agent-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.agent-panel-wide{grid-column:1/-1}
+.agent-link{color:var(--text);font-size:12px}
+.agent-feed{display:grid;gap:10px}
+.agent-event,.agent-action{padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--inset);display:grid;gap:6px}
+.agent-event p,.agent-action p{margin:0;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.agent-event-head{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.agent-event-head strong{font-size:13px;flex:1;min-width:0;overflow-wrap:anywhere}
+.agent-event-head time{font-size:11px;color:var(--muted)}
+.agent-event-links{display:flex;flex-wrap:wrap;gap:12px;font-size:12px}
+.agent-shot{display:grid;gap:6px;margin-top:12px}
+.agent-shot img{width:100%;max-width:960px;aspect-ratio:16/9;object-fit:contain;border-radius:6px;border:1px solid var(--line);background:#000}
+.agent-controls form{display:grid;gap:12px}
+.agent-controls label{display:block;font-size:12px;color:var(--muted)}
+.agent-controls select,.agent-controls textarea,.agent-controls input{width:100%;margin-top:6px;min-height:40px;padding:9px 12px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:13px}
+.agent-controls textarea{resize:vertical;line-height:1.5}
+.agent-actions{display:flex;flex-wrap:wrap;gap:10px}
+/* funding */
+.agent-fund{display:grid;gap:12px}
+.agent-fund-heading{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.agent-fund-heading h3{margin:0}
+.agent-fund-note{font-size:11px;color:var(--muted)}
+.agent-fund-choice{display:flex;gap:6px;padding:5px;border:1px solid var(--line);border-radius:6px;background:var(--inset)}
+.agent-fund-choice button{flex:1;padding:10px;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--muted);font:inherit;font-size:13px;cursor:pointer}
+.agent-fund-choice button[aria-pressed=true]{background:#1f1f23;border-color:#4a4a53;color:var(--text)}
+.agent-fund-help{margin:0;font-size:12px;color:var(--muted);line-height:1.5}
+.agent-fund-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end}
+.agent-fund-amount{display:grid;gap:6px;font-size:12px;color:var(--muted);position:relative}
+.agent-fund-amount input{width:100%;min-height:44px;padding:10px 48px 10px 12px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--text);font:inherit;font-size:15px}
+.agent-fund-amount b{position:absolute;right:12px;bottom:12px;font-size:12px;color:var(--muted)}
+.agent-fund-wallets{display:flex;flex-wrap:wrap;gap:8px}
+.agent-fund-status{margin:0;font-size:12px;color:var(--muted)}
+.agent-fund-terms{padding:12px 14px;border:1px dashed #4a4a53;border-radius:6px;font-size:11px;line-height:1.55;color:var(--muted)}
+.agent-fund-terms strong{display:block;color:var(--text);margin-bottom:4px;font-size:12px}
+@media(max-width:800px){.agents-intro,.agent-grid,.agents-funding{grid-template-columns:1fr}.agents-intro h1{font-size:28px}.agents-card{grid-template-columns:64px minmax(0,1fr)}.agents-card .agent-avatar{width:64px;height:64px;border-radius:10px}.agent-head{grid-template-columns:64px minmax(0,1fr)}.agent-head .agent-avatar{width:64px;height:64px}.agent-fund-row{grid-template-columns:1fr}}
+
+/* ==========================================================================
+   v71.26 makeover v2 (discovery page only; the coin-page agent section above is unchanged):
+   a lively directory. Big cards with the agent avatar and a "thinking" pulse while it runs, a mission
+   excerpt, stats in inset cells, filter chips and comfortable spacing. Tokens: curve-theme.css.
+   ========================================================================== */
+.agents-page{--ag-edge:var(--line-card,#f4f4f51a);--ag-ease:var(--motion-ease,cubic-bezier(.22,1,.36,1));--ag-shadow:var(--shadow-card,0 12px 32px -20px #000000c7);--ag-shadow-hover:var(--shadow-card-hover,0 24px 48px -22px #000000d9);--ag-blue:#5aa9ff;--ag-green:#2ee59d}
+.agents-page main{gap:var(--space-6,24px)}
+.agents-page main>*{min-width:0}
+.agents-page .agents-intro{grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:var(--space-8,40px);align-items:center;margin-bottom:var(--space-4,16px)}
+.agents-page .agents-intro .eyebrow{display:flex;align-items:center;gap:8px;margin:0 0 10px;color:var(--ag-blue);font:600 12px/1.2 var(--sans);letter-spacing:.08em}
+.agents-page .agents-intro .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ag-blue);box-shadow:0 0 0 0 #5aa9ff66;animation:agents-live 2.6s ease-in-out infinite}
+.agents-page .agents-intro h1{margin:0 0 var(--space-3,12px);font-size:var(--text-title,36px);line-height:1.1;font-weight:650;letter-spacing:-.02em;background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.agents-page .agents-lede{max-width:640px;font-size:16px;line-height:1.6}
+.agents-page .agents-lede strong{color:var(--text);font-weight:600}
+.agents-page .agents-lede a{color:var(--accent);text-decoration-color:#8b5cff66;text-underline-offset:3px}
+.agents-page .agents-lede a:hover{color:var(--sunrise-gold,#a78bff);text-decoration-color:currentColor}
+.agents-page .agents-intro-facts{gap:var(--space-3,12px)}
+.agents-page .agents-intro-facts>div{padding:14px 16px;border:1px solid var(--ag-edge);border-radius:var(--radius-inset,12px);background:var(--panel);box-shadow:var(--ag-shadow)}
+.agents-page .agents-intro-facts span{margin-bottom:var(--label-gap,6px);font-size:13px}
+.agents-page .agents-intro-facts strong{font-size:15px;font-weight:600;line-height:1.4}
+/* Status line and the state filter chips share one row. */
+.agents-page .agents-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3,12px) var(--space-5,20px);margin:0}
+.agents-page .agents-toolbar:empty{display:none}
+.agents-page .agents-status{display:inline-flex;align-items:center;gap:8px;margin:0;font-size:14px}
+.agents-page .agents-status:not(:empty)::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ag-green);animation:agents-live 2.6s ease-in-out infinite}
+.agents-page .agents-status:empty{display:none}
+.agents-page .agents-filters{margin:0}
+.agents-page .agents-filters[hidden]{display:none}
+.agents-page .agents-filters>button .count{margin-left:2px;color:inherit;opacity:.75}
+.agents-page .agents-cards{grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:var(--grid-gap,20px)}
+.agents-page .agents-card{grid-template-columns:96px minmax(0,1fr);grid-template-areas:"avatar heading" "mission mission" "facts facts" "foot foot";align-content:start;gap:var(--space-5,20px) var(--space-4,16px);padding:var(--card-pad,24px);border:1px solid var(--ag-edge);border-radius:var(--radius-card,18px);box-shadow:var(--ag-shadow);transition:transform var(--motion-mid,260ms) var(--ag-ease),box-shadow var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+@media(hover:hover){.agents-page .agents-card:hover{transform:translateY(-2px);border-color:var(--line-card-hover,#8b5cff59);box-shadow:var(--ag-shadow-hover)}.agents-page .agents-card:hover .agent-avatar img{transform:scale(1.06)}}
+.agents-page .agents-card[data-state=running]{border-color:#2f7fd666}
+.agents-page .agents-card>.agents-card-body{display:contents}
+.agents-page .agents-card .agent-avatar{grid-area:avatar;width:96px;height:96px;border-radius:28px;box-shadow:0 12px 28px -16px #000c}
+.agents-page .agents-card .agent-avatar img{border-radius:inherit;transition:transform 600ms var(--ag-ease)}
+.agents-page .agents-card .agent-avatar>span{font-size:34px}
+.agents-page .agents-card .agent-pulse{right:7px;bottom:7px;width:12px;height:12px;border:2px solid var(--panel)}
+/* A running agent "thinks": a slow conic ring turns around its avatar. */
+.agents-page .agents-card .agent-avatar.is-running{overflow:visible;isolation:isolate}
+.agents-page .agents-card .agent-avatar.is-running::before{content:"";position:absolute;inset:-4px;z-index:-1;border-radius:32px;background:conic-gradient(from var(--sunrise-angle,0deg),#5aa9ff00,#5aa9ffd9 30%,#2ee59dd9 55%,#5aa9ff00 80%);animation:agents-think 3.2s linear infinite}
+.agents-page .agents-card .agent-avatar.is-running::after{content:"";position:absolute;inset:-2px;z-index:-1;border-radius:30px;background:var(--panel)}
+.agents-page .agents-card-heading{grid-area:heading;flex-direction:column;align-items:flex-start;align-self:center;gap:10px}
+.agents-page .agents-card-heading h2{font-size:20px;line-height:1.25;font-weight:650;letter-spacing:-.015em}
+.agents-page .agents-card .agent-pill{height:26px;padding:0 10px;font-size:12px}
+.agents-page .agents-card .agent-pill[data-state=running]{gap:6px}
+.agents-page .agents-card .agent-pill[data-state=running]::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;animation:agents-live 1.4s ease-in-out infinite}
+.agents-page .agents-card-mission{grid-area:mission;font-size:15px;line-height:1.55;color:#c9c9cf;max-height:calc(1.55em * 3)}
+.agents-page .agents-card-facts{grid-area:facts;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-3,12px)}
+.agents-page .agents-card-facts>div{min-width:0;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-inset,12px);background:var(--inset)}
+.agents-page .agents-card-facts dt{margin-bottom:var(--label-gap,6px);font-size:13px}
+.agents-page .agents-card-facts dd{font-size:15px;font-weight:600;line-height:1.4;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.agents-page .agents-card-foot{grid-area:foot;align-self:end;gap:10px var(--space-3,12px);padding-top:var(--space-4,16px);border-top:1px solid var(--line);font-size:13px}
+.agents-page .agents-card-foot>.agents-muted{font-size:13px}
+.agents-page .agents-card-foot .small-button{margin-left:auto;min-height:var(--control-h,40px);padding:0 16px;border-radius:var(--radius-pill,999px);border-color:#3a3a42;background:#8b5cff14;color:var(--accent);font-size:14px;transition:transform var(--motion-fast,150ms) var(--ag-ease),background-color var(--motion-fast,150ms) ease}
+.agents-page .agents-card-foot .small-button:hover{background:#8b5cff2b;color:var(--sunrise-gold,#a78bff);transform:translateX(2px)}
+.agents-page .agents-empty{display:grid;gap:6px;padding:var(--space-8,40px) var(--space-6,24px);border:1px dashed var(--line-strong,#3a3a42);border-radius:var(--radius-card,18px);background:radial-gradient(60% 80% at 50% 100%,#14335422,transparent 70%),var(--panel);font-size:15px;line-height:1.55}
+.agents-page .agents-empty::before{content:"";width:64px;height:64px;margin:0 auto 10px;border-radius:12px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2398e0ff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='7' width='16' height='12' rx='3'/%3E%3Cpath d='M12 3v4M9 12h.01M15 12h.01M9.5 16h5'/%3E%3C/svg%3E") center/30px no-repeat,var(--panel2);box-shadow:inset 0 0 0 1px var(--line-strong,#3a3a42);animation:agents-float 4s ease-in-out infinite}
+.agents-page .agents-actions{gap:var(--space-3,12px)}
+.agents-page .agents-actions:not(:has(>:not([hidden]))){display:none}
+.agents-page .agents-actions .small-button{min-height:var(--control-h,40px)}
+.agents-page .agents-panel{padding:var(--card-pad-lg,28px);border:1px solid var(--ag-edge);border-radius:var(--radius-card,18px);box-shadow:var(--ag-shadow)}
+.agents-page .agents-panel-heading h2{margin:0 0 var(--space-4,16px);font-size:var(--text-section,22px);font-weight:600;letter-spacing:-.015em}
+.agents-page .agents-rules ol{gap:10px;padding-left:0;font-size:15px;line-height:1.6;color:#c9c9cf;list-style:none;counter-reset:agent-rule}
+.agents-page .agents-rules ol>li{position:relative;padding-left:40px;counter-increment:agent-rule}
+.agents-page .agents-rules ol>li::before{content:counter(agent-rule);position:absolute;left:0;top:1px;display:grid;place-items:center;width:26px;height:26px;border:1px solid #3a3a42;border-radius:5px;background:var(--panel2);color:var(--sunrise-gold,#a78bff);font:650 12px/1 var(--sans)}
+.agents-page .agents-funding{gap:var(--grid-gap,20px);margin:var(--space-6,24px) 0}
+.agents-page .agents-funding-card{padding:var(--space-5,20px);border:1px solid var(--line);border-radius:var(--radius-inset,12px)}
+.agents-page .agents-funding-card strong{margin-bottom:8px;font-size:15px;font-weight:600}
+.agents-page .agents-funding-card p{font-size:14px;line-height:1.55}
+.agents-page #agents-custody{font-size:14px;line-height:1.55}
+@keyframes agents-live{50%{opacity:.5;transform:scale(.8);box-shadow:0 0 0 5px #5aa9ff00}}
+/* The ring turns through the registered --sunrise-angle (curve-theme.css); browsers without @property show a still ring. */
+@keyframes agents-think{to{--sunrise-angle:360deg}}
+@keyframes agents-float{50%{transform:translateY(-6px)}}
+@media(max-width:900px){
+  .agents-page .agents-intro{grid-template-columns:minmax(0,1fr);gap:var(--space-5,20px)}
+  .agents-page .agents-cards{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+}
+@media(max-width:640px){
+  .agents-page main{gap:var(--space-5,20px)}
+  .agents-page .agents-intro-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2,8px)}
+  .agents-page .agents-intro-facts>div{padding:12px 14px}
+  .agents-page .agents-cards{grid-template-columns:minmax(0,1fr);gap:var(--grid-gap,12px)}
+  .agents-page .agents-card{grid-template-columns:72px minmax(0,1fr);gap:var(--space-4,16px) var(--space-3,12px);padding:var(--card-pad,18px)}
+  .agents-page .agents-card .agent-avatar{width:72px;height:72px;border-radius:12px}
+  .agents-page .agents-card .agent-avatar.is-running::before{border-radius:25px}
+  .agents-page .agents-card .agent-avatar.is-running::after{border-radius:12px}
+  .agents-page .agents-card .agent-avatar>span{font-size:28px}
+  .agents-page .agents-card-heading h2{font-size:18px}
+  .agents-page .agents-card-facts{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2,8px)}
+  .agents-page .agents-card-foot .small-button{min-height:44px}
+  .agents-page .agents-panel{padding:var(--card-pad,18px)}
+  .agents-page .agents-funding{grid-template-columns:minmax(0,1fr);gap:var(--space-3,12px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .agents-page :is(.agents-intro .eyebrow,.agents-status,.agent-pill[data-state=running])::before,.agents-page .agent-avatar.is-running::before,.agents-page .agents-empty::before{animation:none!important}
+  .agents-page .agents-card,.agents-page .agents-card-foot .small-button,.agents-page .agent-avatar img{transition:none}
+  .agents-page .agents-card:hover,.agents-page .agents-card-foot .small-button:hover{transform:none}
+  .agents-page .agents-card:hover .agent-avatar img{transform:none}
+}
+
+/* ==========================================================================
+   v71.27 AI Agent upgrade: objectives and programs.
+   Coin page: the personality voice under the title, an objective pill, the Program card (rule, status pill,
+   schedule, milestones) and "Program" chips on program-made activity and treasury rows; the creator's objective
+   controls. Directory: objective and personality chips on the cards and an objective filter in the toolbar.
+   ========================================================================== */
+.agent-voice{display:block;margin:0 0 8px;font-size:13px;line-height:1.5;color:var(--muted);overflow-wrap:anywhere}
+.agent-voice strong{color:var(--text);font-weight:600}
+.agent-voice[hidden]{display:none}
+.agent-pill-objective{border-color:#6d45d9;background:#1a1430;color:#c9b8ff}
+.agent-pill-objective[hidden]{display:none}
+.agent-pill-program{gap:5px;border-color:#6d45d9;background:#1a1430;color:#c9b8ff}
+.agent-pill-program::before{content:"";width:6px;height:6px;border-radius:2px;background:linear-gradient(140deg,#a78bff,#7c4dff)}
+.agent-pill-spends{border-color:#8a5f0d;color:#ffb020}
+.agent-dl dd strong{font-weight:600;color:var(--text)}
+.agent-dl dd .agent-muted{font-size:inherit}
+/* Program card */
+.agent-program{display:grid;gap:12px;align-content:start}
+.agent-program-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.agent-program-head h3{flex:1 1 auto;margin:0!important}
+.agent-program-pill[data-status=active]{border-color:#4a4a53;color:#8ff0c9;background:#2ee59d14}
+.agent-program-pill[data-status=waiting]{border-color:#8a5f0d;color:#ffb020;background:#a78bff1a}
+.agent-program-pill[data-status=finished]{border-color:#6d45d9;color:#c9b8ff;background:#1a1430}
+.agent-program-pill[data-status=off]{border-color:#4a4a53;color:#a78bff;background:#ff4d6d14}
+.agent-program-dot{display:inline-block;width:7px;height:7px;margin-right:5px;border-radius:50%;background:#2ee59d;box-shadow:0 0 0 0 #2ee59d99;animation:agent-pulse 2.4s ease-out infinite}
+.agent-program-rule{margin:0;font-size:14px;line-height:1.6;color:var(--text)}
+.agent-program-note{margin:0;padding:10px 12px;border:1px solid var(--line);border-left:3px solid #6d45d9;border-radius:4px 6px 6px 4px;background:#ffffff06;font-size:13px;line-height:1.55;color:#c9c9cf;overflow-wrap:anywhere}
+.agent-program-note[data-status=waiting]{border-left-color:#d9931a;color:#ffb020}
+.agent-program-note[data-status=off]{border-left-color:#7c4dff;color:#a78bff}
+.agent-program-note[data-status=finished]{border-left-color:#8b5cff}
+.agent-program-foot{font-size:12.5px}
+.agent-milestones-wrap{display:grid;gap:6px}
+.agent-milestones-label{font-size:11px;color:var(--muted)}
+.agent-milestones{display:flex;flex-wrap:wrap;gap:6px}
+.agent-milestone[data-hit=true]{border-color:#4a4a53;color:#8ff0c9;background:#2ee59d14}
+.agent-milestone[data-hit=false]{opacity:.7}
+/* Creator controls: objective select, its summary line and the program settings */
+.agent-objective-summary{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--inset);font-size:12.5px;line-height:1.55}
+.agent-objective-summary strong{color:var(--text)}
+.agent-objective-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.agent-objective-settings[hidden]{display:none}
+.agent-objective-settings small{display:block;margin-top:4px;font-size:11.5px}
+/* Directory cards */
+.agents-page .agents-empty.has-peek{position:relative;min-height:132px;padding-right:160px;overflow:hidden}
+.agents-page .agents-card-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.agents-page .agents-card-chips .agent-pill{height:26px;padding:0 10px;font-size:12px}
+.agents-page .agents-objective-filter{display:inline-flex;align-items:center;gap:8px;margin:0;color:var(--muted);font-size:13px;font-weight:500}
+.agents-page .agents-objective-filter[hidden]{display:none}
+.agents-page .agents-objective-filter select{min-height:var(--control-h-sm,36px);max-width:min(100%,280px);padding:0 34px 0 12px;border-radius:var(--radius-pill,999px);font-size:14px}
+.agents-page .agents-toolbar-right{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;min-width:0}
+@media(max-width:640px){
+  .agents-page .agents-empty.has-peek{padding-right:110px}
+  .agents-page .agents-toolbar-right{width:100%}
+  .agents-page .agents-objective-filter{width:100%}
+  .agents-page .agents-objective-filter select{flex:1;max-width:none;min-height:44px}
+  .agent-objective-settings{grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){.agent-program-dot{animation:none!important}}
+/* AI influencer (v71.30): a directory card whose agent posts to X shows the character's portrait in the avatar and a small
+   "on X" badge on its corner that links to the profile; a character without X reads "AI character". The avatar lets the
+   badge overflow its corner; the portrait keeps the rounded clip through its own radius. */
+.agent-avatar.has-influencer{overflow:visible}
+.agent-avatar.has-influencer img{border-radius:inherit}
+.agent-avatar.has-influencer .agent-pulse{right:auto;left:7px}
+.influencer-badge{position:absolute;right:-8px;bottom:-8px;z-index:1;display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border:1px solid #4a4a53;border-radius:999px;background:var(--panel,#0b0b0c);color:#9fcbff;font-size:11px;font-weight:650;line-height:1;letter-spacing:.02em;white-space:nowrap;text-decoration:none;box-shadow:0 6px 16px -10px #000c}
+.influencer-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
+.influencer-badge[data-influencer=character]{color:#ffb020;border-color:#8a5f0d}
+.influencer-badge[data-state=paused],.influencer-badge[data-state=failed],.influencer-badge[data-state=disabled]{color:#a78bff;border-color:#4a4a53}
+.influencer-badge[data-state=paused]::before,.influencer-badge[data-state=failed]::before,.influencer-badge[data-state=disabled]::before{box-shadow:none}
+a.influencer-badge:hover{color:var(--text);border-color:var(--line-strong,#4a4a53)}
+a.influencer-badge:focus-visible{outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}

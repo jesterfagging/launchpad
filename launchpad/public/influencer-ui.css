@@ -1,0 +1,124 @@
+/* AI influencer (v71.30): the launch step inside the AI Agent settings (influencer-ui.mjs createInfluencerStep) and the
+   coin page's Influencer card (createInfluencerCard). Tokens come from curve-theme.css and the launch page's own
+   variables (launchpad.css); nothing here adds a colour or a font of its own. The launch step reuses the agent block's
+   toggles, setting rows and rule panel; its tiles are radio chips (keyboard-reachable, arrow keys inside a group) that
+   wrap on phones. Motion is opacity/transform only and stops under reduced motion. */
+body.launch-page.relay-terminal .launch-influencer[hidden]{display:none}
+body.launch-page.relay-terminal .launch-influencer-status:empty{display:none}
+body.launch-page.relay-terminal .launch-influencer-status[data-state=closed]{color:#a78bff}
+body.launch-page.relay-terminal .launch-influencer-status[data-state=open]{color:#8ff0c9}
+body.launch-page.relay-terminal .launch-influencer-body{display:grid;gap:14px;min-width:0}
+body.launch-page.relay-terminal .launch-influencer-toggle{margin:0}
+body.launch-page.relay-terminal .launch-influencer-toggle input:disabled~span{opacity:.6}
+body.launch-page.relay-terminal .launch-influencer-toggle:has(input:disabled){cursor:not-allowed}
+body.launch-page.relay-terminal .launch-influencer-toggle:has(input:disabled):hover{border-color:var(--line)}
+body.launch-page.relay-terminal .launch-influencer-toggle .launch-influencer-lock{color:#a78bff}
+body.launch-page.relay-terminal .launch-influencer-layers{display:grid;gap:14px;min-width:0;animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-influencer-layers[hidden],body.launch-page.relay-terminal .launch-influencer-layer[hidden],body.launch-page.relay-terminal .launch-influencer-group[hidden],body.launch-page.relay-terminal .launch-influencer-reference[hidden],body.launch-page.relay-terminal .launch-influencer-number[hidden],body.launch-page.relay-terminal .launch-influencer-select[hidden],body.launch-page.relay-terminal .launch-influencer-popup-link[hidden],body.launch-page.relay-terminal .launch-influencer-error[hidden],body.launch-page.relay-terminal .launch-influencer-reference-preview[hidden]{display:none}
+/* One bordered panel per layer (the agent program-settings look); the toggle above it reads as its heading. */
+body.launch-page.relay-terminal .launch-influencer-layer{display:grid;gap:16px;min-width:0;margin:-4px 0 4px;padding:16px 18px;border:1px solid var(--line);border-radius:8px;background:var(--panel);animation:lp-crossfade .4s var(--lp-ease) both}
+body.launch-page.relay-terminal .launch-influencer-label{display:block;font-size:13px;font-weight:500;line-height:1.5;color:var(--lp-label)}
+body.launch-page.relay-terminal .launch-influencer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px 20px;min-width:0}
+body.launch-page.relay-terminal label.launch-influencer-select,body.launch-page.relay-terminal label.launch-influencer-number,body.launch-page.relay-terminal label.launch-influencer-file{display:grid;gap:6px;min-width:0;margin:0}
+body.launch-page.relay-terminal .launch-section .launch-influencer-select>select,body.launch-page.relay-terminal .launch-section .launch-influencer-number>input,body.launch-page.relay-terminal .launch-section .launch-influencer-file>input{margin-top:0;background:var(--inset)}
+body.launch-page.relay-terminal .launch-influencer-number input[aria-invalid=true],body.launch-page.relay-terminal .launch-influencer-select select[aria-invalid=true]{border-color:#7c4dff;box-shadow:0 0 0 3px #7c4dff1f}
+body.launch-page.relay-terminal label.launch-influencer-check{display:flex;align-items:flex-start;gap:12px;margin:0;font-size:13.5px;line-height:1.5;color:var(--text);cursor:pointer}
+body.launch-page.relay-terminal .launch-influencer-check input{flex:none;width:18px;height:18px;min-height:0;margin:2px 0 0;accent-color:var(--accent)}
+/* Chips: a visually hidden radio in a pill label; the chosen one takes the selection colours, focus shows a ring. */
+body.launch-page.relay-terminal .launch-influencer-chips{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+body.launch-page.relay-terminal label.launch-influencer-chip{position:relative;display:inline-flex;align-items:center;justify-content:center;min-height:36px;margin:0;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:#9a9aa3;font-size:13.5px;font-weight:500;line-height:1.2;cursor:pointer;transition:color var(--motion-fast,150ms) ease,background-color var(--motion-fast,150ms) ease,border-color var(--motion-fast,150ms) ease,transform var(--motion-fast,150ms) var(--lp-ease)}
+body.launch-page.relay-terminal .launch-influencer-chip>input{position:absolute;width:1px;height:1px;min-height:0;margin:0;opacity:0;pointer-events:none}
+body.launch-page.relay-terminal .launch-influencer-chip:hover:not(:has(:checked,:disabled)){background:var(--hover);color:var(--text);transform:translateY(-1px)}
+body.launch-page.relay-terminal .launch-influencer-chip:has(:checked){background:var(--sel-bg);border-color:var(--sel-line);color:var(--sel-text)}
+body.launch-page.relay-terminal .launch-influencer-chip:has(:focus-visible){outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+body.launch-page.relay-terminal .launch-influencer-chip:has(:disabled){opacity:.5;cursor:not-allowed}
+body.launch-page.relay-terminal .launch-influencer-source label.launch-influencer-chip,body.launch-page.relay-terminal .launch-influencer-media label.launch-influencer-chip{min-height:40px;padding:0 16px;font-weight:600}
+/* Tile groups: a heading line per group, then its chips. */
+body.launch-page.relay-terminal .launch-influencer-tiles{display:grid;gap:16px;min-width:0}
+body.launch-page.relay-terminal .launch-influencer-group{display:grid;gap:8px;min-width:0}
+body.launch-page.relay-terminal .launch-influencer-group-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px}
+body.launch-page.relay-terminal .launch-influencer-group-head h4{margin:0;font-size:13.5px;font-weight:650;line-height:1.4;letter-spacing:.01em;color:var(--lp-gold)}
+body.launch-page.relay-terminal .launch-influencer-group-head p{margin:0;font-size:12.5px;line-height:1.5;color:var(--muted)}
+body.launch-page.relay-terminal .launch-influencer-preview{margin:0}
+body.launch-page.relay-terminal .launch-influencer-preview-text{font-size:13.5px;line-height:1.55;color:#e4e4e7;overflow-wrap:anywhere}
+/* X accounts: one row per account with its radio, the handle, a note and Disconnect. */
+body.launch-page.relay-terminal .launch-influencer-accounts{display:grid;gap:8px;min-width:0}
+body.launch-page.relay-terminal .launch-influencer-empty{margin:0;padding:12px 14px;border:1px dashed var(--line-strong,#3a3a42);border-radius:6px;font-size:13px;line-height:1.5}
+body.launch-page.relay-terminal label.launch-influencer-account{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:12px;min-width:0;margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--inset);cursor:pointer;transition:border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease}
+body.launch-page.relay-terminal .launch-influencer-account:has(:checked){border-color:#8b5cff80;background:var(--sel-bg)}
+body.launch-page.relay-terminal .launch-influencer-account.is-revoked{opacity:.7;cursor:default}
+body.launch-page.relay-terminal .launch-influencer-account input{width:18px;height:18px;min-height:0;margin:0;accent-color:var(--accent)}
+body.launch-page.relay-terminal .launch-influencer-account-copy{display:grid;gap:2px;min-width:0}
+body.launch-page.relay-terminal .launch-influencer-account-copy strong{font-size:14px;font-weight:650;color:var(--text);overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-influencer-account-copy small{font-size:12.5px;line-height:1.4;color:var(--muted);overflow-wrap:anywhere}
+body.launch-page.relay-terminal .launch-influencer-disconnect{min-height:32px;padding:0 8px;font-size:13px}
+body.launch-page.relay-terminal .launch-influencer-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+body.launch-page.relay-terminal .launch-influencer-actions .small-button{min-height:40px}
+body.launch-page.relay-terminal .launch-influencer-popup-link{font-size:13.5px;color:var(--text)}
+body.launch-page.relay-terminal .launch-influencer-x-status{margin:0;font-size:13px;line-height:1.5}
+body.launch-page.relay-terminal .launch-influencer-x-status:empty{display:none}
+body.launch-page.relay-terminal .launch-influencer-x-status.negative,body.launch-page.relay-terminal .launch-influencer-reference-status.negative{color:#a78bff}
+/* Reference art: the file field, a thumbnail once uploaded, the status and the rights note. */
+body.launch-page.relay-terminal .launch-influencer-reference{display:grid;gap:10px;min-width:0;padding:14px 16px;border:1px dashed #4a4a53;border-radius:8px;background:var(--inset)}
+body.launch-page.relay-terminal .launch-influencer-file input[type=file]{width:100%;max-width:100%;margin:0;font-size:14px;color:var(--text)}
+body.launch-page.relay-terminal .launch-influencer-reference-preview img{display:block;width:120px;height:120px;border:1px solid var(--line);border-radius:10px;object-fit:cover;background:var(--panel)}
+body.launch-page.relay-terminal .launch-influencer-reference-status,body.launch-page.relay-terminal .launch-influencer-reference-note,body.launch-page.relay-terminal .launch-influencer-costs{margin:0;font-size:12.5px;line-height:1.5}
+body.launch-page.relay-terminal .launch-influencer-reference-status:empty{display:none}
+body.launch-page.relay-terminal .launch-influencer-error{margin:-4px 0 0}
+@media(max-width:719px){
+  body.launch-page.relay-terminal .launch-influencer-layer{padding:14px}
+  body.launch-page.relay-terminal .launch-influencer-grid{grid-template-columns:minmax(0,1fr)}
+  body.launch-page.relay-terminal label.launch-influencer-chip{min-height:40px}
+  body.launch-page.relay-terminal label.launch-influencer-account{grid-template-columns:auto minmax(0,1fr);gap:10px 12px}
+  body.launch-page.relay-terminal .launch-influencer-disconnect{grid-column:2;justify-self:start;margin-top:-4px}
+  body.launch-page.relay-terminal .launch-influencer-actions .small-button{width:100%;min-height:48px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.launch-page.relay-terminal .launch-influencer-layers,body.launch-page.relay-terminal .launch-influencer-layer{animation:none}
+  body.launch-page.relay-terminal .launch-influencer-chip:hover:not(:has(:checked,:disabled)){transform:none}
+}
+
+/* ---- Coin page card: avatar and state, the X handle, facts, the post feed and the creator's controls. -------------- */
+.influencer-card{display:grid;gap:var(--space-4,16px);min-width:0}
+.influencer-card[hidden],.influencer-controls[hidden],.influencer-handle[hidden],.influencer-reason[hidden],.influencer-form-grid label[hidden]{display:none}
+.influencer-head{display:grid;grid-template-columns:72px minmax(0,1fr);gap:var(--space-4,16px);align-items:center}
+.influencer-avatar{position:relative;display:grid;place-items:center;width:72px;height:72px;overflow:hidden;border:1px solid var(--line,#1f1f23);border-radius:12px;background:linear-gradient(135deg,#2b1f52,#1a1430)}
+.influencer-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.influencer-avatar>span{font-size:22px;font-weight:700;color:var(--text,#f4f4f5)}
+.influencer-avatar[data-state=generating]::after{content:"";position:absolute;inset:-3px;border:2px solid transparent;border-top-color:var(--sunrise-gold,#a78bff);border-radius:23px;animation:influencer-spin 1.2s linear infinite}
+.influencer-avatar[data-state=failed],.influencer-avatar[data-state=paused],.influencer-avatar[data-state=disabled]{filter:saturate(.45) brightness(.8)}
+.influencer-copy{display:grid;gap:6px;min-width:0}
+.influencer-copy h3{margin:0!important}
+.influencer-state{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0}
+.influencer-pill[data-state=ready]{border-color:#4a4a53;color:#8ff0c9}
+.influencer-pill[data-state=generating],.influencer-pill[data-state=pending]{border-color:#8a5f0d;color:#ffb020}
+.influencer-pill[data-state=failed],.influencer-pill[data-state=paused],.influencer-pill[data-state=disabled]{border-color:#4a4a53;color:#a78bff}
+.influencer-handle{font-size:13.5px;font-weight:600;color:var(--text,#f4f4f5)}
+.influencer-reason{margin:0;font-size:12.5px;line-height:1.5}
+.influencer-facts{grid-template-columns:repeat(3,minmax(0,1fr))}
+.influencer-posts{min-width:0}
+/* Two pills, a title and a time share the head row; the title keeps its words and the time stays on the right when the row wraps. */
+.influencer-post .agent-event-head{row-gap:6px}
+.influencer-post .agent-event-head strong{flex:1 1 auto;min-width:0}
+.influencer-post .agent-event-head time{margin-left:auto}
+.influencer-post-text{font-size:13.5px!important;line-height:1.55;color:var(--text,#f4f4f5);white-space:pre-wrap}
+.influencer-post-pill[data-state=posted]{border-color:#4a4a53;color:#8ff0c9}
+.influencer-post-pill[data-state=queued],.influencer-post-pill[data-state=generating],.influencer-post-pill[data-state=checking],.influencer-post-pill[data-state=uploading]{border-color:#8a5f0d;color:#ffb020}
+.influencer-post-pill[data-state=skipped],.influencer-post-pill[data-state=failed]{border-color:#4a4a53;color:#a78bff}
+.influencer-media img,.influencer-media video{display:block;width:100%;max-width:360px;aspect-ratio:1/1;object-fit:cover;border:1px solid var(--line,#1f1f23);border-radius:6px;background:#000}
+.influencer-media video{aspect-ratio:auto;max-height:360px}
+.influencer-form{display:grid;gap:12px;padding-top:var(--space-4,16px);border-top:1px solid var(--line,#1f1f23)}
+.influencer-form h4{margin:0;font-size:14px;font-weight:650}
+.influencer-form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px 16px}
+.influencer-form label{display:block;font-size:12px;color:var(--muted,#9a9aa3)}
+.influencer-form select,.influencer-form input[type=number]{width:100%;margin-top:6px;min-height:40px;padding:9px 12px;border-radius:6px;border:1px solid var(--line,#1f1f23);background:var(--panel,#0b0b0c);color:var(--text,#f4f4f5);font:inherit;font-size:13px}
+.influencer-check{display:flex!important;align-items:center;gap:10px;align-self:end;min-height:40px;font-size:13px!important;color:var(--text,#f4f4f5)!important;cursor:pointer}
+.influencer-check input{width:18px;height:18px;margin:0;accent-color:var(--accent,#8b5cff)}
+.influencer-actions{align-items:center}
+.influencer-status:empty{display:none}
+.influencer-status[data-bad=true]{color:#a78bff}
+.influencer-rules summary{cursor:pointer;font-size:13px;color:var(--muted,#9a9aa3)}
+.influencer-rules ul{display:grid;gap:6px;margin:10px 0 0;padding-left:18px;font-size:12.5px;line-height:1.55;color:var(--muted,#9a9aa3)}
+@keyframes influencer-spin{to{transform:rotate(360deg)}}
+@media(max-width:800px){.influencer-facts{grid-template-columns:repeat(2,minmax(0,1fr))}.influencer-head{grid-template-columns:60px minmax(0,1fr)}.influencer-avatar{width:60px;height:60px;border-radius:17px}}
+@media(prefers-reduced-motion:reduce){.influencer-avatar[data-state=generating]::after{animation:none}}

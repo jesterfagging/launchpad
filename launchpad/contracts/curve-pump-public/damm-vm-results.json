@@ -1,0 +1,872 @@
+{
+  "realFundsUsed": false,
+  "broadcast": false,
+  "signatureVerification": "all user/relayer transactions verified; configuration admin fixture only uses signer flag without private key",
+  "packetSizeScope": "harnessTransactionBytes reports offline legacy harness transactions, not the separate full production v0/ALT launch packet; production packet limits are verified in JS client tests",
+  "maximumRecordedComputeUnits": 400528,
+  "controllerSha256": "5b45c7f3e114f5e8ccd73aaf12f500fb654915e7ab8656d169d54a3ad6f2d252",
+  "fixtureManifest": {
+    "capturedAt": "2026-10-01T03:32:48.946935+00:00",
+    "rpc": "https://api.mainnet-beta.solana.com",
+    "genesisHash": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+    "commitment": "finalized",
+    "programAccountSlot": 452167152,
+    "programDataSlot": 452167164,
+    "realFundsUsed": false,
+    "broadcast": false,
+    "programs": [
+      {
+        "name": "damm-v2",
+        "programId": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+        "programData": "AUh8bm2XsMfex3KjYGcM3G4uBqUNSDw6HEhWaWMYnyPH",
+        "lastDeployedSlot": 445230614,
+        "file": "damm-v2.so",
+        "bytes": 2174352,
+        "sha256": "4d5b920baebc090f89b2e8796a3452ed067c9667a143058c96a312f2c1e6848b"
+      },
+      {
+        "name": "pump-swap",
+        "programId": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+        "programData": "6naEzKeUuFh1Jeeu51NXQgr5qkXgXtc9WKNct4xynVJc",
+        "lastDeployedSlot": 446462733,
+        "file": "pump-swap.so",
+        "bytes": 10485715,
+        "sha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5"
+      },
+      {
+        "name": "pump-fees",
+        "programId": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+        "programData": "75Uu23mqWBb8LM8vDppqC1mQAnCcBuLXhVaDezVMQLRw",
+        "lastDeployedSlot": 446465969,
+        "file": "pump-fees.so",
+        "bytes": 948944,
+        "sha256": "4a6e66093305f8a7cb9ca6e4f47c7de726b590dd2be0d5413ce408feba27c8a5"
+      }
+    ],
+    "pumpGlobalSha256": "0fecfb33656e0f0f26f2f5dd80fa6c984f0a175dc58a225841381f9160f3ecde",
+    "pumpTradingConfigSha256": "1c08745171dc748eff782083cadb526be02634c92abf50f1e8ac38df2fd49c54"
+  },
+  "testCount": 155,
+  "tests": [
+    {
+      "name": "actual DAMM initializes through controller CPI",
+      "passed": true,
+      "units": 397933,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "fixed billion-token supply splits exactly",
+      "passed": true
+    },
+    {
+      "name": "initial active quote is exactly zero",
+      "passed": true
+    },
+    {
+      "name": "DAMM fee is fixed 125 bps and quote-only",
+      "passed": true
+    },
+    {
+      "name": "PDA keeps reserve and DAMM owns sale allocation",
+      "passed": true
+    },
+    {
+      "name": "base mint and freeze authorities absent after exact issuance",
+      "passed": true
+    },
+    {
+      "name": "controller owns DAMM position NFT",
+      "passed": true
+    },
+    {
+      "name": "unrelated wallet buys through actual DAMM",
+      "passed": true
+    },
+    {
+      "name": "native DAMM buy delivers base tokens",
+      "passed": true
+    },
+    {
+      "name": "unrelated wallet sells through actual DAMM",
+      "passed": true
+    },
+    {
+      "name": "premature graduation rejects without reserve mutation",
+      "passed": true,
+      "units": 62421,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "protocol claims quote fees through actual DAMM",
+      "passed": true,
+      "units": 83976,
+      "harnessTransactionBytes": 839
+    },
+    {
+      "name": "fee claim leaves all liquidity and principal unchanged",
+      "passed": true
+    },
+    {
+      "name": "fee claim cannot pay an arbitrary quote account",
+      "passed": true,
+      "units": 43488,
+      "harnessTransactionBytes": 839
+    },
+    {
+      "name": "foreign pool rejected atomically",
+      "passed": true,
+      "units": 34296,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "foreign NFT custody rejected atomically",
+      "passed": true,
+      "units": 49536,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "quote token program substitution rejected atomically",
+      "passed": true,
+      "units": 13713,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "initialization replay cannot mint twice",
+      "passed": true,
+      "units": 183490,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "repeated native DAMM buy 1 executes",
+      "passed": true,
+      "units": 14210,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 1 executes",
+      "passed": true,
+      "units": 13639,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 2 executes",
+      "passed": true,
+      "units": 14223,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 2 executes",
+      "passed": true,
+      "units": 13639,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 3 executes",
+      "passed": true,
+      "units": 14213,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 3 executes",
+      "passed": true,
+      "units": 13638,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 4 executes",
+      "passed": true,
+      "units": 14224,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 4 executes",
+      "passed": true,
+      "units": 13636,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 5 executes",
+      "passed": true,
+      "units": 14224,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 5 executes",
+      "passed": true,
+      "units": 13637,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 6 executes",
+      "passed": true,
+      "units": 14214,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 6 executes",
+      "passed": true,
+      "units": 13642,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 7 executes",
+      "passed": true,
+      "units": 14215,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 7 executes",
+      "passed": true,
+      "units": 13646,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 8 executes",
+      "passed": true,
+      "units": 14223,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 8 executes",
+      "passed": true,
+      "units": 13644,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 9 executes",
+      "passed": true,
+      "units": 14226,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 9 executes",
+      "passed": true,
+      "units": 13644,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 10 executes",
+      "passed": true,
+      "units": 14205,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 10 executes",
+      "passed": true,
+      "units": 13634,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 11 executes",
+      "passed": true,
+      "units": 14206,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 11 executes",
+      "passed": true,
+      "units": 13636,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM buy 12 executes",
+      "passed": true,
+      "units": 14211,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "repeated native DAMM sell 12 executes",
+      "passed": true,
+      "units": 13651,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "final partial-fill buy reaches finite range endpoint after repeated buys and sells",
+      "passed": true,
+      "units": 15530,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "terminal DAMM sqrt price exactly equals upper bound",
+      "passed": true
+    },
+    {
+      "name": "Pump failure rolls back successful DAMM withdrawal and all reserves",
+      "passed": true,
+      "units": 204531,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "rollback test reaches both actual venue CPIs",
+      "passed": true,
+      "units": 204531,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "actual DAMM withdraw and actual Pump create-pool complete atomically",
+      "passed": true,
+      "units": 249499,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "Pump tracked custody reserves equal migrated principal",
+      "passed": true
+    },
+    {
+      "name": "terminal rounding preserves reserved base and quote budget",
+      "passed": true
+    },
+    {
+      "name": "every received Pump LP token is burned",
+      "passed": true
+    },
+    {
+      "name": "burn amount equals full Pump LP issuance minus protocol minimum",
+      "passed": true
+    },
+    {
+      "name": "graduation retry is idempotent",
+      "passed": true,
+      "units": 34222,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "remaining DAMM protocol fees remain claimable after LP migration",
+      "passed": true,
+      "units": 73759,
+      "harnessTransactionBytes": 839
+    },
+    {
+      "name": "Classic SPL quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 163532,
+      "harnessTransactionBytes": 983
+    },
+    {
+      "name": "Classic SPL quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Classic SPL quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 113951,
+      "harnessTransactionBytes": 916
+    },
+    {
+      "name": "Classic SPL quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Classic SPL quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "unapproved relayer cannot initialize",
+      "passed": true,
+      "units": 9703,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "legacy state namespace cannot be substituted",
+      "passed": true,
+      "units": 156017,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "noncanonical position cannot be substituted",
+      "passed": true,
+      "units": 171222,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "signed geometry cannot change the fixed supply economics",
+      "passed": true,
+      "units": 143858,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "configuration rotation succeeds",
+      "passed": true
+    },
+    {
+      "name": "stale relayer configuration rejects saved initialization",
+      "passed": true,
+      "units": 9703,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "fresh authorized configuration permits unchanged safe retry",
+      "passed": true
+    },
+    {
+      "name": "changed quote decimals reject before custody creation",
+      "passed": true,
+      "units": 9966,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "quote mint owner must match the fixed token program",
+      "passed": true,
+      "units": 9941,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "relayer address without relayer signature is insufficient",
+      "passed": true,
+      "units": 9701,
+      "harnessTransactionBytes": 1093
+    },
+    {
+      "name": "unbounded quote attestation expiry rejects",
+      "passed": true,
+      "units": 9900,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "expired quote attestation cannot initialize at a stale price",
+      "passed": true,
+      "units": 9896,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "active Token-2022 transfer fee cannot enter an exact-reserve launch",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "zero transfer-fee configuration is rejected because PumpSwap quote compatibility is unproven or unsupported",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "permanent delegate is rejected because PumpSwap quote compatibility is unproven or unsupported",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "interest-bearing configuration is rejected because PumpSwap quote compatibility is unproven or unsupported",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "scaled UI configuration is rejected because PumpSwap quote compatibility is unproven or unsupported",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "transfer hook is rejected because PumpSwap quote compatibility is unproven or unsupported",
+      "passed": true,
+      "units": 10007,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "Token-2022 quote initializes through actual DAMM",
+      "passed": true,
+      "units": 397277,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "Token-2022 quote starts with zero active quote and the mandatory one-unit vault seed",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 quote transfers exactly the mandatory seed without retaining quote principal",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 quote reaches range endpoint with partial fill",
+      "passed": true,
+      "units": 17358,
+      "harnessTransactionBytes": 600
+    },
+    {
+      "name": "Token-2022 quote migrates through both venues and burns LP",
+      "passed": true,
+      "units": 269908,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "Token-2022 quote leaves no redeemable Pump LP",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 155473,
+      "harnessTransactionBytes": 1015
+    },
+    {
+      "name": "Token-2022 quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 103254,
+      "harnessTransactionBytes": 948
+    },
+    {
+      "name": "Token-2022 quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote initializes through actual DAMM",
+      "passed": true,
+      "units": 383747,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "native SOL quote starts with zero active quote and the mandatory one-unit vault seed",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote transfers exactly the mandatory seed without retaining quote principal",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote reaches range endpoint with partial fill",
+      "passed": true,
+      "units": 15526,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "native SOL quote migrates through both venues and burns LP",
+      "passed": true,
+      "units": 241856,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "native SOL quote leaves no redeemable Pump LP",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 135618,
+      "harnessTransactionBytes": 1149
+    },
+    {
+      "name": "native SOL quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote buy closes its temporary SOL account and preserves existing wrapped SOL",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 107158,
+      "harnessTransactionBytes": 1082
+    },
+    {
+      "name": "native SOL quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote sell unwraps proceeds without touching existing wrapped SOL",
+      "passed": true
+    },
+    {
+      "name": "native SOL quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote initializes through actual DAMM",
+      "passed": true,
+      "units": 399423,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote reaches the exact endpoint",
+      "passed": true,
+      "units": 17932,
+      "harnessTransactionBytes": 600
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote migrates through actual PumpSwap and burns LP",
+      "passed": true,
+      "units": 272022,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 167337,
+      "harnessTransactionBytes": 1015
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 126290,
+      "harnessTransactionBytes": 948
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote initializes through actual DAMM",
+      "passed": true,
+      "units": 400528,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote reaches the exact endpoint",
+      "passed": true,
+      "units": 18257,
+      "harnessTransactionBytes": 600
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote migrates through actual PumpSwap and burns LP",
+      "passed": true,
+      "units": 272889,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 159829,
+      "harnessTransactionBytes": 1015
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 127501,
+      "harnessTransactionBytes": 948
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 metadata-pointer and metadata quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "zero-decimal quote validates identical Rust and SDK launch geometry",
+      "passed": true,
+      "units": 398374,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "zero-decimal quote reaches the exact endpoint",
+      "passed": true,
+      "units": 15488,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "zero-decimal quote withdraws exact principal and completes PumpSwap migration",
+      "passed": true,
+      "units": 236189,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "zero-decimal quote preserves exact fixed principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "two-decimal fifty-dollar quote validates identical Rust and SDK launch geometry",
+      "passed": true,
+      "units": 398074,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "two-decimal fifty-dollar quote reaches the exact endpoint",
+      "passed": true,
+      "units": 15505,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "two-decimal fifty-dollar quote withdraws exact principal and completes PumpSwap migration",
+      "passed": true,
+      "units": 235931,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "two-decimal fifty-dollar quote preserves exact fixed principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "eight-decimal high-price quote validates identical Rust and SDK launch geometry",
+      "passed": true,
+      "units": 397829,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "eight-decimal high-price quote reaches the exact endpoint",
+      "passed": true,
+      "units": 15488,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "eight-decimal high-price quote withdraws exact principal and completes PumpSwap migration",
+      "passed": true,
+      "units": 247306,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "eight-decimal high-price quote preserves exact fixed principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "eighteen-decimal quote validates identical Rust and SDK launch geometry",
+      "passed": true,
+      "units": 391758,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "eighteen-decimal quote reaches the exact endpoint",
+      "passed": true,
+      "units": 16119,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "eighteen-decimal quote withdraws exact principal and completes PumpSwap migration",
+      "passed": true,
+      "units": 257497,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "eighteen-decimal quote preserves exact fixed principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "micro-dollar quote validates identical Rust and SDK launch geometry",
+      "passed": true,
+      "units": 393801,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "micro-dollar quote reaches the exact endpoint",
+      "passed": true,
+      "units": 16119,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "micro-dollar quote withdraws exact principal and completes PumpSwap migration",
+      "passed": true,
+      "units": 257497,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "micro-dollar quote preserves exact fixed principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "donation fixture acquires base through native DAMM",
+      "passed": true
+    },
+    {
+      "name": "unrelated holder can donate assets without becoming a controller authority",
+      "passed": true
+    },
+    {
+      "name": "unrelated signer cannot transfer custody reserves",
+      "passed": true,
+      "units": 349,
+      "harnessTransactionBytes": 285
+    },
+    {
+      "name": "donations cannot prevent reaching the endpoint",
+      "passed": true,
+      "units": 15526,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "new-launch switch can be disabled after existing launch trades",
+      "passed": true
+    },
+    {
+      "name": "unrelated keeper can migrate an existing launch after new-launch disable",
+      "passed": true,
+      "units": 249499,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "migration excludes unsolicited donations from fixed pool principal",
+      "passed": true
+    },
+    {
+      "name": "donations cannot change immutable migration economics",
+      "passed": true
+    },
+    {
+      "name": "pre-funded destination recovery fixture reaches endpoint",
+      "passed": true
+    },
+    {
+      "name": "unrelated holder pre-funds a candidate PumpSwap vault",
+      "passed": true
+    },
+    {
+      "name": "pre-funded destination rejects without withdrawing launch liquidity",
+      "passed": true,
+      "units": 102093,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "fresh PumpSwap index recovers from a pre-funded destination atomically",
+      "passed": true,
+      "units": 255499,
+      "harnessTransactionBytes": 1105
+    },
+    {
+      "name": "issuer freezes a seeded quote account using the real SPL instruction",
+      "passed": true
+    },
+    {
+      "name": "frozen quote source rejects without mutating mint issuance or custody",
+      "passed": true,
+      "units": 233791,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "issuer can thaw the same quote source",
+      "passed": true
+    },
+    {
+      "name": "same initialization safely retries after the quote source is restored",
+      "passed": true,
+      "units": 382046,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "late initialization failure rolls back mint issuance, revoked authority, custody and DAMM account creation",
+      "passed": true,
+      "units": 300000,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "late initialization rollback exercises the actual DAMM CPI",
+      "passed": true
+    },
+    {
+      "name": "same initialization safely retries after a compute-budget failure",
+      "passed": true,
+      "units": 397933,
+      "harnessTransactionBytes": 1157
+    }
+  ]
+}

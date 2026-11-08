@@ -1,0 +1,26 @@
+[package]
+name = "curve-pump-test"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "lib"]
+
+[features]
+default = []
+# DETERMINISTIC PUBLIC TEST KEY. NEVER DEPLOY THE ENABLED BUILD.
+local-test = []
+# Requires LAUNCHPAD_TEST_OPERATOR at compile time. No owner binary is bundled.
+owner-test = []
+
+[dependencies]
+solana-program = "=2.3.0"
+
+[build-dependencies]
+solana-pubkey = { version = "=2.4.0", features = ["curve25519"] }
+
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1

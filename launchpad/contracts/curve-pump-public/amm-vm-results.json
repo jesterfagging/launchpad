@@ -1,0 +1,27 @@
+{
+  "realFundsUsed": false,
+  "pumpSha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5",
+  "feeProgramSha256": "4a6e66093305f8a7cb9ca6e4f47c7de726b590dd2be0d5413ce408feba27c8a5",
+  "tests": [
+    {
+      "side": "buy",
+      "passed": true,
+      "computeUnits": 131576,
+      "transactionBytes": 1151,
+      "nativeDeltaLamports": -107968840,
+      "baseDeltaAtoms": 398291755463,
+      "existingWsolUnchanged": true,
+      "temporaryWsolClosed": true
+    },
+    {
+      "side": "sell",
+      "passed": true,
+      "computeUnits": 123928,
+      "transactionBytes": 1084,
+      "nativeDeltaLamports": -5875191,
+      "baseDeltaAtoms": -1000000000,
+      "existingWsolUnchanged": true,
+      "temporaryWsolClosed": true
+    }
+  ]
+}

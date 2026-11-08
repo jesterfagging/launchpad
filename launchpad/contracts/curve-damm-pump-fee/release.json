@@ -1,0 +1,61 @@
+{
+  "version": "damm-pump-20k-50k-fee-v1",
+  "administrator": "7NwWHXzj8oWDV88gurSYjVT77J81qpLPN6xYkUSwfTgS",
+  "treasury": "HN22QWXBPb7dfmPhTjCf14jDco4dYzwDKeehWDXcnHEF",
+  "programId": "5F4tt5fQwSR9ymzx5KiYL4Q2Ln8FJxbMfbXD1HhMgUrw",
+  "programData": "GxZuLjDyHZhDG7vft5uh6UMJfF7pG4a8PZQtEZYcKwTo",
+  "programSeed": "launchpad-program-3",
+  "buffer": "78bmNEEvSsAHCgSNmsVNYM3JpAWLw1y6K4qrxabBCDw2",
+  "bufferSeed": "launchpad-buffer-3",
+  "binaryPath": "private/damm-pump-fee/curve_damm_pump_fee.so",
+  "binaryBytes": 229376,
+  "binarySha256": "0e0337bdc95d5a77175f317766ccee9ce5a4f35a0e2ec594239266f012a729dd",
+  "publicControllerSha256Unchanged": "5b45c7f3e114f5e8ccd73aaf12f500fb654915e7ab8656d169d54a3ad6f2d252",
+  "onchainPolicy": {
+    "startingFdvUsd": "20000",
+    "graduationFdvUsd": "50000",
+    "supplyRaw": "1000000000000000",
+    "baseDecimals": 6,
+    "adminSignerRequiredForInitialize": false,
+    "legacyOpcodesDisabled": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "permissionlessGraduation": true,
+    "allReceivedPumpLpBurned": true,
+    "graduationFeeNumerator": "322369073",
+    "graduationFeeDenominator": "1000000000",
+    "graduationFeePaidRawStateOffset": 440,
+    "grossExpectedQuoteStateOffset": 336,
+    "netMigratedQuoteStateOffset": 408,
+    "migrationAccountCount": 31,
+    "treasuryAccountIndex": 29,
+    "treasuryQuoteAtaIndex": 30
+  },
+  "checks": {
+    "rustTests": 6,
+    "sdkMathVectors": 6,
+    "nodePolicyTests": 4,
+    "liteSvmExecutableChecks": 84,
+    "maxRecordedVmComputeUnits": 392016,
+    "broadcast": false
+  },
+  "sourceSha256": {
+    "Cargo.toml": "4a696af1c1b75f04db8a2e2e53bbfeeb621c21fd48b47b720cb9ed960c2a022b",
+    "Cargo.lock": "c1d197ec05d6c8cbee023d02a1742541a52d7fdb6cd4fb30db6d02d4c9ef2a88",
+    "build-fee.sh": "dc99000402d893a4f795739485194504816376386c31bf42e3902fe4c7229b1e",
+    "src/damm.rs": "ef01b62d075053b290d750ef0122e6b222ac7f29f8c8e739bb9d8d10525c320f",
+    "src/damm_math.rs": "a5ea5fd7d4817f2a95b1e1b677c57c0d8065b49166739b08cdc26be2a0f756db",
+    "src/lib.rs": "9a5a9ac21fe5ed7a4ce680dcfa1dd94285bc8f7fd11cc34bf04bad753535accf",
+    "src/math_test_vectors.rs": "bbb1d79912648bde40391f70a9f0ec916c17dd4844ce404652ab35bc47754968"
+  },
+  "publicSourceOriginSha256": {
+    "src/damm.rs": "f9730e46deaa44cf345daf4fbd37751a169c7a6740fe5302da362c7d53bbd4b9",
+    "src/damm_math.rs": "66f94b4f24fdd549203a0e158f5a7595de09c4f76513dac7cff986b7b97705ce",
+    "src/lib.rs": "28fe3c09f77deca216d644c10637d072ba2e9ec85f5c456ff7c89df566c43813"
+  },
+  "policySha256": "fc2367e42016354384a4ff5c28a7332e0d89ef1da9ef9863569d447a8c6e5865"
+}

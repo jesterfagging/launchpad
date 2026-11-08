@@ -1,0 +1,97 @@
+/* Transfer hook rules (v71.28): the shared "Rules" card, the creator's allowlist manager and the read-only blocklist
+   viewer (hook-ui.mjs), used on the coin page and on My Tokens. Tokens come from curve-theme.css;
+   the host page sets the card surface, this file lays out what is inside it. The hook accent is orchid (#a78bff):
+   between the legacy Buyback lavender and the Gotchi pink on Explore, so the Hooked chip reads as its own thing; the
+   "Trades anywhere" route is a quiet teal. Motion is transform/opacity only and stops under reduced motion. */
+.hook-rules,.hook-allowlist,.hook-blocklist,.hook-chip{--hook:#a78bff;--hook-text:#e4e4e7;--hook-line:#a78bff55;--hook-fill:#a78bff1a;--route-any:#2ee59d;--route-any-text:#8ff0c9}
+.hook-rules[hidden],.hook-allowlist[hidden],.hook-blocklist[hidden],.hook-rules-manager[hidden],.hook-rules-blocklist[hidden],.hook-allowlist-wallets[hidden],.hook-allowlist-summary[hidden],.hook-allowlist-count[hidden],.hook-allowlist-source[hidden],.hook-allowlist-operation[hidden],.hook-blocklist-toggle[hidden],.hook-blocklist-retry[hidden]{display:none}
+.hook-rules{display:grid;gap:var(--space-4,16px);min-width:0}
+.hook-rules-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--space-3,12px);min-height:28px}
+.hook-rules-heading h2{margin:0;font-size:var(--text-card,17px);line-height:1.3;font-weight:650;letter-spacing:-.01em}
+.hook-rules-pills{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px;min-width:0}
+/* State pill: a breathing dot while the hook runs on the curve, a quiet grey once the coin has graduated. */
+.hook-pill{display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 11px;white-space:nowrap}
+.hook-pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor}
+.hook-pill.is-active{color:var(--hook-text);border-color:var(--hook-line);background:var(--hook-fill)}
+.hook-pill.is-active::before{animation:hook-breathe 2.4s ease-in-out infinite}
+.hook-pill.is-ended{color:#9a9aa3;border-color:var(--line,#1f1f23);background:#ffffff0a}
+.hook-pill.is-ended::before{opacity:.6;box-shadow:none}
+/* Route pill: where the coin trades before graduation ("Trades anywhere" teal, "Launchpad route only" orchid). */
+.hook-route-pill{height:26px;padding:0 10px;white-space:nowrap}
+.hook-route-pill.is-any{color:var(--route-any-text);border-color:#2ee59d4d;background:#2ee59d12}
+.hook-route-pill.is-curve{color:var(--hook-text);border-color:var(--hook-line);background:var(--hook-fill)}
+/* App only (v71.35: FOMO-only, Pump App-only): amber, the coin trades only in that app until graduation. */
+.hook-route-pill.is-app,.hook-rule-chip.is-app{color:#c9b8ff;border-color:#ffb02066;background:#ffb0201a}
+.hook-rule[data-route=app]{border-left-color:#ffb020}
+.hook-rules[data-hook-state=ended] .hook-route-pill{color:#9a9aa3;border-color:var(--line,#1f1f23);background:#ffffff0a}
+/* Rule rows: the name (with a "Launchpad route" chip on the rules that need it) over the sentence with the creator's numbers. */
+.hook-rule-list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.hook-rule{display:grid;gap:4px;min-width:0;padding:12px 14px 12px 18px;border:1px solid var(--line,#1f1f23);border-left:3px solid var(--route-any);border-radius:4px var(--radius-inset,12px) var(--radius-inset,12px) 4px;background:var(--inset,#0b0b0c)}
+.hook-rule[data-route=curve]{border-left-color:var(--hook)}
+.hook-rules[data-hook-state=ended] .hook-rule{border-left-color:#4a4a53}
+.hook-rule>strong{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;font-weight:650;line-height:1.35;color:var(--text,#f4f4f5)}
+.hook-rule-chip{height:20px;padding:0 7px;font-size:11px;font-weight:600;color:var(--hook-text);border-color:var(--hook-line);background:var(--hook-fill)}
+.hook-rule-text{font-size:13.5px;line-height:1.5;color:var(--muted,#9a9aa3);overflow-wrap:anywhere}
+/* Address rows: the gate token and the tithe recipient, with a Solscan link and a copy button. */
+.hook-gate{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:0;font-size:13px;color:var(--muted,#9a9aa3)}
+.hook-gate code{padding:3px 8px;border:1px solid var(--line,#1f1f23);border-radius:4px;background:var(--inset,#0b0b0c);color:var(--text,#f4f4f5);font-size:12.5px;font-variant-numeric:tabular-nums}
+.hook-gate-link{display:inline-grid;place-items:center;min-width:28px;min-height:28px;border-radius:5px;color:var(--muted,#9a9aa3);text-decoration:none}
+.hook-gate-link:hover,.hook-gate-copy:hover{color:var(--text,#f4f4f5)}
+.hook-gate-copy{min-height:28px;padding:2px 6px;font-size:13px}
+.hook-fine{margin:0;font-size:12.5px;line-height:1.55;color:#7a7a85}
+.hook-trade-lock{padding:10px 12px;border:1px solid #ffb0204d;border-radius:var(--radius-inset,12px);background:#ffb02012;color:#c9b8ff}
+/* Allowlist manager and blocklist viewer: the current wallets, a textarea for new ones (allowlist only), a summary and
+   the prepare button, then the operation (facts, status and approval) from meteora-ui.mjs. */
+.hook-allowlist,.hook-blocklist{display:grid;gap:12px;min-width:0;padding-top:var(--space-4,16px);border-top:1px solid var(--line,#1f1f23)}
+.hook-allowlist-head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px}
+.hook-allowlist-title{margin:0;font-size:15px;font-weight:650;line-height:1.4;color:var(--text,#f4f4f5)}
+.hook-allowlist-count{height:22px;padding:0 8px;font-size:11.5px;font-variant-numeric:tabular-nums}
+.hook-allowlist .help,.hook-allowlist-intro,.hook-blocklist .help{margin:0;font-size:13px;line-height:1.55;color:var(--muted,#9a9aa3)}
+.hook-allowlist-status:empty{display:none}
+.hook-allowlist-status.negative{color:#a78bff}
+.hook-allowlist-current{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.hook-allowlist-item{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;padding:4px 6px 4px 12px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-inset,12px);background:var(--inset,#0b0b0c);transition:opacity var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease}
+.hook-allowlist-item code{font-size:13px;font-variant-numeric:tabular-nums;color:var(--text,#f4f4f5)}
+.hook-allowlist-item.is-removed{border-style:dashed;border-color:#7c4dff66;opacity:.75}
+.hook-allowlist-item.is-removed code{text-decoration:line-through;color:var(--muted,#9a9aa3)}
+.hook-allowlist-remove{min-height:32px;padding:0 10px;font-size:13px}
+.hook-allowlist-source{margin:-2px 0 0;font-size:12px;line-height:1.5;color:#7a7a85}
+.hook-allowlist-empty{padding:12px 14px;border:1px dashed var(--line-strong,#3a3a42);border-radius:var(--radius-inset,12px);font-size:13px;line-height:1.5;color:var(--muted,#9a9aa3)}
+.hook-allowlist-add{display:grid;gap:6px;margin:0;font-size:13px;font-weight:500;color:#c9c9cf}
+.hook-allowlist-add textarea{width:100%;min-height:88px;margin:0;padding:11px 14px;border-radius:var(--radius-control,12px);font-family:var(--mono,ui-monospace,monospace);font-size:13px;line-height:1.5;resize:vertical}
+.hook-allowlist-summary{margin:0;font-size:13px;color:#a78bff;font-variant-numeric:tabular-nums}
+.hook-allowlist-summary.negative{color:#a78bff}
+.hook-allowlist-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.hook-allowlist-actions>.primary{min-width:200px}
+.hook-allowlist-wallets{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.hook-allowlist-wallets>.help{flex-basis:100%}
+.hook-allowlist-operation .meteora-operation-facts{margin:0;padding:12px 0 0;border-top:1px solid var(--line,#1f1f23)}
+.hook-allowlist-operation .meteora-operation-status{margin:8px 0 0;font-size:13px}
+.hook-allowlist-operation .meteora-operation-actions{margin-top:12px}
+.hook-allowlist-operation .meteora-operation-actions>.primary{width:auto;min-width:200px}
+.hook-allowlist[aria-busy=true] .hook-allowlist-actions>.primary{opacity:.7}
+/* Blocklist viewer: a sealed list, so plain rows (no buttons), a compact grid on wide cards and a Show-all toggle. */
+.hook-blocklist-current{grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr))}
+.hook-blocklist-current>.hook-allowlist-empty{grid-column:1/-1}
+.hook-blocklist-item{min-height:36px;padding:4px 12px;border-left:3px solid #7c4dff66;border-radius:4px var(--radius-inset,12px) var(--radius-inset,12px) 4px}
+.hook-blocklist-actions{min-height:0}
+.hook-blocklist-toggle,.hook-blocklist-retry{min-height:32px;padding:0 10px;font-size:13px}
+.hook-blocklist[aria-busy=true] .hook-blocklist-current{opacity:.7}
+/* The small "Hooked" chip for grids and cards; pages may restyle it with their own badge classes. A Launchpad-route coin
+   carries a smaller marker inside the chip. */
+.hook-chip{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border:1px solid var(--hook-line);border-radius:999px;background:var(--hook-fill);color:var(--hook-text);font-size:12px;font-weight:600;white-space:nowrap}
+.hook-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;box-shadow:0 0 6px currentColor}
+.hook-chip-route{display:inline-flex;align-items:center;height:16px;padding:0 6px;margin-left:2px;border-radius:999px;background:#a78bff33;color:#f4f4f5;font-size:10.5px;font-weight:650;letter-spacing:.02em;line-height:1}
+@keyframes hook-breathe{50%{opacity:.4;transform:scale(.75)}}
+@media(max-width:640px){
+  .hook-allowlist-actions>.primary{flex:1 1 100%;width:auto}
+  .hook-allowlist-operation .meteora-operation-actions>.primary{flex:1 1 100%;width:auto;min-width:0}
+  .hook-allowlist-item{flex-wrap:wrap}
+  .hook-allowlist-remove{min-height:44px}
+  .hook-blocklist-current{grid-template-columns:minmax(0,1fr)}
+  .hook-blocklist-toggle,.hook-blocklist-retry{min-height:44px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hook-pill.is-active::before{animation:none}
+  .hook-allowlist-item{transition:none}
+}

@@ -1,0 +1,35 @@
+/* $LAUNCHPAD price badge and the Gotchi / Agents header entries. Their size and responsive placement live
+   with the rest of the header in curve-theme.css (v71.25 shell); this file keeps the badge's own look.
+   The badge has a fixed width on desktop so incoming prices never move the header. */
+body[data-navigation=top] .app-header .curve-price-badge{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 164px;width:164px;height:36px;padding:0 10px;border:1px solid var(--line-strong,#3a3a42);border-radius:6px;background:var(--panel2,#121214);color:var(--text,#ddd3ff);font:500 12px var(--sans,Arial,sans-serif);text-decoration:none;white-space:nowrap;box-sizing:border-box}
+body[data-navigation=top] .app-header .curve-price-badge:focus-visible{outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+.curve-price-badge>img{display:block;flex:0 0 18px;width:18px;height:18px;object-fit:contain;border-radius:50%}
+.curve-price-badge .curve-price-symbol{flex:0 0 auto;font-weight:600;letter-spacing:-.15px}
+.curve-price-badge .curve-price-value{display:block;flex:1;min-width:0;text-align:right;font-variant-numeric:tabular-nums;color:var(--accent,#8b5cff);letter-spacing:-.2px}
+.curve-price-badge[data-price-state=unavailable] .curve-price-value{color:var(--muted,#9a9aa3)}
+
+/* The badge lifts on hover and shows a breathing live dot while its price is current. */
+@keyframes curve-price-live{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+body[data-navigation=top] .app-header .curve-price-badge{transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease}
+body[data-navigation=top] .app-header .curve-price-badge:hover{transform:translateY(-1px);border-color:#4a4a53;background:#18181b}
+.curve-price-badge>img{transition:transform var(--motion-slow,560ms) var(--motion-spring,ease)}
+.curve-price-badge:hover>img{transform:rotate(-14deg) scale(1.1)}
+.curve-price-badge[data-price-state=current]::after{content:"";position:absolute;top:4px;right:4px;width:5px;height:5px;border-radius:50%;background:#2ee59d;box-shadow:0 0 6px #2ee59d;animation:curve-price-live 2.4s ease-in-out infinite}
+
+/* Gotchi Mode, then AI Agents: first in the header's action group, in the same order at every width. */
+body[data-navigation=top] .app-header .gotchi-nav,body[data-navigation=top] .app-header .agents-nav{display:inline-flex;align-items:center;justify-content:center;gap:6px;flex:0 0 auto;height:36px;padding:0 12px;border:1px solid var(--line-strong,#3a3a42);border-radius:6px;background:var(--panel2,#121214);color:var(--text,#ddd3ff);font:600 12.5px var(--sans,Arial,sans-serif);text-decoration:none;white-space:nowrap;box-sizing:border-box;transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease}
+body[data-navigation=top] .app-header .gotchi-nav>svg,body[data-navigation=top] .app-header .agents-nav>svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+body[data-navigation=top] .app-header .gotchi-nav:hover,body[data-navigation=top] .app-header .agents-nav:hover{transform:translateY(-1px)}
+body[data-navigation=top] .app-header .gotchi-nav:focus-visible,body[data-navigation=top] .app-header .agents-nav:focus-visible{outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.curve-price-badge[data-price-state=current]::after{animation:none}body[data-navigation=top] .app-header :is(.curve-price-badge,.gotchi-nav,.agents-nav),.curve-price-badge>img{transition:none}body[data-navigation=top] .app-header :is(.curve-price-badge,.gotchi-nav,.agents-nav):hover,.curve-price-badge:hover>img{transform:none}}
+/* The header's chain toggle (v71.42): Solana | Robinhood with the chains' marks, after the brand; the pressed one is the chain the site shows. */
+body[data-navigation=top] .app-header .site-chain-toggle{display:inline-flex;align-items:center;flex:0 0 auto;height:36px;padding:3px;border:1px solid var(--line-strong,#3a3a42);border-radius:6px;background:var(--panel2,#121214);box-sizing:border-box}
+body[data-navigation=top] .app-header .site-chain-toggle>button{display:inline-flex;align-items:center;gap:6px;height:28px;margin:0;padding:0 10px;border:0;border-radius:4px;background:transparent;color:var(--muted,#9a9aa3);font:600 12.5px var(--sans,Arial,sans-serif);cursor:pointer;white-space:nowrap;transition:background-color var(--motion-mid,260ms) ease,color var(--motion-mid,260ms) ease}
+body[data-navigation=top] .app-header .site-chain-toggle>button>img{width:18px;height:18px;border-radius:50%;opacity:.75;transition:opacity var(--motion-mid,260ms) ease}
+body[data-navigation=top] .app-header .site-chain-toggle>button:hover{color:var(--text,#ddd3ff)}
+body[data-navigation=top] .app-header .site-chain-toggle>button[aria-pressed=true]{background:var(--sel-bg,#1f1f23);color:var(--text,#ddd3ff);box-shadow:inset 0 0 0 1px var(--sel-line,#3a3a42)}
+body[data-navigation=top] .app-header .site-chain-toggle>button[aria-pressed=true]>img{opacity:1}
+body[data-navigation=top] .app-header .site-chain-toggle>button:focus-visible{outline:2px solid var(--sunrise-gold,#a78bff);outline-offset:1px}
+/* Gotchi and AI Agents exist on Solana only: their header entries step aside while the site shows Robinhood. */
+body.relay-terminal[data-navigation=top][data-chain=robinhood] .app-header :is(.gotchi-nav,.agents-nav),body[data-chain=robinhood] .app-header :is(.gotchi-nav,.agents-nav){display:none}
+@media(max-width:900px){body[data-navigation=top] .app-header .site-chain-toggle>button>span{display:none}body[data-navigation=top] .app-header .site-chain-toggle>button{padding:0 7px}}

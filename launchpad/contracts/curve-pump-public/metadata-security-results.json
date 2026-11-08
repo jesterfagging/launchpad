@@ -1,0 +1,55 @@
+{
+  "localOnly": true,
+  "realFundsUsed": false,
+  "testCount": 7,
+  "tests": [
+    {
+      "name": "immutable metadata name, symbol and URI survive atomic initialization",
+      "passed": true
+    },
+    {
+      "name": "mint authority revoked after handoff and exact fixed supply mint",
+      "passed": true
+    },
+    {
+      "name": "freeze authority remains absent",
+      "passed": true
+    },
+    {
+      "name": "all supply is in the program vault",
+      "passed": true
+    },
+    {
+      "name": "full launch transaction fits packet limit",
+      "passed": true
+    },
+    {
+      "name": "creator cannot edit immutable token metadata",
+      "passed": true
+    },
+    {
+      "name": "failed custody init rolls back mint and metadata creation atomically",
+      "passed": true
+    }
+  ],
+  "metadataProgramSha256": "31f0a627dba051a938de650464e55cc5397a4be0fd496929c1f9cf02fe5e9011",
+  "curveProgramSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "transactionBytes": 991,
+  "computeUnits": 75494,
+  "metadata": {
+    "name": "Launchpad public proof",
+    "symbol": "LPPROOF",
+    "uri": "https://launch.example.com/api/metadata/public-proof.json",
+    "sellerFeeBps": 0,
+    "primarySale": false,
+    "isMutable": false
+  },
+  "creatorDebitLamports": 42640440,
+  "deposits": {
+    "mint": 1461600,
+    "metadata": 15115600,
+    "state": 3118080,
+    "vault": 20890880,
+    "baseAta": 2039280
+  }
+}

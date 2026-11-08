@@ -1,0 +1,79 @@
+{
+  "realFundsUsed": false,
+  "programSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "testCount": 18,
+  "tests": [
+    {
+      "name": "creator can sign a real assigned account transition",
+      "passed": true
+    },
+    {
+      "name": "assigned creator cannot block buy or alter payout destination",
+      "passed": true
+    },
+    {
+      "name": "assigned creator cannot block an unrelated holder exit",
+      "passed": true
+    },
+    {
+      "name": "assigned creator settlement is accepted and cannot pay twice",
+      "passed": true
+    },
+    {
+      "name": "assigned creator does not block bonding",
+      "passed": true
+    },
+    {
+      "name": "assigned creator does not block atomic custody LP burn",
+      "passed": true
+    },
+    {
+      "name": "creator can sign a real allocated account transition",
+      "passed": true
+    },
+    {
+      "name": "allocated creator cannot block buy or alter payout destination",
+      "passed": true
+    },
+    {
+      "name": "allocated creator cannot block an unrelated holder exit",
+      "passed": true
+    },
+    {
+      "name": "allocated creator settlement is accepted and cannot pay twice",
+      "passed": true
+    },
+    {
+      "name": "allocated creator does not block bonding",
+      "passed": true
+    },
+    {
+      "name": "allocated creator does not block atomic custody LP burn",
+      "passed": true
+    },
+    {
+      "name": "allocated rent-paying recipient queues credits instead of aborting holder trades",
+      "passed": true
+    },
+    {
+      "name": "creator credit is fully backed separately from state rent and curve vault",
+      "passed": true
+    },
+    {
+      "name": "claim below actual recipient data rent leaves accrued credit intact",
+      "passed": true
+    },
+    {
+      "name": "owner flexibility never permits substitution of the immutable creator",
+      "passed": true
+    },
+    {
+      "name": "funded allocated recipient receives exactly its queued credit",
+      "passed": true
+    },
+    {
+      "name": "allocated creator cannot replay settlement to drain state rent",
+      "passed": true
+    }
+  ]
+}

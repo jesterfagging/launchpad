@@ -1,0 +1,111 @@
+{
+  "realFundsUsed": false,
+  "programSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "testCount": 16,
+  "quotes": [
+    {
+      "side": "buy",
+      "amount": "1000000000",
+      "before": {
+        "phase": 0,
+        "vb": 1876395877837567,
+        "vq": 187639587783,
+        "sold": 0,
+        "quote": 0,
+        "lpBurned": 0,
+        "graduationFee": 0,
+        "price": 200000000,
+        "created": 0
+      },
+      "output": "9798563174575",
+      "charged": "1000000000",
+      "creatorFee": "5000000",
+      "protocolFee": "10000000"
+    },
+    {
+      "side": "sell",
+      "amount": "3266187724858",
+      "before": {
+        "phase": 0,
+        "vb": 1866597314662992,
+        "vq": 188624587783,
+        "sold": 9798563174575,
+        "quote": 985000000,
+        "lpBurned": 0,
+        "graduationFee": 0,
+        "price": 200000000,
+        "created": 0
+      },
+      "output": "324538161",
+      "charged": "3266187724858",
+      "creatorFee": "1647401",
+      "protocolFee": "3294805"
+    }
+  ],
+  "tests": [
+    {
+      "name": "unrelated wallet buy succeeds with creator payment",
+      "passed": true
+    },
+    {
+      "name": "buy pays creator 50 bps of charged SOL, rounded down",
+      "passed": true
+    },
+    {
+      "name": "buy pays treasury 100 bps plus sub-lamport rounding",
+      "passed": true
+    },
+    {
+      "name": "paid creator fee is recorded without a pending credit",
+      "passed": true
+    },
+    {
+      "name": "unrelated wallet sell succeeds with creator payment",
+      "passed": true
+    },
+    {
+      "name": "sell pays the same 0.5 percent creator and 1 percent protocol split",
+      "passed": true
+    },
+    {
+      "name": "trade cannot substitute a creator fee recipient",
+      "passed": true
+    },
+    {
+      "name": "creator can buy their own coin without account alias failure",
+      "passed": true
+    },
+    {
+      "name": "small payout to an empty creator is queued without blocking trades",
+      "passed": true
+    },
+    {
+      "name": "permissionless settlement cannot redirect queued creator fees",
+      "passed": true
+    },
+    {
+      "name": "below-rent settlement keeps the complete credit safe",
+      "passed": true
+    },
+    {
+      "name": "relayer automatically settles exact queued fees once recipient can receive",
+      "passed": true
+    },
+    {
+      "name": "settlement replay cannot pay twice",
+      "passed": true
+    },
+    {
+      "name": "creator-fee model still reaches the original supply cap",
+      "passed": true
+    },
+    {
+      "name": "graduation fee goes to exactly the same protocol treasury",
+      "passed": true
+    },
+    {
+      "name": "graduation does not pay another creator fee and burns all custody LP",
+      "passed": true
+    }
+  ]
+}

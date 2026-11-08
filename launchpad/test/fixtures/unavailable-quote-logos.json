@@ -1,0 +1,181 @@
+{
+ "note": "Catalogue assets whose issuers publish no usable artwork; they show a text fallback (public/quote-logos.mjs).",
+ "unavailableLogos": [
+  {
+   "mint": "Xs8kHDEs5w8ERuTmefBXsJy66G5mh836VgDFfgpuRej",
+   "symbol": "AEHRx"
+  },
+  {
+   "mint": "XsGRoyBwemr8giBu8mgShoRGXHYbip7yWHDsaAueMvA",
+   "symbol": "QNTx"
+  },
+  {
+   "mint": "XsEKTjrrYD3Yni2CEPZUn1H4wKsSXpZc8hBQLFy54TR",
+   "symbol": "SONYx"
+  },
+  {
+   "mint": "XsyGzGhqwnbfqeN6TQWK4SHnVJYgbxRdp4aH5L6RwEZ",
+   "symbol": "QYLDx"
+  },
+  {
+   "mint": "XsnStpqwfPD5mC1KRVrJ3w6kxEYVkUQivDHBSEr4uxf",
+   "symbol": "BIDUx"
+  },
+  {
+   "mint": "XsJBX1kSf58ymLVKFSm2MkbLtsPiVRMWTvkvF7TSiVT",
+   "symbol": "BABAx"
+  },
+  {
+   "mint": "XsvsSHRUz5dAmUGH9jvVnkEZRcLkgo7uJf1VWhSuVLk",
+   "symbol": "EWZx"
+  },
+  {
+   "mint": "Xss5mnWWwgwVc6d7dibSqcb43fbmjXAnuRaJ6ZF2iXQ",
+   "symbol": "NTESx"
+  },
+  {
+   "mint": "XsBPCyiRanUFCw5zd3m9EUGWMZZRhtpavZ5SWPdTWM6",
+   "symbol": "BBx"
+  },
+  {
+   "mint": "Xsb9Hu9KkxJxMNoaogz7UYsNS3VHvLCqwT9S1mRyVGE",
+   "symbol": "UVXYx"
+  },
+  {
+   "mint": "Xsj1NnCroe64taUVsrxwWSzd1VgPnLtTD1K7W8MLXmd",
+   "symbol": "OSCRx"
+  },
+  {
+   "mint": "XsWfu1svxj6DPqQZFAinCvtDa1EvgAZGx5qocUkrrA6",
+   "symbol": "TSLLx"
+  },
+  {
+   "mint": "XsCMQxyd94mNDqb9uXoxLh6hNFFcBygdBYerEKp2LZy",
+   "symbol": "TSEMx"
+  },
+  {
+   "mint": "XscLQvx6mzoarzvLF6CntvUPFa6ukUkFCvqzLxiihmw",
+   "symbol": "PURRx"
+  },
+  {
+   "mint": "Xs5xCbQ7r3tJrR1huRmNrAKLyDZQM4MadU1rkmrh8hX",
+   "symbol": "LYTEx"
+  },
+  {
+   "mint": "XsC6bBzDDABjHhKmUAxx7THK4jF5zbJgPA3kVox5okM",
+   "symbol": "SIMOx"
+  },
+  {
+   "mint": "XsaXKP7GaPDA3bLwtuFoZ2oGsaukfeS1v2U1xUeqwrp",
+   "symbol": "EWJx"
+  },
+  {
+   "mint": "XsNZ125wJDfhqhdSuGMeVCWgP26pYsY5ZRtiAfKtU2d",
+   "symbol": "TMFx"
+  },
+  {
+   "mint": "XsRN7n3AZDs577pgQSGbrbgznY5T9xERcjr4dK6vHnX",
+   "symbol": "SHOPx"
+  },
+  {
+   "mint": "XstnmTaJXkobEbbs7AgmGLBsBeWyHTSJAFcJ6BF6ycs",
+   "symbol": "JDx"
+  },
+  {
+   "mint": "XsBHq5npA7gUemYgFkzHvpWznPvybEUmyuz3o3Dim11",
+   "symbol": "LUNRx"
+  },
+  {
+   "mint": "XszWcNSHsYTXqxDbgK5GzNPxNfxSAKJBCkr2YtsjuPT",
+   "symbol": "POETx"
+  },
+  {
+   "mint": "XsA5xNUbsqxyz22XSFnNeALLv5XsmBgq3SCaK6xFR5R",
+   "symbol": "FLYx"
+  },
+  {
+   "mint": "Xs8LesEYZb7SZJrW85hMrrVzyeoyxKrCNVnpEURLzZp",
+   "symbol": "RDWx"
+  },
+  {
+   "mint": "Xst3tzrmqjzvGXZz2eE2h8CWWWxy4wzp6mXvTuG5Tqt",
+   "symbol": "URNMx"
+  },
+  {
+   "mint": "XsXJBom7kFSxA6hc2ArzUwe6o6zyRU1AdHTfvev1HkG",
+   "symbol": "USOx"
+  },
+  {
+   "mint": "XsxtnDUJzTMjqmzajufokv9xrG868kvkp5KNuNNsU4d",
+   "symbol": "SKDDx"
+  },
+  {
+   "mint": "XsNG7S8TMR3Xqa86GHjgtM8gj6Jkt8f62EvtG29B5yc",
+   "symbol": "XBIx"
+  },
+  {
+   "mint": "XsZRN32fxqsvU9VmL254K1yLyYVkL3RXcBRJpTsRYWc",
+   "symbol": "RAMx"
+  },
+  {
+   "mint": "XsXw4uaUyz6fHfK6qcet55Cg8b5rnf4D1TCJ96FUJqe",
+   "symbol": "INFQx"
+  },
+  {
+   "mint": "XsAzGv2quxQWSUphAKcmFeFyJqTgDkcetgp3DmAFVj4",
+   "symbol": "SHLDx"
+  },
+  {
+   "mint": "XstZ31nh6HKMkkNgEcXqAJuF2CFmexYkM4tGaNtUVWK",
+   "symbol": "SKUUx"
+  },
+  {
+   "mint": "XsUsHYstgit1UE4anT2thfJvTByEHmrgx4V1FS8EQu8",
+   "symbol": "OUSTx"
+  },
+  {
+   "mint": "XsSdwPGhuiTBir2bpJTiJkEhfMEn5bG75XevuePua1q",
+   "symbol": "PDDx"
+  },
+  {
+   "mint": "XsNKpPnrpzt3MRF7dA9EtAxWyrdivwN5xyvHUi2iweV",
+   "symbol": "PENGx"
+  },
+  {
+   "mint": "XsQTDfyyWUBRbLnikwDoSqrcn3YKLG2EDRLHCoQ9e3a",
+   "symbol": "FWDIx"
+  },
+  {
+   "mint": "XsSPkcE4GbHiBacr8awTTHpwFBuznazcwEKgdvBCkoz",
+   "symbol": "SQQQx"
+  },
+  {
+   "mint": "Xst9jAZk2vxXtsttJdDh5pKvwfmDUPHAPqt3dxFi64G",
+   "symbol": "SPCHx"
+  },
+  {
+   "mint": "XsrH4d2jVBUbZx5YJ3CyPsiN84ugZQGKCbJAoDn9qEd",
+   "symbol": "NVDLx"
+  },
+  {
+   "mint": "XsEkwEYVKnvqVF3sxsimXVEEB17jdT9pVA6SP3NBEYe",
+   "symbol": "AMCx"
+  },
+  {
+   "mint": "Xs3N3dcHdWXaJ5dv2ysjMA8DS33vixYYzAgVzkG6L3T",
+   "symbol": "GPROx"
+  },
+  {
+   "mint": "XsPZqWN9qCGwwasxuo3zSEnM6vQbBJ9imktKjUeBMyF",
+   "symbol": "CRDOx"
+  },
+  {
+   "mint": "Xsgu2ZZPVjVdjf2HN9F2weJNSyyireZBfu8MYJBBH1S",
+   "symbol": "BILIx"
+  },
+  {
+   "mint": "XsM8hCeX916xAiVLCeFwxmVpTNYq14rjM8h8Ha2UiTe",
+   "symbol": "EWTx"
+  }
+ ]
+}

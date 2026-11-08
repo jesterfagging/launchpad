@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Coin — Launchpad</title><link rel="icon" href="/brand-icon.svg?v=54">
+  <link rel="stylesheet" href="/style.css?v=21"><link rel="stylesheet" href="/terminal.css?v=21"><link rel="stylesheet" href="/workspace.css?v=24"><link rel="stylesheet" href="/dashboard.css?v=21"><link rel="stylesheet" href="/coin.css?v=71.41"><link rel="stylesheet" href="/coin-rewards.css?v=71.26"><link rel="stylesheet" href="/coin-trade.css?v=71.35">
+  <script type="module" src="/coin.js"></script>
+<link rel="stylesheet" href="/curve-theme.css?v=73"><link rel="stylesheet" href="/curve-motion.css?v=2"><script type="module" src="/curve-motion.mjs?v=2"></script><meta name="theme-color" content="#000000"><link id="explore-search-styles" rel="stylesheet" href="/explore-search.css?v=49"><link id="curve-quote-logo-styles" rel="stylesheet" href="/quote-logos.css?v=52"><link id="curve-price-badge-styles" rel="stylesheet" href="/curve-price-badge.css"><link rel="preload" href="/fonts/InterVariable.woff2?v=4.1" as="font" type="font/woff2" crossorigin><link rel="preload" href="/fonts/BricolageGrotesque-Bold.woff?v=1" as="font" type="font/woff" crossorigin><link rel="preload" href="/fonts/GeistMono-Regular.woff?v=1" as="font" type="font/woff" crossorigin></head>
+<body data-robinhood="on" data-product="launchpad" data-shell="true" data-navigation="top" class="relay-terminal coin-page" data-page="coin">
+  <header class="app-header"><div class="workspace-header-inner"><a class="brand" href="/" aria-label="Launchpad home"><img class="mark" src="/brand-icon.svg?v=54" width="38" height="38" alt=""><span>Launchpad<span class="brand-dot">.</span></span></a><label class="header-search" for="explore-search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg><span class="search-sr-only">Search coins, tickers, addresses or users</span><input id="explore-search" data-curve-search-trigger name="search" type="search" readonly autocomplete="off" placeholder="Search coins, tickers, addresses or users"><kbd aria-hidden="true">/</kbd></label><div class="local"><a class="curve-price-badge" href="/coin?mint=7rvRFpzP5W18yZcNpPNqtWgPTxLaFrnutz5QPxXpyupc" aria-label="Open official $LAUNCHPAD token page. USD price unavailable."><img src="/brand-icon.svg?v=54" width="20" height="20" alt=""><span class="curve-price-symbol">$LAUNCHPAD</span><span class="curve-price-value">—</span></a><a class="top-launch" href="/launchpad" data-workspace-tool="launchpad" aria-label="Launch on Launchpad" title="Create a coin on Launchpad"><svg class="tool-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg><span>Launch on Launchpad</span></a><a data-account-link class="small-button" href="/?signin=1">Connect wallet</a></div></div></header>
+  <main id="coin-main">
+    <div class="coin-back-row"><a href="/">← Explore coins</a><span class="coin-network">Solana mainnet</span></div>
+    <p id="coin-error" class="coin-notice" role="alert" hidden></p>
+    <section id="coin-loading" class="coin-loading" role="status"><span class="coin-loading-mark" aria-hidden="true"><i></i><b></b></span><h1>Opening this coin</h1><p>Warming up the curve…</p></section>
+    <div id="coin-content" hidden>
+      <section class="coin-heading" aria-labelledby="coin-name">
+        <div class="coin-identity"><div id="coin-avatar" class="coin-avatar"></div><div class="coin-identity-text"><div class="coin-title-row"><h1 id="coin-name"></h1><span id="coin-stage" class="coin-stage cv-pill"></span></div><p id="coin-symbol" class="coin-symbol"></p><div class="coin-address-row"><a id="coin-address" target="_blank" rel="noopener noreferrer"></a><button id="coin-copy" class="text-button" type="button" aria-label="Copy token address">Copy</button><div id="coin-creator" class="creator-row coin-creator-compact" hidden></div></div></div></div>
+        <div class="coin-headline" data-motion-reveal><span id="coin-cap-label">Market cap</span><strong id="coin-cap" data-motion-number>—</strong><div class="coin-headline-meta"><span id="coin-cap-change" class="coin-cap-change" hidden></span><small id="coin-cap-source">Reading market data</small></div></div>
+      </section>
+      <div class="coin-layout">
+        <div class="coin-market-column">
+        <section class="coin-chart-card" aria-label="Price chart">
+          <div class="coin-card-heading"><div><h2>Market</h2><span id="coin-chart-source">Raydium</span></div><button type="button" id="coin-refresh" class="text-button">Refresh</button></div>
+          <nav id="coin-chart-controls" class="coin-chart-controls cv-segmented" aria-label="Chart display" hidden><button type="button" data-coin-chart="price" aria-pressed="true">Price</button><button type="button" data-coin-chart="fdv" aria-pressed="false">Fully diluted value</button></nav>
+          <nav id="coin-intervals" class="coin-intervals cv-segmented" aria-label="Chart interval" hidden><button type="button" data-coin-interval="1" aria-pressed="false">1s</button><button type="button" data-coin-interval="5" aria-pressed="false">5s</button><button type="button" data-coin-interval="15" aria-pressed="false">15s</button><button type="button" data-coin-interval="30" aria-pressed="false">30s</button><button type="button" data-coin-interval="60" aria-pressed="true">1m</button><button type="button" data-coin-interval="300" aria-pressed="false">5m</button><button type="button" data-coin-interval="900" aria-pressed="false">15m</button><button type="button" data-coin-interval="3600" aria-pressed="false">1h</button><button type="button" data-coin-interval="14400" aria-pressed="false">4h</button><button type="button" data-coin-interval="86400" aria-pressed="false">1d</button></nav>
+          <div id="coin-chart" class="coin-chart"><div class="coin-chart-empty"><span aria-hidden="true">⌁</span><h3>Warming up the curve</h3><p>Confirmed prices appear here as market data becomes available.</p></div></div>
+          <p id="coin-market-note" class="coin-data-note" role="status"></p>
+        </section>
+        <section id="coin-activity" class="coin-activity" aria-label="Token activity">
+          <div class="coin-activity-heading"><nav class="cv-tabs coin-activity-tabs has-indicator" aria-label="Token activity views"><button type="button" data-activity="trades" aria-pressed="true">Trades</button><button type="button" data-activity="holders" aria-pressed="false">Holders</button></nav><button type="button" id="coin-activity-refresh" class="text-button">Refresh</button></div>
+          <div class="coin-table-scroll"><table id="coin-activity-table" class="cv-table"><thead></thead><tbody></tbody></table></div>
+          <p id="coin-activity-note" class="coin-data-note" role="status">Loading recent trades…</p>
+        </section>
+        </div>
+        <aside class="coin-sidebar"><section id="coin-trade" hidden></section>
+          <section class="coin-overview"><div class="coin-card-heading"><h2>Market overview</h2><span id="coin-change"></span></div><div class="coin-price"><span id="coin-price-label">Price</span><strong id="coin-price" data-motion-number>—</strong><small id="coin-price-quote"></small></div><div id="coin-stats" class="coin-stats"></div>
+            <div id="coin-progress-wrap" class="coin-progress-wrap" hidden><div><span>Progress to graduation</span><strong id="coin-progress-label" data-motion-number></strong></div><div class="coin-progress-track"><progress id="coin-progress" max="100" value="0" aria-label="Progress to graduation"></progress><i class="coin-progress-fill" aria-hidden="true"></i><i class="coin-progress-spark" aria-hidden="true"></i><i class="coin-progress-sun" aria-hidden="true"></i></div><small id="coin-progress-raised"></small></div>
+            <a id="coin-dex" class="coin-external" target="_blank" rel="noopener noreferrer" hidden>Open DEX Screener ↗</a>
+          </section>
+          <section id="coin-creator-earnings" class="coin-creator-earnings" hidden></section>
+          <section class="coin-info"><div class="coin-card-heading"><h2>About this coin</h2><span>Launchpad launch</span></div><dl id="coin-details" class="coin-details"></dl><div id="coin-description-section" class="coin-description-section" hidden><strong>Description:</strong><p id="coin-description" class="coin-description" hidden></p></div><div id="coin-socials" class="coin-socials"></div><div id="coin-trade-links" class="coin-trade-links" hidden></div></section>
+        </aside>
+      </div>
+      <section id="coin-rewards" class="coin-rewards" aria-labelledby="coin-rewards-title" hidden>
+        <div class="coin-card-heading"><h2 id="coin-rewards-title">Holder rewards</h2><button id="coin-rewards-refresh" type="button" class="text-button" aria-label="Refresh reward information">Refresh</button></div>
+        <div class="coin-rewards-status-row"><span id="coin-rewards-mode" class="coin-rewards-mode"></span><span id="coin-rewards-state" class="coin-rewards-state"></span></div>
+        <p id="coin-rewards-description" class="coin-rewards-description"></p>
+        <div id="coin-rewards-primary" class="coin-rewards-primary"></div>
+        <div id="coin-rewards-secondary" class="coin-rewards-secondary"></div>
+        <p id="coin-rewards-schedule" class="coin-rewards-schedule"></p>
+        <p id="coin-rewards-latest" class="coin-rewards-latest"></p>
+        <p id="coin-rewards-note" class="coin-rewards-note" role="status"></p>
+      </section>
+      <section id="coin-agent" class="coin-agent" aria-label="AI agent" hidden></section>
+    </div>
+    <p id="coin-announcement" class="coin-announcement" aria-live="polite"></p>
+  </main>
+  <footer><span>LAUNCHPAD / EXPLORE</span><a href="/">Discover your next coin ↗</a></footer>
+</body>
+</html>

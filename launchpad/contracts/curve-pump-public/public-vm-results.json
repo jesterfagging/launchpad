@@ -1,0 +1,173 @@
+{
+  "realFundsUsed": false,
+  "signatureVerification": "enabled for all creator/trader/relayer transactions; config admin fixture-only transaction bypasses cryptographic signature, never broadcast",
+  "programSha256": "aee7973c6e77b388de4b4457efe553d70f5c643b9a07e2fe182f7558821ce02e",
+  "pumpSha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5",
+  "testCount": 41,
+  "tests": [
+    {
+      "name": "public creator initializes with independent relayer signature",
+      "passed": true
+    },
+    {
+      "name": "fixed public20000/50000 parameters enforced",
+      "passed": true
+    },
+    {
+      "name": "mint authority revoked after fixed supply minted",
+      "passed": true
+    },
+    {
+      "name": "freeze authority absent",
+      "passed": true
+    },
+    {
+      "name": "unrelated wallet buys without creator or relayer signature",
+      "passed": true
+    },
+    {
+      "name": "unrelated wallet sells without creator or relayer signature",
+      "passed": true
+    },
+    {
+      "name": "substituted treasury rejects without reserve mutation",
+      "passed": true
+    },
+    {
+      "name": "another users token account rejects without reserve mutation",
+      "passed": true
+    },
+    {
+      "name": "zero minimum output rejects without reserve mutation",
+      "passed": true
+    },
+    {
+      "name": "premature migration rejects without reserve mutation",
+      "passed": true
+    },
+    {
+      "name": "initialization replay cannot remint or charge twice",
+      "passed": true
+    },
+    {
+      "name": "admin can pause new launches",
+      "passed": true
+    },
+    {
+      "name": "pause does not block existing holders trading",
+      "passed": true
+    },
+    {
+      "name": "paused new launches rejected",
+      "passed": true
+    },
+    {
+      "name": "admin re-enables launches",
+      "passed": true
+    },
+    {
+      "name": "second independent launch initializes",
+      "passed": true
+    },
+    {
+      "name": "first launch continues trading",
+      "passed": true
+    },
+    {
+      "name": "separate launch reserves and price state isolated",
+      "passed": true
+    },
+    {
+      "name": "final buy clips exactly to fixed public supply cap",
+      "passed": true
+    },
+    {
+      "name": "launch developer cannot submit LP migration",
+      "passed": true
+    },
+    {
+      "name": "unsynchronized native WSOL donation setup",
+      "passed": true
+    },
+    {
+      "name": "platform relayer creates actual PumpSwap pool and atomically burns LP",
+      "passed": true
+    },
+    {
+      "name": "PDA receives and burns all LP, developer never owns it",
+      "passed": true
+    },
+    {
+      "name": "exact pool reserves exclude unsolicited donation",
+      "passed": true
+    },
+    {
+      "name": "exact 28.85 percent graduation fee paid once",
+      "passed": true
+    },
+    {
+      "name": "unsolicited WSOL donation excluded from principal",
+      "passed": true
+    },
+    {
+      "name": "migration replay is idempotent",
+      "passed": true
+    },
+    {
+      "name": "blocked migration fixture bonds",
+      "passed": true
+    },
+    {
+      "name": "future pool dust attack setup",
+      "passed": true
+    },
+    {
+      "name": "dusted pool rejects atomically without shifting price",
+      "passed": true
+    },
+    {
+      "name": "holders redeem while migration blocked",
+      "passed": true
+    },
+    {
+      "name": "curve reopens then bonds",
+      "passed": true
+    },
+    {
+      "name": "relayer retries a fresh canonical pool index",
+      "passed": true
+    },
+    {
+      "name": "rotation fixture bonds",
+      "passed": true
+    },
+    {
+      "name": "admin rotates failed relayer without fund withdrawal",
+      "passed": true
+    },
+    {
+      "name": "old relayer revoked",
+      "passed": true
+    },
+    {
+      "name": "replacement relayer completes same fixed custody migration",
+      "passed": true
+    },
+    {
+      "name": "excessive price rejected",
+      "passed": true
+    },
+    {
+      "name": "zero price rejected",
+      "passed": true
+    },
+    {
+      "name": "unbounded launch expiry rejected",
+      "passed": true
+    },
+    {
+      "name": "outsider cannot change relayer or enable state",
+      "passed": true
+    }
+  ]
+}

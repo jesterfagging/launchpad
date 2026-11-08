@@ -1,0 +1,14 @@
+[package]
+name = "curve-transfer-hook"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Launchpad transfer hook: creator-chosen transfer rules for Token-2022 coins on Meteora's Dynamic Bonding Curve"
+[lib]
+crate-type = ["cdylib", "lib"]
+[dependencies]
+solana-program = "=2.3.0"
+[profile.release]
+overflow-checks = true
+lto = "fat"
+codegen-units = 1

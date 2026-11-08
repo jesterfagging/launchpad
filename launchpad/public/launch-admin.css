@@ -1,0 +1,122 @@
+/* Admin → Tokens → Token management (v71.25 design system). Loaded by the admin page only.
+   .launch-admin is also an .account-section, so the shared account spacing is reset here. */
+.admin-card .launch-admin{min-width:0;margin:0;padding:0;border:0}
+.launch-admin .help{margin:var(--space-2,8px) 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.launch-admin details{margin:0;font-size:inherit}
+.launch-admin form{margin:0}
+
+/* Administrator launch: one compact row with its action. */
+.admin-page .admin-app .launch-admin-create{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4,16px);margin:0 0 var(--space-5,20px);padding:12px 14px 12px 16px;border:1px solid var(--line);border-radius:var(--radius-control,10px);background:linear-gradient(100deg,#8b5cff12,transparent 60%),var(--panel)}
+.admin-page .admin-app .launch-admin-create h3{margin:0 0 2px;font-size:14px}
+.launch-admin-create p{margin:0}
+.launch-admin-create>a{flex-shrink:0;text-decoration:none;white-space:nowrap}
+
+/* Coins: heading with the bulk actions on the same row. */
+.launch-admin>.card-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2,8px) var(--space-3,12px);margin:0 0 var(--space-3,12px)}
+.admin-page .admin-app .launch-admin>.card-heading h3{margin:0;font-size:16px}
+.launch-admin-heading-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2,8px)}
+.admin-page .admin-app .launch-admin-heading-actions>.small-button{min-height:var(--control-h-sm,32px);padding:4px 12px;font-size:12.5px}
+
+/* Bulk runs: an "About" chip while idle, a status panel while running. */
+.launch-admin-distributions{margin:0 0 var(--space-3,12px);padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius-control,10px);background:#ffffff04}
+.launch-admin-distributions .help{margin:0;font-size:13px;overflow-wrap:anywhere}
+.launch-admin-distributions [role=status]:not(:empty){margin-top:var(--space-2,8px)}
+.launch-admin-distributions>[role=status]:empty{display:none}
+.launch-admin-distributions details{margin-top:var(--space-2,8px)}
+.launch-admin-distributions summary{color:var(--text);font-size:13px;cursor:pointer}
+.admin-page .admin-app .launch-admin-distributions>.admin-more{margin:0}
+.admin-page .admin-app .launch-admin-distributions:has(>[role=status]:empty):not(:has(>details:not(.admin-more):not([hidden]))){display:inline-block;vertical-align:top;margin:0 var(--space-2,8px) var(--space-3,12px) 0;padding:0;border:0;background:none}
+.launch-admin-distribution-rows{display:grid;gap:var(--space-2,8px);max-height:240px;margin:var(--space-2,8px) 0 0;padding:0;overflow:auto;list-style:none}
+.launch-admin-distribution-rows li{display:grid;gap:2px;font-size:13px;overflow-wrap:anywhere}
+.launch-admin-distribution-rows li.negative strong{color:#ff8fa3}
+.launch-admin-distribution-rows span{color:var(--muted)}
+.launch-admin-distribution-rows a{color:var(--accent);font-family:var(--mono,ui-monospace,monospace);font-size:12px;text-decoration:none}
+
+/* Rows of the panel: idle "About" chips share a line, and the Active / Archived switch shares one with the search. */
+.admin-page .launch-admin{display:flex;flex-wrap:wrap;align-items:center;column-gap:var(--space-2,8px)}
+.admin-page .launch-admin>*{flex:1 1 100%;min-width:0}
+.admin-page .admin-app .launch-admin>p{max-width:none}
+.admin-page .admin-app .launch-admin>.launch-admin-distributions:has(>[role=status]:empty):not(:has(>details:not(.admin-more):not([hidden]))){flex:0 0 auto;margin-right:0}
+.admin-page .launch-admin>.help{margin:0 0 var(--space-3,12px)}
+.admin-page .launch-admin>.launch-admin-tabs{flex:0 0 auto;margin:0 var(--space-2,8px) var(--space-3,12px) 0}
+.admin-page .launch-admin>.launch-admin-search{flex:1 1 320px;margin:0 0 var(--space-3,12px)}
+.launch-admin-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-2,8px);align-items:end}
+.admin-page .admin-app .launch-admin-search>label{margin:0;font-size:0}
+.admin-page .admin-app .launch-admin-search>label>input{margin-top:0;font-size:14px}
+.launch-admin-search button{margin:0;min-height:var(--input-h,40px)}
+.launch-admin>p[role=status]{margin:0 0 var(--space-2,8px);color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.launch-admin>p[role=status]:empty{display:none}
+
+/* Coin list: compact rows; name, venue and state on one line, owner and mint underneath. */
+.launch-admin-list{display:grid;gap:var(--space-2,8px)}
+.launch-admin-list:focus-visible{outline:2px solid var(--sunrise-gold);outline-offset:3px;border-radius:var(--radius-control,10px)}
+.admin-page .admin-app .launch-admin .launch-admin-row{min-width:0;margin:0;padding:0 14px;border:1px solid var(--line);border-radius:var(--radius-control,10px);background:#ffffff05;transition:border-color .2s ease,background-color .2s ease}
+.admin-page .admin-app .launch-admin .launch-admin-row:hover{border-color:var(--line-strong,#3a3a42)}
+.admin-page .admin-app .launch-admin .launch-admin-row[open]{padding-bottom:14px;border-color:var(--sel-line,#6d45d9);background:#ffffff07}
+.launch-admin .launch-admin-row>summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3,12px);min-height:56px;padding:8px 0;color:var(--text);list-style:none;cursor:pointer}
+.launch-admin .launch-admin-row>summary::-webkit-details-marker{display:none}
+.launch-admin .launch-admin-row[open]>summary{margin-bottom:var(--space-2,8px);border-bottom:1px solid var(--line)}
+.launch-admin-coin-identity{display:flex;flex-wrap:wrap;align-items:center;gap:3px 8px;flex:1;min-width:0;text-align:left}
+.launch-admin-coin-identity>strong{order:1;min-width:0;font-size:14px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.launch-admin-coin-identity>.launch-admin-venue{order:2}
+.launch-admin-coin-identity>.launch-admin-reward-badge{order:3}
+.launch-admin-coin-identity>small{order:4;flex:1 1 100%;color:var(--muted);font-size:12px;line-height:1.35;overflow-wrap:anywhere}
+.launch-admin-coin-identity>.launch-admin-row-status{order:5;flex:1 1 100%}
+.launch-admin-venue,.launch-admin-reward-badge{display:inline-flex;align-items:center;width:max-content;height:20px;padding:0 7px;border:1px solid var(--line);border-radius:var(--radius-pill,999px);background:#ffffff08;color:var(--muted);font:600 11px/1 var(--sans);white-space:nowrap}
+.launch-admin-reward-badge{border-color:#a78bff55;background:#a78bff1a;color:#a78bff}
+.launch-admin-row-status{display:block;margin:0;color:var(--muted);font-size:12px;line-height:1.5;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.launch-admin-row-status:empty{display:none}
+.launch-admin-row-status.negative{color:#ff8fa3}
+.launch-admin-coin-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-2,8px);flex:none;max-width:60%}
+.launch-admin-visibility-state{color:var(--muted);font-size:12px}
+.launch-admin-visibility-state[data-hidden=true]{color:var(--accent)}
+.admin-page .admin-app .launch-admin-row>summary :is(.launch-admin-visibility-toggle,.launch-admin-archive-toggle){min-width:64px;min-height:var(--control-h-sm,32px);margin:0;padding:0 12px;font-size:12.5px;white-space:nowrap}
+.launch-admin-expand{display:inline-grid;place-items:center;width:20px;color:var(--muted);font-size:16px;transition:transform .15s ease}
+.launch-admin-row[open] .launch-admin-expand{transform:rotate(180deg)}
+
+/* Expanded coin: details, recipient editor and reward operations. */
+.launch-admin-row>p.help{margin:var(--space-2,8px) 0 0}
+.admin-page .admin-app .launch-admin-row .account-address{margin:4px 0 0}
+.launch-admin-row>a.small-button{margin-top:var(--space-3,12px)}
+.launch-admin-row form{display:grid;gap:var(--space-3,12px);margin-top:var(--space-3,12px)}
+.launch-admin-row form label{margin:0}
+.launch-admin-row textarea{width:100%;min-height:64px;resize:vertical}
+.launch-admin-row form button{justify-self:start;margin:0}
+.launch-admin-row form .help{margin:0}
+.launch-admin-row>details{margin-top:var(--space-3,12px)}
+.launch-admin-row>details>summary,.launch-admin-reward details>summary{color:var(--accent);font-size:13px;cursor:pointer}
+.launch-admin-history{margin:var(--space-2,8px) 0 0;padding:0;list-style:none}
+.launch-admin-history li{padding:8px 0}
+.launch-admin-history li+li{border-top:1px solid var(--line)}
+.launch-admin-history .help{margin:2px 0 0}
+.admin-page .launch-admin-reward{margin-top:var(--space-4,16px);padding-top:var(--space-4,16px);border-top:1px solid var(--line)}
+.launch-admin-reward h4{margin:0;font-size:13px}
+.launch-admin-reward .help{margin:var(--space-2,8px) 0 0}
+.launch-admin-reward-recovery{min-width:0;margin:var(--space-3,12px) 0;padding:12px;border:1px solid var(--line);border-radius:var(--radius-control,10px);background:#ffffff04}
+.launch-admin-reward-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3,12px)}
+.launch-admin-reward-controls strong{font-size:13px}
+.launch-admin-reward-controls button{margin:0}
+.launch-admin-reward-recovery p{margin:var(--space-2,8px) 0 0;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.launch-admin-reward-feedback:empty,.launch-admin-pause-feedback:empty{display:none}
+.launch-admin-retry-reason,.launch-admin-deferred-rewards{overflow-wrap:anywhere}
+.launch-admin-credits{display:flex;flex-wrap:wrap;gap:6px var(--space-4,16px);padding:var(--space-3,12px) 0 0;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+.launch-admin>.account-actions{display:flex;justify-content:space-between;gap:var(--space-3,12px);margin-top:var(--space-3,12px)}
+.admin-page .admin-app .launch-admin>.account-actions>.small-button{min-height:var(--control-h-sm,32px);font-size:12.5px}
+
+@media(max-width:640px){
+.admin-page .admin-app .launch-admin-create{flex-direction:column;align-items:stretch;gap:var(--space-3,12px);padding:12px}
+.admin-page .admin-app .launch-admin-create>a{align-self:flex-start}
+.admin-page .launch-admin>:is(.launch-admin-tabs,.launch-admin-search){flex:1 1 100%;margin-right:0}
+.admin-page .launch-admin>.launch-admin-tabs{display:flex}
+.admin-page .admin-app .launch-admin-search>label>input{font-size:16px}
+.admin-page .launch-admin>.launch-admin-tabs>button{flex:1;padding:0 8px;font-size:12.5px}
+.launch-admin-heading-actions{gap:6px}
+.admin-page .admin-app .launch-admin-heading-actions>.small-button{min-height:36px;padding:4px 10px}
+.admin-page .admin-app .launch-admin .launch-admin-row{padding:0 12px}
+.launch-admin .launch-admin-row>summary{align-items:center;gap:var(--space-2,8px)}
+.launch-admin-coin-actions{max-width:52%;gap:6px}
+.launch-admin-row>summary .launch-admin-visibility-state{display:none}
+.admin-page .admin-app .launch-admin-row>summary :is(.launch-admin-visibility-toggle,.launch-admin-archive-toggle){min-height:36px;padding:0 10px}
+.launch-admin-reward-controls{flex-direction:column;align-items:flex-start}
+.launch-admin-reward-controls button{width:100%}
+}

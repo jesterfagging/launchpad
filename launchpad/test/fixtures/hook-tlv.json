@@ -1,0 +1,169 @@
+{
+  "note": "ExtraAccountMetaList bytes of the Launchpad transfer hook program (rules v2), six shapes. Written by src/hooks/program.mjs (extraAccountMetaListBytes) and asserted byte for byte by contracts/curve-transfer-hook/src/tlv.rs (cargo test) and test/hook-program.test.mjs. Regenerate only together with both writers. The \"full\" shape cannot occur on a real coin (allowlist, blocklist and holder_gated conflict); it pins the writer with every entry present.",
+  "layout": "type [8] = sha256(\"spl-transfer-hook-interface:execute\")[0..8] | length u32 LE = 4 + 35 * count | count u32 LE | count x { discriminator u8, address_config [32], is_signer u8, is_writable u8 }",
+  "order": ["config (always)", "instructions sysvar (sniper_fee_cap, tithe, fomo_only, pump_app_only)", "BlockList (blocklist)", "source-owner WalletState (holder_vesting)", "destination-owner WalletState (holder_vesting)", "destination-owner AllowEntry (allowlist)", "associated-token program (holder_gated)", "gate token program (holder_gated)", "gate mint (holder_gated)", "destination owner gate ATA (holder_gated)"],
+  "executeDiscriminator": [105, 37, 101, 197, 75, 251, 102, 26],
+  "initializeExtraAccountMetasDiscriminator": [43, 34, 13, 49, 167, 88, 235, 235],
+  "gateTokenProgramBytes": [7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7],
+  "gateMintBytes": [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9],
+  "gateTokenProgram": "US517G5965aydkZ46HS38QLi7UQiSojurfbQfKCELFx",
+  "gateMint": "cGfHiC6Kgg3FpFZvgwGcswsCRtp4aBP2fzuXRQPizuN",
+  "shapes": {
+    "configOnly": {
+      "flags": {
+        "sysvar": false,
+        "blocklist": false,
+        "walletState": false,
+        "allowlist": false,
+        "holderGated": false
+      },
+      "exampleRules": ["anti_dump", "max_per_wallet"],
+      "entries": 1,
+      "size": 51,
+      "positions": {
+        "config": 5,
+        "sysvar": null,
+        "blocklist": null,
+        "srcWallet": null,
+        "dstWallet": null,
+        "allow": null,
+        "ataProgram": null,
+        "gateTokenProgram": null,
+        "gateMint": null,
+        "gateAta": null,
+        "accounts": 6
+      },
+      "hex": "692565c54bfb661a2700000001000000010106636f6e6669670301000000000000000000000000000000000000000000000001"
+    },
+    "sysvar": {
+      "flags": {
+        "sysvar": true,
+        "blocklist": false,
+        "walletState": false,
+        "allowlist": false,
+        "holderGated": false
+      },
+      "exampleRules": ["sniper_fee_cap"],
+      "entries": 2,
+      "size": 86,
+      "positions": {
+        "config": 5,
+        "sysvar": 6,
+        "blocklist": null,
+        "srcWallet": null,
+        "dstWallet": null,
+        "allow": null,
+        "ataProgram": null,
+        "gateTokenProgram": null,
+        "gateMint": null,
+        "gateAta": null,
+        "accounts": 7
+      },
+      "hex": "692565c54bfb661a4a00000002000000010106636f6e66696703010000000000000000000000000000000000000000000000010006a7d517187bd16635dad40455fdc2c0c124c68f215675a5dbbacb5f080000000000"
+    },
+    "blocklist": {
+      "flags": {
+        "sysvar": false,
+        "blocklist": true,
+        "walletState": false,
+        "allowlist": false,
+        "holderGated": false
+      },
+      "exampleRules": ["blocklist"],
+      "entries": 2,
+      "size": 86,
+      "positions": {
+        "config": 5,
+        "sysvar": null,
+        "blocklist": 6,
+        "srcWallet": null,
+        "dstWallet": null,
+        "allow": null,
+        "ataProgram": null,
+        "gateTokenProgram": null,
+        "gateMint": null,
+        "gateAta": null,
+        "accounts": 7
+      },
+      "hex": "692565c54bfb661a4a00000002000000010106636f6e6669670301000000000000000000000000000000000000000000000001010105626c6f636b030100000000000000000000000000000000000000000000000000"
+    },
+    "route": {
+      "flags": {
+        "sysvar": false,
+        "blocklist": false,
+        "walletState": true,
+        "allowlist": true,
+        "holderGated": false
+      },
+      "exampleRules": ["holder_vesting", "allowlist"],
+      "entries": 4,
+      "size": 156,
+      "positions": {
+        "config": 5,
+        "sysvar": null,
+        "blocklist": null,
+        "srcWallet": 6,
+        "dstWallet": 7,
+        "allow": 8,
+        "ataProgram": null,
+        "gateTokenProgram": null,
+        "gateMint": null,
+        "gateAta": null,
+        "accounts": 9
+      },
+      "hex": "692565c54bfb661a9000000004000000010106636f6e666967030100000000000000000000000000000000000000000000000101010677616c6c6574030104002020000000000000000000000000000000000000000101010677616c6c65740301040220200000000000000000000000000000000000000001010105616c6c6f77030104022020000000000000000000000000000000000000000000"
+    },
+    "holderGated": {
+      "flags": {
+        "sysvar": false,
+        "blocklist": false,
+        "walletState": false,
+        "allowlist": false,
+        "holderGated": true
+      },
+      "exampleRules": ["holder_gated"],
+      "entries": 5,
+      "size": 191,
+      "positions": {
+        "config": 5,
+        "sysvar": null,
+        "blocklist": null,
+        "srcWallet": null,
+        "dstWallet": null,
+        "allow": null,
+        "ataProgram": 6,
+        "gateTokenProgram": 7,
+        "gateMint": 8,
+        "gateAta": 9,
+        "accounts": 10
+      },
+      "hex": "692565c54bfb661ab300000005000000010106636f6e6669670301000000000000000000000000000000000000000000000001008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f8590000000707070707070707070707070707070707070707070707070707070707070707000000090909090909090909090909090909090909090909090909090909090909090900008604022020030703080000000000000000000000000000000000000000000000000000"
+    },
+    "full": {
+      "flags": {
+        "sysvar": true,
+        "blocklist": true,
+        "walletState": true,
+        "allowlist": true,
+        "holderGated": true
+      },
+      "exampleRules": null,
+      "entries": 10,
+      "size": 366,
+      "positions": {
+        "config": 5,
+        "sysvar": 6,
+        "blocklist": 7,
+        "srcWallet": 8,
+        "dstWallet": 9,
+        "allow": 10,
+        "ataProgram": 11,
+        "gateTokenProgram": 12,
+        "gateMint": 13,
+        "gateAta": 14,
+        "accounts": 15
+      },
+      "hex": "692565c54bfb661a620100000a000000010106636f6e66696703010000000000000000000000000000000000000000000000010006a7d517187bd16635dad40455fdc2c0c124c68f215675a5dbbacb5f080000000000010105626c6f636b03010000000000000000000000000000000000000000000000000001010677616c6c6574030104002020000000000000000000000000000000000000000101010677616c6c65740301040220200000000000000000000000000000000000000001010105616c6c6f77030104022020000000000000000000000000000000000000000000008c97258f4e2489f1bb3d1029148e0d830b5a1399daff1084048e7bd8dbe9f8590000000707070707070707070707070707070707070707070707070707070707070707000000090909090909090909090909090909090909090909090909090909090909090900008b04022020030c030d0000000000000000000000000000000000000000000000000000"
+    }
+  }
+}

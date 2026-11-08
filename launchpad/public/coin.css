@@ -1,0 +1,467 @@
+/* ===== Coin page (v71.26 makeover v2: roomy, polished, alive). The page frame, buttons, tabs, segmented
+   controls, tables and pills come from the shared design system (curve-theme.css / workspace.css, see
+   curve-theme.css). This file lays out the coin page and styles its cards. curve-theme.css loads after this
+   file and styles some coin classes at (0,2,1); rules that must win over it use the body.relay-terminal.coin-page
+   prefix. Decorative motion animates only transform and opacity, and stops under reduced motion. ===== */
+.coin-page { --coin-muted:#9a9aa3; --coin-gap:24px; --coin-pad:var(--card-pad,24px); --coin-line-soft:#18181b; --coin-line:var(--line-card,#f4f4f51a); --coin-line-hover:var(--line-card-hover,#8b5cff59); --coin-radius:var(--radius-card,18px); --coin-radius-inset:var(--radius-inset,12px); --coin-shadow:var(--shadow-card,0 1px 0 #ffffff07 inset,0 12px 32px -20px #000000c7); --coin-shadow-hover:var(--shadow-card-hover,0 1px 0 #ffffff0a inset,0 24px 48px -22px #000000d9,0 10px 34px -16px #8b5cff40); }
+.coin-page [hidden] { display:none!important; }
+
+/* Back link and network. */
+.coin-page .coin-back-row { display:flex; justify-content:space-between; align-items:center; gap:var(--space-4,16px); min-height:24px; margin:0 0 var(--space-5,20px); font-size:14px; line-height:24px; }
+.coin-page .coin-back-row a,.coin-page .coin-address-row>a { color:var(--coin-muted); text-decoration:none; }
+.coin-page .coin-back-row a:hover,.coin-page .coin-address-row>a:hover { color:var(--text); }
+.coin-page .coin-network { color:var(--coin-muted); font-size:13px; }
+.coin-page .coin-network::before { content:''; display:inline-block; width:7px; height:7px; margin:0 8px 1px 0; border-radius:50%; background:#2ee59d; box-shadow:0 0 8px #2ee59daa; vertical-align:middle; }
+
+/* Heading: an 88px avatar, the name and stage on one line, then the ticker, pair, address and creator with
+   comfortable spacing; the headline value sits on the right as a roomy stat. */
+.coin-page .coin-heading { display:flex; justify-content:space-between; align-items:center; gap:var(--space-7,32px); margin:0 0 var(--space-7,32px); }
+.coin-page .coin-identity { min-width:0; display:flex; align-items:center; gap:var(--space-6,24px); }
+.coin-page .coin-identity-text { min-width:0; display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-3,12px) var(--space-4,16px); }
+.coin-page .coin-avatar { width:88px; height:88px; border-radius:12px; overflow:hidden; flex-shrink:0; display:grid; place-items:center; color:var(--accent); font-size:16px; font-weight:750; }
+.coin-page .coin-avatar img { width:100%; height:100%; object-fit:cover; }
+.coin-page .coin-title-row { flex:1 0 100%; min-width:0; display:flex; gap:var(--space-2,8px) var(--space-4,16px); align-items:center; flex-wrap:wrap; }
+.coin-page .coin-title-row h1 { margin:0; font-size:var(--text-title,36px); line-height:1.1; letter-spacing:-.025em; font-weight:700; overflow-wrap:anywhere; }
+.coin-page .coin-stage { white-space:nowrap; height:26px; padding:0 11px; font-size:12px; }
+.coin-page .coin-symbol { display:flex; align-items:center; flex-wrap:wrap; gap:var(--space-2,8px) var(--space-4,16px); margin:0; color:var(--coin-muted); font-size:15px; font-weight:600; }
+.coin-page .coin-pair-badge { display:inline-flex; align-items:center; flex-wrap:wrap; gap:6px; max-width:100%; min-height:32px; padding:2px 12px; border:1px solid var(--coin-line); border-radius:999px; background:var(--panel2); color:var(--coin-muted); font-size:13px; font-weight:500; line-height:1.4; }
+.coin-page .coin-paired-value { display:flex; align-items:center; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
+.coin-page .coin-pair-badge>span { white-space:nowrap; }
+.coin-page .coin-pair-badge strong { color:var(--text); font-weight:650; overflow-wrap:anywhere; }
+.coin-page .coin-address-row { display:flex; align-items:center; gap:var(--space-2,8px) var(--space-4,16px); font-size:14px; font-variant-numeric:tabular-nums; }
+.coin-page .coin-address-row .text-button { padding:2px; font-size:13px; }
+body.relay-terminal.coin-page .coin-address-row { flex-wrap:wrap; row-gap:var(--space-2,8px); }
+body.relay-terminal.coin-page .coin-creator-compact { display:inline-flex; align-items:center; gap:8px; min-width:0; max-width:260px; min-height:32px; margin:0; padding:2px 12px 2px 6px; border:1px solid var(--coin-line); border-radius:999px; background:var(--panel2); font-size:13px; transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease); }
+body.relay-terminal.coin-page .coin-creator-compact:hover { border-color:var(--coin-line-hover); transform:translateY(-1px); }
+body.relay-terminal.coin-page .coin-creator-compact>span { margin:0; color:var(--coin-muted); font-size:12px; }
+body.relay-terminal.coin-page .coin-creator-compact .creator-avatar { width:22px; height:22px; }
+body.relay-terminal.coin-page .coin-creator-compact:not(:has(.creator-avatar)) { padding-left:12px; }
+.coin-page .coin-headline { position:relative; display:grid; gap:4px; justify-items:end; min-width:220px; padding:16px 22px 14px; border:1px solid var(--coin-line); border-radius:var(--coin-radius); background:radial-gradient(ellipse at 100% 0,#a78bff14,transparent 60%),linear-gradient(135deg,#ffffff07,#ffffff02); box-shadow:var(--coin-shadow); text-align:right; flex-shrink:0; }
+.coin-page .coin-headline>span { color:var(--coin-muted); font-size:13px; font-weight:500; }
+.coin-page .coin-headline strong { font-size:36px; line-height:1.1; letter-spacing:-.025em; font-weight:700; font-variant-numeric:tabular-nums; }
+.coin-page .coin-headline-meta { display:flex; align-items:center; justify-content:flex-end; flex-wrap:wrap; gap:6px 10px; margin-top:4px; }
+.coin-page .coin-headline small { max-width:280px; color:var(--coin-muted); font-size:12px; }
+.coin-page .coin-cap-change { display:inline-flex; align-items:center; gap:5px; height:24px; padding:0 9px; border-radius:999px; border:1px solid var(--line); background:#ffffff0a; color:var(--coin-muted); font-size:12px; font-weight:650; font-variant-numeric:tabular-nums; }
+.coin-page .coin-cap-change::before { content:''; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; }
+.coin-page .coin-cap-change.positive { color:#8ff0c9; background:#2ee59d1c; border-color:#2ee59d4d; }
+.coin-page .coin-cap-change.positive::before { border-bottom:6px solid currentColor; }
+.coin-page .coin-cap-change.negative { color:#ff8fa3; background:#ff4d6d1c; border-color:#ff4d6d4d; }
+.coin-page .coin-cap-change.negative::before { border-top:6px solid currentColor; }
+
+/* Layout. Desktop: chart and trades on the left (2/3); trade, overview, creator earnings and coin facts on the
+   right (1/3). The trades card grows to the height of the right column, so neither column ends early. The longer
+   reward and Pump.fun cards and the AI agent follow as full-width cards. */
+.coin-page .coin-layout { display:grid; grid-template-columns:minmax(0,2fr) minmax(340px,1fr); gap:var(--coin-gap); align-items:start; }
+.coin-page .coin-market-column { min-width:0; align-self:stretch; display:flex; flex-direction:column; gap:var(--coin-gap); }
+.coin-page .coin-sidebar { min-width:0; align-self:stretch; display:flex; flex-direction:column; gap:var(--coin-gap); }
+.coin-page .coin-sidebar>.coin-info { flex-grow:1; }
+.coin-page #coin-content>.coin-layout~section { margin-top:var(--coin-gap); }
+
+/* Cards: one surface with depth. The smaller cards lift a little under the cursor. */
+body.relay-terminal.coin-page :is(.coin-chart-card,.coin-activity,.coin-overview,.coin-info,.coin-rewards,.coin-creator-earnings,.coin-trade-panel,.coin-pump-classic,.coin-agent,.coin-hook) { position:relative; min-width:0; margin:0; border:1px solid var(--coin-line); border-radius:var(--coin-radius); background:var(--panel); box-shadow:var(--coin-shadow); transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease),box-shadow var(--motion-mid,260ms) ease; }
+body.relay-terminal.coin-page :is(.coin-chart-card,.coin-activity,.coin-overview,.coin-info,.coin-rewards,.coin-creator-earnings,.coin-pump-classic,.coin-agent,.coin-hook):hover { border-color:var(--coin-line-hover); }
+/* The reward card keeps a faint sunrise wash; the Gotchi peek needs room at its foot. */
+body.relay-terminal.coin-page .coin-rewards { background:radial-gradient(ellipse at 0 0,#a78bff0f,transparent 55%),var(--panel); }
+body.relay-terminal.coin-page .coin-rewards.motion-peek-host { padding-bottom:calc(var(--coin-pad) + 52px); }
+/* The trade card draws its edge with the sunrise ring (coin-trade.css), so its own border stays clear. */
+body.relay-terminal.coin-page .coin-trade-panel { border-color:transparent; background-clip:padding-box; }
+body.relay-terminal.coin-page :is(.coin-overview,.coin-info,.coin-creator-earnings,.coin-trade-panel):hover { transform:translateY(-2px); box-shadow:var(--coin-shadow-hover); }
+body.relay-terminal.coin-page :is(.coin-overview,.coin-info,.coin-rewards,.coin-creator-earnings,.coin-trade-panel,.coin-pump-classic,.coin-hook) { padding:var(--coin-pad); }
+/* Transfer hook rules (v71.28): the Rules card (hook-ui.mjs / hook-ui.css) sits in the sidebar between creator earnings and the coin facts; a faint violet wash marks the hooked state. */
+body.relay-terminal.coin-page .coin-hook { background:radial-gradient(ellipse at 100% 0,#a78bff12,transparent 55%),var(--panel); }
+body.relay-terminal.coin-page .coin-hook[hidden] { display:none; }
+.coin-page .coin-chart-card,.coin-page .coin-activity { overflow:hidden; }
+.coin-page .coin-card-heading { display:flex; align-items:center; justify-content:space-between; gap:var(--space-3,12px); min-height:28px; }
+.coin-page .coin-card-heading h2 { margin:0; font-size:var(--text-card,17px); line-height:1.3; font-weight:650; letter-spacing:-.01em; }
+.coin-page .coin-card-heading span { color:var(--coin-muted); font-size:13px; }
+.coin-page .coin-card-heading>div { display:flex; align-items:center; gap:12px; flex-wrap:wrap; min-width:0; }
+.coin-page :is(.coin-overview,.coin-info)>.coin-card-heading { margin-bottom:var(--space-4,16px); }
+.coin-page :is(.coin-card-heading,.coin-activity-heading) .text-button { font-size:13px; }
+
+/* Chart card: heading, then one toolbar row (Price/FDV on the left, intervals on the right), then a tall chart. */
+.coin-page .coin-chart-card { display:grid; grid-template-columns:auto minmax(0,1fr); container-type:inline-size; }
+.coin-page .coin-chart-card>.coin-card-heading { grid-column:1/-1; padding:18px var(--coin-pad) 14px; }
+.coin-page .coin-chart-card>:is(.coin-chart,.coin-data-note) { grid-column:1/-1; }
+.coin-page .coin-chart-card .coin-card-heading>div>span { display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px; border:1px solid var(--line); border-radius:999px; background:var(--inset); font-size:12px; font-weight:500; }
+.coin-page .coin-chart-card .coin-card-heading>div>span::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent); animation:coin-breathe 2.4s ease-in-out infinite; }
+.coin-page .coin-chart-card>.coin-chart-controls { grid-column:1; grid-row:2; justify-self:start; align-self:center; margin:0 0 14px var(--coin-pad); }
+.coin-page .coin-chart-card>.coin-intervals { grid-column:2; grid-row:2; justify-self:end; align-self:center; max-width:calc(100% - var(--coin-pad) - 16px); margin:0 var(--coin-pad) 14px 16px; }
+body.relay-terminal.coin-page .coin-chart-card>.coin-intervals { overflow-x:auto; scrollbar-width:none; overscroll-behavior-x:contain; }
+.coin-page .coin-chart-card>.coin-intervals::-webkit-scrollbar { display:none; }
+body.relay-terminal.coin-page :is(.coin-chart-controls,.coin-intervals)>button { height:34px; font-size:13px; transition:color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease,border-color var(--motion-mid,260ms) ease; }
+body.relay-terminal.coin-page .coin-intervals>button { min-width:38px; padding:0 9px; font-variant-numeric:tabular-nums; }
+body.relay-terminal.coin-page :is(.coin-chart-controls,.coin-intervals)>button[aria-pressed=true] { background:var(--sel-bg,#1a1430); border-color:var(--sel-line,#6d45d9); color:var(--sel-text,#c9b8ff); }
+@container (max-width:720px) {
+  .coin-page .coin-chart-card>.coin-chart-controls { grid-column:1/-1; margin-bottom:10px; }
+  .coin-page .coin-chart-card>.coin-intervals { grid-column:1/-1; grid-row:3; justify-self:stretch; max-width:none; margin:0 var(--coin-pad) 14px; }
+  body.relay-terminal.coin-page .coin-intervals>button { flex:1 0 auto; min-width:30px; padding:0 4px; font-size:12px; }
+}
+/* Very narrow cards: the interval row scrolls and fades at the right edge. */
+@container (max-width:380px) {
+  body.relay-terminal.coin-page .coin-chart-card>.coin-intervals { padding-inline-end:24px; -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); }
+}
+.coin-page .coin-chart { position:relative; display:flex; flex-direction:column; min-height:0; height:clamp(420px,54vh,560px); border-top:1px solid var(--line); background:var(--inset); }
+.coin-page .coin-chart iframe { display:block; width:100%; height:100%; border:0; }
+.coin-page .coin-chart-empty { position:relative; height:100%; min-height:0; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:32px 24px; text-align:center; overflow:hidden; }
+/* A small sunrise over the horizon while the first confirmed price is on its way. */
+.coin-page .coin-chart-empty>span { position:relative; display:block; width:200px; height:64px; margin-bottom:8px; overflow:hidden; font-size:0; color:transparent; }
+.coin-page .coin-chart-empty>span::before { content:''; position:absolute; left:50%; bottom:-30px; width:76px; height:76px; margin-left:-38px; border-radius:50%; background:radial-gradient(circle at 50% 45%,#ddd3ff,#a78bff 38%,#8b5cff 64%,#7c4dff 78%); box-shadow:0 0 40px #8b5cff55; animation:coin-sun-bob 4s ease-in-out infinite alternate; }
+.coin-page .coin-chart-empty>span::after { content:''; position:absolute; left:0; right:0; bottom:0; height:1px; background:linear-gradient(90deg,transparent,#a78bff88 30%,#7c4dffcc 50%,#4b2fa088 70%,transparent); }
+.coin-page .coin-chart-empty h3 { font-size:18px; margin:14px 0 6px; letter-spacing:-.01em; }
+.coin-page .coin-chart-empty p { color:var(--coin-muted); font-size:14px; max-width:440px; margin:0; line-height:1.6; }
+/* The source caption sits over the empty top margin of the plot instead of taking its own row. */
+.coin-page .coin-curve-caption { position:absolute; z-index:3; top:10px; left:var(--space-4,16px); right:100px; color:var(--coin-muted); font-size:12px; line-height:1.4; pointer-events:none; text-shadow:0 1px 2px #0b0b0c; }
+.coin-page .coin-curve-plot { flex:1 1 0; min-height:0; transition:opacity 220ms ease,transform 220ms var(--motion-ease,ease); }
+.coin-page .coin-curve-plot>div { animation:coin-chart-in 640ms var(--motion-ease,ease) both; }
+/* While the chart library loads (or reconnects) the plot shimmers like the rest of the site's skeletons. */
+.coin-page .coin-curve-plot:not(:has(*)) { display:grid; place-items:center; padding:40px 24px 24px; color:var(--coin-muted); font-size:14px; text-align:center; background:linear-gradient(100deg,transparent 20%,#ffffff07 42%,#ddd3ff0f 50%,#ffffff07 58%,transparent 80%); background-size:220% 100%; animation:coin-shimmer 1.6s linear infinite; }
+.coin-page .coin-chart.is-switching .coin-curve-plot { opacity:.35; transform:scale(.992); }
+.coin-page .coin-data-note { margin:0; min-height:40px; padding:11px var(--coin-pad); color:var(--coin-muted); font-size:12px; line-height:1.5; border-top:1px solid var(--line); }
+
+/* Trades and holders: comfortable 48px rows in a scroll area that fills the card; the tab bar carries a sliding
+   underline. */
+.coin-page .coin-activity { display:flex; flex-direction:column; flex:1 1 auto; min-height:0; }
+.coin-page .coin-activity-heading { display:flex; align-items:stretch; justify-content:space-between; gap:var(--space-3,12px); padding:0 var(--coin-pad) 0 var(--space-3,12px); border-bottom:1px solid var(--line); }
+.coin-page .coin-activity-heading .text-button { align-self:center; }
+body.relay-terminal.coin-page .coin-activity-heading .cv-tabs { position:relative; align-self:stretch; gap:4px; border-bottom:0; overflow:visible; padding:0; }
+body.relay-terminal.coin-page .coin-activity-heading .cv-tabs>button { width:112px; height:56px; justify-content:center; padding:0; font-size:15px; box-shadow:none; }
+body.relay-terminal.coin-page .coin-activity-heading .cv-tabs>button[aria-pressed=true] { color:var(--sunrise-cream,#ddd3ff); box-shadow:none; }
+body.relay-terminal.coin-page .coin-activity-heading .cv-tabs::after { content:''; position:absolute; left:16px; bottom:-1px; width:80px; height:2px; border-radius:2px; background:linear-gradient(90deg,#a78bff,#8b5cff); box-shadow:0 0 10px #8b5cff80; transform:translateX(0); transition:transform 360ms var(--motion-spring,cubic-bezier(.34,1.4,.64,1)); }
+body.relay-terminal.coin-page .coin-activity-heading .cv-tabs:has(>button:nth-child(2)[aria-pressed=true])::after { transform:translateX(116px); }
+/* Edge shadows show that a wide table scrolls sideways; panel-coloured covers hide them at either end. */
+.coin-page .coin-table-scroll { flex:1 1 0; min-height:320px; overflow:auto; overscroll-behavior-x:contain; scrollbar-width:thin; scrollbar-color:#3a3a42 transparent; background:linear-gradient(90deg,var(--panel) 30%,#0b0b0c00) left/24px 100% no-repeat local,linear-gradient(270deg,var(--panel) 30%,#0b0b0c00) right/24px 100% no-repeat local,linear-gradient(90deg,#000000d9,#00000000) left/14px 100% no-repeat scroll,linear-gradient(270deg,#000000d9,#00000000) right/14px 100% no-repeat scroll,var(--panel); }
+.coin-page .coin-activity table { width:100%; border-collapse:collapse; font-size:14px; white-space:nowrap; font-variant-numeric:tabular-nums; }
+body.relay-terminal.coin-page .coin-activity :is(th,td) { padding:13px var(--space-4,16px); text-align:right; border-bottom:1px solid var(--coin-line-soft); }
+body.relay-terminal.coin-page .coin-activity td { height:48px; }
+body.relay-terminal.coin-page .coin-activity th { position:sticky; top:0; z-index:2; padding-top:12px; padding-bottom:12px; background:var(--panel2); color:var(--coin-muted); font-size:13px; font-weight:500; letter-spacing:0; text-transform:none; border-bottom-color:var(--line); }
+body.relay-terminal.coin-page .coin-activity :is(th,td):first-child { text-align:left; padding-left:var(--coin-pad); }
+body.relay-terminal.coin-page .coin-activity :is(th,td):last-child { padding-right:var(--coin-pad); }
+body.relay-terminal.coin-page .coin-activity[data-activity-tab=holders] :is(th,td):nth-child(2) { text-align:left; }
+.coin-page .coin-activity a { color:var(--text); text-decoration:none; transition:color var(--motion-mid,260ms) ease; }
+.coin-page .coin-activity a:hover { color:var(--accent); }
+.coin-page .coin-activity .trade-buy { color:#8b5cff; }
+.coin-page .coin-activity .trade-sell { color:#7c4dff; }
+body.relay-terminal.coin-page .coin-activity td.activity-empty { padding:48px 24px; text-align:center; vertical-align:middle; color:var(--coin-muted); white-space:normal; font-size:14px; }
+/* An empty table fills the card so its message sits mid-card (and a Gotchi can peek over its foot). */
+body.relay-terminal.coin-page .coin-activity:has(td.activity-empty) table { height:100%; }
+body.relay-terminal.coin-page .coin-activity td.activity-empty.is-loading { vertical-align:top; }
+body.relay-terminal.coin-page .coin-activity tbody tr:nth-child(even) { background:#ffffff03; }
+body.relay-terminal.coin-page .coin-activity tbody tr:hover { background:#ffffff08; }
+.coin-page .coin-activity tbody tr:hover a { color:var(--sunrise-cream,#ddd3ff); }
+.coin-page .coin-activity .trade-row>td:first-child { box-shadow:inset 3px 0 0 var(--side-line,transparent); }
+.coin-page .coin-activity .trade-row.is-buy { --side:#2ee59d; --side-line:#2ee59d66; }
+.coin-page .coin-activity .trade-row.is-sell { --side:#ff4d6d; --side-line:#ff4d6d66; }
+.coin-page .coin-activity :is(.trade-buy,.trade-sell) { color:var(--side); }
+.coin-page .trade-side-chip { display:inline-flex; align-items:center; gap:6px; height:24px; padding:0 10px 0 9px; border-radius:999px; border:1px solid color-mix(in srgb,var(--side,#8b5cff) 35%,transparent); background:color-mix(in srgb,var(--side,#8b5cff) 12%,transparent); color:var(--side,#8b5cff); font-size:12px; font-weight:650; line-height:1; }
+.coin-page .trade-side-chip::before { content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
+.coin-page .coin-activity tr.is-arriving { animation:coin-row-in 620ms var(--motion-ease,ease) both; animation-delay:calc(var(--arrival,0)*80ms); }
+.coin-page .coin-activity tr.is-arriving>td { animation:coin-row-flash 2.2s ease-out both; animation-delay:calc(var(--arrival,0)*80ms); }
+.coin-page .coin-activity tr.is-arriving.is-sell>td { animation-name:coin-row-flash-sell; }
+/* Holders: medal ranks and a supply-share meter under each percentage. */
+.coin-page .coin-activity td.coin-holder-rank { position:relative; z-index:0; font-weight:700; }
+.coin-page .coin-activity td.coin-holder-rank::before { content:""; position:absolute; z-index:-1; left:calc(var(--coin-pad) - 7px); top:50%; width:26px; height:26px; margin-top:-13px; border-radius:50%; }
+.coin-page .coin-activity td.coin-holder-rank.is-top-1 { color:#2a1d06; }
+.coin-page .coin-activity td.coin-holder-rank.is-top-1::before { background:linear-gradient(140deg,#ddd3ff,#a78bff 45%,#ffb020); box-shadow:0 0 12px #a78bff66; }
+.coin-page .coin-activity td.coin-holder-rank.is-top-2 { color:#18181b; }
+.coin-page .coin-activity td.coin-holder-rank.is-top-2::before { background:linear-gradient(140deg,#f4f4f5,#c9c9cf 50%,#7a7a85); }
+.coin-page .coin-activity td.coin-holder-rank.is-top-3 { color:#7c4dff; }
+.coin-page .coin-activity td.coin-holder-rank.is-top-3::before { background:linear-gradient(140deg,#c9b8ff,#7c4dff 50%,#7c4dff); }
+body.relay-terminal.coin-page .coin-activity td.coin-holder-share { position:relative; padding-bottom:16px; }
+.coin-page .coin-activity td.coin-holder-share::before,.coin-page .coin-activity td.coin-holder-share::after { content:""; position:absolute; right:var(--space-4,16px); bottom:7px; height:4px; border-radius:4px; }
+.coin-page .coin-activity td.coin-holder-share::before { width:72px; background:#1f1f23; }
+.coin-page .coin-activity td.coin-holder-share::after { width:72px; background:linear-gradient(90deg,#6d45d9,#8b5cff); transform-origin:100% 50%; transform:scaleX(calc(max(4,var(--share,0))/100)); transition:transform var(--motion-slow,560ms) var(--motion-ease,ease); }
+.coin-page .coin-activity .holder-lp-badge { display:inline-flex; align-items:center; height:20px; margin-left:8px; padding:0 8px; border:1px solid #4a4a53; border-radius:999px; background:#1f1f23; color:var(--sunrise-gold,#a78bff); font-size:11px; font-weight:700; letter-spacing:.03em; vertical-align:2px; }
+/* A loading cell sketches the rows it is waiting for. */
+body.relay-terminal.coin-page .coin-activity td.activity-empty.is-loading { padding:20px var(--coin-pad); }
+.coin-page .coin-activity td.activity-empty.is-loading::before { content:""; display:block; height:220px; margin:0 0 16px; border-radius:6px; background:linear-gradient(100deg,#121214 20%,#1f1f23 42%,#1f1f23 50%,#1f1f23 58%,#121214 80%); background-size:220% 100%; -webkit-mask:repeating-linear-gradient(180deg,#000 0 36px,transparent 36px 48px); mask:repeating-linear-gradient(180deg,#000 0 36px,transparent 36px 48px); animation:coin-shimmer 1.6s linear infinite; }
+
+/* Market overview: a big price, a 2x3 grid of stat tiles and a wide graduation bar. */
+.coin-page .coin-price { display:grid; gap:6px; padding:0 0 var(--space-5,20px); }
+.coin-page .coin-price>span,.coin-page .coin-price small { font-size:13px; color:var(--coin-muted); overflow-wrap:anywhere; }
+.coin-page .coin-price strong { font-size:32px; line-height:1.15; letter-spacing:-.025em; font-weight:700; color:var(--sunrise-cream,#ddd3ff); overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+.coin-page .coin-stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--space-3,12px); padding-top:var(--space-5,20px); border-top:1px solid var(--line); }
+.coin-page .coin-overview { container-type:inline-size; }
+@container (max-width:300px) { .coin-page .coin-stats { grid-template-columns:minmax(0,1fr); } }
+.coin-page .coin-stats>div { display:grid; align-content:start; gap:6px; min-width:0; padding:14px 16px; border:1px solid var(--line); border-radius:var(--coin-radius-inset); background:var(--inset); transition:border-color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease); }
+.coin-page .coin-stats>div:hover { border-color:var(--line-strong,#3a3a42); transform:translateY(-1px); }
+.coin-page .coin-stats span { color:var(--coin-muted); font-size:13px; line-height:1.35; }
+.coin-page .coin-stats strong { font-size:22px; line-height:1.15; letter-spacing:-.02em; font-weight:650; font-variant-numeric:tabular-nums; overflow-wrap:anywhere; }
+.coin-page .coin-stats>div:nth-child(5) strong { color:#8ff0c9; }
+.coin-page .coin-stats>div:nth-child(6) strong { color:#ff8fa3; }
+.coin-page .coin-stats>div:nth-child(5) strong::before,.coin-page .coin-stats>div:nth-child(6) strong::before { content:""; display:inline-block; width:8px; height:8px; margin:0 8px 3px 0; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; vertical-align:middle; }
+.coin-page #coin-change:is(.positive,.negative) { display:inline-flex; align-items:center; height:24px; padding:0 9px; border-radius:999px; font-size:12px; font-weight:650; font-variant-numeric:tabular-nums; }
+.coin-page #coin-change.positive { background:#2ee59d1f; border:1px solid #2ee59d40; }
+.coin-page #coin-change.negative { background:#ff4d6d1f; border:1px solid #ff4d6d40; }
+.coin-page .coin-progress-wrap { position:relative; margin-top:var(--space-4,16px); padding:16px 18px 14px; border:1px solid var(--line); border-radius:var(--coin-radius-inset); background:radial-gradient(ellipse at 100% 100%,#a78bff0f,transparent 55%),var(--inset); overflow:hidden; }
+.coin-page .coin-progress-wrap>div { display:flex; justify-content:space-between; align-items:baseline; gap:10px; color:var(--coin-muted); font-size:13px; }
+.coin-page .coin-progress-wrap strong { color:var(--text); font-size:16px; font-weight:650; font-variant-numeric:tabular-nums; }
+.coin-page .coin-progress-track { position:relative; height:12px; margin:12px 32px 12px 0; border-radius:6px; background:#2a2a30; container-type:inline-size; }
+.coin-page .coin-progress-track>progress { position:absolute; inset:0; width:100%; height:100%; margin:0; opacity:0; }
+.coin-page .coin-progress-fill { position:absolute; inset:0; overflow:hidden; border-radius:inherit; background:linear-gradient(90deg,#4b2fa0,#6d45d9 40%,#8b5cff 80%,#a78bff); transform-origin:0 50%; transform:scaleX(calc(var(--progress,0)/100)); transition:transform var(--motion-slow,560ms) var(--motion-ease,ease); animation:coin-fill 1.4s var(--motion-ease,ease) .2s backwards; }
+.coin-page .coin-progress-fill::after { content:""; position:absolute; inset:0; background:linear-gradient(100deg,transparent 25%,#ffffff8c 50%,transparent 75%); transform:translateX(-130%); animation:coin-sheen 3s ease-in-out 1.6s infinite; }
+/* The leading edge glows and the sun at the end of the track marks graduation. */
+.coin-page .coin-progress-spark { position:absolute; left:-7px; top:50%; width:14px; height:14px; margin-top:-7px; border-radius:50%; background:#ddd3ff; box-shadow:0 0 12px #a78bff,0 0 2px #fff; transform:translateX(calc(var(--progress,0)*1cqw)); transition:transform var(--motion-slow,560ms) var(--motion-ease,ease); animation:coin-spark 1.4s var(--motion-ease,ease) .2s backwards; }
+.coin-page .coin-progress-sun { position:absolute; right:-32px; top:50%; width:24px; height:24px; margin-top:-12px; border-radius:50%; background:radial-gradient(circle at 42% 38%,#ddd3ff,#a78bff 45%,#8b5cff 70%,#7c4dff00 74%); box-shadow:0 0 14px #a78bff55; opacity:.5; transition:opacity var(--motion-slow,560ms) ease; }
+.coin-page .coin-progress-wrap.is-hot .coin-progress-sun { opacity:1; animation:coin-sun-pulse 2.4s ease-in-out infinite; }
+.coin-page .coin-progress-wrap.is-hot #coin-progress-label { color:var(--sunrise-gold,#a78bff); }
+.coin-page .coin-progress-wrap small { display:block; color:var(--coin-muted); font-size:12px; line-height:1.4; }
+.coin-page .coin-external { display:block; margin-top:var(--space-4,16px); text-align:center; color:var(--coin-muted); text-decoration:none; font-size:13px; }
+.coin-page .coin-external:hover { color:var(--accent); }
+
+/* About this coin. */
+.coin-page .coin-details { margin:0; }
+.coin-page .coin-details>div { display:flex; justify-content:space-between; align-items:baseline; gap:16px; padding:11px 0; border-bottom:1px solid var(--coin-line-soft); font-size:14px; }
+.coin-page .coin-details>div:first-child { padding-top:0; }
+.coin-page .coin-details>div:last-child { border-bottom:0; }
+.coin-page .coin-details dt { color:var(--coin-muted); flex-shrink:0; }
+.coin-page .coin-details dd { margin:0; text-align:right; overflow-wrap:anywhere; }
+.coin-page .coin-details a { color:var(--text); text-decoration:none; }
+.coin-page .coin-details a:hover { color:var(--accent); }
+body.relay-terminal.coin-page .coin-description-section { margin-top:0; padding-top:var(--space-4,16px); border-top:1px solid var(--coin-line-soft); font-size:14px; }
+body.relay-terminal.coin-page .coin-description-section>strong { color:var(--coin-muted); font-size:13px; font-weight:500; }
+body.relay-terminal.coin-page .coin-description-section .coin-description { margin-top:6px; }
+.coin-page .coin-description { color:#c9c9cf; line-height:1.6; font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; margin:6px 0 0; }
+.coin-page .coin-socials { display:flex; flex-wrap:wrap; gap:10px; margin-top:var(--space-4,16px); }
+.coin-page .coin-socials:empty { display:none; }
+.coin-page .coin-socials a { display:inline-flex; align-items:center; min-height:36px; padding:0 14px; border:1px solid var(--line); border-radius:999px; background:var(--panel2); color:var(--text); text-decoration:none; font-size:13px; font-weight:500; transition:transform var(--motion-mid,260ms) var(--motion-ease,ease),border-color var(--motion-mid,260ms) ease,background-color var(--motion-mid,260ms) ease; }
+.coin-page .coin-socials a:hover { transform:translateY(-2px); border-color:var(--coin-line-hover); background:var(--hover,#18181b); }
+
+/* Loading, notices and screen-reader announcements. */
+.coin-page .coin-loading { min-height:420px; text-align:center; display:flex; align-items:center; justify-content:center; flex-direction:column; }
+.coin-page .coin-loading h1 { font-size:24px; letter-spacing:-.015em; margin:18px 0 6px; }
+.coin-page .coin-loading p { color:var(--coin-muted); font-size:15px; margin:0; }
+.coin-page .coin-loading-mark { position:relative; display:grid; place-items:center; width:80px; height:80px; border-radius:50%; background:radial-gradient(circle at 35% 30%,#2a2a30,#121214); animation:coin-bob 2.4s ease-in-out infinite; }
+.coin-page .coin-loading-mark>i { position:absolute; inset:-5px; border-radius:50%; border:2px solid transparent; border-top-color:#a78bff; border-right-color:#7c4dff80; animation:coin-spin 1.1s linear infinite; }
+.coin-page .coin-loading-mark>b { width:34px; height:34px; border-radius:50%; background:radial-gradient(circle at 45% 40%,#ddd3ff,#a78bff 45%,#8b5cff 70%,#7c4dff00 74%); box-shadow:0 0 22px #a78bff66; }
+.coin-page .coin-notice { border:1px solid #3a3a42; background:#121214; color:#c9b8ff; padding:14px 18px; border-radius:var(--coin-radius); line-height:1.55; font-size:14px; }
+.coin-page .coin-notice:not([hidden]) { display:flex; align-items:center; gap:12px; margin:0 0 var(--space-5,20px); }
+.coin-page .coin-notice::before { content:"!" / ""; flex:0 0 26px; display:grid; place-items:center; width:26px; height:26px; border-radius:50%; background:#7c4dff2e; color:#ff8fa3; font-weight:750; font-size:14px; }
+/* A coin that is not listed: a roomier notice with a way back (and room for a Gotchi to peek over its foot). */
+.coin-page .coin-notice.is-missing { flex-wrap:wrap; align-items:center; gap:12px 18px; min-height:132px; padding:26px 28px; border-color:#3a3a42; background:radial-gradient(ellipse at 100% 0,#a78bff12,transparent 55%),#121214; color:#c9b8ff; font-size:16px; }
+.coin-page .coin-notice.is-missing::before { width:32px; height:32px; flex-basis:32px; font-size:16px; }
+.coin-page .coin-notice.is-missing .coin-notice-action { margin-left:auto; margin-right:210px; }
+.coin-page .coin-notice.is-missing.motion-peek-host { padding-bottom:30px; }
+@media (max-width:640px) { .coin-page .coin-notice.is-missing { padding:20px; font-size:15px; } .coin-page .coin-notice.is-missing .coin-notice-action { margin:4px 0 0; } }
+.coin-page .coin-announcement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.coin-page .positive { color:#2ee59d; }.coin-page .negative { color:#ff4d6d; }
+.coin-page button:focus-visible,.coin-page a:focus-visible { outline:2px solid var(--sunrise-gold,#a78bff); outline-offset:2px; }
+
+/* Refresh buttons show a small ring while a read is in flight. */
+.coin-page :is(#coin-refresh,#coin-activity-refresh,#coin-rewards-refresh):is(:disabled,[aria-disabled=true]) { display:inline-flex; align-items:center; gap:7px; opacity:.85; }
+.coin-page :is(#coin-refresh,#coin-activity-refresh,#coin-rewards-refresh):is(:disabled,[aria-disabled=true])::before { content:""; width:10px; height:10px; flex:0 0 10px; border-radius:50%; border:2px solid #a78bff33; border-top-color:#a78bff; animation:coin-spin .8s linear infinite; }
+
+.coin-page .pump-operation[hidden]{display:none}.coin-page .pump-operation-facts{display:grid;gap:10px;padding:14px 0;border-top:1px solid var(--line);font-size:13px}.coin-page .pump-operation-facts>div{display:flex;justify-content:space-between;gap:12px}.coin-page .pump-operation-facts dt{color:var(--muted)}.coin-page .pump-operation-facts dd{margin:0;text-align:right;overflow-wrap:anywhere}.coin-page .pump-operation-actions{display:flex;flex-wrap:wrap;gap:10px}.coin-page .pump-operation-actions .primary{width:100%}.coin-page .pump-operation-status{font-size:13px;line-height:1.6}.coin-page .pump-operation-actions a{text-decoration:none;color:var(--text)}
+
+/* Identity details: a slowly turning sunrise ring around the avatar and a colour-coded stage pill. */
+@keyframes coin-spin{to{transform:rotate(360deg)}}
+@keyframes coin-breathe{50%{opacity:.35;transform:scale(.7)}}
+@keyframes coin-fill{from{transform:scaleX(0)}}
+@keyframes coin-spark{from{transform:translateX(0)}}
+@keyframes coin-sheen{0%,50%{transform:translateX(-130%)}100%{transform:translateX(260%)}}
+@keyframes coin-bob{50%{transform:translate(2px,-3px)}}
+@keyframes coin-sun-bob{to{transform:translateY(-10px)}}
+@keyframes coin-sun-pulse{50%{transform:scale(1.18);opacity:.75}}
+@keyframes coin-row-in{from{opacity:0;transform:translate3d(0,-10px,0)}to{opacity:1;transform:none}}
+@keyframes coin-row-flash{0%,30%{background-color:#2ee59d22}100%{background-color:transparent}}
+@keyframes coin-row-flash-sell{0%,30%{background-color:#ff4d6d20}100%{background-color:transparent}}
+@keyframes coin-shimmer{from{background-position:120% 0}to{background-position:-120% 0}}
+@keyframes coin-chart-in{from{opacity:0;transform:translate3d(0,8px,0)}to{opacity:1;transform:none}}
+.coin-page .coin-avatar { position:relative; isolation:isolate; padding:3px; border:0; box-shadow:0 14px 30px -14px #000c; }
+.coin-page .coin-avatar::before { content:""; position:absolute; z-index:-1; inset:-40%; background:conic-gradient(#a78bff,#7c4dff 30%,#4b2fa0 55%,#6d45d9 75%,#a78bff); animation:coin-spin 9s linear infinite; }
+.coin-page .coin-avatar>span { display:grid; place-items:center; width:100%; height:100%; border-radius:21px; background:linear-gradient(140deg,#3a3a42,#18181b); }
+.coin-page .coin-avatar img { border-radius:21px; background:#0b0b0c; transition:transform 600ms var(--motion-ease,ease); }
+.coin-page .coin-avatar:hover img { transform:scale(1.06); }
+.coin-page .coin-title-row h1 { color:var(--sunrise-cream,#ddd3ff); }
+.coin-page .coin-stage { gap:7px; }
+.coin-page .coin-stage::before { content:""; width:7px; height:7px; border-radius:50%; background:currentColor; box-shadow:0 0 8px currentColor; animation:coin-breathe 2.4s ease-in-out infinite; }
+.coin-page .coin-stage[data-curve-status=migrating] { color:#ddd3ff; border-color:#5e5e67; background:#1f1f23; }
+.coin-page .coin-stage[data-stage=graduated] { color:#8ff0c9; border-color:#4a4a53; background:#121214; }
+.coin-page .coin-stage[data-stage=graduated]::before { animation:none; }
+.coin-page .coin-pair-badge { transition:border-color var(--motion-mid,260ms) ease; }
+.coin-page .coin-pair-badge:hover { border-color:var(--coin-line-hover); }
+.coin-page .coin-headline strong { background:linear-gradient(100deg,#ddd3ff,#a78bff 45%,#8b5cff); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.coin-page .coin-headline strong:is(.motion-up,.motion-down) { color:var(--sunrise-cream,#ddd3ff); background:none; -webkit-text-fill-color:currentColor; }
+.coin-page .coin-back-row a { display:inline-block; transition:color var(--motion-mid,260ms) ease,transform var(--motion-mid,260ms) var(--motion-ease,ease); }
+.coin-page .coin-back-row a:hover { transform:translateX(-3px); }
+.coin-page .coin-network::before { animation:coin-breathe 2.4s ease-in-out infinite; }
+
+/* Pump.fun coins (v71.18): verified fee-sharing recipients, rewards and the managed strategy, as inset tiles. */
+.coin-page .coin-pump-classic .pc-heading { display:flex; justify-content:space-between; align-items:center; gap:12px; min-height:28px; margin-bottom:8px; }
+.coin-page .coin-pump-classic h2 { font-size:var(--text-card,17px); font-weight:650; margin:0; letter-spacing:-.01em; }
+.coin-page .coin-pump-classic .pc-mode { display:inline-flex; align-items:center; height:26px; padding:0 11px; border-radius:999px; background:#18181b; border:1px solid #3a3a42; color:#ddd3ff; font-size:12px; font-weight:600; white-space:nowrap; }
+.coin-page .coin-pump-classic h3 { font-size:14px; margin:0 0 10px; color:var(--text); font-weight:650; }
+.coin-page .coin-pump-classic .pc-note { font-size:14px; line-height:1.6; color:var(--muted); margin:6px 0 16px; }
+.coin-page .coin-pump-classic .pc-note.negative { color:#a78bff; }
+.coin-page .coin-pump-classic .pc-fine { font-size:12px; line-height:1.55; color:var(--muted); margin:10px 0 0; }
+.coin-page .coin-pump-classic>.pc-facts,.coin-page .coin-pump-classic .pc-section { margin:0 0 var(--space-4,16px); padding:16px 18px; border:1px solid var(--line); border-radius:var(--coin-radius-inset); background:var(--inset); }
+.coin-page .coin-pump-classic .pc-facts { display:grid; gap:9px; margin:0; }
+.coin-page .coin-pump-classic .pc-section>.pc-facts+.pc-facts { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
+.coin-page .coin-pump-classic .pc-facts>div { display:flex; justify-content:space-between; gap:12px; font-size:13px; }
+.coin-page .coin-pump-classic .pc-facts dt { color:var(--muted); }
+.coin-page .coin-pump-classic .pc-facts dd { margin:0; text-align:right; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }
+.coin-page .coin-pump-classic a { color:var(--text); }
+.coin-page .coin-pump-classic .pc-status[data-status=active] { color:#2ee59d; }
+.coin-page .coin-pump-classic .pc-status:is([data-status=paused],[data-status=retired]) { color:#a78bff; }
+.coin-page .coin-pump-classic .pc-events { list-style:none; margin:0; padding:0; display:grid; }
+.coin-page .coin-pump-classic .pc-events li { padding:10px 0; border-top:1px solid var(--line); font-size:13px; }
+.coin-page .coin-pump-classic .pc-events li>div { display:flex; justify-content:space-between; gap:10px; }
+.coin-page .coin-pump-classic .pc-events time { color:var(--muted); font-size:12px; white-space:nowrap; }
+.coin-page .coin-pump-classic .pc-events p { margin:4px 0; color:var(--muted); line-height:1.5; overflow-wrap:anywhere; }
+/* Reward cycles read as a timeline: a sunrise dot per cycle on a thin rail. */
+.coin-page .coin-pump-classic .pc-timeline { gap:0; margin-top:4px; }
+.coin-page .coin-pump-classic .pc-timeline>div { position:relative; display:grid; gap:3px; padding:6px 0 12px 22px; }
+.coin-page .coin-pump-classic .pc-timeline>div::before { content:""; position:absolute; left:4px; top:11px; width:10px; height:10px; border-radius:50%; background:linear-gradient(140deg,#ddd3ff,#8b5cff); box-shadow:0 0 10px #8b5cff80; }
+.coin-page .coin-pump-classic .pc-timeline>div::after { content:""; position:absolute; left:8px; top:24px; bottom:-2px; width:2px; border-radius:2px; background:#1f1f23; }
+.coin-page .coin-pump-classic .pc-timeline>div:last-child::after { display:none; }
+.coin-page .coin-pump-classic .pc-timeline dt { color:var(--text); font-weight:600; }
+.coin-page .coin-pump-classic .pc-timeline dd { text-align:left; color:var(--muted); }
+
+/* Full-width extras on wide screens: the reward and Pump.fun cards flow into balanced columns. */
+@media (min-width:900px) {
+  body.relay-terminal.coin-page .coin-rewards { column-count:2; column-gap:var(--space-8,40px); }
+  body.relay-terminal.coin-page .coin-rewards>.coin-card-heading { column-span:all; margin-bottom:4px; }
+  body.relay-terminal.coin-page .coin-rewards>* { break-inside:avoid; }
+  body.relay-terminal.coin-page .coin-pump-classic { column-count:2; column-gap:var(--space-5,20px); }
+  body.relay-terminal.coin-page .coin-pump-classic>:is(.pc-heading,.pc-note) { column-span:all; }
+  body.relay-terminal.coin-page .coin-pump-classic>* { break-inside:avoid; }
+  body.relay-terminal.coin-page .coin-pump-classic .pc-section>h3:first-child { margin-top:0; }
+}
+@media (min-width:1200px) { body.relay-terminal.coin-page .coin-pump-classic { column-count:3; } }
+
+/* AI agent section (agent coins): below the market, as one card with inset panels. Base styles live in agents.css.
+   The tab strip carries a sliding indicator that agent-view.mjs positions through --tab-x / --tab-s. */
+body.relay-terminal.coin-page .coin-agent { margin-top:var(--coin-gap); padding:var(--coin-pad); gap:var(--space-5,20px); }
+body.relay-terminal.coin-page .coin-agent .agent-head { grid-template-columns:64px minmax(0,1fr) auto; gap:var(--space-3,12px) var(--space-5,20px); }
+body.relay-terminal.coin-page .coin-agent .agent-avatar { width:64px; height:64px; border-radius:10px; }
+body.relay-terminal.coin-page .coin-agent .agent-avatar>span { font-size:24px; }
+body.relay-terminal.coin-page .coin-agent .agent-head-copy h2 { margin:2px 0 6px; font-size:var(--text-section,22px); line-height:1.2; letter-spacing:-.015em; }
+body.relay-terminal.coin-page .coin-agent .agent-head-copy .eyebrow { margin:0; font-size:11px; letter-spacing:.1em; }
+body.relay-terminal.coin-page .coin-agent .agent-state { gap:10px; }
+body.relay-terminal.coin-page .coin-agent .agent-tabs { position:relative; isolation:isolate; grid-column:auto; align-self:center; display:inline-flex; gap:2px; padding:3px; border-radius:var(--coin-radius-inset); overflow-x:auto; scrollbar-width:none; overscroll-behavior-x:contain; }
+body.relay-terminal.coin-page .coin-agent .agent-tabs::-webkit-scrollbar { display:none; }
+body.relay-terminal.coin-page .coin-agent .agent-tabs::before { content:""; position:absolute; z-index:0; left:0; top:3px; bottom:3px; width:100px; border:1px solid var(--sel-line,#6d45d9); border-radius:5px; background:var(--sel-bg,#1a1430); transform-origin:0 50%; transform:translateX(var(--tab-x,3px)) scaleX(var(--tab-s,0)); transition:transform 380ms var(--motion-spring,cubic-bezier(.34,1.4,.64,1)); pointer-events:none; }
+body.relay-terminal.coin-page .coin-agent .agent-tabs>button { position:relative; z-index:1; flex:0 0 auto; height:36px; min-width:0; padding:0 var(--space-4,16px); border-radius:5px; font-size:14px; transition:color var(--motion-mid,260ms) ease; }
+body.relay-terminal.coin-page .coin-agent .agent-tabs>button[aria-pressed=true] { background:transparent; border-color:transparent; color:var(--sel-text,#c9b8ff); }
+body.relay-terminal.coin-page .coin-agent .agent-tabs:not(.has-indicator)>button[aria-pressed=true] { background:var(--sel-bg,#1a1430); border-color:var(--sel-line,#6d45d9); }
+body.relay-terminal.coin-page .coin-agent .agent-tabs:not(.has-indicator)::before { display:none; }
+body.relay-terminal.coin-page .coin-agent .agent-body { gap:var(--space-4,16px); }
+body.relay-terminal.coin-page .coin-agent .agent-grid { gap:var(--space-4,16px); }
+body.relay-terminal.coin-page .coin-agent :is(.agent-panel,.agent-event,.agent-action) { padding:18px 20px; border-radius:var(--coin-radius-inset); background:var(--inset); border:1px solid var(--line); }
+body.relay-terminal.coin-page .coin-agent .agent-panel h3 { margin:0 0 12px; font-size:15px; }
+body.relay-terminal.coin-page .coin-agent .agent-dl { gap:10px 14px; }
+body.relay-terminal.coin-page .coin-agent .agent-mission { margin:0 0 12px; font-size:14px; line-height:1.6; }
+body.relay-terminal.coin-page .coin-agent .agent-fund-choice { position:relative; isolation:isolate; gap:2px; padding:3px; border-radius:var(--coin-radius-inset); }
+body.relay-terminal.coin-page .coin-agent .agent-fund-choice::before { content:""; position:absolute; z-index:0; top:3px; bottom:3px; left:3px; width:calc(50% - 4px); border-radius:5px; background:var(--sel-bg,#1a1430); border:1px solid var(--sel-line,#6d45d9); transition:transform 380ms var(--motion-spring,cubic-bezier(.34,1.4,.64,1)); }
+body.relay-terminal.coin-page .coin-agent .agent-fund-choice:has(>button:last-child[aria-pressed=true])::before { transform:translateX(calc(100% + 2px)); }
+body.relay-terminal.coin-page .coin-agent .agent-fund-choice>button { position:relative; z-index:1; min-height:38px; padding:0 14px; border-radius:5px; font-size:14px; transition:color var(--motion-mid,260ms) ease; }
+body.relay-terminal.coin-page .coin-agent .agent-fund-choice>button[aria-pressed=true] { background:transparent; border-color:transparent; color:var(--sel-text,#c9b8ff); }
+/* Reward cycles in the Treasury tab read as a timeline. */
+body.relay-terminal.coin-page .coin-agent .agent-cycle { position:relative; margin:0; padding:6px 0 14px 24px; font-size:13px; line-height:1.55; }
+body.relay-terminal.coin-page .coin-agent .agent-cycle::before { content:""; position:absolute; left:4px; top:12px; width:10px; height:10px; border-radius:50%; background:linear-gradient(140deg,#ddd3ff,#8b5cff); box-shadow:0 0 10px #8b5cff80; }
+body.relay-terminal.coin-page .coin-agent .agent-cycle::after { content:""; position:absolute; left:8px; top:26px; bottom:-4px; width:2px; border-radius:2px; background:#1f1f23; }
+body.relay-terminal.coin-page .coin-agent .agent-cycle:last-of-type::after { display:none; }
+/* Wide screens: the four overview panels flow into two balanced columns instead of rows of equal height. */
+@media (min-width:801px) {
+  body.relay-terminal.coin-page .coin-agent .agent-grid { display:block; column-count:2; column-gap:var(--space-4,16px); }
+  body.relay-terminal.coin-page .coin-agent .agent-grid>.agent-panel { break-inside:avoid; margin:0 0 var(--space-4,16px); }
+  body.relay-terminal.coin-page .coin-agent .agent-grid>.agent-panel:last-child { margin-bottom:0; }
+}
+
+/* Tablet: cards flow in two columns: trade beside the overview, chart and trades full width, facts below. */
+@media (max-width:1000px) {
+  .coin-page .coin-layout { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; }
+  .coin-page .coin-market-column,.coin-page .coin-sidebar { display:contents; }
+  .coin-page #coin-trade { order:1; }
+  .coin-page .coin-overview { order:2; }
+  .coin-page .coin-chart-card { order:3; grid-column:1/-1; }
+  .coin-page .coin-activity { order:4; grid-column:1/-1; }
+  .coin-page .coin-info { order:5; grid-column:1/-1; }
+  .coin-page .coin-creator-earnings { order:6; grid-column:1/-1; }
+  .coin-page .coin-hook { order:7; grid-column:1/-1; }
+  .coin-page .coin-table-scroll { flex:0 1 auto; min-height:0; max-height:520px; }
+  body.relay-terminal.coin-page .coin-agent .agent-head { grid-template-columns:64px minmax(0,1fr); }
+  body.relay-terminal.coin-page .coin-agent .agent-tabs { grid-column:1/-1; justify-self:start; max-width:100%; }
+}
+/* Phones: one column ordered header, trade, chart, stats, activity, about; wide tables scroll inside their card. */
+@media (max-width:640px) {
+  .coin-page { --coin-gap:var(--space-4,16px); --coin-pad:var(--card-pad,18px); }
+  .coin-page .coin-back-row { margin-bottom:var(--space-4,16px); font-size:13px; }
+  .coin-page .coin-network { font-size:12px; }
+  .coin-page .coin-heading { flex-direction:column; align-items:stretch; gap:var(--space-4,16px); margin-bottom:var(--space-6,24px); }
+  .coin-page .coin-identity { align-items:flex-start; gap:var(--space-4,16px); }
+  .coin-page .coin-avatar { width:64px; height:64px; border-radius:10px; }
+  .coin-page .coin-avatar>span,.coin-page .coin-avatar img { border-radius:15px; }
+  .coin-page .coin-identity-text { gap:8px 12px; }
+  .coin-page .coin-title-row { gap:6px 10px; }
+  .coin-page .coin-symbol { font-size:14px; }
+  .coin-page .coin-headline { min-width:0; justify-items:start; text-align:left; padding:14px 18px 12px; }
+  .coin-page .coin-headline strong { font-size:30px; }
+  .coin-page .coin-headline-meta { justify-content:flex-start; }
+  .coin-page .coin-headline small { max-width:none; }
+  .coin-page .coin-layout { grid-template-columns:minmax(0,1fr); }
+  .coin-page .coin-chart-card { order:2; }
+  .coin-page .coin-overview { order:3; }
+  .coin-page .coin-chart-card>.coin-card-heading { padding:16px var(--coin-pad) 12px; }
+  .coin-page .coin-chart { height:300px; }
+  .coin-page .coin-price strong { font-size:28px; }
+  .coin-page .coin-stats { gap:10px; }
+  .coin-page .coin-stats>div { padding:12px 14px; }
+  .coin-page .coin-stats strong { font-size:20px; }
+  .coin-page .coin-table-scroll { max-height:440px; }
+  body.relay-terminal.coin-page .coin-activity :is(th,td) { padding-left:12px; padding-right:12px; }
+  body.relay-terminal.coin-page .coin-activity-heading .cv-tabs>button { width:96px; height:52px; }
+  body.relay-terminal.coin-page .coin-activity-heading .cv-tabs::after { width:68px; left:14px; }
+  body.relay-terminal.coin-page .coin-activity-heading .cv-tabs:has(>button:nth-child(2)[aria-pressed=true])::after { transform:translateX(100px); }
+  body.relay-terminal.coin-page .coin-agent { padding:var(--coin-pad); }
+  body.relay-terminal.coin-page .coin-agent .agent-head { grid-template-columns:52px minmax(0,1fr); }
+  body.relay-terminal.coin-page .coin-agent .agent-avatar { width:52px; height:52px; border-radius:15px; }
+  body.relay-terminal.coin-page .coin-agent .agent-tabs { justify-self:stretch; padding-inline-end:24px; -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); }
+  body.relay-terminal.coin-page .coin-agent .agent-tabs>button { padding:0 12px; }
+  body.relay-terminal.coin-page .coin-agent :is(.agent-panel,.agent-event,.agent-action) { padding:14px 16px; }
+}
+/* Narrow phones: the interval row no longer fits, so it scrolls and fades at the right edge. */
+@media (max-width:370px) {
+  body.relay-terminal.coin-page .coin-chart-card>.coin-intervals { padding-inline-end:24px; -webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); mask-image:linear-gradient(90deg,#000 calc(100% - 28px),transparent); }
+}
+/* Touch screens: small text buttons and table links get a 44px tap area without changing the layout,
+   and the chart toolbar buttons grow to 40px. */
+@media (pointer:coarse) {
+  .coin-page :is(#coin-copy,#coin-refresh,#coin-activity-refresh,#coin-rewards-refresh,.coin-rewards-activity,.coin-external) { position:relative; }
+  .coin-page :is(#coin-copy,#coin-refresh,#coin-activity-refresh,#coin-rewards-refresh,.coin-rewards-activity,.coin-external)::after { content:""; position:absolute; inset:-12px -8px; }
+  .coin-page .coin-activity td a { display:inline-block; padding:12px 0; margin:-12px 0; }
+  body.relay-terminal.coin-page :is(.coin-chart-controls,.coin-intervals)>button,body.relay-terminal.coin-page .coin-agent .agent-tabs>button { height:40px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .coin-page .coin-avatar::before,.coin-page .coin-stage::before,.coin-page .coin-network::before,.coin-page .coin-chart-card .coin-card-heading>div>span::before,.coin-page .coin-progress-fill,.coin-page .coin-progress-fill::after,.coin-page .coin-progress-spark,.coin-page .coin-progress-sun,.coin-page .coin-loading-mark,.coin-page .coin-loading-mark>i,.coin-page .coin-chart-empty>span::before,.coin-page .coin-curve-plot>div,.coin-page .coin-curve-plot:not(:has(*)),.coin-page .coin-activity tr.is-arriving,.coin-page .coin-activity tr.is-arriving>td,.coin-page .coin-activity td.activity-empty.is-loading::before,.coin-page :is(#coin-refresh,#coin-activity-refresh,#coin-rewards-refresh)::before { animation:none!important; }
+  .coin-page .coin-progress-fill::after { display:none; }
+  .coin-page .coin-progress-fill,.coin-page .coin-progress-spark,.coin-page .coin-socials a,.coin-page .coin-back-row a,.coin-page .coin-curve-plot,.coin-page .coin-avatar img,.coin-page .coin-stats>div,.coin-page .coin-activity td.coin-holder-share::after,body.relay-terminal.coin-page .coin-activity-heading .cv-tabs::after,body.relay-terminal.coin-page .coin-agent .agent-tabs::before,body.relay-terminal.coin-page .coin-agent .agent-fund-choice::before,body.relay-terminal.coin-page .coin-creator-compact { transition:none; }
+  .coin-page .coin-socials a:hover,.coin-page .coin-back-row a:hover,.coin-page .coin-stats>div:hover,.coin-page .coin-avatar:hover img,body.relay-terminal.coin-page .coin-creator-compact:hover,body.relay-terminal.coin-page :is(.coin-overview,.coin-info,.coin-creator-earnings,.coin-trade-panel):hover { transform:none; }
+  .coin-page .coin-chart.is-switching .coin-curve-plot { opacity:1; transform:none; }
+}
+
+/* v71.34: Pump.fun launch-option section (Diamond Hands, Earned, Insured). */
+.pump-classic-coin .pc-option-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.pump-classic-coin .pc-option-head h3{margin:0}
+.pump-classic-coin .pc-option h4{margin:14px 0 6px;font-size:13px;font-weight:600;color:var(--muted,#9a9aa3);letter-spacing:.3px;text-transform:uppercase}
+.pump-classic-coin .pc-option .pc-status[data-status=failed],.pump-classic-coin .pc-option .pc-status[data-status=holders]{background:#18181b;border-color:#4a4a53;color:#ff8fa3}
+.pump-classic-coin .pc-option .pc-status[data-status=earned],.pump-classic-coin .pc-option .pc-status[data-status=released],.pump-classic-coin .pc-option .pc-status[data-status=bonus]{background:#18181b;border-color:#4a4a53;color:#8ff0c9}
+/* Reward baskets on Pump.fun (v71.35): one row per extra asset under the holder-rewards note. */
+.coin-page .coin-pump-classic .pc-basket { margin:6px 0 2px; }
+.coin-page .coin-pump-classic .pc-basket>div>span:first-child { font-weight:600; letter-spacing:.01em; }
+
+/* ---- v71.39 Robinhood Chain coins ----------------------------------------------------------------------------- */
+.coin-page .rh-trade .rh-claim-box{margin-top:16px;padding:14px;border:1px solid var(--line,#1f1f23);border-radius:var(--radius-inset,12px);background:var(--inset,#0b0b0c)}
+.coin-page .rh-trade .rh-claim-box h3{margin:0 0 8px;font-size:14px;font-weight:650}
+.coin-page .rh-trade .rh-claim-box .ct-note{margin:0 0 10px}
+.coin-page .rh-trade [data-rh-note].negative{color:var(--negative,#ff4d6d)}
+.coin-page #coin-activity-table tr[data-side=buy] td:nth-child(2){color:#2ee59d}
+.coin-page #coin-activity-table tr[data-side=sell] td:nth-child(2){color:#ff4d6d}
+/* Robinhood coins (v71.41): where else the coin trades, and the price chart drawn from the pool's trades. */
+.coin-page .coin-trade-links{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:12px 18px 16px;font-size:13px}
+.coin-page .coin-trade-links-label{color:var(--muted,#9a9aa3)}
+.coin-page .coin-trade-link{padding:4px 10px;border:1px solid var(--line,#1f1f23);border-radius:999px;color:var(--text,#f4f4f5);text-decoration:none;background:var(--inset,#0b0b0c)}
+.coin-page .coin-trade-link:hover{border-color:var(--accent,#8b5cff)}
+.coin-page .coin-price-chart{display:block;width:100%;height:auto;max-height:260px}
+.coin-page .coin-price-chart-line{stroke:var(--accent,#8b5cff);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.coin-page .coin-price-chart-area{fill:var(--accent,#8b5cff);opacity:.12}
+.coin-page .coin-price-chart-legend{display:flex;justify-content:space-between;gap:12px;padding:6px 10px 2px;font-size:12px;color:var(--muted,#9a9aa3);font-variant-numeric:tabular-nums}

@@ -1,0 +1,62 @@
+{
+  "wallet": "BvGRhAWRik2bMPx3DxgsFM9L86HpQtBkgK3irkgZW7Yh",
+  "rows": [
+    {
+      "kind": "buy",
+      "signature": "5zFZB2weMvMKybJoBAW1UqFh1iVS7p3hQo79crB5CeQNjs43WGnPx238mT7AViHDTeNtRQZvpnU47XpVVWYxNcLr",
+      "slot": 450441122,
+      "confirmedAt": 1790478849000,
+      "inputAmount": "585694366",
+      "outputAmount": "719951750480"
+    },
+    {
+      "kind": "burn",
+      "signature": "3P4DRKBuHcNta7aAgDPw5W2mGkwR517mRLHhz2NxRc1gSc1wbAYQB4Dyw3UiTK3tse9Ss37S2mmLWC6c1ZzikjmH",
+      "slot": 450441662,
+      "confirmedAt": 1790479060000,
+      "inputAmount": "719951750480",
+      "outputAmount": "0"
+    },
+    {
+      "kind": "buy",
+      "signature": "2EaXeJn1Ycy9j5gXjR34TQbjZJTawMBU6a4BtLeW7ZYCoAeZY9xTEHmnFzzhFdWs2u51CLvb4mcTGxgvHXkHw8G5",
+      "slot": 450473128,
+      "confirmedAt": 1790491651000,
+      "inputAmount": "871005083",
+      "outputAmount": "513188836651"
+    },
+    {
+      "kind": "burn",
+      "signature": "5dA6KQgJNticqCqbbqDPRFDUv8S1MJF6BgZy6gi2npzqoycBbYmSQiQvvrJCaShvg1SxdcBZEMtRnPQHBKnGqWXU",
+      "slot": 450473215,
+      "confirmedAt": 1790491685000,
+      "inputAmount": "513188836651",
+      "outputAmount": "0"
+    },
+    {
+      "kind": "burn",
+      "funding": "external-contribution",
+      "signature": "5grG4kBMMevX8VGGSrkhXjoSN6n68yistGQVh4uRik9p54jkG2gTwFAdV1Lt8bGwZqaJuLHXLAt7t5MaqSPrkXdW",
+      "slot": 450861812,
+      "confirmedAt": 1790647124000,
+      "inputAmount": "5099911699886",
+      "outputAmount": "0"
+    },
+    {
+      "kind": "buy",
+      "signature": "42QiSR693aYaUQhP1gpFCsN17EmWFPxe6oqkHNkEsRj4AyNznqc4GLa9q3rqPYwwioRWeNj1w9csP5syzioxwE4n",
+      "slot": 450880354,
+      "confirmedAt": 1790654537000,
+      "inputAmount": "7459946409",
+      "outputAmount": "1081643039627"
+    },
+    {
+      "kind": "burn",
+      "signature": "4qaoY6XXK7M716q7TQN5WpsHLbE3QKazZTx1iLsYt4goSPWs46xXkGaw39gmb6L6biZaPKDVhuwxK2ztB3EruPgz",
+      "slot": 450881011,
+      "confirmedAt": 1790654800000,
+      "inputAmount": "1081643039627",
+      "outputAmount": "0"
+    }
+  ]
+}

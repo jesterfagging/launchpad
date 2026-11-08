@@ -1,0 +1,13 @@
+{
+  "sourceSha256": "89f71660c41c868d5ca31b5decbc86dad1cd9772681b2b2178787289b00c5594",
+  "cargoLockSha256": "37bbcf587dacd85294dd479e3eba942ab23afe4de2c4ed0a815ddffa68665b4b",
+  "buildScriptSha256": "fc4c59719b3a1d1d9a09451b801b0f374960b5323cfae2002a09cbb015c2bb63",
+  "artifacts": {
+    "curve_pump_test_DISABLED.so": "42ee1cf20bfef5e7c9d2004ef83739d610686302ec7ff19240cfef085174172d",
+    "curve_pump_test_LOCAL_ONLY.so": "e3c7e833be7228ece8fc1ebe9b7e123343cfe2329d014df47914c8a2753797d5"
+  },
+  "noRealOwnerArtifact": true,
+  "rust": "Solana platform-tools v1.57",
+  "sbfSdk": "v4.3.0",
+  "onChainBroadcasts": false
+}

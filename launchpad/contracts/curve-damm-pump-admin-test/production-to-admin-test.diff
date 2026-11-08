@@ -1,0 +1,226 @@
+--- curve-pump-public/src/lib.rs
++++ curve-damm-pump-admin-test/src/lib.rs
+@@ -1,4 +1,4 @@
+-//! Public SOL bonding curve with per-launch PDA custody and atomic PumpSwap LP burn.
++//! Isolated admin-only $50/$100 DAMM test launch with atomic PumpSwap LP burn.
+ //! Fixed launch economics; no administrative reserve withdrawal. Not professionally audited.
+ #![allow(unexpected_cfgs)]
+ use solana_program::{
+@@ -164,12 +164,12 @@
+ fn entry(p: &Pubkey, a: &[AccountInfo], d: &[u8]) -> ProgramResult {
+     need(!a.is_empty() && a[0].is_signer, Error::Unauthorized)?;
+     match d.first() {
+-        Some(0) => init(p, a, &d[1..]),
+-        Some(1) => trade(p, a, &d[1..], true),
+-        Some(2) => trade(p, a, &d[1..], false),
+-        Some(3) => migrate(p, a, &d[1..]),
++        Some(0) => Err(err(Error::Disabled)),
++        Some(1) => Err(err(Error::Disabled)),
++        Some(2) => Err(err(Error::Disabled)),
++        Some(3) => Err(err(Error::Disabled)),
+         Some(4) => configure(p, a, &d[1..]),
+-        Some(5) => claim_creator(p, a, &d[1..]),
++        Some(5) => Err(err(Error::Disabled)),
+         Some(6) => damm::initialize(p, a, &d[1..]),
+         Some(7) => damm::migrate(p, a, &d[1..]),
+         Some(8) => damm::claim_fees(p, a, &d[1..]),
+--- curve-pump-public/src/damm.rs
++++ curve-damm-pump-admin-test/src/damm.rs
+@@ -1,7 +1,7 @@
+ //! Finite DAMM v2 range -> PumpSwap. Controller PDA owns every redeemable
+ //! position and launch reserve. There is deliberately no rescue/EOA withdrawal.
+ use super::*;
+-use super::damm_math::{geometry,Geometry};
++use super::damm_math::{geometry,Geometry,graduation_fee};
+ const DAMM:Pubkey=pubkey!("cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG");
+ const DAMM_AUTH:Pubkey=pubkey!("HLnpSz9h2S4hiLQ43rnSD9XkcUThA7B8hQMKmDaiTLcC");
+ const DMAGIC:&[u8;8]=b"CRVDAMM1";
+@@ -11,15 +11,15 @@
+ const FEE_NUMERATOR:u64=12_500_000; // 125 bps gross, quote-only, no compounding.
+ fn u128at(d:&[u8],o:usize)->Result<u128,ProgramError>{Ok(u128::from_le_bytes(d.get(o..o+16).ok_or(err(Error::State))?.try_into().unwrap()))}
+ #[derive(Clone,Debug)]
+-struct DState{phase:u8,bump:u8,decimals:u8,creator:Pubkey,base:Pubkey,quote:Pubkey,quote_program:Pubkey,pool:Pubkey,position:Pubkey,nft:Pubkey,nft_account:Pubkey,g:Geometry,price:u64,created:u64,rent_floor:u64,pump:Pubkey,burned:u64,migrated_quote:u64,migrated_base:u64,fees:u64,index:u16}
++struct DState{phase:u8,bump:u8,decimals:u8,creator:Pubkey,base:Pubkey,quote:Pubkey,quote_program:Pubkey,pool:Pubkey,position:Pubkey,nft:Pubkey,nft_account:Pubkey,g:Geometry,price:u64,created:u64,rent_floor:u64,pump:Pubkey,burned:u64,migrated_quote:u64,migrated_base:u64,fees:u64,index:u16,graduation_fee_paid:u64}
+ impl DState{
+  fn load(p:&Pubkey,a:&AccountInfo)->Result<Self,ProgramError>{need(a.owner==p,Error::State)?;let d=a.try_borrow_data()?;need(d.len()==DLEN&&&d[..8]==DMAGIC&&(d[8]==0||d[8]==2),Error::State)?;let base=keyat(&d,48)?;need(*a.key==Pubkey::find_program_address(&[b"damm",base.as_ref()],p).0,Error::Accounts)?;
+-  Ok(Self{phase:d[8],bump:d[9],decimals:d[10],creator:keyat(&d,16)?,base,quote:keyat(&d,80)?,quote_program:keyat(&d,112)?,pool:keyat(&d,144)?,position:keyat(&d,176)?,nft:keyat(&d,208)?,nft_account:keyat(&d,240)?,g:Geometry{min:u128at(&d,272)?,max:u128at(&d,288)?,liquidity:u128at(&d,304)?,sale:u64at(&d,320)?,reserve:u64at(&d,328)?,quote:u64at(&d,336)?},price:u64at(&d,344)?,created:u64at(&d,352)?,rent_floor:u64at(&d,360)?,pump:keyat(&d,368)?,burned:u64at(&d,400)?,migrated_quote:u64at(&d,408)?,migrated_base:u64at(&d,416)?,fees:u64at(&d,424)?,index:u16::from_le_bytes(d[432..434].try_into().unwrap())})
++  Ok(Self{phase:d[8],bump:d[9],decimals:d[10],creator:keyat(&d,16)?,base,quote:keyat(&d,80)?,quote_program:keyat(&d,112)?,pool:keyat(&d,144)?,position:keyat(&d,176)?,nft:keyat(&d,208)?,nft_account:keyat(&d,240)?,g:Geometry{min:u128at(&d,272)?,max:u128at(&d,288)?,liquidity:u128at(&d,304)?,sale:u64at(&d,320)?,reserve:u64at(&d,328)?,quote:u64at(&d,336)?},price:u64at(&d,344)?,created:u64at(&d,352)?,rent_floor:u64at(&d,360)?,pump:keyat(&d,368)?,burned:u64at(&d,400)?,migrated_quote:u64at(&d,408)?,migrated_base:u64at(&d,416)?,fees:u64at(&d,424)?,index:u16::from_le_bytes(d[432..434].try_into().unwrap()),graduation_fee_paid:u64at(&d,440)?})
+  }
+  fn save(&self,a:&AccountInfo)->ProgramResult{let mut d=a.try_borrow_mut_data()?;need(d.len()==DLEN,Error::State)?;d.fill(0);d[..8].copy_from_slice(DMAGIC);d[8]=self.phase;d[9]=self.bump;d[10]=self.decimals;
+   for(o,k)in[(16,self.creator),(48,self.base),(80,self.quote),(112,self.quote_program),(144,self.pool),(176,self.position),(208,self.nft),(240,self.nft_account),(368,self.pump)]{d[o..o+32].copy_from_slice(k.as_ref());}
+   for(o,v)in[(272,self.g.min),(288,self.g.max),(304,self.g.liquidity)]{d[o..o+16].copy_from_slice(&v.to_le_bytes());}
+-  for(o,v)in[(320,self.g.sale),(328,self.g.reserve),(336,self.g.quote),(344,self.price),(352,self.created),(360,self.rent_floor),(400,self.burned),(408,self.migrated_quote),(416,self.migrated_base),(424,self.fees)]{d[o..o+8].copy_from_slice(&v.to_le_bytes());}d[432..434].copy_from_slice(&self.index.to_le_bytes());Ok(())
++  for(o,v)in[(320,self.g.sale),(328,self.g.reserve),(336,self.g.quote),(344,self.price),(352,self.created),(360,self.rent_floor),(400,self.burned),(408,self.migrated_quote),(416,self.migrated_base),(424,self.fees),(440,self.graduation_fee_paid)]{d[o..o+8].copy_from_slice(&v.to_le_bytes());}d[432..434].copy_from_slice(&self.index.to_le_bytes());Ok(())
+  }
+ }
+ fn dkey(seeds:&[&[u8]])->Pubkey{Pubkey::find_program_address(seeds,&DAMM).0}
+@@ -63,6 +63,8 @@
+  need(a.len()==26&&d.len()==89,Error::Accounts)?;
+  let[payer,state,auth,base,ba,quote,qa,config,relayer,sys,tok,tok22,qt,associated,damm,da,pool,pos,nft,na,av,bv,event,ab,bb,payer_quote]=<&[AccountInfo;26]>::try_from(a).unwrap();
+  program(sys,&system_program::id())?;program(tok,&TOKEN)?;program(tok22,&TOKEN22)?;program(associated,&ATA)?;program(damm,&DAMM)?;system_wallet(payer)?;system_wallet(auth)?;
++ // Admin-only launch is enforced by the executable, independently of the web API.
++ need(*payer.key==ADMIN&&payer.is_signer,Error::Unauthorized)?;
+  let(relay,enabled)=configuration(p,config)?;need(enabled&&relayer.is_signer&&*relayer.key==relay&&payer.is_signer,Error::Unauthorized)?;
+  let price=u64at(d,0)?;let expiry=u64at(d,8)?;let decimals=d[16];let now=u64::try_from(Clock::get()?.unix_timestamp).map_err(|_|err(Error::Policy))?;
+  need(expiry>=now&&expiry<=add(now,300)?,Error::Policy)?;quote_mint(quote,qt,decimals)?;need(base.key!=quote.key,Error::Policy)?;
+@@ -106,7 +108,7 @@
+  let ai=vec![auth.clone(),nft.clone(),na.clone(),auth.clone(),da.clone(),pool.clone(),pos.clone(),base.clone(),quote.clone(),av.clone(),bv.clone(),ba.clone(),qa.clone(),tok.clone(),qt.clone(),tok22.clone(),sys.clone(),event.clone(),damm.clone(),ab.clone(),bb.clone()];
+  let metas=ai.iter().enumerate().map(|(i,x)|if [1,2,3,5,6,9,10,11,12].contains(&i){AccountMeta::new(*x.key,i==1||i==3)}else{AccountMeta::new_readonly(*x.key,false)}).collect();
+  invoke_signed(&Instruction{program_id:DAMM,accounts:metas,data},&ai,&[vs,ns])?;
+- let s=DState{phase:0,bump:vb,decimals,creator:*payer.key,base:*base.key,quote:*quote.key,quote_program:*qt.key,pool:*pool.key,position:*pos.key,nft:*nft.key,nft_account:*na.key,g,price,created:now,rent_floor:floor,pump:Pubkey::default(),burned:0,migrated_quote:0,migrated_base:0,fees:0,index:0};
++ let s=DState{phase:0,bump:vb,decimals,creator:*payer.key,base:*base.key,quote:*quote.key,quote_program:*qt.key,pool:*pool.key,position:*pos.key,nft:*nft.key,nft_account:*na.key,g,price,created:now,rent_floor:floor,pump:Pubkey::default(),burned:0,migrated_quote:0,migrated_base:0,fees:0,index:0,graduation_fee_paid:0};
+  venue(&s,auth,damm,da,pool,pos,nft,na,av,bv,event)?;
+  {let pd=pool.try_borrow_data()?;need(u128at(&pd,360)?==g.liquidity&&u128at(&pd,456)?==g.min&&u64at(&pd,680)?==g.sale&&u64at(&pd,688)?==0,Error::Cpi)?;}
+  need(token_account(ba,base.key,auth.key,&TOKEN)?==g.reserve&&token_account(qa,quote.key,auth.key,qt.key)?==seed_quote-1&&token_account(bv,quote.key,da.key,qt.key)?>=1&&token_account(av,base.key,da.key,&TOKEN)?==g.sale ,Error::Cpi)?;
+@@ -123,14 +125,16 @@
+ // Opcode 7: payer is permissionless; the chosen index only selects a fresh
+ // canonical PumpSwap address. Every economic amount is fixed in immutable state.
+ pub(super) fn migrate(p:&Pubkey,a:&[AccountInfo],d:&[u8])->ProgramResult{
+- need(a.len()==29&&d.len()==2,Error::Accounts)?;
+- let[payer,state,auth,base,ba,quote,qa,damm,da,dp,pos,nft,na,av,bv,de,pump,global,pool,lp,la,pa,pb,sys,tok,tok22,qt,associated,pe]=<&[AccountInfo;29]>::try_from(a).unwrap();
++ need(a.len()==31&&d.len()==2,Error::Accounts)?;
++ let[payer,state,auth,base,ba,quote,qa,damm,da,dp,pos,nft,na,av,bv,de,pump,global,pool,lp,la,pa,pb,sys,tok,tok22,qt,associated,pe,treasury,tqa]=<&[AccountInfo;31]>::try_from(a).unwrap();
+  let mut s=DState::load(p,state)?;fixed_accounts(p,&s,auth,base,ba,quote,qt)?;need(payer.is_signer,Error::Unauthorized)?;system_wallet(payer)?;
+  program(sys,&system_program::id())?;program(tok,&TOKEN)?;program(tok22,&TOKEN22)?;program(associated,&ATA)?;program(pump,&PUMP)?;
+  need(*global.key==GLOBAL&&global.owner==&PUMP&&*qa.key==ata(auth.key,quote.key,qt.key),Error::Accounts)?;
++ need(*treasury.key==TREASURY&&*tqa.key==ata(&TREASURY,quote.key,qt.key),Error::Accounts)?;system_wallet(treasury)?;
++ let fee=graduation_fee(s.g.quote)?;let net_quote=sub(s.g.quote,fee)?;need(fee>0&&net_quote>0,Error::Policy)?;
+  let index:[u8;2]=d.try_into().unwrap();let expected=Pubkey::find_program_address(&[b"pool",&index,auth.key.as_ref(),base.key.as_ref(),quote.key.as_ref()],&PUMP).0;
+  need(*pool.key==expected&&*lp.key==Pubkey::find_program_address(&[b"pool_lp_mint",pool.key.as_ref()],&PUMP).0&&*la.key==ata(auth.key,lp.key,&TOKEN22)&&*pa.key==ata(pool.key,base.key,&TOKEN)&&*pb.key==ata(pool.key,quote.key,qt.key)&&*pe.key==Pubkey::find_program_address(&[b"__event_authority"],&PUMP).0,Error::Accounts)?;
+- if s.phase==2{need(s.pump==*pool.key&&s.index==u16::from_le_bytes(index)&&s.burned>0&&pool.owner==&PUMP,Error::State)?;return Ok(());}
++ if s.phase==2{need(s.pump==*pool.key&&s.index==u16::from_le_bytes(index)&&s.burned>0&&s.graduation_fee_paid==fee&&s.migrated_quote==net_quote&&s.migrated_base==s.g.reserve&&pool.owner==&PUMP,Error::State)?;return Ok(());}
+  need(s.phase==0,Error::Phase)?;venue(&s,auth,damm,da,dp,pos,nft,na,av,bv,de)?;
+  // The immutable upper sqrt-price gates graduation. Pool bookkeeping can retain
+  // base rounding dust after ceil deposits and floor swap outputs; it is not
+@@ -142,28 +146,34 @@
+  // No relayer-dependent reserve access. A keeper may subsidize rent but can
+  // neither choose payout amounts nor receive assets from the controller.
+  xfer_sol(payer,auth,sys,add(s.rent_floor,MIGRATION_RENT)?.saturating_sub(auth.lamports()),&[])?;
+- create_ata(auth,qa,auth,quote,sys,qt,associated,seeds)?;create_ata(auth,pa,pool,base,sys,tok,associated,seeds)?;create_ata(auth,pb,pool,quote,sys,qt,associated,seeds)?;
++ create_ata(auth,qa,auth,quote,sys,qt,associated,seeds)?;create_ata(auth,pa,pool,base,sys,tok,associated,seeds)?;create_ata(auth,pb,pool,quote,sys,qt,associated,seeds)?;create_ata(auth,tqa,treasury,quote,sys,qt,associated,seeds)?;
+  need(token_account(pa,base.key,pool.key,&TOKEN)?==0&&token_account(pb,quote.key,pool.key,qt.key)?==0,Error::Policy)?;
+  if *quote.key==WSOL{invoke(&Instruction{program_id:TOKEN,accounts:vec![AccountMeta::new(*qa.key,false)],data:vec![17]},&[qa.clone(),tok.clone()])?;}
++ let treasury_before=token_account(tqa,quote.key,&TREASURY,qt.key)?;
+  let before_a=token_account(ba,base.key,auth.key,&TOKEN)?;let before_b=token_account(qa,quote.key,auth.key,qt.key)?;need(before_a>=s.g.reserve,Error::Insolvent)?;
+  let mut data=vec![80,85,209,72,24,206,177,108];data.extend_from_slice(&s.g.liquidity.to_le_bytes());data.extend_from_slice(&0u64.to_le_bytes());data.extend_from_slice(&s.g.quote.to_le_bytes());
+  damm_position_cpi(auth,dp,pos,ba,qa,av,bv,base,quote,na,tok,qt,de,damm,da,data,true,seeds)?;
+  need(token_account(ba,base.key,auth.key,&TOKEN)?==before_a&&token_account(qa,quote.key,auth.key,qt.key)?==add(before_b,s.g.quote)?&&u128at(&pos.try_borrow_data()?,152)?==0,Error::Cpi)?;
+- // Pump pool creation consumes exactly this launch's reserve and withdrawn
+- // principal. Unsolicited donations and unclaimed position fees are excluded.
+- let mut data=vec![233,146,209,142,207,104,64,188];data.extend_from_slice(&index);data.extend_from_slice(&s.g.reserve.to_le_bytes());data.extend_from_slice(&s.g.quote.to_le_bytes());data.extend_from_slice(&[0;32]);data.extend_from_slice(&[0;2]);data.extend_from_slice(&0u64.to_le_bytes());data.extend_from_slice(&[0;2]);
++ // Graduation fee and pool creation are one atomic instruction. Principal is
++ // fixed by the signed launch geometry; donations and trading fees are excluded.
++ let mut fee_data=vec![12];fee_data.extend_from_slice(&fee.to_le_bytes());fee_data.push(s.decimals);
++ invoke_signed(&Instruction{program_id:*qt.key,accounts:vec![AccountMeta::new(*qa.key,false),AccountMeta::new_readonly(*quote.key,false),AccountMeta::new(*tqa.key,false),AccountMeta::new_readonly(*auth.key,true)],data:fee_data},&[qa.clone(),quote.clone(),tqa.clone(),auth.clone(),qt.clone()],&[seeds])?;
++ need(token_account(tqa,quote.key,&TREASURY,qt.key)?==add(treasury_before,fee)?&&token_account(qa,quote.key,auth.key,qt.key)?==add(before_b,net_quote)?,Error::Cpi)?;
++ // Every reserved base token and the net quote principal seed PumpSwap.
++ // No base tokens are burned or stranded by the graduation fee.
++ let mut data=vec![233,146,209,142,207,104,64,188];data.extend_from_slice(&index);data.extend_from_slice(&s.g.reserve.to_le_bytes());data.extend_from_slice(&net_quote.to_le_bytes());data.extend_from_slice(&[0;32]);data.extend_from_slice(&[0;2]);data.extend_from_slice(&0u64.to_le_bytes());data.extend_from_slice(&[0;2]);
+  let ai=vec![pool.clone(),global.clone(),auth.clone(),base.clone(),quote.clone(),lp.clone(),ba.clone(),qa.clone(),la.clone(),pa.clone(),pb.clone(),sys.clone(),tok22.clone(),tok.clone(),qt.clone(),associated.clone(),pe.clone(),pump.clone()];
+  let metas=ai.iter().enumerate().map(|(i,x)|if [0,2,5,6,7,8,9,10].contains(&i){AccountMeta::new(*x.key,i==2)}else{AccountMeta::new_readonly(*x.key,false)}).collect();
+  invoke_signed(&Instruction{program_id:PUMP,accounts:metas,data},&ai,&[seeds])?;
+  need(pool.owner==&PUMP&&lp.owner==&TOKEN22,Error::Cpi)?;
+- need(token_account(ba,base.key,auth.key,&TOKEN)?==sub(before_a,s.g.reserve)?&&token_account(qa,quote.key,auth.key,qt.key)?==before_b&&token_account(pa,base.key,pool.key,&TOKEN)?==s.g.reserve&&token_account(pb,quote.key,pool.key,qt.key)?==s.g.quote,Error::Cpi)?;
++ need(token_account(ba,base.key,auth.key,&TOKEN)?==sub(before_a,s.g.reserve)?&&token_account(qa,quote.key,auth.key,qt.key)?==before_b&&token_account(pa,base.key,pool.key,&TOKEN)?==s.g.reserve&&token_account(pb,quote.key,pool.key,qt.key)?==net_quote,Error::Cpi)?;
+  {let pd=pool.try_borrow_data()?;need(pd.len()>=271&&pd[..8]==POOL_DISC&&keyat(&pd,11)?==*auth.key&&keyat(&pd,43)?==s.base&&keyat(&pd,75)?==s.quote&&keyat(&pd,107)?==*lp.key&&keyat(&pd,139)?==*pa.key&&keyat(&pd,171)?==*pb.key&&pd[211..243]==[0;32]&&pd[243]==0&&pd[244]==0&&u128at(&pd,245)?==0&&u64at(&pd,261)?==0&&pd[269]==0&&pd[270]==0,Error::Cpi)?;}
+- let received=token_account(la,lp.key,auth.key,&TOKEN22)?;let minimum=isqrt((s.g.reserve as u128).checked_mul(s.g.quote as u128).ok_or(err(Error::Math))?);
++ let received=token_account(la,lp.key,auth.key,&TOKEN22)?;let minimum=isqrt((s.g.reserve as u128).checked_mul(net_quote as u128).ok_or(err(Error::Math))?);
+  need(minimum>1000&&received>=minimum-1000&&u64at(&lp.try_borrow_data()?,36)?==received,Error::Cpi)?;
+  token_ix(tok22,8,received,&[la.clone(),lp.clone(),auth.clone()],seeds)?;
+  need(token_account(la,lp.key,auth.key,&TOKEN22)?==0&&u64at(&lp.try_borrow_data()?,36)?==0,Error::Cpi)?;
+  need(auth.lamports()>=s.rent_floor,Error::Insolvent)?;
+- s.phase=2;s.pump=*pool.key;s.burned=received;s.migrated_quote=s.g.quote;s.migrated_base=s.g.reserve;s.index=u16::from_le_bytes(index);s.save(state)
++ s.phase=2;s.pump=*pool.key;s.burned=received;s.migrated_quote=net_quote;s.migrated_base=s.g.reserve;s.graduation_fee_paid=fee;s.index=u16::from_le_bytes(index);s.save(state)
+ }
+ // Opcode 8: claim the controller-owned position's quote fees to the fixed
+ // protocol treasury. It cannot claim principal, arbitrary NFTs, or creator fees.
+--- curve-pump-public/src/damm_math.rs
++++ curve-damm-pump-admin-test/src/damm_math.rs
+@@ -1,6 +1,11 @@
+ //! Integer-only policy calculations. U256 is deliberately local: no floating point,
+ //! unchecked narrowing, external math program, or caller-controlled economics.
+ use super::{err, need, Error, ProgramError, SUPPLY};
++pub(super) const GRADUATION_FEE_NUMERATOR: u64 = 322_369_073;
++pub(super) const GRADUATION_FEE_DENOMINATOR: u64 = 1_000_000_000;
++pub(super) fn graduation_fee(quote: u64) -> Result<u64, ProgramError> {
++ small(floor(Wide::mul(quote as u128, GRADUATION_FEE_NUMERATOR as u128), Wide::of(GRADUATION_FEE_DENOMINATOR as u128))?)
++}
+ #[derive(Clone, Copy, Debug, PartialEq, Eq)]
+ pub(super) struct Wide(pub [u64; 4]);
+ impl Wide {
+@@ -50,10 +55,13 @@
+     need(price>0&&decimals<=18,Error::Policy)?;
+     let scale=10u128.checked_pow(decimals as u32).ok_or(err(Error::Math))?;
+     let den=Wide::mul(price as u128,SUPPLY as u128);
+-    let lo=Wide::high(20_000_000_000u128.checked_mul(scale).ok_or(err(Error::Math))?).div(den)?.0.sqrt();
+-    let hi=Wide::high(50_000_000_000u128.checked_mul(scale).ok_or(err(Error::Math))?).div(den)?.0.sqrt();
++    let lo=Wide::high(50_000_000u128.checked_mul(scale).ok_or(err(Error::Math))?).div(den)?.0.sqrt();
++    let hi=Wide::high(100_000_000u128.checked_mul(scale).ok_or(err(Error::Math))?).div(den)?.0.sqrt();
+     need(lo>=4_295_048_016&&hi<=79_226_673_521_066_979_257_578_248_091&&hi>lo,Error::Policy)?;
+-    let budget=floor(Wide::mul(SUPPLY as u128,hi),Wide::of(lo.checked_add(hi).ok_or(err(Error::Math))?))?;
++    let fee_den=GRADUATION_FEE_DENOMINATOR as u128;
++    let retained=(GRADUATION_FEE_DENOMINATOR-GRADUATION_FEE_NUMERATOR) as u128;
++    let budget_den=hi.checked_mul(fee_den).and_then(|n|lo.checked_mul(retained).and_then(|m|n.checked_add(m))).ok_or(err(Error::Math))?;
++    let budget=floor(Wide::mul(SUPPLY as u128,hi).times(fee_den)?,Wide::of(budget_den))?;
+     let product=Wide::mul(lo,hi);let delta=hi-lo;
+     let liquidity=floor(product.times(budget)?,Wide::of(delta))?;
+     need(liquidity>0,Error::Math)?;
+@@ -62,33 +70,36 @@
+     let quote=small(floor(Wide::mul(liquidity,delta),Wide::high(1))?)?;
+     need(sale>0&&reserve>0&&quote>0,Error::Policy)?;
+     // Graduation reserve ratio must match DAMM endpoint within five basis points.
+-    let actual=Wide::high(quote as u128);let expected=Wide::mul(hi,hi).times(reserve as u128)?;
++    let net_quote=quote.checked_sub(graduation_fee(quote)?).ok_or(err(Error::Math))?;
++    let actual=Wide::high(net_quote as u128);let expected=Wide::mul(hi,hi).times(reserve as u128)?;
+     let difference=if actual.cmp(&expected)==core::cmp::Ordering::Less{expected.subtract(actual)}else{actual.subtract(expected)};
+     need(difference.times(10_000)?.cmp(&expected.times(5)?)!=core::cmp::Ordering::Greater,Error::Policy)?;
+     Ok(Geometry{min:lo,max:hi,liquidity,sale,reserve,quote})
+ }
+ #[cfg(test)]
+-mod tests{
++mod tests {
+  use super::*;
+- #[test]fn wide_division(){for(a,b)in[(1,3),(u64::MAX as u128,71),(u128::MAX,u128::MAX-1),(u128::MAX,1)]{let n=Wide::mul(a,b);assert_eq!(n.div(Wide::of(b)).unwrap().0.narrow().unwrap(),a);}assert_eq!(Wide::high(1).sqrt(),1u128<<64);}
+- #[test]fn policy_sol_and_usdc(){for(p,d)in[(150_000_000,9),(1_000_000,6),(100_000_000_000,8),(1,6)]{let g=geometry(p,d).unwrap();assert_eq!(g.sale+g.reserve,SUPPLY);assert!(g.max>g.min&&g.quote>0);assert!(g.reserve>387_000_000_000_000&&g.reserve<388_000_000_000_000);}assert!(geometry(0,9).is_err());assert!(geometry(1,19).is_err());}
+- // Fixed outputs from @meteora-ag/cp-amm-sdk 1.4.10 cover coarse decimals,
+- // tiny quote USD values, 18 decimals and references beyond JS safe integers.
+- #[test]fn official_sdk_geometry_vectors(){
+- let cases=[
+-(1000000,6,Geometry{min:82496347424711897,max:130438178253327822,liquidity:137493912374519628439785053979218,sale:612574113277206,reserve:387425886722794,quote:19371294336}),
+-(118170000,9,Geometry{min:239983345068544928,max:379446985461369515,liquidity:399972241780907632522324097680253,sale:612574113277206,reserve:387425886722794,quote:163927344809}),
+-(100000000000,8,Geometry{min:2608763565066556,max:4124817371235594,liquidity:4347939275110920643072482199858,sale:612574113277206,reserve:387425886722794,quote:19371294}),
+-(250125000,6,Geometry{min:5216223237290027,max:8247573106866718,liquidity:8693705395483365264855181902299,sale:612574113277206,reserve:387425886722794,quote:77446454}),
+-(1000,3,Geometry{min:82496347424711897,max:130438178253327822,liquidity:137493912374519628439785053979218,sale:612574113277206,reserve:387425886722794,quote:19371294336}),
+-(1,6,Geometry{min:82496347424711897175,max:130438178253327822123,liquidity:137493912374519629010237570450985898,sale:612574113277206,reserve:387425886722794,quote:19371294336139627}),
+-(12345678,12,Geometry{min:23478873048232822693,max:37123357863178057321,liquidity:39131455080387981009587653832014203,sale:612574113277206,reserve:387425886722794,quote:1569074969891457}),
+-(100000000000,18,Geometry{min:260876356506655644246,max:412481737123559485879,liquidity:434793927511092109174381598191301880,sale:612574113277206,reserve:387425886722794,quote:193712943361396274}),
+-(1000000,0,Geometry{min:82496347424711,max:130438178253327,liquidity:137493912374517276333501537578,sale:612574113277207,reserve:387425886722793,quote:19371}),
+-(1000000000000000001,18,Geometry{min:82496347424711897,max:130438178253327822,liquidity:137493912374519628439785053979218,sale:612574113277206,reserve:387425886722794,quote:19371294336}),
+-];
+- for(price,decimals,expected)in cases{assert_eq!(geometry(price,decimals).unwrap(),expected);}
+- for(price,decimals)in[(10_000_000_000,0),(1,18),(100_000,18),(u64::MAX,0)]{assert!(geometry(price,decimals).is_err());}
++ include!("math_test_vectors.rs");
++ #[test]fn micro_policy_boundaries(){
++  for (price,decimals) in [(150_000_000,9),(1_000_000,6),(100_000_000_000,8),(1,6)] {
++   let g=geometry(price,decimals).unwrap();
++   assert_eq!(g.sale+g.reserve,SUPPLY);
++   assert!(g.reserve>323_000_000_000_000&&g.reserve<324_000_000_000_000);
++  }
++  for (price,decimals) in [(0,9),(1,19),(1_000_000,0),(10_000_000_000,0),(u64::MAX,0)] {
++   assert!(geometry(price,decimals).is_err());
++  }
+  }
+-
++ #[test]fn fee_floor_is_exact(){
++  for gross in [0u64,1,3,4,47_804_700,22_135_943_622,u64::MAX] {
++   let expected=((gross as u128)*322_369_073u128/1_000_000_000u128)as u64;
++   assert_eq!(graduation_fee(gross).unwrap(),expected);
++  }
++ }
++ #[test]fn wide_division(){
++  for(a,b)in[(1,3),(u64::MAX as u128,71),(u128::MAX,u128::MAX-1),(u128::MAX,1)] {
++   assert_eq!(Wide::mul(a,b).div(Wide::of(b)).unwrap().0.narrow().unwrap(),a);
++  }
++  assert_eq!(Wide::high(1).sqrt(),1u128<<64);
++ }
+ }

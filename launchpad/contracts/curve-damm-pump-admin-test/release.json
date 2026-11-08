@@ -1,0 +1,61 @@
+{
+  "version": "damm-pump-admin-test-50-100-fee-v1",
+  "administrator": "7NwWHXzj8oWDV88gurSYjVT77J81qpLPN6xYkUSwfTgS",
+  "treasury": "HN22QWXBPb7dfmPhTjCf14jDco4dYzwDKeehWDXcnHEF",
+  "programId": "CzgJRVKJSmAibnZAjkEYqmAVvxyCSSukjxNG2y7b62NU",
+  "programData": "8kvT3drS36j6qaMie5j2HgqLDMfxLbdLqPsy75VASrc4",
+  "programSeed": "launchpad-program-4",
+  "buffer": "6GDnbt3ZP3z8uLUS3E9z2PZJjMV2iDUtFBDUp5B6oe4h",
+  "bufferSeed": "launchpad-buffer-4",
+  "binaryPath": "private/damm-pump-admin-test/curve_damm_pump_admin_test.so",
+  "binaryBytes": 233472,
+  "binarySha256": "948d26bc525ef14483d0132a0685f5dbfc6c885306904648bb8bc2728d14cf91",
+  "publicControllerSha256Unchanged": "5b45c7f3e114f5e8ccd73aaf12f500fb654915e7ab8656d169d54a3ad6f2d252",
+  "onchainPolicy": {
+    "startingFdvUsd": "50",
+    "graduationFdvUsd": "100",
+    "supplyRaw": "1000000000000000",
+    "baseDecimals": 6,
+    "adminSignerRequiredForInitialize": true,
+    "legacyOpcodesDisabled": [
+      0,
+      1,
+      2,
+      3,
+      5
+    ],
+    "permissionlessGraduation": true,
+    "allReceivedPumpLpBurned": true,
+    "graduationFeeNumerator": "322369073",
+    "graduationFeeDenominator": "1000000000",
+    "graduationFeePaidRawStateOffset": 440,
+    "grossExpectedQuoteStateOffset": 336,
+    "netMigratedQuoteStateOffset": 408,
+    "migrationAccountCount": 31,
+    "treasuryAccountIndex": 29,
+    "treasuryQuoteAtaIndex": 30
+  },
+  "checks": {
+    "rustTests": 6,
+    "sdkMathVectors": 6,
+    "nodePolicyTests": 5,
+    "liteSvmExecutableChecks": 85,
+    "maxRecordedVmComputeUnits": 392449,
+    "broadcast": false
+  },
+  "sourceSha256": {
+    "Cargo.toml": "f4347f53c778ff0110de942a1fd6f57a53ef5605a51d8e4eb93b2008decafa3b",
+    "Cargo.lock": "deeb1b328960fdce51db4cc026775b072e990d7d6e6a6a8dd7466129313b592b",
+    "build-admin-test.sh": "633ff8487f4837980919c2315b593bd7d94e3b733ae4e41c7294ed306addb6ee",
+    "src/damm.rs": "eea90e50579067ddb69e765af77930a056a26c7fb946541ddf719ab6fdf95832",
+    "src/damm_math.rs": "a136ca54da116cf5d8a7df43246d9e502495a62eecf65f1db9b8fea880995558",
+    "src/lib.rs": "5f024e4a4511e8a4f1d685e03a822fbc57196890bbdf4c6921d755358a459ef3",
+    "src/math_test_vectors.rs": "ad7e4eb73b3f077b5a3e7ea8a6758cb19a180f32cbd8986262189fcc3fb9572a"
+  },
+  "publicSourceOriginSha256": {
+    "src/damm.rs": "f9730e46deaa44cf345daf4fbd37751a169c7a6740fe5302da362c7d53bbd4b9",
+    "src/damm_math.rs": "66f94b4f24fdd549203a0e158f5a7595de09c4f76513dac7cff986b7b97705ce",
+    "src/lib.rs": "28fe3c09f77deca216d644c10637d072ba2e9ec85f5c456ff7c89df566c43813"
+  },
+  "policySha256": "5da911c9fdffe8c20dc1c61f71dd7a5ffac94ada8bf386803b7e819940f1b34d"
+}

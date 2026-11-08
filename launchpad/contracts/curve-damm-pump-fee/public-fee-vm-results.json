@@ -1,0 +1,472 @@
+{
+  "realFundsUsed": false,
+  "broadcast": false,
+  "programId": "5F4tt5fQwSR9ymzx5KiYL4Q2Ln8FJxbMfbXD1HhMgUrw",
+  "ownerOnly": false,
+  "startUsd": 20000,
+  "graduationUsd": 50000,
+  "graduationFeeNumerator": "322369073",
+  "graduationFeeDenominator": "1000000000",
+  "signatureVerification": "Owner initialization and configuration fixture uses administrator signer flag; all other transactions use real verified test-key signatures. Forged administrator signatures are explicitly rejected when verification enabled.",
+  "packetSizeScope": "Offline legacy harness bytes only; production launch packet checks are separate.",
+  "controllerSha256": "0e0337bdc95d5a77175f317766ccee9ce5a4f35a0e2ec594239266f012a729dd",
+  "maximumRecordedComputeUnits": 392016,
+  "fixtureManifest": {
+    "capturedAt": "2026-10-01T03:32:48.946935+00:00",
+    "rpc": "https://api.mainnet-beta.solana.com",
+    "genesisHash": "5eykt4UsFv8P8NJdTREpY1vzqKqZKvdpKuc147dw2N9d",
+    "commitment": "finalized",
+    "programAccountSlot": 452167152,
+    "programDataSlot": 452167164,
+    "realFundsUsed": false,
+    "broadcast": false,
+    "programs": [
+      {
+        "name": "damm-v2",
+        "programId": "cpamdpZCGKUy5JxQXB4dcpGPiikHawvSWAd6mEn1sGG",
+        "programData": "AUh8bm2XsMfex3KjYGcM3G4uBqUNSDw6HEhWaWMYnyPH",
+        "lastDeployedSlot": 445230614,
+        "file": "damm-v2.so",
+        "bytes": 2174352,
+        "sha256": "4d5b920baebc090f89b2e8796a3452ed067c9667a143058c96a312f2c1e6848b"
+      },
+      {
+        "name": "pump-swap",
+        "programId": "pAMMBay6oceH9fJKBRHGP5D4bD4sWpmSwMn52FMfXEA",
+        "programData": "6naEzKeUuFh1Jeeu51NXQgr5qkXgXtc9WKNct4xynVJc",
+        "lastDeployedSlot": 446462733,
+        "file": "pump-swap.so",
+        "bytes": 10485715,
+        "sha256": "feb2ec72199f35999bbfd26ada811a37d297464ab265c78593b2d4717d7d42b5"
+      },
+      {
+        "name": "pump-fees",
+        "programId": "pfeeUxB6jkeY1Hxd7CsFCAjcbHA9rWtchMGdZ6VojVZ",
+        "programData": "75Uu23mqWBb8LM8vDppqC1mQAnCcBuLXhVaDezVMQLRw",
+        "lastDeployedSlot": 446465969,
+        "file": "pump-fees.so",
+        "bytes": 948944,
+        "sha256": "4a6e66093305f8a7cb9ca6e4f47c7de726b590dd2be0d5413ce408feba27c8a5"
+      }
+    ],
+    "pumpGlobalSha256": "0fecfb33656e0f0f26f2f5dd80fa6c984f0a175dc58a225841381f9160f3ecde",
+    "pumpTradingConfigSha256": "1c08745171dc748eff782083cadb526be02634c92abf50f1e8ac38df2fd49c54"
+  },
+  "testCount": 84,
+  "tests": [
+    {
+      "name": "future public fee controller accepts ordinary creator with real creator and relayer signatures",
+      "passed": true,
+      "units": 386672,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "real signature verification rejects forged administrator signature",
+      "passed": true,
+      "units": 0,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "administrator address without administrator signature cannot initialize",
+      "passed": true,
+      "units": 6324,
+      "harnessTransactionBytes": 1093
+    },
+    {
+      "name": "legacy or unsupported opcode 0 cannot launch or move custody",
+      "passed": true,
+      "units": 513,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "legacy or unsupported opcode 1 cannot launch or move custody",
+      "passed": true,
+      "units": 513,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "legacy or unsupported opcode 2 cannot launch or move custody",
+      "passed": true,
+      "units": 513,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "legacy or unsupported opcode 3 cannot launch or move custody",
+      "passed": true,
+      "units": 513,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "legacy or unsupported opcode 5 cannot launch or move custody",
+      "passed": true,
+      "units": 514,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "legacy or unsupported opcode 9 cannot launch or move custody",
+      "passed": true,
+      "units": 514,
+      "harnessTransactionBytes": 211
+    },
+    {
+      "name": "owner and relayer cannot alter immutable test geometry",
+      "passed": true,
+      "units": 155094,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "owner initializes actual DAMM at $20000 FDV",
+      "passed": true,
+      "units": 386672,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "SDK model preserves $20000 start and $50000 graduation",
+      "passed": true
+    },
+    {
+      "name": "on-chain DAMM range matches test policy exactly",
+      "passed": true
+    },
+    {
+      "name": "full billion-token test supply splits exactly",
+      "passed": true
+    },
+    {
+      "name": "test starts with zero active quote and one-unit initialization seed",
+      "passed": true
+    },
+    {
+      "name": "test uses production 125-bps quote-only DAMM fees",
+      "passed": true
+    },
+    {
+      "name": "test mint and freeze authorities revoked after issuance",
+      "passed": true
+    },
+    {
+      "name": "test initialization replay cannot mint more tokens",
+      "passed": true,
+      "units": 181226,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "test cannot graduate before the actual DAMM endpoint",
+      "passed": true,
+      "units": 71202,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "unrelated holder buys the test coin through actual DAMM",
+      "passed": true,
+      "units": 14222,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "unrelated holder sells the test coin through actual DAMM",
+      "passed": true,
+      "units": 13635,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "test fee claims pay the same treasury without withdrawing principal",
+      "passed": true,
+      "units": 79486,
+      "harnessTransactionBytes": 839
+    },
+    {
+      "name": "test bonds exactly at its FDV endpoint through an actual partial-fill buy",
+      "passed": true,
+      "units": 15523,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "fee-aware migration requires the full 31-account ABI",
+      "passed": true
+    },
+    {
+      "name": "graduation cannot redirect the treasury wallet",
+      "passed": true,
+      "units": 19289,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "graduation cannot redirect the treasury token account",
+      "passed": true,
+      "units": 20862,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "actual PumpSwap failure atomically rolls back withdrawn test liquidity",
+      "passed": true,
+      "units": 220915,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "rollback reaches actual DAMM and PumpSwap CPIs",
+      "passed": true,
+      "units": 220915,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "fee-aware graduation creates an ordinary PumpSwap pool",
+      "passed": true,
+      "units": 264155,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "fixed graduation fee pays the pinned treasury exactly once",
+      "passed": true
+    },
+    {
+      "name": "gross withdrawn quote equals net LP deposit plus treasury fee",
+      "passed": true
+    },
+    {
+      "name": "graduation fee does not burn or reduce the billion-token supply",
+      "passed": true
+    },
+    {
+      "name": "all reserved base and net quote are deposited without stranded principal",
+      "passed": true
+    },
+    {
+      "name": "post-fee PumpSwap price and full-supply FDV match the DAMM endpoint within five basis points",
+      "passed": true
+    },
+    {
+      "name": "test PumpSwap holds exactly migrated reserves",
+      "passed": true
+    },
+    {
+      "name": "test migration preserves fixed sale and quote principal",
+      "passed": true
+    },
+    {
+      "name": "all received test PumpSwap LP tokens burn atomically",
+      "passed": true
+    },
+    {
+      "name": "test graduation retries are idempotent",
+      "passed": true,
+      "units": 49012,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "Admin test classic quote post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 163549,
+      "harnessTransactionBytes": 983
+    },
+    {
+      "name": "Admin test classic quote post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Admin test classic quote post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 132054,
+      "harnessTransactionBytes": 916
+    },
+    {
+      "name": "Admin test classic quote post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Admin test classic quote continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "SOL test owner initialization succeeds",
+      "passed": true,
+      "units": 385047,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "SOL test reaches actual endpoint",
+      "passed": true,
+      "units": 15524,
+      "harnessTransactionBytes": 568
+    },
+    {
+      "name": "SOL disable only blocks new owner test launches",
+      "passed": true
+    },
+    {
+      "name": "SOL unrelated keeper still graduates an existing test while new launches paused",
+      "passed": true,
+      "units": 305449,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "SOL test preserves quote principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "SOL migration pays exact recorded fee to pinned treasury",
+      "passed": true
+    },
+    {
+      "name": "SOL fee preserves full supply and deposits every reserved token",
+      "passed": true
+    },
+    {
+      "name": "Admin test SOL post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 144687,
+      "harnessTransactionBytes": 1149
+    },
+    {
+      "name": "Admin test SOL post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Admin test SOL buy closes its temporary SOL account and preserves existing wrapped SOL",
+      "passed": true
+    },
+    {
+      "name": "Admin test SOL post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 106959,
+      "harnessTransactionBytes": 1082
+    },
+    {
+      "name": "Admin test SOL post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Admin test SOL sell unwraps proceeds without touching existing wrapped SOL",
+      "passed": true
+    },
+    {
+      "name": "Admin test SOL continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 test owner initialization succeeds",
+      "passed": true,
+      "units": 392016,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "Token-2022 test reaches actual endpoint",
+      "passed": true,
+      "units": 17358,
+      "harnessTransactionBytes": 600
+    },
+    {
+      "name": "Token-2022 disable only blocks new owner test launches",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 unrelated keeper still graduates an existing test while new launches paused",
+      "passed": true,
+      "units": 298407,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "Token-2022 test preserves quote principal and burns LP",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 migration pays exact recorded fee to pinned treasury",
+      "passed": true
+    },
+    {
+      "name": "Token-2022 fee preserves full supply and deposits every reserved token",
+      "passed": true
+    },
+    {
+      "name": "Admin test Token-2022 post-graduation buy executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 182534,
+      "harnessTransactionBytes": 1015
+    },
+    {
+      "name": "Admin test Token-2022 post-graduation buy delivers minimum base and debits the exact quote budget",
+      "passed": true
+    },
+    {
+      "name": "Admin test Token-2022 post-graduation sell executes production SDK instructions on actual PumpSwap",
+      "passed": true,
+      "units": 119693,
+      "harnessTransactionBytes": 948
+    },
+    {
+      "name": "Admin test Token-2022 post-graduation sell debits exact base and delivers minimum quote",
+      "passed": true
+    },
+    {
+      "name": "Admin test Token-2022 continues trading with all received LP burned",
+      "passed": true
+    },
+    {
+      "name": "donation fixture initializes fee-aware custody",
+      "passed": true
+    },
+    {
+      "name": "donation fixture acquires base through actual DAMM",
+      "passed": true
+    },
+    {
+      "name": "unrelated donor transfers extra assets into fee-aware custody",
+      "passed": true
+    },
+    {
+      "name": "donated assets cannot prevent reaching the endpoint",
+      "passed": true
+    },
+    {
+      "name": "donated assets cannot prevent fee-aware graduation",
+      "passed": true,
+      "units": 273244,
+      "harnessTransactionBytes": 1171
+    },
+    {
+      "name": "migration consumes all allocated principal and excludes only unsolicited donations",
+      "passed": true
+    },
+    {
+      "name": "donations do not inflate the fixed treasury graduation fee",
+      "passed": true
+    },
+    {
+      "name": "donations do not alter LP deposits or migration price",
+      "passed": true
+    },
+    {
+      "name": "admin can pause new test launches",
+      "passed": true
+    },
+    {
+      "name": "paused test initialization rejects without creating custody",
+      "passed": true,
+      "units": 8197,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "admin can resume new test launches",
+      "passed": true
+    },
+    {
+      "name": "test owner still requires the reviewed relayer signature",
+      "passed": true,
+      "units": 8202,
+      "harnessTransactionBytes": 1093
+    },
+    {
+      "name": "test late compute failure rolls back mint issuance and custody",
+      "passed": true,
+      "units": 300000,
+      "harnessTransactionBytes": 1157
+    },
+    {
+      "name": "unchanged test launch safely retries after compute failure",
+      "passed": true
+    },
+    {
+      "name": "production controller executable remains byte-for-byte unchanged",
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+import {createAdminPumpDeployment} from './admin-pump-deployment-ui.mjs';
+import {getLaunchpadWallet} from './launchpad-wallet.mjs';
+import {pumpUnits} from './pump-public-ui.mjs';
+const OWNER='7NwWHXzj8oWDV88gurSYjVT77J81qpLPN6xYkUSwfTgS';
+const BASE='/api/admin/pump-public';
+export function createAdminPumpPublic(options){
+  const {document,api,getAccount,isActive=()=>true,walletFactory=getLaunchpadWallet}=options;
+  const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n;};
+  const element=el('div'),deployment=createAdminPumpDeployment({...options,base:BASE+'/deployment',publicMode:true});
+  const card=el('section',undefined,'admin-card admin-pump-public');card.id='admin-pump-public-configuration';
+  card.append(el('p','PUMPSWAP / PUBLIC LAUNCHES','eyebrow'),el('h2','Custody and public access'),el('p','Each launch has program-controlled vaults. Launchpad’s separate graduation wallet pays transaction fees and submits graduation and the LP burn. Launch creators never hold the LP.','admin-muted'));
+  const status=el('p','','admin-muted'),facts=el('dl',undefined,'pump-operation-facts'),blockers=el('ul'),actions=el('div',undefined,'admin-pump-test-actions');status.setAttribute('role','status');
+  const funding=el('p','','admin-muted'),copy=el('button','Copy graduation wallet','text-button');copy.type='button';
+  const refresh=el('button','Refresh readiness','text-button'),setup=el('button','Create graduation wallet','small-button'),configure=el('button','Review custody setup','small-button'),activate=el('button','Review public activation','small-button'),enable=el('button','Open public launches','small-button'),pause=el('button','Pause new launches','small-button');for(const b of [refresh,setup,configure,activate,enable,pause])b.type='button';actions.append(refresh,setup,configure,activate,enable,pause);
+  const review=el('div',undefined,'admin-pump-deployment-review'),reviewText=el('p'),approve=el('button','Approve in deployment wallet','small-button'),cancel=el('button','Cancel review','text-button');approve.type=cancel.type='button';review.append(reviewText,approve,cancel);review.hidden=true;
+  const walletRow=el('div',undefined,'admin-pump-test-actions'),walletSelect=el('select'),connect=el('button','Connect deployment wallet','small-button'),walletHint=el('p','No Solana wallet app was found in this browser. Install or unlock one (for example Phantom or Solflare) to connect.','admin-wallet-hint');connect.type='button';walletHint.hidden=true;walletSelect.setAttribute('aria-label','Wallet app for custody configuration');walletRow.append(walletSelect,walletHint,connect);
+  // Opening public launches takes effect at once for every creator, so it asks for a confirming click.
+  const openReview=el('div',undefined,'admin-pump-deployment-review'),openConfirm=el('button','Confirm: open public launches','small-button'),openCancel=el('button','Cancel','text-button');openReview.id='admin-pump-public-open-review';openConfirm.id='admin-pump-public-open-confirm';openConfirm.type=openCancel.type='button';openReview.hidden=true;openReview.setAttribute('role','group');openReview.setAttribute('aria-label','Confirm opening public launches');openReview.append(el('p','Open PumpSwap to new public launches now? Every creator can launch here as soon as you confirm.'),openConfirm,openCancel);
+  card.append(status,facts,funding,copy,blockers,walletRow,actions,review,openReview);element.append(deployment.element,card);
+  let data=null,config=null,plan=null,busy=false,disposed=false,revision=0,opening=false;const wallet=walletFactory({window:document.defaultView});
+  const permitted=()=>!disposed&&isActive()&&getAccount()?.role==='admin'&&getAccount()?.mfaEnabled===true;
+  const guard=()=>{const version=revision,owner=getAccount()?.id;return()=>{if(!permitted()||version!==revision||owner!==getAccount()?.id)throw Object.assign(Error('Administrator session changed.'),{cancelled:true});};};
+  function render(){
+    card.hidden=!permitted();const w=wallet.state(),selected=walletSelect.value;walletSelect.replaceChildren(...w.wallets.map(item=>{const n=el('option',item.name);n.value=item.id;return n;}));if(w.wallets.some(x=>x.id===selected))walletSelect.value=selected;
+    connect.textContent=w.address===OWNER?'Deployment wallet connected':'Connect deployment wallet';connect.disabled=busy||!w.wallets.length;walletSelect.disabled=busy;walletSelect.hidden=!w.wallets.length;walletHint.hidden=!!w.wallets.length;
+    const relayer=data?.relayer?.address||data?.relayer||config?.relayer||'',balance=data?.relayer?.balanceLamports??data?.relayerBalanceLamports;
+    funding.textContent=relayer?'Send SOL to the graduation wallet shown above for automatic graduation transaction fees. Pool account rent is prepaid in each launch’s reviewed budget. '+((data?.recommendedBalanceLamports||data?.recommendedRelayerBalanceLamports||data?.relayerRecommendedBalanceLamports)?'Recommended starting balance: '+pumpUnits(String(data.recommendedBalanceLamports||data.recommendedRelayerBalanceLamports||data.relayerRecommendedBalanceLamports))+' SOL.':'Check the required balance below before enabling.') :'';copy.hidden=!relayer;copy.disabled=busy;
+    facts.replaceChildren();for(const [label,value]of [['Public access',data?.publicEnabled?'Open':'Closed'],['Graduation wallet',relayer||'Not set up'],['Graduation wallet SOL',balance==null?'—':pumpUnits(String(balance))+' SOL'],['Required gas balance',data?.relayerMinimumBalanceLamports?pumpUnits(String(data.relayerMinimumBalanceLamports))+' SOL':'Checking…'],['Custody program',data?.programId||config?.programId||'Not deployed'],['Onchain activation',config?.chainEnabled?'Enabled':config?.configured?'Configured, disabled':'Not configured']]){const row=el('div');row.append(el('dt',label),el('dd',value));facts.append(row);}
+    blockers.replaceChildren(...(data?.blockers||[]).filter(x=>typeof x==='string').map(text=>el('li',text)));blockers.hidden=!blockers.children.length;
+    setup.hidden=!!relayer;setup.disabled=busy;configure.hidden=!!config?.configured;configure.disabled=busy||w.address!==OWNER||!config?.canPrepare;activate.hidden=!config?.configured||config?.chainEnabled===true;activate.disabled=busy||w.address!==OWNER||config?.canPrepare===false;
+    enable.hidden=data?.publicEnabled===true;enable.disabled=busy||config?.chainEnabled!==true||data?.ready!==true&&data?.canEnable!==true;pause.hidden=data?.publicEnabled!==true;pause.disabled=busy;refresh.disabled=busy;approve.disabled=busy||!plan||w.address!==OWNER;cancel.disabled=busy;
+    if(enable.hidden||enable.disabled&&!busy)opening=false;openReview.hidden=!opening;openConfirm.disabled=openCancel.disabled=busy;
+  }
+  async function load(){
+    if(!permitted()||busy)return;busy=true;render();const check=guard();
+    try{const [next,nextConfig]=await Promise.all([api(BASE+'/status'),api(config?.pendingBatch&&config.pendingBatch.state!=='prepared'?BASE+'/configuration/reconcile':BASE+'/configuration/status',config?.pendingBatch&&config.pendingBatch.state!=='prepared'?{}:undefined)]);check();data=next;config=nextConfig.status||nextConfig;status.textContent=data.publicEnabled?'PumpSwap is open to public launches.':'Complete the steps below, then open public launches.';}
+    catch(error){if(!error.cancelled)status.textContent=error.message;}
+    finally{busy=false;render();}
+  }
+  async function action(fn){if(!permitted()||busy)return;busy=true;render();const check=guard();try{await fn(check);}catch(error){if(!error.cancelled)status.textContent=error.message;}finally{busy=false;render();}}
+  async function prepare(enabled){await action(async check=>{plan=null;review.hidden=true;const next=await api(BASE+'/configuration/prepare',{wallet:OWNER,enabled});check();if(typeof next?.planId!=='string'||!Array.isArray(next.pendingSignatures)||next.pendingSignatures.length!==1||next.pendingSignatures[0].wallet!==OWNER)throw Error('Configuration review is incomplete.');plan=next;reviewText.textContent=(enabled?'Enable public launches onchain.':'Initialize program custody with public launches disabled.')+' Maximum wallet debit: '+pumpUnits(String(next.maxWalletDebitLamports))+' SOL.';review.hidden=false;status.textContent='Review this configuration change, then approve in your deployment wallet.';});}
+  copy.onclick=async()=>{try{const address=data?.relayer?.address||data?.relayer||config?.relayer;if(address){await document.defaultView.navigator.clipboard.writeText(address);copy.textContent='Address copied';}}catch{status.textContent='Select and copy the graduation wallet address shown above.';}};
+  setup.onclick=async()=>{await action(async check=>{await api(BASE+'/setup',{});check();});await load();};
+  configure.onclick=()=>prepare(false);activate.onclick=()=>prepare(true);
+  approve.onclick=async()=>{await action(async check=>{const p=plan;if(!p||wallet.state().address!==OWNER)return;const signedTransactions=await wallet.signBatch(p.pendingSignatures);check();if(wallet.state().address!==OWNER)throw Error('Deployment wallet changed. Nothing submitted.');await api(BASE+'/configuration/submit',{planId:p.planId,signedTransactions});check();plan=null;review.hidden=true;await api(BASE+'/configuration/reconcile',{});check();});await load();};
+  enable.onclick=()=>{if(busy||enable.disabled||!permitted())return;opening=true;render();openConfirm.focus?.();};
+  openCancel.onclick=()=>{opening=false;render();enable.focus?.();};
+  openConfirm.onclick=async()=>{if(!opening)return;opening=false;await action(async check=>{await api(BASE+'/configure',{enabled:true});check();});await load();};pause.onclick=async()=>{await action(async check=>{await api(BASE+'/configure',{enabled:false});check();});await load();};
+  connect.onclick=()=>action(async check=>{await wallet.connect(walletSelect.value);check();if(wallet.state().address!==OWNER)throw Error('Select the configured BMBe…KARi deployment wallet.');});refresh.onclick=()=>Promise.all([deployment.load(),load()]);cancel.onclick=()=>{if(!busy){plan=null;review.hidden=true;render();}};
+  const unsubscribe=wallet.onChange(()=>{plan=null;review.hidden=true;render();});
+  function clear(){revision++;data=null;config=null;plan=null;busy=false;opening=false;review.hidden=true;openReview.hidden=true;card.hidden=true;deployment.clear();}
+  return{element,load:()=>Promise.all([deployment.load(),load()]),clear,pause(){revision++;deployment.pause();plan=null;opening=false;review.hidden=true;openReview.hidden=true;},destroy(){disposed=true;revision++;unsubscribe?.();deployment.destroy();element.replaceChildren();}};
+}
